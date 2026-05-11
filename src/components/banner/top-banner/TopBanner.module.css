@@ -1,0 +1,43 @@
+.topBannerWrapper {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 50px;
+    padding: 25px 0;
+    overflow-x: auto;
+}
+
+.categoryItem {
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.categoryImgWrapper {
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+    height: 125px;
+    display: flex;
+    background: #cce69c;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.categoryImg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.categoryLabel {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.3;
+}
+.topBannerWrapper {
+    width: 1200px !important;
+    margin: auto;
+}
