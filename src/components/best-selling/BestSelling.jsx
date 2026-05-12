@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { FaSeedling } from 'react-icons/fa'
 import ProductsItem from '../common-components/products/ProductsItem'
 import bannerImage from '@/assets/images/selling.png'
 import sprayerImage from '@/assets/images/selling-1.png'

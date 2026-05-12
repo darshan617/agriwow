@@ -1,7 +1,6 @@
-.productsSection {
-  padding: 24px 0 34px;
+.sectionSpace{
+  padding: 30px 0 !important;
 }
-
 .productsSectionEquipment {
   background: transparent;
 }
@@ -10,9 +9,9 @@
   color: #111;
   letter-spacing: .2px;
   margin: 0 0 18px;
-  font-size: 41px;
+  font-size: 35px;
   font-weight: 700;
-  padding: 26px 0;
+  padding-bottom: 30px;
 }
 
 .promoCard {
@@ -22,7 +21,6 @@
   min-height: 320px;
   border-radius: 6px;
   overflow: hidden;
-  background: #0e3b14;
 }
 
 .promoImage {
@@ -40,35 +38,25 @@
   z-index: 2;
 }
 
-.promoOverlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.05) 0%,
-      rgba(0, 0, 0, 0.15) 60%,
-      rgba(0, 0, 0, 0.35) 100%);
-  z-index: -1;
-}
-
 .promoTitle {
   margin: 0;
   color: #2bb24a;
-  font-size: 33px;
+  font-size: 28px;
   font-weight: 800;
   line-height: 1.15;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  transform: translateX(10%);
+  transform: translateX(20%);
+  margin-top: 30px;
 }
 
 .promoSubtitle {
-  color: #fff;
+  /* color: #fff; */
   text-shadow: 0 1px 1px #00000040;
   margin: 6px 0 0;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.35;
-  transform: translateX(15%);
+  transform: translateX(20%);
 }
 
 .promoExtras {
@@ -83,6 +71,7 @@
 .promoExtras img {
   height: auto;
   object-fit: contain;
+  
 
 }
 
@@ -91,7 +80,7 @@
   text-align: center;
   letter-spacing: .3px;
   z-index: 3;
-  background: #3f8708;
+  background: #2bb24a;
   padding: 8px 12px;
   font-size: 12px;
   font-weight: 600;
@@ -103,9 +92,9 @@
 
 
 .productCard {
-  background: #ffffff;    
+  background: #f2f2f2;    
   border-radius: 6px;
-  padding: 30px 10px 30px;
+  padding: 15px ;
   border: 1px solid #ececec;
   display: flex;
   flex-direction: column;
@@ -175,25 +164,27 @@
 }
 
 .productName {
-  margin: 8px 0 7px;
   color: #1d1d1d;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.35;
   min-height: 32px;
+  margin: 8px 0 7px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .priceRow {
-  margin: 0;
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  border-bottom: 2px solid #C9C8C8;
+    align-items: center;
+    gap: 8px;
+    margin: 0 10px 0 0;
+    display: flex;
+    padding-bottom: 15px;
 }
 
 .currentPrice {
   color: #101010;
+  font-size: 12px;
   font-weight: 700;
-  font-size: 15px;
 }
 
 .oldPrice {
@@ -212,18 +203,15 @@
 
 .addToCartBtn,
 .buyNowBtn {
+  cursor: pointer;
   border: none;
   border-radius: 3px;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 6px;
-  line-height: 1;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
   gap: 4px;
-  white-space: nowrap;
+  padding: 5px 0;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .addToCartBtn {
@@ -259,11 +247,11 @@
 
 .viewAllBtn {
   margin-top: 12px;
-  padding: 0;
+  padding-top: 10px;
   border: 0;
   background: none;
   color: #239c3d;
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
@@ -291,7 +279,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  transition: background 0.2s, border-color 0.2s;
+  background: none;
 }
 
 .swiperNavBtn:hover {

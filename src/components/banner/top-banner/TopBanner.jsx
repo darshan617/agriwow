@@ -1,7 +1,6 @@
 
 import React from 'react'
 import styles from '@/components/banner/top-banner/TopBanner.module.css'
-
 import image1 from '@/assets/category-image/1.png'
 import image2 from '@/assets/category-image/2.png'
 import image3 from '@/assets/category-image/3.png'
@@ -54,6 +53,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Agriculture Sprayers</p>
                         </div>
                     </SwiperSlide>
 
@@ -66,6 +66,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>{`Farm Equipment's`}</p>
                         </div>
                     </SwiperSlide>
 
@@ -78,6 +79,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Garden Tools</p>
                         </div>
                     </SwiperSlide>
 
@@ -90,6 +92,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Industrial Products</p>
                         </div>
                     </SwiperSlide>
 
@@ -102,6 +105,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Post Harvest</p>
                         </div>
                     </SwiperSlide>
 
@@ -114,6 +118,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Fogging Machines</p>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
@@ -125,6 +130,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Agriculture Sprayers</p>
                         </div>
                     </SwiperSlide>
 
@@ -137,6 +143,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>{`Farm Equipment's`}</p>
                         </div>
                     </SwiperSlide>
 
@@ -149,6 +156,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Garden Tools</p>
                         </div>
                     </SwiperSlide>
 
@@ -161,6 +169,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Industrial Products</p>
                         </div>
                     </SwiperSlide>
 
@@ -173,6 +182,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Post Harvest</p>
                         </div>
                     </SwiperSlide>
 
@@ -185,6 +195,7 @@ const TopBanner = () => {
                                     className={styles.categoryImg}
                                 />
                             </div>
+                            <p className={styles.categoryLabel}>Fogging Machines</p>
                         </div>
                     </SwiperSlide>
                 </Swiper>

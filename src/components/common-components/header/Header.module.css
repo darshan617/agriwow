@@ -1,27 +1,38 @@
 .headerOuter {
     background: #ffffff;
-    border-top: 1px solid #efefef;
     border-bottom: 1px solid #efefef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .headerContainer {
-    min-height: 72px;
+    min-height: 70px;
     display: flex;
     align-items: center;
-    gap: 24px;
-    padding: 8px 20px;
-    justify-content: space-between;
+    gap: 28px;
+    padding: 10px 48px;
+    justify-content: flex-start;
 }
 
 .logoWrap {
-    min-width: 170px;
+    flex: 0 0 260px;
+    display: flex;
+    align-items: center;
+}
+
+.logoWrap img {
+    width: 170px;
+    height: auto;
+    display: block;
 }
 
 .navLinks {
+    white-space: nowrap;
+    flex: none;
     align-items: center;
-    margin-left: 140px;
-    gap: 28px;
+    gap: 30px;
     display: flex;
+    right: -100px;
+    position: relative;
 }
 
 .navLinks a {
@@ -32,20 +43,23 @@
 }
 
 .searchWrap {
-    flex: 1;
-    position: relative;
+    flex: 1 1 560px;
     max-width: 620px;
+    position: relative;
 }
 
 .searchInput {
     color: #7b7b7b;
+    background: #f0f0f0;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     outline: none;
-    width: 550px;
-    height: 38px;
+    width: 400px;
+    height: 36px;
     padding: 0 40px 0 14px;
     font-size: 12px;
+    position: relative;
+    left: 120px;
 }
 
 .searchInput::placeholder {
@@ -64,15 +78,15 @@
     display: flex;
     position: absolute;
     top: 50%;
-    right: 70px;
+    right: 8px;
     transform: translateY(-50%);
 }
 
 .actions {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-left: -120px;
+    gap: 14px;
+    flex: 0 0 auto;
 }
 
 .iconBtn {
@@ -108,5 +122,16 @@
     .headerContainer {
         flex-wrap: wrap;
         justify-content: center;
+        padding: 12px 24px;
+    }
+
+    .logoWrap {
+        flex-basis: auto;
+    }
+
+    .searchWrap {
+        order: 3;
+        flex-basis: 100%;
+        max-width: 100%;
     }
 }

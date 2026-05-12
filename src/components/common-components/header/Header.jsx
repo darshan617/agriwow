@@ -5,12 +5,13 @@ import logo from '@/assets/images/logo.png'
 import { BiSearch } from 'react-icons/bi'
 import { FiUser, FiHeart, FiShoppingCart, FiMoreVertical } from 'react-icons/fi'
 import { FaUserCircle, FaHeart, FaShoppingCart  } from "react-icons/fa";
+import menu from '@/assets/icon/menu.png'
 
 import styles from '@/components/common-components/header/Header.module.css'
 
 const Header = () => {
     return (
-        <div className={styles.headerOuter}>
+        <header className={styles.headerOuter}>
             <div className="container">
                 <div className={styles.headerContainer}>
                     <div className={styles.logoWrap}>
@@ -46,13 +47,11 @@ const Header = () => {
                             <FaShoppingCart size={17} />
                             <span className={styles.badge}>0</span>
                         </button>
-                        <button type="button" className={styles.iconBtn} aria-label="More">
-                            <FiMoreVertical size={17} />
-                        </button>
+                        <Image src={menu} alt="menu" width={17} height={17} />
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
     )
 }
 

@@ -2,9 +2,9 @@ import styles from '@/components/marquee/marquee.module.css'
 
 const marqueeItems = [
     "On Selected Products",
-    "25% OFF",
+    "UP TO 25% OFF",
     "On Selected Products",
-    "25% OFF",
+    "UP TO 25% OFF",
     "On Selected Products",
 ];
 
