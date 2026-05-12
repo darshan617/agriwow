@@ -9,7 +9,7 @@ const Benefit = () => {
     const [isActive, setIsActive] = useState(false)
 
     return (
-        <section className={styles.wrapper}>
+        <section className={`${styles.wrapper} `}>
             <Image
                 src={benefitImage}
                 alt="Digital payment benefit background"
@@ -20,15 +20,15 @@ const Benefit = () => {
             />
             <div className={styles.scrim} aria-hidden="true" />
 
-            <div className={styles.inner}>
+            <div className={`${styles.inner}`}>
 
-                <div className={styles.left}>
-                    <h2 className={styles.heading}>
-                        Pay Online &amp;<br />Save More
+                <div className={`${styles.left} text-center`}>
+                    <h2 className={`${styles.heading}`}>
+                        Pay Online &amp;<br /><span>Save</span> More
                     </h2>
                 </div>
-                <div className={styles.right}>
-                    <h3 className={styles.subheading}>
+                <div className={`${styles.right}`}>
+                    <h3 className={`${styles.subheading}`}>
                         Get Instant Benefits On Digital Payments
                     </h3>
 
@@ -38,7 +38,7 @@ const Benefit = () => {
                         aria-pressed={isActive}
                         className={`${styles.pillToggle} ${isActive ? styles.active : ''}`}
                     >
-                        <span className={styles.pillLeft}>EXTRA 5% OFF</span>
+                        <span className={`${styles.pillLeft}`}>EXTRA 5% OFF</span>
                         <span className={styles.pillRight}>At Checkout</span>
                     </button>
 

@@ -51,7 +51,7 @@ const HomeBanner = () => {
 
               <div className={`${styles.offerStrip}`} data-aos="fade-up">
                 <div className={`${styles.offerMain}`}>
-                  <span className={`${styles.upto}`}>UP TO</span>
+                  <span className={`${styles.upto}`}>UPTO</span>
                   <span className={`${styles.offerPercent}`}>25% OFF <br /> 
                   <span className={`${styles.offerPercentSub}`}>on Selected Products</span></span>
                 </div>

@@ -88,12 +88,16 @@ const ProductsItem = ({
 
     promoTitle = 'Power Sprayer',
 
-    promoSubtitle = 'Performance That Grows with You',
+    promoSubtitle = (
+        <>
+            Performance
+            <br />
+            That Grows with You
+        </>
+    ),
 
     promoExtras = null,
-
     promoFooter = null,
-
     promoCardClassName = '',
     promoImageClassName = '',
     promoOverlayClassName = '',
@@ -105,230 +109,235 @@ const ProductsItem = ({
     const isEquipment = variant === 'equipment'
 
     return (
-        <section className="container">
-            <div className={styles.productsSection}>
-                <div className="row g-3 align-items-stretch">
+        <section className="sectionSpace">
+            <div className="container">
+                <div className={`${styles.productsSection}`}>
+                    <div className="row g-3 align-items-stretch">
 
-                    {!isEquipment && (
-                        <div className="col-12">
-                            <h2 className={`${styles.productsTitle} text-center`}>
-                                {title}
-                            </h2>
-                        </div>
-                    )}
+                        {!isEquipment && (
+                            <div className="col-12">
+                                <h2 className={`${styles.productsTitle} text-center`}>
+                                    {title}
+                                </h2>
+                            </div>
+                        )}
 
-                    {!isEquipment && (
-                        <div className="col-md-3">
-                            <div
-                                className={`${styles.promoCard} ${promoCardClassName}`.trim()}
-                            >
-                                <Image
-                                    src={bannerImage}
-                                    alt={title}
-                                    fill
-                                    sizes="(max-width: 767px) 100vw, 25vw"
-                                    className={`${styles.promoImage} ${promoImageClassName}`.trim()}
-                                />
-
+                        {!isEquipment && (
+                            <div className="col-md-3">
                                 <div
-                                    className={`${styles.promoOverlay} ${promoOverlayClassName}`.trim()}
+                                    className={`${styles.promoCard}`}
                                 >
-                                    <h3
-                                        className={`${styles.promoTitle} text-center ${promoTitleClassName}`.trim()}
+                                    <Image
+                                        src={bannerImage}
+                                        alt={title}
+                                        fill
+                                        sizes="(max-width: 767px) 100vw, 25vw"
+                                        className={`${styles.promoImage}`}
+                                    />
+
+                                    <div
+                                        className={`${styles.promoOverlay} ${promoOverlayClassName}`}
                                     >
-                                        {promoTitle}
-                                    </h3>
-
-                                    {promoSubtitle && (
-                                        <p className={`${styles.promoSubtitle} text-center`}>
-                                            {promoSubtitle}
-                                        </p>
-                                    )}
-
-                                    {promoExtras && (
                                         <div
-                                            className={`${styles.promoExtras} ${promoExtrasClassName}`.trim()}
+                                            role="heading"
+                                            aria-level={3}
+                                            className={`${styles.promoTitle} text-center ${promoTitleClassName}`}
                                         >
-                                            {promoExtras}
+                                            {promoTitle}
+                                        </div>
+
+                                        {promoSubtitle && (
+                                            <div className={`${styles.promoSubtitle} text-center`}>
+                                                {promoSubtitle}
+                                            </div>
+                                        )}
+
+                                        {promoExtras && (
+                                            <div
+                                                className={`${styles.promoExtras} ${promoExtrasClassName}`}
+                                            >
+                                                {promoExtras}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {promoFooter && (
+                                        <div
+                                            className={`${styles.promoFooter} ${promoFooterClassName}`}
+                                        >
+                                            {promoFooter}
                                         </div>
                                     )}
                                 </div>
+                            </div>
+                        )}
 
-                                {promoFooter && (
-                                    <div
-                                        className={`${styles.promoFooter} ${promoFooterClassName}`.trim()}
-                                    >
-                                        {promoFooter}
+                        <div className={isEquipment ? 'col-12' : 'col-md-9'}>
+                            <div className={styles.swiperWrapper}>
+
+                                <Swiper
+                                    modules={[Navigation, Autoplay]}
+                                    navigation={{
+                                        prevEl: '.swiper-btn-prev',
+                                        nextEl: '.swiper-btn-next',
+                                    }}
+                                    autoplay={{
+                                        delay: 3000,
+                                        disableOnInteraction: false,
+                                    }}
+                                    spaceBetween={16}
+                                    breakpoints={{
+                                        0: {
+                                            slidesPerView: 1,
+                                        },
+                                        576: {
+                                            slidesPerView: 2,
+                                        },
+                                        768: {
+                                            slidesPerView: 3,
+                                        },
+                                        992: {
+                                            slidesPerView: isEquipment ? 5 : 4,
+                                        },
+                                    }}
+                                    className={styles.cardsRow}
+                                >
+
+                                    {products.map((item) => (
+                                        <SwiperSlide key={item.id}>
+
+                                            <article className={styles.productCard}>
+
+                                                <div className={styles.cardTags}>
+                                                    <span className={styles.discountTag}>
+                                                        {item.discount}
+                                                    </span>
+
+                                                    {item.isBestSeller && (
+                                                        <span className={styles.bestsellerTag}>
+                                                            BESTSELLER
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                <div className={styles.imageWrap}>
+                                                    <Image
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        width={180}
+                                                        height={180}
+                                                        className={styles.productImage}
+                                                    />
+                                                </div>
+
+                                                <div className={styles.ratingLine}>
+                                                    <span className={styles.ratingBadge}>
+                                                        <IoMdStar
+                                                            style={{
+                                                                marginRight: 2,
+                                                                verticalAlign: 'middle',
+                                                            }}
+                                                        />
+                                                        4.5
+                                                    </span>
+
+                                                    <span className={styles.reviewText}>
+                                                        ({item.reviews})
+                                                    </span>
+                                                </div>
+
+                                                <h3 className={styles.productName}>
+                                                    {item.name}
+                                                </h3>
+
+                                                <p className={styles.priceRow}>
+                                                    <span className={styles.currentPrice}>
+                                                        ₹ {item.price}
+                                                    </span>
+
+                                                    <span className={styles.oldPrice}>
+                                                        ₹ {item.oldPrice}
+                                                    </span>
+                                                </p>
+
+
+                                                <div className={styles.cardActions}>
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.addToCartBtn}
+                                                    >
+                                                        <MdAddShoppingCart
+                                                            className={styles.btnIcon}
+                                                        />
+
+                                                        Add to Cart
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.buyNowBtn}
+                                                    >
+                                                        Buy Now
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.wishlistBtn}
+                                                        aria-label="Add to wishlist"
+                                                    >
+                                                        <FiHeart />
+                                                    </button>
+
+                                                </div>
+
+                                            </article>
+
+                                        </SwiperSlide>
+                                    ))}
+
+                                </Swiper>
+
+                                {!isEquipment && (
+                                    <div className={styles.swiperNav}>
+
+                                        <button
+                                            className={`swiper-btn-prev ${styles.swiperNavBtn}`}
+                                            aria-label="Previous"
+                                        >
+                                            <FiChevronLeft />
+                                        </button>
+
+                                        <button
+                                            className={`swiper-btn-next ${styles.swiperNavBtn}`}
+                                            aria-label="Next"
+                                        >
+                                            <FiChevronRight />
+                                        </button>
+
                                     </div>
                                 )}
+
                             </div>
-                        </div>
-                    )}
 
-                    <div className={isEquipment ? 'col-12' : 'col-md-9'}>
-                        <div className={styles.swiperWrapper}>
-
-                            <Swiper
-                                modules={[Navigation, Autoplay]}
-                                navigation={{
-                                    prevEl: '.swiper-btn-prev',
-                                    nextEl: '.swiper-btn-next',
-                                }}
-                                autoplay={{
-                                    delay: 3000,
-                                    disableOnInteraction: false,
-                                }}
-                                spaceBetween={16}
-                                breakpoints={{
-                                    0: {
-                                        slidesPerView: 1,
-                                    },
-                                    576: {
-                                        slidesPerView: 2,
-                                    },
-                                    768: {
-                                        slidesPerView: 3,
-                                    },
-                                    992: {
-                                        slidesPerView: isEquipment ? 5 : 4,
-                                    },
-                                }}
-                                className={styles.cardsRow}
+                            <div
+                                className={
+                                    isEquipment
+                                        ? `${styles.viewAllWrapper} ${styles.centerViewAll}`
+                                        : styles.viewAllWrapper
+                                }
                             >
+                                <button
+                                    type="button"
+                                    className={styles.viewAllBtn}
+                                >
+                                    View All
+                                </button>
+                            </div>
 
-                                {products.map((item) => (
-                                    <SwiperSlide key={item.id}>
-
-                                        <article className={styles.productCard}>
-
-                                            <div className={styles.cardTags}>
-                                                <span className={styles.discountTag}>
-                                                    {item.discount}
-                                                </span>
-
-                                                {item.isBestSeller && (
-                                                    <span className={styles.bestsellerTag}>
-                                                        BESTSELLER
-                                                    </span>
-                                                )}
-                                            </div>
-
-                                            <div className={styles.imageWrap}>
-                                                <Image
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    width={180}
-                                                    height={180}
-                                                    className={styles.productImage}
-                                                />
-                                            </div>
-
-                                            <div className={styles.ratingLine}>
-                                                <span className={styles.ratingBadge}>
-                                                    <IoMdStar
-                                                        style={{
-                                                            marginRight: 2,
-                                                            verticalAlign: 'middle',
-                                                        }}
-                                                    />
-                                                    4.5
-                                                </span>
-
-                                                <span className={styles.reviewText}>
-                                                    ({item.reviews})
-                                                </span>
-                                            </div>
-
-                                            <h3 className={styles.productName}>
-                                                {item.name}
-                                            </h3>
-
-                                            <p className={styles.priceRow}>
-                                                <span className={styles.currentPrice}>
-                                                    ₹ {item.price}
-                                                </span>
-
-                                                <span className={styles.oldPrice}>
-                                                    ₹ {item.oldPrice}
-                                                </span>
-                                            </p>
-
-                                            <div className={styles.cardActions}>
-
-                                                <button
-                                                    type="button"
-                                                    className={styles.addToCartBtn}
-                                                >
-                                                    <MdAddShoppingCart
-                                                        className={styles.btnIcon}
-                                                    />
-
-                                                    Add to Cart
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    className={styles.buyNowBtn}
-                                                >
-                                                    Buy Now
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    className={styles.wishlistBtn}
-                                                    aria-label="Add to wishlist"
-                                                >
-                                                    <FiHeart />
-                                                </button>
-
-                                            </div>
-
-                                        </article>
-
-                                    </SwiperSlide>
-                                ))}
-
-                            </Swiper>
-
-                            {!isEquipment && (
-                                <div className={styles.swiperNav}>
-
-                                    <button
-                                        className={`swiper-btn-prev ${styles.swiperNavBtn}`}
-                                        aria-label="Previous"
-                                    >
-                                        <FiChevronLeft />
-                                    </button>
-
-                                    <button
-                                        className={`swiper-btn-next ${styles.swiperNavBtn}`}
-                                        aria-label="Next"
-                                    >
-                                        <FiChevronRight />
-                                    </button>
-
-                                </div>
-                            )}
-
-                        </div>
-
-                        <div
-                            className={
-                                isEquipment
-                                    ? `${styles.viewAllWrapper} ${styles.centerViewAll}`
-                                    : styles.viewAllWrapper
-                            }
-                        >
-                            <button
-                                type="button"
-                                className={styles.viewAllBtn}
-                            >
-                                View All
-                            </button>
                         </div>
 
                     </div>
-
                 </div>
             </div>
         </section>

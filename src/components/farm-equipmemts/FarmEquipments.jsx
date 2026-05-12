@@ -18,7 +18,7 @@ const FarmEquipments = ({
     leftImageWrapperClassName = '',
 }) => {
     return (
-    <section className={styles.wrapper}>
+        <section className="sectionSpace">
             <div className="container">
                 <div className={styles.card}>
                     <Image
@@ -30,12 +30,12 @@ const FarmEquipments = ({
 
                     {leftImage ? (
                         <div
-                            className={`${styles.leftImageWrapper} ${leftImageWrapperClassName}`.trim()}
+                            className={`${styles.leftImageWrapper} ${leftImageWrapperClassName}`}
                         >
                             <Image
                                 src={leftImage}
                                 alt={leftAlt || equipmentAlt}
-                                className={`${styles.leftImage} ${leftImageClassName}`.trim()}
+                                className={`${styles.leftImage} ${leftImageClassName}`}
                             />
                         </div>
                     ) : null}
@@ -51,14 +51,11 @@ const FarmEquipments = ({
                     ) : null}
 
                     <div className={styles.content}>
-                        <h2 className={`${styles.title} ${className}`.trim()}>
+                        <h2 className={`${styles.title} ${className}`}>
                             {title}
                         </h2>
 
-                        <button
-                            type="button"
-                            className={styles.btn}
-                        >
+                        <button type="button" className={`${styles.bannerBtn}`}>
                             Explore Products
                         </button>
                     </div>

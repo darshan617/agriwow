@@ -1,6 +1,3 @@
-.sectionSpace {
-  padding: 12px 0 0;
-}
 
 .bannerCard {
   position: relative;
@@ -32,12 +29,12 @@
 
 .leftContent {
   color: #fff;
-  margin-left: 300px;
+  transform: translateX(400px);
 }
 
 .title {
   margin: 0;
-  font-size: 50px;
+  font-size: 40px;
   line-height: 1.04;
   font-weight: 600;
   letter-spacing: -0.6px;
@@ -45,30 +42,30 @@
 
 .subtitle {
   margin: 14px 0 18px;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1.4;
   opacity: 0.85;
 }
 
 .offerStrip {
-  display: flex;
-  align-items: stretch;
-  width: 600px;
-  height: auto;
-  background: #fe9117;
   color: #000;
-  border-radius: 8px;
   clip-path: polygon(100% 0%, 92% 46%, 100% 100%, 0% 100%, 0% 53%, 0% 0%, 51% 0%);
+  background: #fe9117;
+  border: 1.5px dashed #fff;
+  border-radius: 8px;
+  align-items: stretch;
+  width: 450px;
+  height: auto;
   padding-right: 24px;
+  display: flex;
 }
 
 .upto {
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-weight: 800;
   letter-spacing: 1px;
-  padding: 8px 6px;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  transform: rotate(180deg);
 }
 
 .offerMain {
@@ -77,39 +74,39 @@
 
 .offerPercent {
   display: contents;
-  font-size: 90px;
+  font-size: 65px;
   line-height: 0.6;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -1px;
 }
 
 .offerSubText {
   margin-top: 3px;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.05;
 }
 
 .offerPercentSub {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 700 !important;
   line-height: 1.05;
   padding: 16px;
 }
 
 .bannerBtn {
-  margin-top: 14px;
+  background: linear-gradient(to right, #8dba3b, #f6c417);
   border: 0;
-  background: linear-gradient(to right, #8dba3b, #51850a);
+  border-radius: 6px;
+  margin-top: 25px;
+  padding: 9px 40px;
   font-size: 13px;
   font-weight: 700;
-  border-radius: 6px;
-  padding: 9px 20px;
-  transition: all 0.3s ease;
+  transition: all .3s;
 }
 
 .bannerBtn:hover {
-  background: #C1DE6889;
+  background: linear-gradient(to right,  #f6c417, #8dba3b) ;
 }
 
 .rightContent {
@@ -198,9 +195,9 @@
 }
 
 .bannerSwiper :global(.swiper-pagination) {
-  right: 16px !important;
+  right: 100px !important;
   left: auto !important;
-  top: 50% !important;
+  top: 35% !important;
   bottom: auto !important;
   transform: translateY(-50%);
   width: auto !important;
@@ -211,8 +208,8 @@
 }
 
 .bannerSwiper :global(.swiper-pagination-bullet) {
-  width: 8px;
-  height: 8px;
+  width: 11px;
+  height: 11px;
   margin: 0 !important;
   background: rgba(255, 255, 255, 0.55);
   opacity: 1;
