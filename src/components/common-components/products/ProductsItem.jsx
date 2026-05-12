@@ -89,6 +89,18 @@ const ProductsItem = ({
     promoTitle = 'Power Sprayer',
 
     promoSubtitle = 'Performance That Grows with You',
+
+    promoExtras = null,
+
+    promoFooter = null,
+
+    promoCardClassName = '',
+    promoImageClassName = '',
+    promoOverlayClassName = '',
+    promoTitleClassName = '',
+    promoFooterClassName = '',
+
+    promoExtrasClassName = '',
 }) => {
     const isEquipment = variant === 'equipment'
 
@@ -107,24 +119,48 @@ const ProductsItem = ({
 
                     {!isEquipment && (
                         <div className="col-md-3">
-                            <div className={styles.promoCard}>
+                            <div
+                                className={`${styles.promoCard} ${promoCardClassName}`.trim()}
+                            >
                                 <Image
                                     src={bannerImage}
                                     alt={title}
                                     fill
                                     sizes="(max-width: 767px) 100vw, 25vw"
-                                    className={styles.promoImage}
+                                    className={`${styles.promoImage} ${promoImageClassName}`.trim()}
                                 />
 
-                                <div className={styles.promoOverlay}>
-                                    <h3 className={`${styles.promoTitle} text-center`}>
+                                <div
+                                    className={`${styles.promoOverlay} ${promoOverlayClassName}`.trim()}
+                                >
+                                    <h3
+                                        className={`${styles.promoTitle} text-center ${promoTitleClassName}`.trim()}
+                                    >
                                         {promoTitle}
                                     </h3>
 
-                                    <p className={`${styles.promoSubtitle} text-center`}>
-                                        {promoSubtitle}
-                                    </p>
+                                    {promoSubtitle && (
+                                        <p className={`${styles.promoSubtitle} text-center`}>
+                                            {promoSubtitle}
+                                        </p>
+                                    )}
+
+                                    {promoExtras && (
+                                        <div
+                                            className={`${styles.promoExtras} ${promoExtrasClassName}`.trim()}
+                                        >
+                                            {promoExtras}
+                                        </div>
+                                    )}
                                 </div>
+
+                                {promoFooter && (
+                                    <div
+                                        className={`${styles.promoFooter} ${promoFooterClassName}`.trim()}
+                                    >
+                                        {promoFooter}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}

@@ -71,6 +71,36 @@
   transform: translateX(15%);
 }
 
+.promoExtras {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-top: 16px;
+}
+
+.promoExtras img {
+  height: auto;
+  object-fit: contain;
+
+}
+
+.promoFooter {
+  color: #fff;
+  text-align: center;
+  letter-spacing: .3px;
+  z-index: 3;
+  background: #3f8708;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  bottom: 35px;
+  left: 0;
+  right: 0;
+}
+
 
 .productCard {
   background: #ffffff;    

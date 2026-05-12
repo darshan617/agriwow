@@ -19,6 +19,9 @@ import Solution from "@/components/solution/Solution";
 import GardenTool from "@/components/garden-tool/GardenTool";
 import PostHarvest from "@/components/post-harvast/PostHarvest";
 import FoogingMachine from "@/components/fooging-machine/FoogingMachine";
+import BestSelling from "@/components/best-selling/BestSelling";
+import ExclusiveDeal from "@/components/deal/ExclusiveDeal";
+import TopRating from "@/components/top-rating/TopRating";
 
 export default function Home() {
 
@@ -43,6 +46,9 @@ return (
       <GardenTool />
       <PostHarvest />
       <FoogingMachine />
+      <BestSelling />
+      <ExclusiveDeal />
+      <TopRating />
     </>
   );
 }
