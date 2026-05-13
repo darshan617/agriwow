@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    padding: 10px 48px;
+    padding: 10px 0;
     justify-content: flex-start;
 }
 
@@ -31,8 +31,11 @@
     align-items: center;
     gap: 30px;
     display: flex;
-    right: -100px;
+    right: -200px;
     position: relative;
+}
+.navLinks a:hover{
+    color: #7ac043;
 }
 
 .navLinks a {
@@ -59,7 +62,7 @@
     padding: 0 40px 0 14px;
     font-size: 12px;
     position: relative;
-    left: 120px;
+    left: 208px;
 }
 
 .searchInput::placeholder {

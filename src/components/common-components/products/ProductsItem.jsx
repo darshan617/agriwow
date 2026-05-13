@@ -103,15 +103,24 @@ const ProductsItem = ({
     promoOverlayClassName = '',
     promoTitleClassName = '',
     promoFooterClassName = '',
-
     promoExtrasClassName = '',
+    productsSectionClassName = '',
+    sectionClassName = 'sectionSpace',
 }) => {
     const isEquipment = variant === 'equipment'
 
+    const productsSectionClassNames = [
+        styles.productsSection,
+        isEquipment && styles.productsSectionEquipment,
+        productsSectionClassName,
+    ]
+        .filter(Boolean)
+        .join(' ')
+
     return (
-        <section className="sectionSpace">
+        <section className={`${sectionClassName}` || undefined}>
             <div className="container">
-                <div className={`${styles.productsSection}`}>
+                <div className={`${productsSectionClassNames}`}>
                     <div className="row g-3 align-items-stretch">
 
                         {!isEquipment && (
@@ -173,7 +182,7 @@ const ProductsItem = ({
                         )}
 
                         <div className={isEquipment ? 'col-12' : 'col-md-9'}>
-                            <div className={styles.swiperWrapper}>
+                            <div className={`${styles.swiperWrapper}`}>
 
                                 <Swiper
                                     modules={[Navigation, Autoplay]}
@@ -200,27 +209,27 @@ const ProductsItem = ({
                                             slidesPerView: isEquipment ? 5 : 4,
                                         },
                                     }}
-                                    className={styles.cardsRow}
+                                    className={`${styles.cardsRow}`}
                                 >
 
                                     {products.map((item) => (
                                         <SwiperSlide key={item.id}>
 
-                                            <article className={styles.productCard}>
+                                            <article className={`${styles.productCard}`}>
 
-                                                <div className={styles.cardTags}>
-                                                    <span className={styles.discountTag}>
+                                                <div className={`${styles.cardTags}`}>
+                                                    <span className={`${styles.discountTag}`}>
                                                         {item.discount}
                                                     </span>
 
                                                     {item.isBestSeller && (
-                                                        <span className={styles.bestsellerTag}>
+                                                        <span className={`${styles.bestsellerTag}`}>
                                                             BESTSELLER
                                                         </span>
                                                     )}
                                                 </div>
 
-                                                <div className={styles.imageWrap}>
+                                                <div className={`${styles.imageWrap}`}>
                                                     <Image
                                                         src={item.image}
                                                         alt={item.name}
@@ -230,8 +239,8 @@ const ProductsItem = ({
                                                     />
                                                 </div>
 
-                                                <div className={styles.ratingLine}>
-                                                    <span className={styles.ratingBadge}>
+                                                <div className={`${styles.ratingLine}`}>
+                                                    <span className={`${styles.ratingBadge}`}>
                                                         <IoMdStar
                                                             style={{
                                                                 marginRight: 2,
@@ -241,34 +250,34 @@ const ProductsItem = ({
                                                         4.5
                                                     </span>
 
-                                                    <span className={styles.reviewText}>
+                                                    <span className={`${styles.reviewText}`}>
                                                         ({item.reviews})
                                                     </span>
                                                 </div>
 
-                                                <h3 className={styles.productName}>
+                                                <h3 className={`${styles.productName}`}>
                                                     {item.name}
                                                 </h3>
 
-                                                <p className={styles.priceRow}>
-                                                    <span className={styles.currentPrice}>
+                                                <p className={`${styles.priceRow}`}>
+                                                    <span className={`${styles.currentPrice}`}>
                                                         ₹ {item.price}
                                                     </span>
 
-                                                    <span className={styles.oldPrice}>
+                                                    <span className={`${styles.oldPrice}`}>
                                                         ₹ {item.oldPrice}
                                                     </span>
                                                 </p>
 
 
-                                                <div className={styles.cardActions}>
+                                                <div className={`${styles.cardActions}`}>
 
                                                     <button
                                                         type="button"
-                                                        className={styles.addToCartBtn}
+                                                        className={`${styles.addToCartBtn}`}
                                                     >
                                                         <MdAddShoppingCart
-                                                            className={styles.btnIcon}
+                                                            className={`${styles.btnIcon}`}
                                                         />
 
                                                         Add to Cart
@@ -276,14 +285,14 @@ const ProductsItem = ({
 
                                                     <button
                                                         type="button"
-                                                        className={styles.buyNowBtn}
+                                                        className={`${styles.buyNowBtn}`}
                                                     >
                                                         Buy Now
                                                     </button>
 
                                                     <button
                                                         type="button"
-                                                        className={styles.wishlistBtn}
+                                                        className={`${styles.wishlistBtn}`}
                                                         aria-label="Add to wishlist"
                                                     >
                                                         <FiHeart />
@@ -299,7 +308,7 @@ const ProductsItem = ({
                                 </Swiper>
 
                                 {!isEquipment && (
-                                    <div className={styles.swiperNav}>
+                                    <div className={`${styles.swiperNav}`}>
 
                                         <button
                                             className={`swiper-btn-prev ${styles.swiperNavBtn}`}
@@ -324,12 +333,12 @@ const ProductsItem = ({
                                 className={
                                     isEquipment
                                         ? `${styles.viewAllWrapper} ${styles.centerViewAll}`
-                                        : styles.viewAllWrapper
+                                        : `${styles.viewAllWrapper}`
                                 }
                             >
                                 <button
                                     type="button"
-                                    className={styles.viewAllBtn}
+                                    className={`${styles.viewAllBtn}`}
                                 >
                                     View All
                                 </button>

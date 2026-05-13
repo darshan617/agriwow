@@ -7,6 +7,7 @@ const PostHarvest = () => {
   return (
     <div>
       <ProductsItem
+        sectionClassName=""
         title="Post Harvest"
         bannerImage={postHarvestBanner}
         promoTitle={<div className={`${styles.industrialPromoTitle} `}><span>Powering</span> Your <br />

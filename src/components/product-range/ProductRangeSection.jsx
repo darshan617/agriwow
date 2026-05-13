@@ -10,58 +10,58 @@ import styles from '@/components/product-range/ProductRangeSection.module.css'
 
 const ProductRangeSection = () => {
   return (
-    <section className={styles.section} aria-labelledby="product-range-heading">
-      <div className={styles.inner}>
-        <h2 id="product-range-heading" className={styles.mainTitle}>
+    <section className={`${styles.section}`} aria-labelledby="product-range-heading">
+      <div className={`${styles.inner}`}>
+        <h2 id="product-range-heading" className={`${styles.mainTitle}`}>
           Product Range
         </h2>
 
-        <div className={styles.row}>
-          <div className={styles.visual}>
+        <div className={`${styles.row}`}>
+          <div className={`${styles.visual}`}>
             <Image
               src={sprayerImg}
               alt="Agriculture sprayer equipment"
               width={360}
               height={360}
-              className={styles.img}
+              className={`${styles.img}`}
               sizes="(max-width: 767px) 90vw, 40vw"
               priority
             />
           </div>
-          <div className={styles.labelWrap}>
-            <div className={styles.labelBar}>
-              <span className={styles.iconPlant} aria-hidden>
+          <div className={`${styles.labelWrap}`}>
+            <div className={`${styles.labelBar}`}>
+              <span className={`${styles.iconPlant}`} aria-hidden>
                 <GiSprout />
               </span>
-              <p className={styles.labelText}>Agriculture Sprayers</p>
+              <p className={`${styles.labelText}`}>Agriculture Sprayers</p>
             </div>
           </div>
         </div>
 
         <div className={`${styles.row} ${styles.rowReverse}`}>
-          <div className={styles.labelWrap}>
-            <div className={styles.labelBar}>
-              <span className={styles.iconWater} aria-hidden>
+          <div className={`${styles.labelWrap}`}>
+            <div className={`${styles.labelBar}`}>
+              <span className={`${styles.iconWater}`} aria-hidden>
                 <IoWater />
               </span>
-              <p className={styles.labelText}>Portable Water Pump</p>
+              <p className={`${styles.labelText}`}>Portable Water Pump</p>
             </div>
           </div>
-          <div className={styles.visual}>
+          <div className={`${styles.visual}`}>
             <Image
               src={pumpImg}
               alt="Portable gasoline water pump"
               width={360}
               height={360}
-              className={styles.img}
+              className={`${styles.img}`}
               sizes="(max-width: 767px) 90vw, 40vw"
             />
           </div>
         </div>
       </div>
 
-      <div className={styles.footer}>
-        <p className={styles.footerText}>
+      <div className={`${styles.footer}`}>
+        <p className={`${styles.footerText}`}>
           Everything You Need for Smart Farming
         </p>
       </div>

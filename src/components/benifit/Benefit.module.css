@@ -45,6 +45,7 @@
     color: #ffffff;
     ;
 }
+
 .right {
     flex-direction: column;
     flex: 1;
@@ -69,26 +70,9 @@
     border: none;
     align-items: center;
     gap: 0;
-    width: fit-content;
-    padding: 0;
-    transition: transform .2s, box-shadow .2s;
     display: flex;
-    background: white;
+    /* background: white; */
     border-radius: 50%;
-}
-
-.pillToggle:hover {
-    transform: translateY(-2px);
-}
-
-.pillToggle:active {
-    transform: translateY(0);
-}
-
-.pillToggle:focus-visible {
-    outline: 2px solid #7dc242;
-    outline-offset: 3px;
-    border-radius: 50px;
 }
 
 .pillLeft {
@@ -96,7 +80,7 @@
     color: #fff;
     border-radius: 50px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     padding: 12px 32px;
     height: 44px;
     display: flex;
@@ -104,33 +88,22 @@
     letter-spacing: 0.5px;
     white-space: nowrap;
     transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    z-index: 0;
 }
 
 .pillRight {
     background-color: #fff;
-    color: #181818;
-    border-radius:50px ;
+    background-color: #fff;
+    border-radius: 0 50px 50px 0;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     padding: 12px 26px;
-    height: 44px;
+    height: 33px;
+    width: 180px;
     display: flex;
     align-items: center;
-    white-space: nowrap;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
-    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
-}
+    margin-left: -10px;
 
-.pillToggle.active .pillLeft {
-    background-color: #fff;
-    color: #181818;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
-}
-
-.pillToggle.active .pillRight {
-    background-color: #7dc242;
-    color: #fff;
-    box-shadow: none;
 }
 
 .hint {

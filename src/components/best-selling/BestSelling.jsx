@@ -9,13 +9,13 @@ import sproutIcon from '@/assets/icon/plant.png'
 import waterDropIcon from '@/assets/icon/water.png'
 
 const SproutIcon = () => (
-  <span className={styles.sproutIcon} aria-hidden>
+  <span className={`${styles.sproutIcon}`} aria-hidden>
   <Image src={sproutIcon} alt="Sprout Icon" width={15} height={15} />
 </span>
 )
 
 const WaterDropIcon = () => (
-  <span className={styles.pumpIcon} aria-hidden>
+  <span className={`${styles.pumpIcon}`} aria-hidden>
     <Image src={waterDropIcon} alt="Water Drop Icon" width={15} height={15} />
   </span>
 )
@@ -23,18 +23,19 @@ const WaterDropIcon = () => (
 const BestSelling = () => {
   return (
     <ProductsItem
+      sectionClassName=""
       title="Best Selling"
       promoTitle="Product Range"
       promoSubtitle={null}
       bannerImage={bannerImage}
-      promoCardClassName={styles.promoCardProductRange}
-      promoImageClassName={styles.promoImageProductRange}
-      promoOverlayClassName={styles.promoOverlayProductRange}
-      promoTitleClassName={styles.promoTitleProductRange}
-      promoExtrasClassName={styles.promoExtrasProductRange}
-      promoFooterClassName={styles.promoFooterProductRange}
+      promoCardClassName={`${styles.promoCardProductRange}`}  
+      promoImageClassName={`${styles.promoImageProductRange}`}
+      promoOverlayClassName={`${styles.promoOverlayProductRange}`}
+      promoTitleClassName={`${styles.promoTitleProductRange}`}
+      promoExtrasClassName={`${styles.promoExtrasProductRange}`}
+      promoFooterClassName={`${styles.promoFooterProductRange}`}
       promoExtras={(
-        <div className={styles.promoBody}>
+        <div className={`${styles.promoBody}`}>
           <div className={`${styles.promoRow} ${styles.promoRowLeft}`}>
             <Image
               src={sprayerImage}
@@ -43,7 +44,7 @@ const BestSelling = () => {
               height={200}
               className={styles.promoProductImg}
             />
-            <span className={styles.promoLabel1}>
+            <span className={`${styles.promoLabel1}`}>
               <SproutIcon />
               <span>
                 Agriculture
@@ -54,8 +55,8 @@ const BestSelling = () => {
           </div>
 
           <div className={`${styles.promoRow} ${styles.promoRowRight}`}>
-            <span className={styles.promoLabel2}>
-              <span className={styles.pumpLine1}>
+            <span className={`${styles.promoLabel2}`}>
+              <span className={`${styles.pumpLine1}`}>
                 Portable
                 <WaterDropIcon />
               </span>
@@ -67,7 +68,7 @@ const BestSelling = () => {
               alt="Portable Water Pump"
               width={130}
               height={110}
-              className={styles.promoProductImg}
+              className={`${styles.promoProductImg}`}
             />
           </div>
         </div>

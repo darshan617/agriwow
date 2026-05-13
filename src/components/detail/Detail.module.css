@@ -9,6 +9,15 @@
 .detailCardWrapper h2 {
     font-size: 29px;
     font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+.detailCardWrapper p {
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    z-index: 2;
+    color: #323333;
 }
 
 .cardSide {
@@ -64,7 +73,7 @@
 .warrantyIcon {
     z-index: 1;
     border-radius: 0 20px 20px 0;
-    width: 200px;
+    width: 160px;
     height: auto;
     position: absolute;
     bottom: 0;

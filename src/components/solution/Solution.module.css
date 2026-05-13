@@ -33,14 +33,14 @@
 
 .btn {
     cursor: pointer;
-    color: #fff;
+    color: black;
     background: linear-gradient(to right, #8dba3b, #f6c417);
-    border: none;
+    border: 1px solid;
     border-radius: 8px;
     outline: none;
     width: 159px;
-    padding: 9px 9px;
-    font-size: 14px;
+    padding: 9px;
+    font-size: 12px;
     font-weight: 600;
     transition: all .3s;
 }
