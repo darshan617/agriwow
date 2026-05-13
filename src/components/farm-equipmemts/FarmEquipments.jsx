@@ -10,7 +10,6 @@ const FarmEquipments = ({
     equipmentImage = farmEquipmentsItem,
     leftImage = null,
     title = "Farm Equipment's",
-    className = '',
     bannerAlt = 'Farm Equipments',
     equipmentAlt = 'Equipment',
     leftAlt = '',
@@ -20,11 +19,11 @@ const FarmEquipments = ({
     return (
         <section className="sectionSpace">
             <div className="container">
-                <div className={styles.card}>
+                <div className={`${styles.card}`}>
                     <Image
                         src={bannerImage}
                         alt={bannerAlt}
-                        className={styles.bannerImage}
+                        className={`${styles.bannerImage}`}
                         priority
                     />
 
@@ -41,17 +40,17 @@ const FarmEquipments = ({
                     ) : null}
 
                     {equipmentImage ? (
-                        <div className={styles.farmEquipmentsItem}>
+                        <div className={`${styles.farmEquipmentsItem}`}>
                             <Image
                                 src={equipmentImage}
                                 alt={equipmentAlt}
-                                className={styles.equipmentImage}
+                                className={`${styles.equipmentImage}`}
                             />
                         </div>
                     ) : null}
 
-                    <div className={styles.content}>
-                        <h2 className={`${styles.title} ${className}`}>
+                    <div className={`${styles.content}`}>
+                        <h2 className={`${styles.title}`}>
                             {title}
                         </h2>
 
@@ -60,8 +59,12 @@ const FarmEquipments = ({
                         </button>
                     </div>
                 </div>
-                <div className={styles.productsWrapper}>
-                    <ProductsItem variant="equipment" />
+                <div className={`${styles.productsWrapper}`}>
+                    <ProductsItem
+                        variant="equipment"
+                        sectionClassName=""
+                        productsSectionClassName={`${styles.farmProductsSection}`}
+                    />
                 </div>
             </div>
         </section>

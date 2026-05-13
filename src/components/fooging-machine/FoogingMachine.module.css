@@ -1,5 +1,5 @@
 .foogingMachineTitle{
-    color: black;
+    color: black !important;
 }
 .foogingMachineEquip{
     z-index: 2; 

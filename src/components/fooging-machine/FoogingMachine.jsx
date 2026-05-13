@@ -7,17 +7,16 @@ import foogingMachineEquip from '@/assets/images/fooging-eqip.png'
 const FoogingMachine = () => {
   return (
     <div>
-        <FarmEquipments 
-          title="Fogging Machine"
-          className={styles.foogingMachineTitle}
-          bannerImage={foogingMachineBanner}
-          equipmentImage={null}
-          leftImage={foogingMachineEquip}
-          leftAlt="Fogging machine equipment"
-          leftImageClassName={styles.foogingMachineEquip}
-          />
-        </div>
-    );
+      <FarmEquipments 
+        title={<span style={{ color: '#000',textShadow: 'none' }}>Fogging Machine</span>}
+        bannerImage={foogingMachineBanner}
+        equipmentImage={null}
+        leftImage={foogingMachineEquip}
+        leftAlt="Fogging machine equipment"
+        leftImageClassName={styles.foogingMachineEquip}
+      />
+    </div>
+  );
 };
 
 export default FoogingMachine;

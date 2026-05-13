@@ -18,7 +18,7 @@ import 'swiper/css'
 const TopBanner = () => {
     return (
         <div className="container">
-            <div className={styles.topBannerWrapper}>
+            <div className={`${styles.topBannerWrapper}`}>
                 <Swiper
                     modules={[Autoplay]}
                     spaceBetween={5}
@@ -45,157 +45,157 @@ const TopBanner = () => {
                     }}
                 >
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image1}
                                     alt="image1"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Agriculture Sprayers</p>
+                            <p className={`${styles.categoryLabel}`}>Agriculture Sprayers</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image2}
                                     alt="image2"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>{`Farm Equipment's`}</p>
+                            <p className={`${styles.categoryLabel}`}>{`Farm Equipment's`}</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image3}
                                     alt="image3"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Garden Tools</p>
+                            <p className={`${styles.categoryLabel}`}>Garden Tools</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image4}
                                     alt="image4"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Industrial Products</p>
+                            <p className={`${styles.categoryLabel}`}>Industrial Products</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image5}
                                     alt="image5"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Post Harvest</p>
+                            <p className={`${styles.categoryLabel}` }>Post Harvest</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image6}
                                     alt="image6"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Fogging Machines</p>
+                            <p className={`${styles.categoryLabel}`}>Fogging Machines</p>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image1}
                                     alt="image1"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Agriculture Sprayers</p>
+                            <p className={`${styles.categoryLabel}`}>Agriculture Sprayers</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image2}
                                     alt="image2"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>{`Farm Equipment's`}</p>
+                            <p className={`${styles.categoryLabel}`}>{`Farm Equipment's`}</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image3}
                                     alt="image3"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Garden Tools</p>
+                            <p className={`${styles.categoryLabel}`}>Garden Tools</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image4}
                                     alt="image4"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Industrial Products</p>
+                            <p className={`${styles.categoryLabel}`}>Industrial Products</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image5}
                                     alt="image5"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Post Harvest</p>
+                            <p className={`${styles.categoryLabel}`}>Post Harvest</p>
                         </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
-                        <div className={styles.categoryItem}>
-                            <div className={styles.categoryImgWrapper}>
+                        <div className={`${styles.categoryItem}`}>
+                            <div className={`${styles.categoryImgWrapper}`}>
                                 <Image
                                     src={image6}
                                     alt="image6"
-                                    className={styles.categoryImg}
+                                    className={`${styles.categoryImg}`}
                                 />
                             </div>
-                            <p className={styles.categoryLabel}>Fogging Machines</p>
+                            <p className={`${styles.categoryLabel}`}>Fogging Machines</p>
                         </div>
                     </SwiperSlide>
                 </Swiper>

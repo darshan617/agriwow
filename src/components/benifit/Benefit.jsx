@@ -32,15 +32,11 @@ const Benefit = () => {
                         Get Instant Benefits On Digital Payments
                     </h3>
 
-                    <button
-                        type="button"
-                        onClick={() => setIsActive(prev => !prev)}
-                        aria-pressed={isActive}
-                        className={`${styles.pillToggle} ${isActive ? styles.active : ''}`}
-                    >
+                    <div className={`${styles.pillToggle}`}>
                         <span className={`${styles.pillLeft}`}>EXTRA 5% OFF</span>
-                        <span className={styles.pillRight}>At Checkout</span>
-                    </button>
+                        <span className={`${styles.pillRight}`}>At Checkout</span>
+                    </div>
+               
 
                 </div>
 

@@ -1,0 +1,145 @@
+.carousel {
+  position: relative;
+  margin: 0 auto;
+}
+
+
+.card {
+  position: relative;
+  min-height: 500px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.bgImage {
+  object-fit: cover;
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(16px, 4vw, 36px);
+  z-index: 1;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: #1e6fe0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.playBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(64px, 12vw, 96px);
+  height: clamp(64px, 12vw, 96px);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.playBtn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.playIcon {
+  width: 40%;
+  height: 40%;
+  margin-left: 6%;
+}
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+}
+
+.footerText {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.viewAll {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.viewAll:hover {
+  opacity: 0.9;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: clamp(8px, 2vw, 20px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.15);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.navBtnNext {
+  left: auto;
+  right: clamp(8px, 2vw, 20px);
+}
+
+.navBtn:hover {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: #fff;
+}
+
+.navBtn svg {
+  stroke-width: 1.5px;
+  width: auto;
+  height: 52px;
+}
+
+@media (max-width: 576px) {
+
+  .swiper,
+  .card {
+    border-radius: 16px;
+  }
+
+  .navBtn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .navBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

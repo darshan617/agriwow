@@ -22,6 +22,9 @@ import FoogingMachine from "@/components/fooging-machine/FoogingMachine";
 import BestSelling from "@/components/best-selling/BestSelling";
 import ExclusiveDeal from "@/components/deal/ExclusiveDeal";
 import TopRating from "@/components/top-rating/TopRating";
+import VideoSection from "@/components/video/VideoSection";
+import InsightsBlog from "@/components/insights/InsightsBlog";
+import Footer from "@/components/common-components/footer/Footer";
 
 export default function Home() {
 
@@ -49,6 +52,9 @@ return (
       <BestSelling />
       <ExclusiveDeal />
       <TopRating />
+      <VideoSection />
+      <InsightsBlog />
+      <Footer />
     </>
   );
 }

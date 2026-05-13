@@ -29,7 +29,7 @@ const HomeBanner = () => {
             pagination={{
               clickable: true,
             }}
-            className={styles.bannerSwiper}
+            className={`${styles.bannerSwiper} `}
           >
             {bannerSlides.map((slideImage, index) => (
               <SwiperSlide key={index}>
