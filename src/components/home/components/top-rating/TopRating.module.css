@@ -1,5 +1,5 @@
 /* Reset ProductsItem default promo title styles so custom layout controls typography */
-.promoTitleReset {
+.productTitleReset {
     margin: 0 !important;
     transform: none !important;
     color: transparent !important;
@@ -137,7 +137,7 @@
     right: -8px;
 }
 
-.industrialPromoFooter {
+.industrialproductFooter {
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;

@@ -14,7 +14,7 @@
   padding: 14px 12px 50px;
 }
 
-.promoTitleProductRange {
+.productTitleProductRange {
   color: #fff ;
   font-size: 26px ;
   font-weight: 800 ;
@@ -32,7 +32,7 @@
   gap: 0;
 } */
 
-/* .promoFooterProductRange {
+/* .productFooterProductRange {
   background: #4b930d !important;
   font-size: 13px !important;
   font-weight: 700 !important;
@@ -124,7 +124,7 @@
     min-height: 300px;
   }
 
-  .promoTitleProductRange {
+  .productTitleProductRange {
     font-size: 22px !important;
   }
 
@@ -152,7 +152,7 @@
     padding: 4px 0 2px;
   }
 
-  .promoTitleProductRange {
+  .productTitleProductRange {
     font-size: 19px !important;
   }
 

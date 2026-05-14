@@ -10,11 +10,11 @@ const TopRating = () => {
         sectionClassName=""
         title="Top Rating"
         bannerImage={topRating}
-        promoCardClassName={`${styles.industrialPromoCard}`}
-        promoImageClassName={`${styles.industrialPromoImage}`}
-        promoOverlayClassName={`${styles.industrialPromoOverlay}`}
-        promoTitleClassName={`${styles.promoTitleReset}`}
-        promoTitle={
+        productCardClassName={`${styles.industrialPromoCard}`}
+        productImageClassName={`${styles.industrialPromoImage}`}
+        productOverlayClassName={`${styles.industrialPromoOverlay}`}
+        productTitleClassName={`${styles.productTitleReset}`}
+        productTitle={
           <div className={`${styles.industrialPromoStack}`}>
             <span className={`${styles.ribbon}`}>Newest</span>
             <span className={`${styles.titleIndustrial}`}>Industrial</span>
@@ -35,13 +35,13 @@ const TopRating = () => {
             </div>
           </div>
         }
-        promoSubtitle={null}
-        promoFooter={
+        productSubtitle={null}
+        productFooter={
           <span className={`${styles.footerText}`}>
             New Arrivals • Latest Technology
           </span>
         }
-        promoFooterClassName={`${styles.industrialPromoFooter}`}
+        productFooterClassName={`${styles.industrialproductFooter}`}
       />
     </div>
   )

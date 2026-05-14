@@ -25,15 +25,15 @@ const BestSelling = () => {
     <ProductsItem
       sectionClassName=""
       title="Best Selling"
-      promoTitle="Product Range"
-      promoSubtitle={null}
+      productTitle="Product Range"
+      productSubtitle={null}
       bannerImage={bannerImage}
-      promoCardClassName={`${styles.promoCardProductRange}`}  
-      promoImageClassName={`${styles.promoImageProductRange}`}
-      promoOverlayClassName={`${styles.promoOverlayProductRange}`}
-      promoTitleClassName={`${styles.promoTitleProductRange}`}
+      productCardClassName={`${styles.promoCardProductRange}`}  
+      productImageClassName={`${styles.promoImageProductRange}`}
+      productOverlayClassName={`${styles.promoOverlayProductRange}`}
+      productTitleClassName={`${styles.productTitleProductRange}`}
       promoExtrasClassName={`${styles.promoExtrasProductRange}`}
-      promoFooterClassName={`${styles.promoFooterProductRange}`}
+      productFooterClassName={`${styles.productFooterProductRange}`}
       promoExtras={(
         <div className={`${styles.promoBody}`}>
           <div className={`${styles.promoRow} ${styles.promoRowLeft}`}>
@@ -73,7 +73,7 @@ const BestSelling = () => {
           </div>
         </div>
       )}
-      promoFooter="Everything You Need for Smart Farming"
+      productFooter="Everything You Need for Smart Farming"
     />
   )
 }

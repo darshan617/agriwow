@@ -9,8 +9,8 @@ const IndustrialProduct = () => {
         <ProductsItem
             title="Industrial Products"
             bannerImage={industrialBanner}
-            promoTitle={<div className={`${styles.industrialPromoTitle} `}>Built for Power Engineered</div>}
-            promoSubtitle={<div className={`${styles.industrialPromoSubtitle}`}>for Performance</div>}
+            productTitle={<div className={`${styles.industrialproductTitle} `}>Built for Power Engineered</div>}
+            productSubtitle={<div className={`${styles.industrialproductSubtitle}`}>for Performance</div>}
        
         />
     )
