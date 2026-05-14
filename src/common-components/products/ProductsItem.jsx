@@ -212,7 +212,7 @@ const ProductsItem = ({
                                     className={`${styles.cardsRow}`}
                                 >
 
-                                    {products.map((item) => (
+                                    {products?.map((item) => (
                                         <SwiperSlide key={item.id}>
 
                                             <article className={`${styles.productCard}`}>
