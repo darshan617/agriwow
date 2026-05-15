@@ -1,54 +1,89 @@
-.exclusiveDealBanner img{
-    object-fit: cover;
-    z-index: 0;
+.ExclusiveDealSection {
+    padding: 60px 0;
+}
+
+.exclusiveDeal {
+    position: relative;
     border-radius: 25px;
-    height: auto;
-    max-width: 1400px;
-    position: absolute; 
+    overflow: hidden;
 }
-.ExclusiveDealSection{
-    padding-top: 60px;
+
+.exclusiveDealBanner {
+    position: absolute;
+    inset: 0;
 }
-.exclusiveDealContent{
+
+.exclusiveDealBanner img {
+    object-fit: cover;
+    border-radius: 25px;
+}   
+
+.exclusiveDealContent {
     color: #fff;
     position: relative;
     z-index: 1;
     padding: 50px;
 }
 
-.exclusiveDealTitle{
+.exclusiveDealContent .row,
+.exclusiveDealRow {
+    align-items: flex-start;
+}
+
+.exclusiveDealBtnWrapper {
+    display: none;
+}
+
+.bannerBtnTablet {
+    display: none;
+}
+
+.exclusiveDealTitle {
     padding-bottom: 8px;
     font-size: 35px;
     font-weight: 500;
 }
-.exclusiveDealItemDescription {
-    font-size: 13px;
-}
-.exclusiveDealTitle span{
+
+.exclusiveDealTitle span {
     color: #e8c31c;
 }
-.exclusiveDealItemTitle{
+
+.exclusiveDealItemWrapper {
+    align-self: flex-start;
+    height: fit-content;
+    position: relative;
+}
+
+.exclusiveDealItemWrapper:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100px;
+    background-color: #fff;
+}
+
+.exclusiveDealItemTitle {
     color: #8dba3b;
     font-size: 15px;
     font-weight: 600;
     padding-top: 5px;
 }
-.exclusiveDealEquipment img{
-    object-fit: cover;
-    width: 400px;
-    height: auto;
-    margin-left: -50px;
-    position: relative;
-    top: -30px;
-}
-.exclusiveDealItem{
-    border-right: 2px solid #fff;
-    height: 90px;
 
+.exclusiveDealItemDescription {
+    font-size: 13px;
 }
-.exclusiveDealItem img{
+
+.exclusiveDealItem {
+    align-self: flex-start;
+    height: fit-content;
+}
+
+.exclusiveDealItem img {
     width: 28px;
     height: 28px;
+    flex-shrink: 0;
 }
 
 .bannerBtn {
@@ -59,9 +94,249 @@
     padding: 9px 60px;
     font-size: 13px;
     font-weight: 700;
-    transition: all .3s;
-  }
-  
-  .bannerBtn:hover {
-    background: linear-gradient(to right,  #f6c417, #8dba3b) ;
-  }
+    transition: all 0.3s;
+}
+
+.bannerBtn:hover {
+    background: linear-gradient(to right, #f6c417, #8dba3b);
+}
+
+@media (max-width: 1024px) {
+    .ExclusiveDealSection {
+        padding: 50px 0;
+    }
+
+    .exclusiveDeal {
+        border-radius: 20px;
+    }
+
+    .exclusiveDealBanner img {
+        border-radius: 20px;
+    }
+
+    .exclusiveDealContent {
+        padding: 40px 32px;
+    }
+
+    .exclusiveDealTitle {
+        font-size: 30px;
+        padding-bottom: 12px;
+    }
+
+    .exclusiveDealItemTitle {
+        font-size: 14px;
+    }
+
+    .exclusiveDealItemDescription {
+        font-size: 12px;
+    }
+
+    .exclusiveDealItem img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .bannerBtn {
+        margin-top: 18px;
+        padding: 8px 40px;
+        font-size: 12px;
+    }
+
+    .exclusiveDealItemWrapper:not(:last-child) {
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ExclusiveDealSection {
+        padding: 40px 0;
+    }
+
+    .exclusiveDeal {
+        border-radius: 16px;
+    }
+
+    .exclusiveDealBanner img {
+        border-radius: 16px;
+    }
+
+    .exclusiveDealContent {
+        padding: 32px 24px;
+    }
+
+    .exclusiveDealTitle {
+        font-size: 26px;
+        line-height: 1.3;
+        padding-bottom: 20px;
+    }
+
+    .exclusiveDealRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 16px;
+        row-gap: 24px;
+    }
+
+    .exclusiveDealRow > .col-md-12 {
+        grid-column: 1 / -1;
+    }
+
+    .exclusiveDealItemWrapper {
+        width: auto;
+        flex: unset;
+        max-width: none;
+        margin-bottom: 0;
+        padding-right: 16px;
+    }
+
+    .exclusiveDealItemWrapper:nth-child(2) {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .exclusiveDealItemWrapper:nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .exclusiveDealItemWrapper:nth-child(4) {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .exclusiveDealBtnWrapper {
+        display: flex;
+        align-items: flex-end;
+        grid-column: 2;
+        grid-row: 3;
+    }
+    .bannerBtn{
+        display: none;
+    }
+
+    .bannerBtnDesktop {
+        display: none;
+    }
+
+    .bannerBtnTablet {
+        display: inline-block;
+    }
+
+    .exclusiveDealItemWrapper:nth-child(2)::after {
+        display: block;
+    }
+
+    .exclusiveDealItemWrapper:nth-child(3)::after,
+    .exclusiveDealItemWrapper:nth-child(4)::after {
+        display: none;
+    }
+
+    .exclusiveDealItem {
+        gap: 12px;
+    }
+
+    .exclusiveDealItemTitle {
+        font-size: 14px;
+        padding-top: 0;
+    }
+
+    .exclusiveDealItemDescription {
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+
+    .bannerBtn {
+        margin-top: 16px;
+        padding: 8px 36px;
+    }
+}
+
+@media (max-width: 425px) {
+    .ExclusiveDealSection {
+        padding: 10px 0;
+    }
+
+    .exclusiveDeal {
+        border-radius: 14px;
+    }
+
+    .exclusiveDealBanner {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+    }
+
+    .exclusiveDealBanner img {
+        border-radius: 14px;
+        object-fit: cover;  /* ← was 'contain', that's why image wasn't filling */
+        width: 100%;
+        height: 100%;
+    }
+
+    .exclusiveDealContent {
+        padding: 24px 16px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .exclusiveDealTitle {
+        font-size: 22px;
+        padding-bottom: 16px;
+    }
+
+    .exclusiveDealRow {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .exclusiveDealItemWrapper {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        padding-right: 0;
+    }
+
+    .exclusiveDealBtnWrapper {
+        display: none;
+    }
+
+    .bannerBtnDesktop {
+        display: inline-block;
+    }
+
+    .bannerBtnTablet {
+        display: none;
+    }
+
+    .exclusiveDealItemWrapper:not(:last-child)::after {
+        display: none;
+    }
+
+    .exclusiveDealItem {
+        gap: 10px;
+    }
+
+    .exclusiveDealItem img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .exclusiveDealItemTitle {
+        font-size: 13px;
+    }
+
+    .exclusiveDealItemDescription {
+        font-size: 11px;
+        line-height: 1.45;
+    }
+
+    .bannerBtn {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 8px 28px;
+        font-size: 11px;
+        width: 100%;
+        max-width: 200px;
+    }
+}

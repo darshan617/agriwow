@@ -9,8 +9,8 @@ const Solution = () => {
         <div>
             <div className="container">
                 <div className="row align-items-center">
-                    <div className="col-lg-6 col-md-12">
-                        <div className={`${styles.leftContent}`}>
+                    <div className="col-lg-6 col-md-12" data-aos="fade-right" data-aos-delay="100">
+                            <div className={`${styles.leftContent}`}>
                             <div className={`${styles.imageTextWrapper}`}>
                                 <Image src={trackImage} alt="track" className={`${styles.trackImageBg}`} />
                                 <div className={`${styles.textOverlay}`}>
@@ -27,8 +27,8 @@ const Solution = () => {
 
                         </div>
                     </div>
-                    <div className="col-lg-6 col-md-12">
-                        <div className={`${styles.leftContent}`}>
+                    <div className="col-lg-6 col-md-12" data-aos="fade-left" data-aos-delay="200">
+                        <div className={`${styles.rightContent}`}>
                             <div className={`${styles.imageTextWrapper}`}>
                                 <Image src={solutionImage} alt="solution" className={`${styles.trackImageBg}`} />
                                 <div className={`${styles.textOverlay}`}>

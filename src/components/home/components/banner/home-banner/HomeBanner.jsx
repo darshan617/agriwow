@@ -31,12 +31,13 @@ const HomeBanner = () => {
     {
       title: (
         <>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat, iusto.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </>
       ),
       subtitle: (
         <>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+          Explore a wide range of agricultural equipment across <br /> all
+          categories - designed for performance and productivity.
         </>
       ),
       backgroundImage: bannerImage,
@@ -46,7 +47,7 @@ const HomeBanner = () => {
     {
       title: (
         <>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat, iusto.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </>
       ),
       subtitle: (

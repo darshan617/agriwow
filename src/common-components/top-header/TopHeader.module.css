@@ -18,7 +18,8 @@
     margin: 0;
     padding: 0;
 }
-.topHeaderLeft a:hover{
+
+.topHeaderLeft a:hover {
     color: #239c3d;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .shopNowButton {
-    background: linear-gradient(to right, #f6c417, #8dba3b );
+    background: linear-gradient(to right, #f6c417, #8dba3b);
     border: 1px solid #323333;
     padding: 10px 18px;
     height: auto;
@@ -96,22 +97,133 @@
 
 @keyframes verticalTicker {
     0% {
-      transform: translateY(100%);
-      opacity: 0;
+        transform: translateY(100%);
+        opacity: 0;
     }
-  
+
     10% {
-      transform: translateY(0);
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-  
+
     80% {
-      transform: translateY(0);
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-  
+
     100% {
-      transform: translateY(-100%);
-      opacity: 0;
+        transform: translateY(-100%);
+        opacity: 0;
     }
-  }
+}
+
+@media (max-width: 1024px) {
+
+    .topHeaderLeft ul {
+        font-size: 10px;
+        gap: 0.75rem !important;
+        flex-wrap: wrap;
+    }
+
+    .topHeaderTicker p {
+        font-size: 13px;
+    }
+
+    .shopNowButton {
+        padding: 8px 14px;
+        font-size: 11px;
+    }
+
+    .topHeaderRight h2 {
+        font-size: 10px;
+    }
+
+    .topHeaderRight a {
+        font-size: 12px;
+    }
+
+    .topHeaderRightIcon {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .TopHeader> :global(.col-md-4) {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+
+    .topHeaderLeft ul {
+        width: 100%;
+    }
+
+    .topHeaderCenter {
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 8px !important;
+    }
+
+    .topHeaderTicker p {
+        font-size: 12px;
+    }
+
+    .topHeaderRight {
+        align-items: center;
+        width: 100%;
+    }
+
+    .TopHeader> :global(.col-md-4.d-flex) {
+        justify-content: center !important;
+    }
+
+    .socialIcons {
+        justify-content: center;
+    }
+
+    .shopNowButton {
+        padding: 7px 9px;
+        font-size: 9px;
+        width: 100px;
+    }
+}
+
+@media (max-width: 575px) {
+    .TopHeader {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+        justify-content: left;
+    }
+
+    .topHeaderLeft ul {
+        display: none !important;
+    }
+
+
+    .topHeaderCenter {
+        align-items: center;
+        gap: 6px !important;
+    }
+
+    .topHeaderTicker p {
+        font-size: 13px;
+    }
+
+    .shopNowButton {
+       display: none;
+    }
+
+    .topHeaderRight {
+        display: none;
+    }
+
+    .topHeaderRightIcon{
+        display: none;
+    }
+}

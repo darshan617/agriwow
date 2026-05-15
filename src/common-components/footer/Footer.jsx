@@ -54,7 +54,7 @@ const Footer = () => {
                 <div className={`${styles.footerBottom}`}>
                     <div className={`${styles.footerMain}`}>
                         <div className={styles.footerMainGrid}>
-                            <div className={`${styles.footerBrand}`}>
+                            <div className={`${styles.footerBrand} `}>
                                 <Link href="/" className={styles.footerLogoLink}>
                                     <Image src={logo} alt="Agriwow" width={170} priority />
                                 </Link>

@@ -126,20 +126,135 @@
   height: 52px;
 }
 
-@media (max-width: 576px) {
-
-  .swiper,
+@media (max-width: 1024px) {
+  
   .card {
-    border-radius: 16px;
+    height: 500px;
+  }
+
+  .title {
+    font-size: 1.75rem;
   }
 
   .navBtn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    height: 420px;
   }
 
-  .navBtn svg {
-    width: 18px;
-    height: 18px;
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .inner {
+    padding: 24px;
+  }
+
+  .playBtn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .playIcon {
+    font-size: 1.5rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .navBtn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 425px) {
+  .carousel {
+    position: relative;
+  }
+
+  .card {
+    height: 280px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  .inner {
+    padding: 16px;
+  }
+
+  .playBtn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .playIcon {
+    font-size: 1.25rem;
+  }
+
+  .footerText {
+    font-size: 0.75rem;
+  }
+
+  .viewAll {
+    font-size: 0.75rem;
+  }
+
+  .navBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .card {
+    height: 240px;
+    border-radius: 8px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .inner {
+    padding: 12px;
+  }
+
+  .playBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .playIcon {
+    font-size: 1.1rem;
+  }
+
+  .footer {
+    gap: 4px;
+  }
+
+  .footerText,
+  .viewAll {
+    font-size: 0.7rem;
+  }
+
+  .navBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.875rem;
   }
 }

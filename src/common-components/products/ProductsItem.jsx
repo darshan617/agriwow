@@ -1,70 +1,73 @@
 import React from 'react'
 import Image from 'next/image'
-import { FiHeart, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { MdAddShoppingCart } from 'react-icons/md'
-import { IoMdStar } from 'react-icons/io'
-
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import productImage from '@/assets/images/agriculture-sprayer.jpg'
 import productOne from '@/assets/products/1.png'
 import productTwo from '@/assets/products/2.png'
-
+import productOneHover from '@/assets/images/hover-product.png'
+import productTwoHover from '@/assets/images/hover-product-1.png'
+import ProductCard from '@/common-components/product-card/ProductCard'
 import styles from '@/common-components/products/ProductsItems.module.css'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
 
-const defaultProductList = [
+const productList = [
     {
         id: 1,
         image: productOne,
         discount: '15% OFF',
         isBestSeller: true,
-        name: 'Neptune DLX-13+ Double Motor Battery Sprayer | 12V 12Ah...',
+        name: 'aaaa Double Motor Battery Sprayer | 12V 12Ah...',
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 2,
         image: productTwo,
         discount: '40% OFF',
         isBestSeller: false,
-        name: 'Neptune NF-767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
+        name: 'ddddF-767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
         price: '8,343.00',
         oldPrice: '14,000.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
     {
         id: 3,
         image: productOne,
         discount: '15% OFF',
         isBestSeller: true,
-        name: 'Neptune DLX-13+ Double Motor Battery Sprayer | 12V 12Ah...',
+        name: 'NeeeDouble Motor Battery Sprayer | 12V 12Ah...',
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 4,
         image: productTwo,
         discount: '15% OFF',
         isBestSeller: false,
-        name: 'Neptune NF-767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
+        name: 'hhh NF-767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
     {
         id: 5,
         image: productOne,
         discount: '15% OFF',
         isBestSeller: true,
-        name: 'Neptune DLX-13+ Double Motor Battery Sprayer | 12V 12Ah...',
+        name: 'wef Double Motor Battery Sprayer | 12V 12Ah...',
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 6,
@@ -75,6 +78,7 @@ const defaultProductList = [
         price: '8,343.00',
         oldPrice: '14,000.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
 ]
 
@@ -82,26 +86,16 @@ const ProductsItem = ({
     variant = 'default',
     title = 'Agriculture Sprayers',
 
-    products = defaultProductList,
+    products = productList,
 
     bannerImage = productImage,
 
     promoTitle = 'Power Sprayer',
 
-    promoSubtitle = (
-        <>
-            Performance
-            <br />
-            That Grows with You
-        </>
-    ),
 
     promoExtras = null,
     promoFooter = null,
-    promoCardClassName = '',
-    promoImageClassName = '',
     promoOverlayClassName = '',
-    promoTitleClassName = '',
     promoFooterClassName = '',
     promoExtrasClassName = '',
     productsSectionClassName = '',
@@ -132,10 +126,8 @@ const ProductsItem = ({
                         )}
 
                         {!isEquipment && (
-                            <div className="col-md-3">
-                                <div
-                                    className={`${styles.promoCard}`}
-                                >
+                            <div className={`col-lg-3 col-md-4  col-12 ${styles.promoCol}`}>
+                                <div className={styles.promoCard}>
                                     <Image
                                         src={bannerImage}
                                         alt={title}
@@ -143,45 +135,13 @@ const ProductsItem = ({
                                         sizes="(max-width: 767px) 100vw, 25vw"
                                         className={`${styles.promoImage}`}
                                     />
-
-                                    <div
-                                        className={`${styles.promoOverlay} ${promoOverlayClassName}`}
-                                    >
-                                        <div
-                                            role="heading"
-                                            aria-level={3}
-                                            className={`${styles.promoTitle} text-center ${promoTitleClassName}`}
-                                        >
-                                            {promoTitle}
-                                        </div>
-
-                                        {promoSubtitle && (
-                                            <div className={`${styles.promoSubtitle} text-center`}>
-                                                {promoSubtitle}
-                                            </div>
-                                        )}
-
-                                        {promoExtras && (
-                                            <div
-                                                className={`${styles.promoExtras} ${promoExtrasClassName}`}
-                                            >
-                                                {promoExtras}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {promoFooter && (
-                                        <div
-                                            className={`${styles.promoFooter} ${promoFooterClassName}`}
-                                        >
-                                            {promoFooter}
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         )}
-
-                        <div className={isEquipment ? 'col-12' : 'col-md-9'}>
+                        <div
+                            className={isEquipment ? 'col-12' : `col-lg-9 col-md-8  col-12 ${styles.cardsCol}`}
+                       
+                        >
                             <div className={`${styles.swiperWrapper}`}>
 
                                 <Swiper
@@ -197,13 +157,13 @@ const ProductsItem = ({
                                     spaceBetween={16}
                                     breakpoints={{
                                         0: {
-                                            slidesPerView: 1,
+                                            slidesPerView: isEquipment ? 2 : 1,
                                         },
-                                        576: {
-                                            slidesPerView: 2,
+                                        425: {
+                                            slidesPerView: isEquipment ? 2 : 1,
                                         },
                                         768: {
-                                            slidesPerView: 3,
+                                            slidesPerView: isEquipment ? 3 : 2,
                                         },
                                         992: {
                                             slidesPerView: isEquipment ? 5 : 4,
@@ -214,94 +174,16 @@ const ProductsItem = ({
 
                                     {products?.map((item) => (
                                         <SwiperSlide key={item.id}>
-
-                                            <article className={`${styles.productCard}`}>
-
-                                                <div className={`${styles.cardTags}`}>
-                                                    <span className={`${styles.discountTag}`}>
-                                                        {item.discount}
-                                                    </span>
-
-                                                    {item.isBestSeller && (
-                                                        <span className={`${styles.bestsellerTag}`}>
-                                                            BESTSELLER
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                <div className={`${styles.imageWrap}`}>
-                                                    <Image
-                                                        src={item.image}
-                                                        alt={item.name}
-                                                        width={180}
-                                                        height={180}
-                                                        className={styles.productImage}
-                                                    />
-                                                </div>
-
-                                                <div className={`${styles.ratingLine}`}>
-                                                    <span className={`${styles.ratingBadge}`}>
-                                                        <IoMdStar
-                                                            style={{
-                                                                marginRight: 2,
-                                                                verticalAlign: 'middle',
-                                                            }}
-                                                        />
-                                                        4.5
-                                                    </span>
-
-                                                    <span className={`${styles.reviewText}`}>
-                                                        ({item.reviews})
-                                                    </span>
-                                                </div>
-
-                                                <h3 className={`${styles.productName}`}>
-                                                    {item.name}
-                                                </h3>
-
-                                                <p className={`${styles.priceRow}`}>
-                                                    <span className={`${styles.currentPrice}`}>
-                                                        ₹ {item.price}
-                                                    </span>
-
-                                                    <span className={`${styles.oldPrice}`}>
-                                                        ₹ {item.oldPrice}
-                                                    </span>
-                                                </p>
-
-
-                                                <div className={`${styles.cardActions}`}>
-
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.addToCartBtn}`}
-                                                    >
-                                                        <MdAddShoppingCart
-                                                            className={`${styles.btnIcon}`}
-                                                        />
-
-                                                        Add to Cart
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.buyNowBtn}`}
-                                                    >
-                                                        Buy Now
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.wishlistBtn}`}
-                                                        aria-label="Add to wishlist"
-                                                    >
-                                                        <FiHeart />
-                                                    </button>
-
-                                                </div>
-
-                                            </article>
-
+                                            <ProductCard 
+                                                image={item.image}
+                                                imageHover={item.imageHover}
+                                                discount={item.discount}
+                                                isBestSeller={item.isBestSeller}
+                                                name={item.name}
+                                                price={item.price}
+                                                oldPrice={item.oldPrice}
+                                                reviews={item.reviews}
+                                            />
                                         </SwiperSlide>
                                     ))}
 
@@ -343,7 +225,7 @@ const ProductsItem = ({
                                     View All
                                 </button>
                             </div>
-
+                     
                         </div>
 
                     </div>

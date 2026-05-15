@@ -17,7 +17,7 @@ const FarmEquipments = ({
     leftImageWrapperClassName = '',
 }) => {
     return (
-        <section className="sectionSpace">
+        <section className="sectionSpace" data-aos="zoom-in">
             <div className="container">
                 <div className={`${styles.card}`}>
                     <Image
@@ -26,28 +26,6 @@ const FarmEquipments = ({
                         className={`${styles.bannerImage}`}
                         priority
                     />
-
-                    {leftImage ? (
-                        <div
-                            className={`${styles.leftImageWrapper} ${leftImageWrapperClassName}`}
-                        >
-                            <Image
-                                src={leftImage}
-                                alt={leftAlt || equipmentAlt}
-                                className={`${styles.leftImage} ${leftImageClassName}`}
-                            />
-                        </div>
-                    ) : null}
-
-                    {equipmentImage ? (
-                        <div className={`${styles.farmEquipmentsItem}`}>
-                            <Image
-                                src={equipmentImage}
-                                alt={equipmentAlt}
-                                className={`${styles.equipmentImage}`}
-                            />
-                        </div>
-                    ) : null}
 
                     <div className={`${styles.content}`}>
                         <h2 className={`${styles.title}`}>

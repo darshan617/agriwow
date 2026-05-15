@@ -42,7 +42,7 @@ const posts = [
 
 const InsightsBlog = () => {
   return (
-    <section className={`${styles.section}`}>
+    <section className={`${styles.section}`} data-aos="fade-up" data-aos-delay="100">
       <div className="container">
         <h2 className={`${styles.heading}`}>Farming Insights &amp; Blogs</h2>
         <div className={`${styles.grid}`}>
@@ -59,7 +59,7 @@ const InsightsBlog = () => {
                   <p className={`${styles.ribbonText}`}>{post.overlayTitle}</p>
                 </div>
               </div>
-              <div className={`${styles.cardBody}`}>
+              <div className={`${styles.cardBody}`} data-aos="zoom-in" data-aos-delay="200">
                 <p className={`${styles.category}`}>{post.category}</p>
                 <div className={`${styles.meta}`}>
                   <span className={styles.metaItem}>
