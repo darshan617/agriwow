@@ -1,0 +1,280 @@
+.headerOuter {
+    background: #ffffff;
+    border-bottom: 1px solid #efefef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.headerContainer {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 10px 0;
+    justify-content: space-between;
+}
+
+.logoWrap {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.logoWrap img {
+    width: 170px;
+    height: auto;
+    display: block;
+}
+
+.navLinks {
+    white-space: nowrap;
+    flex: none;
+    align-items: center;
+    gap: 30px;
+    display: flex;
+}
+
+.navLinks a:hover {
+    color: #7ac043;
+}
+
+.navLinks a {
+    font-size: 12px;
+    color: #545454;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.searchWrap {
+    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchInput {
+    color: #7b7b7b;
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    width: 100%;
+    height: 36px;
+    padding: 0 40px 0 14px;
+    font-size: 12px;
+}
+
+.searchInput::placeholder {
+    color: #9d9d9d;
+}
+
+.searchBtn {
+    color: #6e6e6e;
+    cursor: pointer;
+    background: none;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 0 0 auto;
+}
+
+.iconBtn {
+    border: none;
+    background: transparent;
+    color: #5c5c5c;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #7ac043;
+    color: #ffffff;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+@media (max-width: 1200px) {
+    .logoWrap {
+        flex-basis: auto;
+    }
+
+    .searchWrap {
+        order: 3;
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .headerContainer {
+        gap: 12px;
+    }
+
+    .logoWrap img {
+        width: 140px !important;
+    }
+
+    .navLinks {
+        gap: 12px;
+    }
+
+    .navLinks a {
+        font-size: 13px;
+    }
+
+    .searchWrap {
+        order: 0;
+        flex-basis: auto;
+        flex: 1 1 auto;
+    }
+
+    .searchInput {
+        font-size: 12px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .logoWrap img {
+        width: 120px !important;
+    }
+
+    .navLinks {
+        display: none;
+    }
+
+    .searchWrap {
+        order: 0;
+        flex-basis: auto;
+        flex: 1 1 auto;
+    }
+
+    .searchInput {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .actions {
+        gap: 8px;
+    }
+}
+@media (max-width: 425px) {
+    .headerContainer {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .logoWrap img {
+        width: 100px !important;
+    }
+
+    .navLinks {
+        display: none;
+    }
+
+    .searchWrap {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .searchInput {
+        font-size: 12px;
+        padding: 6px 36px 6px 8px;
+    }
+
+    .searchBtn {
+        padding: 0;
+    }
+
+    .actions {
+        gap: 6px;
+    }
+
+    .iconBtn {
+        padding: 4px;
+    }
+
+    .badge {
+        font-size: 9px;
+        min-width: 14px;
+        height: 14px;
+    }
+}
+
+@media (max-width: 375px) {
+    .headerContainer {
+        gap: 6px;
+        padding: 6px 0;
+    }
+
+    .logoWrap img {
+        width: 85px !important;
+    }
+
+    .searchWrap {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .searchInput {
+        font-size: 11px;
+        padding: 5px 36px 5px 7px;
+    }
+
+    .searchBtn {
+        padding: 0;
+    }
+
+    .actions {
+        gap: 4px;
+    }
+
+    .iconBtn {
+        padding: 3px;
+    }
+
+    .iconBtn svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .badge {
+        font-size: 8px;
+        min-width: 12px;
+        height: 12px;
+        top: -4px;
+        right: -4px;
+    }
+}

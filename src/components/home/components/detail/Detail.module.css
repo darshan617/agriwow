@@ -1,0 +1,26 @@
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.detailCard {
+    min-width: 0;
+}
+
+.delivery {
+    width: 100%;
+    height: auto;
+}
+
+.delivery:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .detailGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

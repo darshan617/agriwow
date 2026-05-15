@@ -1,4 +1,5 @@
 import { storeWrapper } from "@/redux/store";
+import Head from "next/head";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "aos/dist/aos.css";
 import "@/styles/globals.css";
@@ -18,6 +19,12 @@ export default function App({ Component, pageProps, ...rest }) {
   }, []);
   return (
     <Provider store={store}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+      </Head>
       <ToastProvider>
           <Component {...pageProps} />
       </ToastProvider>

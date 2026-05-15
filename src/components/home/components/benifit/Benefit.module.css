@@ -1,0 +1,230 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.inner {
+  z-index: 2;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 19px 0;
+  display: flex;
+  position: relative;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  color: #99d728;
+  margin: 0;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.15;
+  padding: 29px 0;
+}
+
+.heading span {
+  color: #ffffff;
+  ;
+}
+
+.right {
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.subheading {
+  color: #fff;
+  margin: 0;
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.pillToggle {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  align-items: center;
+  gap: 0;
+  display: flex;
+  /* background: white; */
+  border-radius: 50%;
+}
+
+.pillLeft {
+  background-color: #8dba3b;
+  color: #fff;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 12px 32px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  z-index: 0;
+}
+
+.pillRight {
+  background-color: #fff;
+  background-color: #fff;
+  border-radius: 0 50px 50px 0;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 12px 26px;
+  height: 33px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  margin-left: -10px;
+
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  min-height: 1.2em;
+}
+
+
+@media (max-width: 1024px) {
+  .wrapper {
+    min-height: 320px;
+  }
+
+  .inner {
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2.5rem 2rem;
+  }
+
+  .heading {
+    font-size: 2.2rem;
+  }
+
+  .subheading {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    min-height: auto;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+
+  .subheading {
+    font-size: 1rem;
+  }
+
+  .pillToggle {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .inner {
+    padding: 1.75rem 1.25rem;
+    gap: 1.25rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .heading {
+    padding: 0;
+  }
+
+  .pillRight {
+    margin-left: -15px;
+    width: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .inner {
+    padding: 1.75rem 1.25rem;
+    gap: 1.25rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .heading {
+    font-size: 1.7rem;
+    line-height: 1.3;
+  }
+
+  .subheading {
+    font-size: 0.95rem;
+  }
+
+  .pillToggle {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .pillLeft,
+  .pillRight {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.85rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .subheading {
+    font-size: 0.875rem;
+  }
+
+  .pillLeft,
+  .pillRight {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+}
