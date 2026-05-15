@@ -1,0 +1,266 @@
+
+.bannerCard {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+}
+
+.bannerImageWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.bannerBackground {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+.bannerSwiper {
+  width: 100%;
+  height: 100%;
+}
+
+.bannerContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.leftContent {
+  color: #fff;
+  transform: translateX(400px);
+}
+
+.title {
+  margin: 0;
+  font-size: 40px;
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+}
+
+.subtitle {
+  margin: 14px 0 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.offerStrip {
+  color: #000;
+  clip-path: polygon(100% 0%, 92% 46%, 100% 100%, 0% 100%, 0% 53%, 0% 0%, 51% 0%);
+  background: #fe9117;
+  border: 1.5px dashed #fff;
+  border-radius: 8px;
+  align-items: stretch;
+  width: 450px;
+  height: auto;
+  padding: 8px;
+  display: flex;
+}
+
+.upto {
+  writing-mode: vertical-rl;
+  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 800;
+  transform: rotate(180deg);
+}
+
+
+.offerPercent {
+  display: contents;
+  font-size: 65px;
+  line-height: 0.6;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.offerSubText {
+  margin-top: 3px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.offerPercentSub {
+  font-size: 20px;
+  font-weight: 700 !important;
+  line-height: 1.05;
+  padding: 16px;
+}
+
+.bannerBtn {
+  background: linear-gradient(to right, #8dba3b, #f6c417);
+  border: 0;
+  border-radius: 6px;
+  margin-top: 25px;
+  padding: 9px 40px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all .3s;
+}
+
+.bannerBtn:hover {
+  background: linear-gradient(to right,  #f6c417, #8dba3b) ;
+}
+
+.rightContent {
+  width: min(42%, 540px);
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.productImage {
+  object-fit: contain;
+  z-index: 1;
+  max-width: 650px;
+  height: 100%;
+  position: relative;
+}
+
+.productImageWrapper {
+  position: relative;
+}
+
+.productImageWrapper::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 750px;
+  height: 40%;
+  background: #fff;
+  opacity: 0.95;
+  z-index: 1;
+  border-radius: 50px 0 0 0;
+  margin-left: -100px;
+}
+
+
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dotActive {
+  background: #fff;
+}
+
+@media (max-width: 1200px) {
+  .title {
+    font-size: 38px;
+  }
+
+  .offerPercent {
+    font-size: 36px;
+  }
+
+  .offerSubText {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+
+  .bannerCard,
+  .bannerBackground,
+  .bannerImageWrapper {
+    min-height: 420px;
+  }
+
+  .bannerContent {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .rightContent {
+    width: min(80%, 430px);
+    align-self: center;
+    justify-content: center;
+  }
+
+  .sliderDots {
+    right: 10px;
+  }
+}
+
+.bannerSwiper :global(.swiper-pagination) {
+  right: 100px !important;
+  left: auto !important;
+  top: 35% !important;
+  bottom: auto !important;
+  transform: translateY(-50%);
+  width: auto !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3;
+}
+
+.bannerSwiper :global(.swiper-pagination-bullet) {
+  width: 11px;
+  height: 11px;
+  margin: 0 !important;
+  background: rgba(255, 255, 255, 0.55);
+  opacity: 1;
+}
+
+.bannerSwiper :global(.swiper-pagination-bullet-active) {
+  background: #fff;
+}
+
+@media (max-width: 767px) {
+
+  .bannerCard,
+  .bannerBackground,
+  .bannerImageWrapper {
+    min-height: 500px;
+  }
+
+  .bannerContent {
+    padding: 28px 20px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .offerMain {
+    padding: 8px 16px 8px 10px;
+  }
+
+  .offerPercent {
+    font-size: 28px;
+  }
+
+  .offerSubText {
+    font-size: 16px;
+  }
+
+  .bannerBtn {
+    margin-top: 10px;
+  }
+}

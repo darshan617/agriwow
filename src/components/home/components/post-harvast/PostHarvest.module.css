@@ -1,0 +1,9 @@
+.industrialPromoTitle {
+    color: white;
+    font-size: 25px;
+    margin-top: -20px;
+    transform: translateX(-15%);
+}
+.industrialPromoTitle span {
+    color: #fd8a01;
+}
