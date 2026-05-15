@@ -10,9 +10,9 @@ const PostHarvest = () => {
         sectionClassName=""
         title="Post Harvest"
         bannerImage={postHarvestBanner}
-        productTitle={<div className={`${styles.industrialproductTitle} `}><span>Powering</span> Your <br />
+        promoTitle={<div className={`${styles.industrialPromoTitle} `}><span>Powering</span> Your <br />
           Post Harvest Process</div>}
-        productSubtitle={<div className={`${styles.industrialproductSubtitle} display-none`}></div>}
+        promoSubtitle={<div className={`${styles.industrialPromoSubtitle} display-none`}></div>}
       />
     </div>
   )

@@ -86,19 +86,22 @@ const TopBanner = () => {
                     slidesPerView={4}
                     loop={true}
                     autoplay={{
-                        delay: 1500,
+                        delay: 9000,
                         disableOnInteraction: false,
                     }}
                     speed={1000}
                     breakpoints={{
-                        320: {
-                            slidesPerView: 1,
+                        375: {
+                            slidesPerView: 3,
+                        },
+                        425: {
+                            slidesPerView: 4,
                         },
                         576: {
-                            slidesPerView: 2,
+                            slidesPerView: 5,
                         },
                         768: {
-                            slidesPerView: 3,
+                            slidesPerView: 6,
                         },
                         992: {
                             slidesPerView: 6,

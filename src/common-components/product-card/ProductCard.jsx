@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { IoMdStar } from 'react-icons/io'
 import { MdAddShoppingCart } from 'react-icons/md'
 import { FiHeart } from 'react-icons/fi'
+import imageHoverImage from '@/assets/images/hover-product.png'
 import styles from '@/common-components/product-card/ProductCard.module.css'
 
 
@@ -15,69 +16,77 @@ const ProductCard = ({
     oldPrice = '0',
     reviews = '0 Reviews',
     image = null,
+    imageHover = imageHoverImage,
 }) => {
     return (
-        <div className={styles.productCard}>
+        <div className={`${styles.productCard}`} data-aos="fade-up" data-aos-delay="100">
 
-            <div className={styles.cardTags}>
-                <span className={styles.discountTag}>
+            <div className={`${styles.cardTags}`}>
+                <span className={`${styles.discountTag}`}>
                     {discount}
                 </span>
 
                 {isBestSeller && (
-                    <span className={styles.bestsellerTag}>
+                    <span className={`${styles.bestsellerTag}`}>
                         BESTSELLER
                     </span>
                 )}
             </div>
-            <div className={styles.imageWrap}>
+            <div className={`${styles.imageWrap}`}>
                 <Image
                     src={image}
                     alt={name}
                     width={180}
                     height={180}
-                    className={styles.productImage}
+                    className={`${styles.productImage}`}
+                />
+                <Image
+                    src={imageHover}      
+                    alt={name}
+                    width={180}
+                    height={180}
+                    className={`${styles.productImageHover}`}
                 />
             </div>
-            <div className={styles.ratingLine}>
-                <span className={styles.ratingBadge}>
+            <div className={`${styles.ratingLine}`}>
+                <span className={`${styles.ratingBadge}`}>
                     <IoMdStar style={{ marginRight: 2, verticalAlign: 'middle' }} />
                     4.5
                 </span>
-                <span className={styles.reviewText}>
+                <span className={`${styles.reviewText} `}>
                     ({reviews})
                 </span>
             </div>
-            <h3 className={styles.productName}>
+            <h3 className={`${styles.productName}`}>
                 {name}
             </h3>
-            <p className={styles.priceRow}>
-                <span className={styles.currentPrice}>
+            <p className={`${styles.priceRow}`}>
+                <span className={`${styles.currentPrice}`}>
                     ₹ {price}
                 </span>
-                <span className={styles.oldPrice}>
+                <span className={`${styles.oldPrice}`}>
                     ₹ {oldPrice}
                 </span>
             </p>
-            <div className={styles.cardActions}>
+            <div className={`${styles.cardActions}`}>
                 <button
                     type="button"
-                    className={styles.addToCartBtn}
+                    className={`${styles.addToCartBtn}`}
                 >
-                    <MdAddShoppingCart className={styles.btnIcon} />
+                    <MdAddShoppingCart className={`${styles.btnIcon}`} />
                     Add to Cart
                 </button>
 
                 <button
                     type="button"
-                    className={styles.buyNowBtn}
+                    className={`${styles.buyNowBtn}`}
                 >
                     Buy Now
                 </button>
 
                 <button
                     type="button"
-                    className={styles.wishlistBtn}
+                    className={`${styles.wishlistBtn}`}
                     aria-label="Add to wishlist"
                 >
                     <FiHeart />

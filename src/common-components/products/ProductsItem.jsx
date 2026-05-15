@@ -4,6 +4,8 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import productImage from '@/assets/images/agriculture-sprayer.jpg'
 import productOne from '@/assets/products/1.png'
 import productTwo from '@/assets/products/2.png'
+import productOneHover from '@/assets/images/hover-product.png'
+import productTwoHover from '@/assets/images/hover-product-1.png'
 import ProductCard from '@/common-components/product-card/ProductCard'
 import styles from '@/common-components/products/ProductsItems.module.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -20,7 +22,8 @@ const productList = [
         name: 'aaaa Double Motor Battery Sprayer | 12V 12Ah...',
         price: '8,343.00',
         oldPrice: '10,640.00',
-        reviews: '58',
+        reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 2,
@@ -31,6 +34,7 @@ const productList = [
         price: '8,343.00',
         oldPrice: '14,000.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
     {
         id: 3,
@@ -41,6 +45,7 @@ const productList = [
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 4,
@@ -51,6 +56,7 @@ const productList = [
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
     {
         id: 5,
@@ -61,16 +67,18 @@ const productList = [
         price: '8,343.00',
         oldPrice: '10,640.00',
         reviews: '58 Reviews',
+        imageHover: productTwoHover,
     },
     {
         id: 6,
         image: productTwo,
         discount: '40% OFF',
         isBestSeller: false,
-        name: 'qwe -767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
+        name: 'Neptune NF-767 Power Sprayer | 4 Stroke 3C Petrol Engine...',
         price: '8,343.00',
         oldPrice: '14,000.00',
         reviews: '35 Reviews',
+        imageHover: productOneHover,
     },
 ]
 
@@ -82,21 +90,13 @@ const ProductsItem = ({
 
     bannerImage = productImage,
 
-    productTitle = 'Power Sprayer',
+    promoTitle = 'Power Sprayer',
 
-    productSubtitle = (
-        <>
-            Performance
-            <br />
-            That Grows with You
-        </>
-    ),
 
     promoExtras = null,
-    productFooter = null,
-    productOverlayClassName = '',
-    productTitleClassName = '',
-    productFooterClassName = '',
+    promoFooter = null,
+    promoOverlayClassName = '',
+    promoFooterClassName = '',
     promoExtrasClassName = '',
     productsSectionClassName = '',
     sectionClassName = 'sectionSpace',
@@ -126,10 +126,8 @@ const ProductsItem = ({
                         )}
 
                         {!isEquipment && (
-                            <div className="col-md-3">
-                                <div
-                                    className={`${styles.promoCard}`}
-                                >
+                            <div className={`col-lg-3 col-md-4  col-12 ${styles.promoCol}`}>
+                                <div className={styles.promoCard}>
                                     <Image
                                         src={bannerImage}
                                         alt={title}
@@ -137,45 +135,13 @@ const ProductsItem = ({
                                         sizes="(max-width: 767px) 100vw, 25vw"
                                         className={`${styles.promoImage}`}
                                     />
-
-                                    <div
-                                        className={`${styles.promoOverlay} ${productOverlayClassName}`}
-                                    >
-                                        <div
-                                            role="heading"
-                                            aria-level={3}
-                                            className={`${styles.productTitle} text-center ${productTitleClassName}`}
-                                        >
-                                            {productTitle}
-                                        </div>
-
-                                        {productSubtitle && (
-                                            <div className={`${styles.productSubtitle} text-center`}>
-                                                {productSubtitle}
-                                            </div>
-                                        )}
-
-                                        {promoExtras && (
-                                            <div
-                                                className={`${styles.promoExtras} ${promoExtrasClassName}`}
-                                            >
-                                                {promoExtras}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {productFooter && (
-                                        <div
-                                            className={`${styles.productFooter} ${productFooterClassName}`}
-                                        >
-                                            {productFooter}
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         )}
-
-                        <div className={isEquipment ? 'col-12' : 'col-md-9'}>
+                        <div
+                            className={isEquipment ? 'col-12' : `col-lg-9 col-md-8  col-12 ${styles.cardsCol}`}
+                       
+                        >
                             <div className={`${styles.swiperWrapper}`}>
 
                                 <Swiper
@@ -191,13 +157,13 @@ const ProductsItem = ({
                                     spaceBetween={16}
                                     breakpoints={{
                                         0: {
-                                            slidesPerView: 1,
+                                            slidesPerView: isEquipment ? 2 : 1,
                                         },
-                                        576: {
-                                            slidesPerView: 2,
+                                        425: {
+                                            slidesPerView: isEquipment ? 2 : 1,
                                         },
                                         768: {
-                                            slidesPerView: 3,
+                                            slidesPerView: isEquipment ? 3 : 2,
                                         },
                                         992: {
                                             slidesPerView: isEquipment ? 5 : 4,
@@ -210,6 +176,7 @@ const ProductsItem = ({
                                         <SwiperSlide key={item.id}>
                                             <ProductCard 
                                                 image={item.image}
+                                                imageHover={item.imageHover}
                                                 discount={item.discount}
                                                 isBestSeller={item.isBestSeller}
                                                 name={item.name}
@@ -258,7 +225,7 @@ const ProductsItem = ({
                                     View All
                                 </button>
                             </div>
-
+                     
                         </div>
 
                     </div>

@@ -8,7 +8,6 @@
 .productsTitle {
   color: #111;
   letter-spacing: .2px;
-  margin: 0 0 18px;
   font-size: 35px;
   font-weight: 700;
   padding-bottom: 30px;
@@ -38,7 +37,7 @@
   z-index: 2;
 }
 
-.productTitle {
+.promoTitle {
   margin: 0;
   color: #2bb24a;
   font-size: 28px;
@@ -49,7 +48,7 @@
   margin-top: 30px;
 }
 
-.productSubtitle {
+.promoSubtitle {
   /* color: #fff; */
   text-shadow: 0 1px 1px #00000040;
   margin: 6px 0 0;
@@ -75,7 +74,7 @@
 
 }
 
-.productFooter {
+.promoFooter {
   color: #fff;
   text-align: center;
   letter-spacing: .3px;
@@ -259,7 +258,6 @@
 
 .swiperWrapper {
   position: relative;
-  /* padding: 0 60px; */
 }
 
 .swiperNav {
@@ -304,6 +302,15 @@
   .productCard {
     padding: 8px 8px 10px;
   }
+  .sectionSpace {
+    padding: 40px 0;
+}
+}
+
+@media (max-width: 1024px) {
+  .sectionSpace {
+    padding: 30px 0;
+  }
 }
 
 @media (max-width: 991px) {
@@ -316,13 +323,14 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .productsSection {
     padding: 16px 0 24px;
   }
 
   .productsTitle {
-    font-size: 20px;
+    font-size: 30px;
+    padding-bottom: 0;
   }
 
   .cardsRow {
@@ -330,13 +338,26 @@
     gap: 10px;
   }
 
-  .promoCard {
-    min-height: 180px;
-  }
 }
 
 @media (max-width: 480px) {
   .cardsRow {
     grid-template-columns: 1fr;
+  }
+  .promoCol,
+  .cardsCol {
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+  }
+  .productsTitle {
+    font-size: 25px;
+    padding-bottom: 0;
+  }
+  .promoCard {
+    height: 80%;
+  }
+  .imageWrap{
+    min-height: 100px;
   }
 }

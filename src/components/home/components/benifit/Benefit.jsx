@@ -9,7 +9,7 @@ const Benefit = () => {
     const [isActive, setIsActive] = useState(false)
 
     return (
-        <section className={`${styles.wrapper} `}>
+        <section className={`${styles.wrapper}`} data-aos="zoom-in">
             <Image
                 src={benefitImage}
                 alt="Digital payment benefit background"

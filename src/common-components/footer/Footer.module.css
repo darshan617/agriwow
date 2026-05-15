@@ -1,38 +1,46 @@
-.footerForm input{
+.footerForm input {
     padding: 15px;
     border-radius: 5px;
     width: 100%;
 }
-.footerText{
+
+.footerText {
     font-size: 30px;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 10px;
 }
-.footerPara{
+
+.footerPara {
     color: #8dba3b;
     margin-bottom: 2px;
-    
-} .footerText{
-    color: #fff;
-    
+
 }
-.footerShortPara{
+
+.footerText {
+    color: #fff;
+
+}
+
+.footerShortPara {
     color: #ffffff80;
     font-size: 11.5px;
 }
-.footerFormIconWrapper{
+
+.footerFormIconWrapper {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
 }
-.footerFormIcon{
+
+.footerFormIcon {
     font-size: 16px;
     color: #333;
 }
-.inputIconRight{
+
+.inputIconRight {
     border: none;
     background: none;
     cursor: pointer;
@@ -42,91 +50,95 @@
     right: 10px;
     top: 30%;
 }
-.footerFormButtonIcon{
+
+.footerFormButtonIcon {
     color: #333;
     font-size: 15px;
 }
-.footerFormPara{
+
+.footerFormPara {
     color: #fff;
     font-size: 12px;
     padding-top: 20px;
 }
-.footerFormPara span{
+
+.footerFormPara span {
     color: #8dba3b;
 }
-.footerTop{
+
+.footerTop {
     border-bottom: 1.5px solid #999999;
-    padding:  60px 0;
+    padding: 60px 0;
 }
 
-.footer{
+.footer {
     background: #323333;
 }
 
-.footerBottom{
+.footerBottom {
     padding: 0 0 60px;
 }
 
-.footerMain{
+.footerMain {
     padding: 40px 0 8px;
 }
 
-.footerMainGrid{
+.footerMainGrid {
     display: grid;
     gap: 2rem 1.5rem;
     grid-template-columns: 1fr;
 }
 
-.footerBrand{
+.footerBrand {
     max-width: 320px;
 }
 
-.footerLogoLink{
+.footerLogoLink {
     display: inline-block;
     margin-bottom: 14px;
 }
 
-.footerLogoLink img{
+.footerLogoLink img {
     height: auto;
     max-width: 100%;
 }
 
-.footerBrandText{
+.footerBrandText {
     color: #ffffff80;
     font-size: 11px;
     line-height: 1.55;
     margin: 0 0 20px;
 }
 
-.footerPhone{
+.footerPhone {
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 0;
 }
 
-.footerPhoneIcon{
+.footerPhoneIcon {
     color: #fff;
     font-size: 22px;
     flex-shrink: 0;
 }
 
-.footerPhoneLink{
+.footerPhoneLink {
     color: #fff;
     font-size: 25px;
     font-weight: 700;
     text-decoration: none;
 }
 
-.footerPhoneLink:hover{
+.footerPhoneLink:hover {
     color: #8dba3b;
 }
 
-.footerNavCol{
+.footerNavCol {
     min-width: 0;
 }
 
-.footerNavHeading{
+.footerNavHeading {
     color: #8dba3b;
     font-size: 14px;
     font-weight: 700;
@@ -135,39 +147,39 @@
     text-transform: uppercase;
 }
 
-.footerNavList{
+.footerNavList {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 
-.footerNavList li:last-child{
+.footerNavList li:last-child {
     margin-bottom: 0;
 }
 
-.footerNavList a{
+.footerNavList a {
     color: #ffffff80;
     font-size: 11px;
     text-decoration: none;
 }
 
-.footerNavList a:hover{
+.footerNavList a:hover {
     color: #8dba3b;
 }
 
-.footerSocialWrap{
+.footerSocialWrap {
     display: flex;
     justify-content: flex-start;
 }
 
-.footerSocial{
+.footerSocial {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
 
-.footerSocialBtn{
+.footerSocialBtn {
     color: #fff;
     border: 1px solid #fff;
     justify-content: center;
@@ -180,13 +192,13 @@
     display: inline-flex;
 }
 
-.footerSocialBtn:hover{
+.footerSocialBtn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: #8dba3b;
     color: #8dba3b;
 }
 
-.footerPayments{
+.footerPayments {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -195,62 +207,42 @@
     margin-top: 28px;
 }
 
-.footerPaymentMaestro{
+.footerPaymentMaestro {
     display: inline-flex;
     line-height: 0;
 }
 
-.footerPaymentIcon{
+.footerPaymentIcon {
     display: inline-flex;
     line-height: 0;
 }
 
-.footerBottomRow{
+.footerBottomRow {
     padding-top: 22px;
     margin-top: 8px;
     row-gap: 1rem;
 }
 
-@media (min-width: 992px){
-    .footerMainGrid{
-        align-items: start;
-        grid-template-columns: minmax(600px, 1.35fr) repeat(3, minmax(0, 1fr)) auto;
-    }
 
-    .footerSocialWrap{
-        justify-content: flex-end;
-    }
-}
-
-@media (max-width: 991px){
-    .footerPayments{
-        justify-content: center;
-    }
-
-    .footerSocialWrap{
-        justify-content: center;
-    }
-}
-
-.footerCopyright{
+.footerCopyright {
     color: #ffffff80;
     font-size: 11.5px;
     line-height: 1.5;
     margin: 0;
 }
 
-.footerCredit{
+.footerCredit {
     color: #8dba3b;
     font-weight: 600;
     text-decoration: none;
 }
 
-.footerCredit:hover{
+.footerCredit:hover {
     color: #a4d655;
     text-decoration: underline;
 }
 
-.footerLegal{
+.footerLegal {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -259,19 +251,205 @@
     margin: 0;
 }
 
-@media (min-width: 992px){
-    .footerLegal{
-        justify-content: flex-end;
-    }
-}
-
-.footerLegal a{
+.footerLegal a {
     color: #ffffff80;
     font-size: 11.5px;
     text-decoration: none;
     white-space: nowrap;
 }
 
-.footerLegal a:hover{
+.footerLegal a:hover {
     color: #8dba3b;
+}
+
+@media (max-width: 1024px) {
+    .footerMainGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 24px;
+    }
+
+    .footerBrand {
+        grid-column: span 2;
+    }
+
+    .footerSocialWrap {
+        grid-column: span 2;
+    }
+
+    .footerText {
+        font-size: 1.6rem;
+    }
+
+    .footerForm {
+        padding-left: 0;
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footerTop .row {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .footerText {
+        font-size: 1.4rem;
+    }
+
+    .footerPara {
+        font-size: 0.85rem;
+    }
+
+    .footerFormInput {
+        width: 100%;
+    }
+
+    .footerMainGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px 20px;
+    }
+
+    .footerBrand {
+        grid-column: span 2;
+    }
+
+    .footerSocialWrap {
+        grid-column: span 2;
+    }
+
+    .footerPayments {
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: flex-start;
+    }
+
+    .footerBottomRow {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .footerLegal {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 16px;
+    }
+
+    .footerCopyright {
+        text-align: center;
+    }
+}
+
+@media (max-width: 425px) {
+    .footerTop {
+        padding: 32px 0 24px;
+    }
+
+    .footerText {
+        font-size: 1.2rem;
+    }
+
+    .footerShortPara {
+        font-size: 0.8rem;
+    }
+
+    .footerMainGrid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footerBrand {
+        grid-column: span 1;
+    }
+
+    .footerSocialWrap {
+        grid-column: span 1;
+    }
+
+    .footerSocial {
+        gap: 10px;
+    }
+
+    .footerSocialBtn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .footerNavHeading {
+        font-size: 0.95rem;
+    }
+
+    .footerNavList li a {
+        font-size: 0.85rem;
+    }
+
+    .footerPayments {
+        gap: 10px;
+    }
+
+    .footerLegal {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .footerCopyright {
+        font-size: 0.75rem;
+    }
+
+}
+
+@media (max-width: 375px) {
+    .footerText {
+        font-size: 1.05rem;
+    }
+
+    .footerFormInput {
+        font-size: 0.8rem;
+        padding-left: 28px;
+    }
+
+    .footerBrandText {
+        font-size: 0.8rem;
+    }
+
+    .footerPhoneLink {
+        font-size: 0.85rem;
+    }
+
+    .footerSocialBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .footerNavHeading {
+        font-size: 0.9rem;
+    }
+
+    .footerNavList li a {
+        font-size: 0.8rem;
+    }
+
+    .footerPayments img {
+        width: 30px !important;
+    }
+
+    .footerCopyright {
+        font-size: 0.7rem;
+    }
+
+    .footerLegal a {
+        font-size: 0.72rem;
+    }
+
+    .footerMainGrid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footerBrand {
+        grid-column: span 1;
+    }
 }

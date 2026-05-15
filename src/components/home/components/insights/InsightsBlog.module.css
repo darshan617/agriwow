@@ -1,6 +1,5 @@
 .section {
     padding: 0 150px 30px;
-    background: #fff;
 }
 
 .heading {
@@ -15,23 +14,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 35px;
-}
-
-@media (max-width: 991px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 575px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .heading {
-        font-size: 26px;
-        margin-bottom: 28px;
-    }
 }
 
 .card {
@@ -105,7 +87,8 @@
     opacity: 0.85;
     font-size: 15px;
 }
-.titleBold span{
+
+.titleBold span {
     font-weight: 800;
     font-size: 16px;
 }
@@ -133,10 +116,12 @@
     display: -webkit-box;
     overflow: hidden;
 }
+
 .viewAll {
     display: flex;
     justify-content: center;
 }
+
 .viewAllBtn {
     margin-top: 12px;
     padding-top: 10px;
@@ -147,4 +132,30 @@
     font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
-  }
+}
+
+@media (max-width: 1024px) {
+    .section {
+        padding: 0 50px 30px;
+    }
+}
+
+@media (max-width: 991px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .heading {
+        font-size: 25px;
+        margin-bottom: 28px;
+    }
+    .section {
+        padding: 0 0 30px;
+    }
+}
