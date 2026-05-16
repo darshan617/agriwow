@@ -9,7 +9,7 @@ import styles from '@/common-components/product-card/ProductCard.module.css'
 
 
 const ProductCard = ({
-    discount = '0% OFF',
+    discount = '0',
     isBestSeller = true,
     name = '-',
     price = '0',
@@ -17,13 +17,14 @@ const ProductCard = ({
     reviews = '0 Reviews',
     image = null,
     imageHover = imageHoverImage,
+    rating = '4.5',
 }) => {
     return (
         <div className={`${styles.productCard}`} data-aos="fade-up" data-aos-delay="100">
 
             <div className={`${styles.cardTags}`}>
                 <span className={`${styles.discountTag}`}>
-                    {discount}
+                    {discount}% OFF
                 </span>
 
                 {isBestSeller && (
@@ -51,7 +52,7 @@ const ProductCard = ({
             <div className={`${styles.ratingLine}`}>
                 <span className={`${styles.ratingBadge}`}>
                     <IoMdStar style={{ marginRight: 2, verticalAlign: 'middle' }} />
-                    4.5
+                    {rating}
                 </span>
                 <span className={`${styles.reviewText} `}>
                     ({reviews})

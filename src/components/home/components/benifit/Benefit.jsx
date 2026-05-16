@@ -6,7 +6,6 @@ import benefitImage from '@/assets/images/pay-back.jpg'
 import styles from '@/components/home/components/benifit/Benefit.module.css'
 
 const Benefit = () => {
-    const [isActive, setIsActive] = useState(false)
 
     return (
         <section className={`${styles.wrapper}`} data-aos="zoom-in">
@@ -24,7 +23,7 @@ const Benefit = () => {
 
                 <div className={`${styles.left} text-center`}>
                     <h2 className={`${styles.heading}`}>
-                        Pay Online &amp;<br /><span>Save</span> More
+                        Pay Online &amp;<br /><span> Save</span> More
                     </h2>
                 </div>
                 <div className={`${styles.right}`}>
@@ -36,7 +35,7 @@ const Benefit = () => {
                         <span className={`${styles.pillLeft}`}>EXTRA 5% OFF</span>
                         <span className={`${styles.pillRight}`}>At Checkout</span>
                     </div>
-               
+
 
                 </div>
 

@@ -83,21 +83,13 @@ const productList = [
 ]
 
 const ProductsItem = ({
+    agricultureProductsData,
     variant = 'default',
     title = 'Agriculture Sprayers',
 
     products = productList,
 
     bannerImage = productImage,
-
-    promoTitle = 'Power Sprayer',
-
-
-    promoExtras = null,
-    promoFooter = null,
-    promoOverlayClassName = '',
-    promoFooterClassName = '',
-    promoExtrasClassName = '',
     productsSectionClassName = '',
     sectionClassName = 'sectionSpace',
 }) => {
@@ -172,17 +164,18 @@ const ProductsItem = ({
                                     className={`${styles.cardsRow}`}
                                 >
 
-                                    {products?.map((item) => (
+                                    {agricultureProductsData?.map((item) => (
                                         <SwiperSlide key={item.id}>
                                             <ProductCard 
-                                                image={item.image}
-                                                imageHover={item.imageHover}
-                                                discount={item.discount}
-                                                isBestSeller={item.isBestSeller}
-                                                name={item.name}
-                                                price={item.price}
-                                                oldPrice={item.oldPrice}
-                                                reviews={item.reviews}
+                                                image={item?.gallery[0]}
+                                                imageHover={item?.gallery[1]}
+                                                discount={item?.discount}
+                                                isBestSeller={item?.is_best_selling}
+                                                name={item?.name}
+                                                price={item?.selling_price}
+                                                oldPrice={item?.price}
+                                                reviews={item?.total_reviews}
+                                                rating={item?.rating}
                                             />
                                         </SwiperSlide>
                                     ))}

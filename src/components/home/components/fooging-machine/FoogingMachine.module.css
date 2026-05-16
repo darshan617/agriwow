@@ -1,9 +1,9 @@
 .foogingMachineTitle{
     color: black !important;
 }
-.foogingMachineEquip{
-    z-index: 2; 
-    width: 450px;
-    position: relative;
-    left: -70px;
+
+@media (max-width: 575px) {
+    .foogingMachineBannerBg {
+        object-position: left;
+    }
 }
