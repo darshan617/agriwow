@@ -3,7 +3,7 @@ import postHarvestBanner from '@/assets/images/post-harvest.png'
 import ProductsItem from '@/common-components/products/ProductsItem'
 import styles from '@/components/home/components/post-harvast/PostHarvest.module.css'
 
-const PostHarvest = () => {
+const PostHarvest = ({ postHarvestData }) => {
   return (
     <div>
       <ProductsItem
@@ -13,6 +13,7 @@ const PostHarvest = () => {
         promoTitle={<div className={`${styles.industrialPromoTitle} `}><span>Powering</span> Your <br />
           Post Harvest Process</div>}
         promoSubtitle={<div className={`${styles.industrialPromoSubtitle} display-none`}></div>}
+        agricultureProductsData={postHarvestData}
       />
     </div>
   )

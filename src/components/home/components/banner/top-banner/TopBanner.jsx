@@ -76,7 +76,9 @@ const ALL_CATEGORIES = [
     },
 ]
 
-const TopBanner = () => {
+const TopBanner = ({categoriesData}) => {
+    console.log(categoriesData);
+    
     return (
         <div className="container">
             <div className={`${styles.topBannerWrapper}`}>
@@ -108,20 +110,20 @@ const TopBanner = () => {
                         },
                     }}
                 >
-                    {ALL_CATEGORIES.map((category) => (
-                        <SwiperSlide key={category.id}>
-                            <Link href={category.slug}>
-                            <div className={`${styles.categoryItem}`}>
+                    {categoriesData?.map((category, idx) => (
+                        <SwiperSlide key={idx}>
+                            <Link href={category?.slug}>
+                            <div className={`${styles.categoryItem}`} key={idx}>
                                 <div className={`${styles.categoryImgWrapper}`}>
                                     <Image
-                                        src={category.image}
-                                        alt={category.title}
+                                        src={category?.image}
+                                        alt={category?.name}
                                         className={`${styles.categoryImg}`}
-                                        width={100}
-                                        height={100}
+                                       width={100}
+                                       height={100}
                                     />
                                 </div>
-                                    <p className={`${styles.categoryLabel}`}>{category.title}</p>
+                                    <p className={`${styles.categoryLabel}`}>{category?.name}</p>
                                 </div>
                             </Link>
                         </SwiperSlide>

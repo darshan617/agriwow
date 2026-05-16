@@ -19,28 +19,44 @@ import TopRating from '@/components/home/components/top-rating/TopRating'
 import VideoSection from '@/components/home/components/video/VideoSection'
 import InsightsBlog from '@/components/home/components/insights/InsightsBlog'
 import Footer from '@/common-components/footer/Footer'
+import { useGetHomeDataQuery } from '@/redux/apis/homeApi'
 const HomeComponents = () => {
+
+  const {data: homeData, isLoading: isHomeDataLoading} = useGetHomeDataQuery() 
+  
+  
+  const categoriesData = homeData?.data?.categories
+  const agricultureProductsData = homeData?.data?.products?.agriculture_sprayers
+  const farmEquipmentsData = homeData?.data?.products?.farm_equipments
+  const industrialProductsData = homeData?.data?.products?.industrial_products
+  const postHarvestData = homeData?.data?.products?.post_harvest
+  const bestSellingData = homeData?.data?.products?.best_selling
+  const foogingMachineData = homeData?.data?.products?.fogging_machines
+  const gardeningToolsData = homeData?.data?.products?.garden_tools
+  const insightsBlogData = homeData?.data?.blogs
+
+  
   return (
     <>
       <TopHeader />
       <Header />
-      <TopBanner />
+      <TopBanner categoriesData={categoriesData}/>
       <HomeBanner />
       <Marquee />
-      <ProductsItem />
+      <ProductsItem agricultureProductsData={agricultureProductsData}/>
       <Benefit />
-      <FarmEquipments />
+      <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
       <Detail />
-      <IndustrialProduct />
+      <IndustrialProduct industrialProductsData={industrialProductsData}/>
       <Solution />
-      <GardenTool />
-      <PostHarvest />
-      <FoogingMachine />
-      <BestSelling />
+      <GardenTool gardeningToolsData={gardeningToolsData}/>
+      <PostHarvest postHarvestData={postHarvestData}/>
+      <FoogingMachine foogingMachineData={foogingMachineData}/>
+      <BestSelling bestSellingData={bestSellingData}/>
       <ExclusiveDeal />
       <TopRating />
       <VideoSection />
-      <InsightsBlog />
+      <InsightsBlog insightsBlogData={insightsBlogData}/>
       <Footer />
     </>
   )

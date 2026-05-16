@@ -188,19 +188,23 @@
     padding: 8px 8px 10px;
   }
 }
+
 @media (max-width: 480px) {
-  .imageWrap{
+  .imageWrap {
     min-height: 80px;
   }
+
   .productName {
     font-size: 10px;
   }
+
   .currentPrice {
     font-size: 10px;
   }
+
   .addToCartBtn,
-.buyNowBtn {
+  .buyNowBtn {
     font-size: 8px;
     padding: 3px 0;
-}
+  }
 }
