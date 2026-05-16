@@ -3,6 +3,9 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
+  images: {
+    domains: ['goyalinfotech.in'],
+  },
 };
 
 export default nextConfig;

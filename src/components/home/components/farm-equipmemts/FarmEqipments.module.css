@@ -83,8 +83,12 @@
 .productsWrapper {
     background: #dae6c5;
     border-radius: 0 0 24px 24px;
-    padding: 90px 0 9px;
+    padding: 60px 30px;
     margin-top: -30px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
 }
 
 .farmProductsSection {
@@ -114,7 +118,10 @@
     }
 
     .productsWrapper {
-        padding: 60px 0 0;
+        padding: 60px 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        gap: 10px;
     }
 
     .farmProductsSection {
