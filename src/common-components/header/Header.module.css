@@ -1,16 +1,15 @@
 .headerOuter {
     background: #ffffff;
-    border-bottom: 1px solid #efefef;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .headerContainer {
-    min-height: 70px;
     display: flex;
     align-items: center;
-    gap: 28px;
-    padding: 10px 0;
-    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 32px;
+    padding: 12px 0;
+    min-height: 64px;
 }
 
 .logoWrap {
@@ -20,218 +19,358 @@
 }
 
 .logoWrap img {
-    width: 170px;
-    height: auto;
+    width: 170px !important;
+    height: auto !important;
     display: block;
 }
 
-.navLinks {
-    white-space: nowrap;
-    flex: none;
-    align-items: center;
-    gap: 30px;
+.navLinksDesktop {
     display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 36px;
+    margin-left: auto;
+    white-space: nowrap;
 }
 
-.navLinks a:hover {
-    color: #7ac043;
-}
-
-.navLinks a {
-    font-size: 12px;
+.navLinksDesktop a {
+    font-size: 13px;
     color: #545454;
     font-weight: 600;
     text-transform: capitalize;
+    transition: color 0.2s ease;
+}
+
+.navLinksDesktop a:first-child {
+    color: #7ac043;
+}
+
+.navLinksDesktop a:hover {
+    color: #7ac043;
 }
 
 .searchWrap {
-    flex: 1 1 auto;
+    flex: 0 1 480px;
+    width: 100%;
+    max-width: 480px;
+    min-width: 200px;
     position: relative;
     display: flex;
     align-items: center;
 }
 
 .searchInput {
+    width: 100%;
+    height: 38px;
+    padding: 0 44px 0 18px;
+    font-size: 12px;
     color: #7b7b7b;
     background: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
+    border: none;
+    border-radius: 5px;
     outline: none;
-    width: 100%;
-    height: 36px;
-    padding: 0 40px 0 14px;
-    font-size: 12px;
 }
 
 .searchInput::placeholder {
     color: #9d9d9d;
 }
 
+.searchInput:focus {
+    background: #ebebeb;
+}
+
 .searchBtn {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
     color: #6e6e6e;
     cursor: pointer;
     background: none;
     border: none;
-    justify-content: center;
-    align-items: center;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
 }
 
 .actions {
     display: flex;
     align-items: center;
-    gap: 14px;
     flex: 0 0 auto;
+    gap: 18px;
 }
 
 .iconBtn {
-    border: none;
-    background: transparent;
-    color: #5c5c5c;
-    width: 24px;
-    height: 24px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
+    color: #5c5c5c;
     cursor: pointer;
 }
 
 .badge {
     position: absolute;
-    top: -4px;
-    right: -4px;
+    top: -5px;
+    right: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 14px;
     height: 14px;
     border-radius: 50%;
     background: #7ac043;
     color: #ffffff;
     font-size: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-weight: 600;
     line-height: 1;
 }
 
-@media (max-width: 1200px) {
-    .logoWrap {
-        flex-basis: auto;
+.menuToggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.menuOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.45);
+    animation: menuOverlayFadeIn 0.25s ease;
+}
+
+@keyframes menuOverlayFadeIn {
+    from {
+        opacity: 0;
     }
 
-    .searchWrap {
-        order: 3;
-        flex-basis: 100%;
-        max-width: 100%;
+    to {
+        opacity: 1;
     }
 }
 
+.navDrawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(300px, 86vw);
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    align-items: stretch;
+    white-space: normal;
+    background: #ffffff;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.navDrawer.open {
+    transform: translateX(0);
+}
+
+.drawerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 16px 18px;
+    border-bottom: 1px solid #efefef;
+}
+
+.drawerTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.drawerClose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #444444;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.drawerClose:hover {
+    color: #7ac043;
+}
+
+.drawerLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 12px 0;
+    overflow-y: auto;
+}
+
+.drawerLinks a {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #545454;
+    font-weight: 600;
+    text-transform: capitalize;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.drawerLinks a:first-child {
+    color: #7ac043;
+}
+
+.drawerLinks a:hover {
+    color: #7ac043;
+}
+
+.drawerTopExtras {
+    display: none;
+    flex-shrink: 0;
+    padding: 0;
+    border-top: 1px solid #efefef;
+    background: #f8f8f8;
+}
+
+/* Slightly narrower search on medium desktops */
+@media (max-width: 1400px) {
+    .headerContainer {
+        gap: 24px;
+    }
+
+    .navLinksDesktop {
+        gap: 28px;
+    }
+
+    .searchWrap {
+        flex: 0 1 400px;
+        max-width: 400px;
+    }
+}
+
+/* Tablets */
 @media (max-width: 1024px) {
     .headerContainer {
-        gap: 12px;
+        gap: 16px;
+        padding: 10px 0;
+        min-height: 56px;
     }
 
     .logoWrap img {
         width: 140px !important;
+        height: auto !important;
     }
 
-    .navLinks {
-        gap: 12px;
+    .navLinksDesktop {
+        gap: 20px;
     }
 
-    .navLinks a {
-        font-size: 13px;
+    .navLinksDesktop a {
+        font-size: 12px;
     }
 
     .searchWrap {
-        order: 0;
-        flex-basis: auto;
         flex: 1 1 auto;
-    }
-
-    .searchInput {
-        font-size: 12px;
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .logoWrap img {
-        width: 120px !important;
-    }
-
-    .navLinks {
-        display: none;
-    }
-
-    .searchWrap {
-        order: 0;
-        flex-basis: auto;
-        flex: 1 1 auto;
-    }
-
-    .searchInput {
-        font-size: 12px;
-        width: 100%;
+        max-width: none;
+        min-width: 140px;
     }
 
     .actions {
-        gap: 8px;
+        gap: 12px;
     }
 }
-@media (max-width: 425px) {
+
+/* Mobile */
+@media (max-width: 768px) {
     .headerContainer {
         flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
+        gap: 10px;
+    }
+
+    .logoWrap img {
+        width: 120px !important;
+        height: auto !important;
+    }
+
+    .navLinksDesktop {
+        display: none;
+    }
+
+    .menuToggle {
+        display: flex;
+    }
+
+    .searchWrap {
+        order: 3;
+        flex: 1 1 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .actions {
+        margin-left: auto;
+        gap: 10px;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .headerContainer {
         gap: 8px;
         padding: 8px 0;
     }
 
     .logoWrap img {
         width: 100px !important;
-    }
-
-    .navLinks {
-        display: none;
-    }
-
-    .searchWrap {
-        order: 3;
-        width: 100%;
-        flex-basis: 100%;
+        height: auto !important;
     }
 
     .searchInput {
-        font-size: 12px;
-        padding: 6px 36px 6px 8px;
+        height: 34px;
+        padding: 0 40px 0 14px;
+        font-size: 11px;
+        border-radius: 18px;
     }
 
     .searchBtn {
-        padding: 0;
+        right: 10px;
     }
 
     .actions {
-        gap: 6px;
+        gap: 8px;
     }
 
     .iconBtn {
-        padding: 4px;
+        width: 24px;
+        height: 24px;
+        padding: 2px;
     }
 
-    .badge {
-        font-size: 9px;
-        min-width: 14px;
-        height: 14px;
+    .drawerTopExtras {
+        display: block;
     }
 }
 
+/* Extra small */
 @media (max-width: 375px) {
     .headerContainer {
         gap: 6px;
@@ -240,29 +379,17 @@
 
     .logoWrap img {
         width: 85px !important;
-    }
-
-    .searchWrap {
-        order: 3;
-        width: 100%;
-        flex-basis: 100%;
+        height: auto !important;
     }
 
     .searchInput {
+        height: 32px;
+        padding: 0 36px 0 12px;
         font-size: 11px;
-        padding: 5px 36px 5px 7px;
-    }
-
-    .searchBtn {
-        padding: 0;
     }
 
     .actions {
-        gap: 4px;
-    }
-
-    .iconBtn {
-        padding: 3px;
+        gap: 6px;
     }
 
     .iconBtn svg {
@@ -271,10 +398,10 @@
     }
 
     .badge {
-        font-size: 8px;
+        top: -4px;
+        right: -5px;
         min-width: 12px;
         height: 12px;
-        top: -4px;
-        right: -4px;
+        font-size: 8px;
     }
 }

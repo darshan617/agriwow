@@ -134,6 +134,13 @@
     color: #8dba3b;
 }
 
+.footerNavGroup {
+    display: grid;
+    gap: 28px 20px;
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+}
+
 .footerNavCol {
     min-width: 0;
 }
@@ -145,6 +152,21 @@
     letter-spacing: 0.04em;
     margin: 0 0 14px;
     text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+    .footerNavGroup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 2rem;
+        justify-content: space-between;
+    }
+
+    .footerNavCol {
+        flex: 1;
+    }
 }
 
 .footerNavList {
@@ -286,6 +308,16 @@
     }
 }
 
+@media (max-width: 767px) {
+    .footerNavGroup {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footerNavCol:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (max-width: 768px) {
     .footerTop .row {
         flex-direction: column;
@@ -340,7 +372,7 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 480px) {
     .footerTop {
         padding: 32px 0 24px;
     }
@@ -356,6 +388,19 @@
     .footerMainGrid {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .footerNavGroup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 2rem;
+        justify-content: space-between;
+    }
+
+    .footerNavCol:last-child {
+        grid-column: auto;
     }
 
     .footerBrand {
@@ -377,11 +422,11 @@
     }
 
     .footerNavHeading {
-        font-size: 0.95rem;
+        font-size: 10px;
     }
 
     .footerNavList li a {
-        font-size: 0.85rem;
+        font-size: 10px;
     }
 
     .footerPayments {
@@ -389,13 +434,25 @@
     }
 
     .footerLegal {
-        flex-direction: column;
         align-items: center;
         gap: 6px;
     }
 
     .footerCopyright {
         font-size: 0.75rem;
+    }
+
+    .footerForm input {
+        padding: 8px;
+    }
+
+    .footerFormButtonIcon {
+        font-size: 13px;
+    }
+
+    .inputIconRight {
+        top: 20%;
+        right: 5px;
     }
 
 }

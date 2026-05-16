@@ -1,20 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import farmEquipments from '@/assets/images/agri-equipments.jpg'
-import farmEquipmentsItem from '@/assets/images/farm-eqip.png'
 import styles from '@/components/home/components/farm-equipmemts/FarmEqipments.module.css'
 import ProductsItem from '@/common-components/products/ProductsItem'
 
 const FarmEquipments = ({
     bannerImage = farmEquipments,
-    equipmentImage = farmEquipmentsItem,
-    leftImage = null,
     title = "Farm Equipment's",
     bannerAlt = 'Farm Equipments',
-    equipmentAlt = 'Equipment',
-    leftAlt = '',
-    leftImageClassName = '',
-    leftImageWrapperClassName = '',
 }) => {
     return (
         <section className="sectionSpace" data-aos="zoom-in">

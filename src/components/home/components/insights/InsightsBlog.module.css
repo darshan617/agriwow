@@ -134,6 +134,69 @@
     cursor: pointer;
 }
 
+/* ── Swiper wrapper (mobile only) ─────────────────────────── */
+.swiper {
+    padding-bottom: 36px !important; /* room for pagination dots */
+}
+
+/* ── Card size adjustments for swiper (≤768px) ────────────── */
+@media (max-width: 768px) {
+    .section {
+        padding: 0 16px 40px;
+    }
+
+    .media {
+        aspect-ratio: 16 / 9;
+    }
+
+    .media img {
+        padding: 6px;
+        border-radius: 12px;
+    }
+
+    .cardBody {
+        padding: 4px 16px 20px;
+    }
+
+    .category {
+        font-size: 10px;
+        margin: 0 0 6px;
+    }
+
+    .meta {
+        gap: 8px 12px;
+        margin-bottom: 8px;
+    }
+
+    .metaItem {
+        font-size: 10px;
+    }
+
+    .metaIcon {
+        font-size: 12px;
+    }
+
+    .titleBold span {
+        font-size: 13px;
+    }
+
+    .cardTitle {
+        font-size: 12px;
+        margin: 0 0 6px;
+        -webkit-line-clamp: 2;
+    }
+
+    .excerpt {
+        font-size: 10px;
+        -webkit-line-clamp: 3;
+    }
+
+    .heading {
+        font-size: 20px;
+        margin-top: 20px;
+    }
+}
+
 @media (max-width: 1024px) {
     .section {
         padding: 0 50px 30px;
@@ -152,10 +215,11 @@
     }
 
     .heading {
-        font-size: 25px;
-        margin-bottom: 28px;
+        font-size: 20px;
+        margin-top: 20px;
+
     }
     .section {
-        padding: 0 0 30px;
+        padding: 0 0 60px;
     }
 }

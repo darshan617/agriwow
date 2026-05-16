@@ -89,15 +89,6 @@ const ProductsItem = ({
     products = productList,
 
     bannerImage = productImage,
-
-    promoTitle = 'Power Sprayer',
-
-
-    promoExtras = null,
-    promoFooter = null,
-    promoOverlayClassName = '',
-    promoFooterClassName = '',
-    promoExtrasClassName = '',
     productsSectionClassName = '',
     sectionClassName = 'sectionSpace',
 }) => {
