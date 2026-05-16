@@ -53,3 +53,12 @@
     padding: 10px 0;
   }
 }
+
+@media (max-width: 575px) {
+  .item span {
+    font-size: 10px;
+  }
+  .marqueeContent {
+    gap: 10px;
+  }
+}

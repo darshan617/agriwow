@@ -63,7 +63,7 @@ const VideoSection = () => {
                                             aria-label={`Watch${slide.title ? ` ${slide.title}` : ''} on YouTube`}
                                         >
                                             <IoPlay className={`${styles.playIcon}`} aria-hidden="true" />
-                                        </a>
+                                        </a>    
                                         <div className={`${styles.footer}`}>
                                             <span className={`${styles.footerText}`}>
                                                 Watch more videos on Youtube

@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import Image from 'next/image'
 import exclusiveDeal from '@/assets/images/deal.png'
 import accurate from '@/assets/icon/accurate.png'
@@ -16,7 +16,7 @@ const ExclusiveDeal = () => {
                     </div>
                     <div className={`${styles.exclusiveDealContent}`}>
                         <div className={`${styles.exclusiveDealRow} row`}>
-                            <div className="col-md-12">
+                            <div className={`${styles.exclusiveDealTitleCol} col-md-12`}>
                                 <h2 className={`${styles.exclusiveDealTitle}`}>
                                     Power Up Productivity with <span>Exclusive Deals</span>
                                 </h2>
@@ -46,8 +46,8 @@ const ExclusiveDeal = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`${styles.exclusiveDealItemWrapper} col-lg-3 col-md-6 border-0`}>
-                                <div className={`${styles.exclusiveDealItem} d-flex flex-row gap-2 border-end-0`}>
+                            <div className={`${styles.exclusiveDealItemWrapper} col-lg-3 col-md-6`}>
+                                <div className={`${styles.exclusiveDealItem} d-flex flex-row gap-2 `}>
                                     <Image src={shield} alt="Shield" />
                                     <div>
                                         <h3 className={`${styles.exclusiveDealItemTitle}`}>Trusted Service Network</h3>
@@ -75,4 +75,3 @@ const ExclusiveDeal = () => {
 
 
 export default ExclusiveDeal
-

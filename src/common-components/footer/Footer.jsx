@@ -66,33 +66,35 @@ const Footer = () => {
                                     <Link href="tel:0000000000" className={styles.footerPhoneLink}>000-000-0000</Link>
                                 </p>
                             </div>
-                            <nav className={`${styles.footerNavCol}`} aria-label="Agriwow">
-                                <h3 className={`${styles.footerNavHeading}`}>Agriwow</h3>
-                                <ul className={`${styles.footerNavList}`}>
-                                    <li><Link href="/">Home</Link></li>
-                                    <li><Link href="#">My Account</Link></li>
-                                    <li><Link href="#">Videos</Link></li>
-                                    <li><Link href="#">Testimonials</Link></li>
-                                    <li><Link href="#">Blog</Link></li>
-                                </ul>
-                            </nav>
-                            <nav className={`${styles.footerNavCol}`} aria-label="Help">
-                                <h3 className={`${styles.footerNavHeading}`}>Help</h3>
-                                <ul className={`${styles.footerNavList}`}>
-                                    <li><Link href="#">Contact Us</Link></li>
-                                    <li><Link href="#">Track My Order</Link></li>
-                                    <li><Link href="#">Buying Guide</Link></li>
-                                </ul>
-                            </nav>
-                            <nav className={`${styles.footerNavCol}`} aria-label="FAQs">
-                                <h3 className={`${styles.footerNavHeading}`}>FAQs</h3>
-                                <ul className={`${styles.footerNavList}`}>
-                                    <li><Link href="#">Order Tracking</Link></li>
-                                    <li><Link href="#">Cancellation and Return</Link></li>
-                                    <li><Link href="#">Refund</Link></li>
-                                    <li><Link href="#">Payment Option</Link></li>
-                                </ul>
-                            </nav>
+                            <div className={styles.footerNavGroup}>
+                                <nav className={styles.footerNavCol} aria-label="Agriwow">
+                                    <h3 className={styles.footerNavHeading}>Agriwow</h3>
+                                    <ul className={styles.footerNavList}>
+                                        <li><Link href="/">Home</Link></li>
+                                        <li><Link href="#">My Account</Link></li>
+                                        <li><Link href="#">Videos</Link></li>
+                                        <li><Link href="#">Testimonials</Link></li>
+                                        <li><Link href="#">Blog</Link></li>
+                                    </ul>
+                                </nav>
+                                <nav className={styles.footerNavCol} aria-label="Help">
+                                    <h3 className={styles.footerNavHeading}>Help</h3>
+                                    <ul className={styles.footerNavList}>
+                                        <li><Link href="#">Contact Us</Link></li>
+                                        <li><Link href="#">Track My Order</Link></li>
+                                        <li><Link href="#">Buying Guide</Link></li>
+                                    </ul>
+                                </nav>
+                                <nav className={styles.footerNavCol} aria-label="FAQs">
+                                    <h3 className={styles.footerNavHeading}>FAQs</h3>
+                                    <ul className={styles.footerNavList}>
+                                        <li><Link href="#">Order Tracking</Link></li>
+                                        <li><Link href="#">Cancellation and Return</Link></li>
+                                        <li><Link href="#">Refund</Link></li>
+                                        <li><Link href="#">Payment Option</Link></li>
+                                    </ul>
+                                </nav>
+                            </div>
                             <div className={`${styles.footerSocialWrap}`}>
                                 <div className={`${styles.footerSocial}`}>
                                     <Link href="#" className={styles.footerSocialBtn} aria-label="Facebook"><FaFacebookF /></Link>

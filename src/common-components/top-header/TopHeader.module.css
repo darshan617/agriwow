@@ -201,29 +201,77 @@
         justify-content: left;
     }
 
-    .topHeaderLeft ul {
-        display: none !important;
-    }
-
-
     .topHeaderCenter {
         align-items: center;
-        gap: 6px !important;
+        gap: 50px !important;
     }
 
     .topHeaderTicker p {
         font-size: 13px;
     }
 
-    .shopNowButton {
+    /* .shopNowButton {
        display: none;
-    }
-
-    .topHeaderRight {
+    } */
+    .topHeaderLeft ul{
         display: none;
     }
+}
 
-    .topHeaderRightIcon{
-        display: none;
+@media (max-width: 480px) {
+    .topHeaderBar .topHeaderBarExtras {
+        display: none !important;
     }
+}
+
+.drawerExtras {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 18px;
+}
+
+.drawerExtras .topHeaderLeft ul {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0 ;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.drawerExtras .topHeaderLeft li {
+    list-style: none;
+    border-bottom: 1px solid #ececec;
+}
+
+.drawerExtras .topHeaderLeft a {
+    display: block;
+    padding: 12px 0;
+    font-size: 13px;
+    color: #323333;
+    text-decoration: none;
+}
+
+.drawerExtras .topHeaderRight {
+    align-items: flex-start;
+    width: 100%;
+}
+
+.drawerExtras .topHeaderRight h2 {
+    font-size: 12px;
+}
+
+.drawerExtras .topHeaderRight a {
+    font-size: 14px;
+}
+
+.drawerExtras .socialIcons {
+    justify-content: flex-start;
+    gap: 8px !important;
+}
+
+.drawerExtras .topHeaderRightIcon {
+    font-size: 14px;
+    padding: 4px;
 }
