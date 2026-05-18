@@ -10,9 +10,6 @@ const PostHarvest = ({ postHarvestData }) => {
         sectionClassName=""
         title="Post Harvest"
         bannerImage={postHarvestBanner}
-        promoTitle={<div className={`${styles.industrialPromoTitle} `}><span>Powering</span> Your <br />
-          Post Harvest Process</div>}
-        promoSubtitle={<div className={`${styles.industrialPromoSubtitle} display-none`}></div>}
         agricultureProductsData={postHarvestData}
       />
     </div>

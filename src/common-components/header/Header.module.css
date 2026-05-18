@@ -133,7 +133,6 @@
 }
 
 .menuToggle {
-    display: none;
     align-items: center;
     justify-content: center;
     padding: 4px;
@@ -228,7 +227,7 @@
 
 .drawerLinks a {
     padding: 14px 18px;
-    font-size: 14px;
+    font-size: 11px;
     color: #545454;
     font-weight: 600;
     text-transform: capitalize;
@@ -251,7 +250,6 @@
     background: #f8f8f8;
 }
 
-/* Slightly narrower search on medium desktops */
 @media (max-width: 1400px) {
     .headerContainer {
         gap: 24px;
@@ -267,7 +265,6 @@
     }
 }
 
-/* Tablets */
 @media (max-width: 1024px) {
     .headerContainer {
         gap: 16px;
@@ -299,12 +296,7 @@
     }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    .headerContainer {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
+    @media (max-width: 768px) {
 
     .logoWrap img {
         width: 120px !important;
@@ -318,41 +310,25 @@
     .menuToggle {
         display: flex;
     }
-
-    .searchWrap {
-        order: 3;
-        flex: 1 1 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
     .actions {
         margin-left: auto;
         gap: 10px;
     }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
-    .headerContainer {
-        gap: 8px;
-        padding: 8px 0;
-    }
-
     .logoWrap img {
         width: 100px !important;
         height: auto !important;
     }
 
     .searchInput {
-        height: 34px;
-        padding: 0 40px 0 14px;
-        font-size: 11px;
-        border-radius: 18px;
+        display: none;
     }
 
     .searchBtn {
-        right: 10px;
+        right: 0;
+        top: 2px;
     }
 
     .actions {
@@ -368,15 +344,12 @@
     .drawerTopExtras {
         display: block;
     }
+    .headerContainer {
+        gap: 0;
+    }
 }
 
-/* Extra small */
 @media (max-width: 375px) {
-    .headerContainer {
-        gap: 6px;
-        padding: 6px 0;
-    }
-
     .logoWrap img {
         width: 85px !important;
         height: auto !important;
@@ -389,7 +362,7 @@
     }
 
     .actions {
-        gap: 6px;
+        gap: 6px;   
     }
 
     .iconBtn svg {
@@ -404,4 +377,5 @@
         height: 12px;
         font-size: 8px;
     }
+    
 }

@@ -254,22 +254,22 @@
     }
 
     .exclusiveDealItemTitle {
-        font-size: 14px;
+        font-size: 13px;
         padding-top: 0;
     }
 
     .exclusiveDealItemDescription {
-        font-size: 12px;
+        font-size: 11px;
         margin-bottom: 0;
     }
 
     .bannerBtn {
         margin-top: 16px;
-        padding: 8px 36px;
+        padding: 8px 20px;
     }
 }
 
-@media (max-width: 425px) {
+@media  (max-width: 375px) {
     .ExclusiveDealSection {
         padding: 10px 0;
     }
@@ -286,7 +286,7 @@
 
     .exclusiveDealBanner img {
         border-radius: 14px;
-        object-fit: cover;  /* ← was 'contain', that's why image wasn't filling */
+        object-fit: cover;  
         width: 100%;
         height: 100%;
     }

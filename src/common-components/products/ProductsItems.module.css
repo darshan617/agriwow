@@ -339,6 +339,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
+  .promoImage {
+    object-fit: scale-down;
+  }
+  
+  .promoCard {
+    top: -44px;
+  }
 
 }
 
@@ -358,8 +365,20 @@
   }
   .promoCard {
     height: 80%;
+    top: 0;
   }
   .imageWrap{
     min-height: 100px;
+  }
+  .promoImage {
+    object-fit: scale-down;
+  }
+}
+@media (max-width: 375px) {
+  .promoCard {
+    top: -20px;
+  }
+  .promoImage {
+    object-fit: cover;
   }
 }

@@ -10,7 +10,9 @@ const BestSelling = ({ bestSellingData }) => {
       title="Best Selling"
       bannerImage={bannerImage}
       agricultureProductsData={bestSellingData}
+      variant="bestSelling"
     />
+
   )
 }
 

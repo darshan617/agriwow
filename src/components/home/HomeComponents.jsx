@@ -30,10 +30,12 @@ const HomeComponents = () => {
   const farmEquipmentsData = homeData?.data?.products?.farm_equipments
   const industrialProductsData = homeData?.data?.products?.industrial_products
   const postHarvestData = homeData?.data?.products?.post_harvest
-  const bestSellingData = homeData?.data?.products?.best_selling
   const foogingMachineData = homeData?.data?.products?.fogging_machines
   const gardeningToolsData = homeData?.data?.products?.garden_tools
   const insightsBlogData = homeData?.data?.blogs
+  const bestSellingData = homeData?.data?.products?.best_selling
+  const topRatedData = homeData?.data?.products?.top_rated
+  
 
   
   return (
@@ -54,7 +56,7 @@ const HomeComponents = () => {
       <FoogingMachine foogingMachineData={foogingMachineData}/>
       <BestSelling bestSellingData={bestSellingData}/>
       <ExclusiveDeal />
-      <TopRating />
+      <TopRating topRatedData={topRatedData}/>
       <VideoSection />
       <InsightsBlog insightsBlogData={insightsBlogData}/>
       <Footer />

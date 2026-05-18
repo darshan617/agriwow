@@ -29,9 +29,6 @@ const PostCard = ({ post }) => (
         fill
         className={styles.mediaImage}
       />
-      <div className={`${styles.ribbon}`} aria-hidden>
-        <p className={`${styles.ribbonText}`}>{post?.title}</p>
-      </div>
     </div>
     <div className={`${styles.cardBody}`} data-aos="zoom-in" data-aos-delay="200">
       <p className={`${styles.category}`}>{post?.category}</p>
