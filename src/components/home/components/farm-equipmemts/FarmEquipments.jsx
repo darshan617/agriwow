@@ -35,18 +35,20 @@ const FarmEquipments = ({
                 <div className={`${styles.productsWrapper}`}>
                     {farmEquipmentsData?.map((item) => (
                         <ProductCard key={item?.id}
-                        image={item?.gallery[0]}
-                        imageHover={item?.gallery[1]}
-                        discount={item?.discount}
-                        isBestSeller={item?.isBestSeller}
-                        name={item?.name}
-                        price={item?.selling_price}
-                        oldPrice={item?.price}
-                        reviews={item?.total_reviews}
-                        rating={item?.rating}
-                    />
+                            image={item?.gallery[0]}
+                            imageHover={item?.gallery[1]}
+                            discount={item?.discount}
+                            isBestSeller={item?.isBestSeller}
+                            name={item?.name}
+                            price={item?.selling_price}
+                            oldPrice={item?.price}
+                            reviews={item?.total_reviews}
+                            rating={item?.rating}
+                        />
                     ))}
                 </div>
+                    
+
             </div>
         </section>
     )
