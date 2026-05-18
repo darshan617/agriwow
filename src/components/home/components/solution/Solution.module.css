@@ -1,211 +1,178 @@
-.title{
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-.leftContent {
-    position: relative;
-    height: auto;
-}
-.leftContent:hover{
-    transform: translateY(-10px);
-    transition: all .3s;
-    border-radius: 20px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-.rightContent {
-    position: relative;
-    height: auto;
-}
-.rightContent:hover{
-    border-radius: 20px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-.rightContent:hover{
-    transform: translateY(-10px);
-    transition: all .3s;
-}
-.imageTextWrapper {
-    position: relative;
+.title {
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.trackImageBg{
-    position: relative;
-    color: transparent;
-    width: 100%;
-    height: 260px;
-    border-radius: 20px;
+.leftContent,
+.rightContent {
+  position: relative;
+  height: auto;
+  transition: all 0.3s;
 }
+
+.leftContent:hover,
+.rightContent:hover {
+  transform: translateY(-10px);
+  border-radius: 20px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.imageTextWrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.trackImageBg {
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+}
+
 .textOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 2;
-    border-radius: 20px;
-    padding: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  padding: 30px 36px;
 }
 
 .btn {
-    cursor: pointer;
-    color: black;
-    background: linear-gradient(to right, #8dba3b, #f6c417);
-    border: 1px solid;
-    border-radius: 8px;
-    outline: none;
-    width: 159px;
-    padding: 9px;
-    font-size: 12px;
-    font-weight: 600;
-    transition: all .3s;
+  cursor: pointer;
+  color: black;
+  background: linear-gradient(to right, #8dba3b, #f6c417);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  width: 159px;
+  padding: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
+
 @media (max-width: 1024px) {
-    .textOverlay {
-        padding: 20px;
-    }
-    .title{
-        font-size: 25px;
-    }
-    .description{
-        font-size: 14px;
-    }
-}
-@media (max-width: 1024px) {
-    .leftContent,
-    .rightContent {
+  .leftContent,
+  .rightContent {
       padding: 0 10px;
-    }
-  
-    .imageTextWrapper {
-      position: relative;
-    }
-  
-    .trackImageBg {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  
-    .textOverlay {
-      padding: 20px 24px;
-    }
-  
-    .title {
-      font-size: 1.6rem;
-    }
-  
-    .description {
-      font-size: 0.9rem;
-    }
   }
-  
-  @media (max-width: 768px) {
-    .leftContent,
-    .rightContent {
+
+  .trackImageBg {
+      height: 220px !important;
+  }
+
+  .textOverlay {
+      padding: 24px 28px;
+  }
+
+  .title {
+      font-size: 1.4rem;
+  }
+
+  .description {
+      font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .leftContent,
+  .rightContent {
       margin-bottom: 24px;
       padding: 0;
-    }
-  
-    .imageTextWrapper {
-      border-radius: 12px;
-      overflow: hidden;
-    }
-  
-    .trackImageBg {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  
-    .textOverlay {
-      padding: 16px 20px;
-    }
-  
-    .title {
-      font-size: 1.4rem;
-      line-height: 1.3;
-    }
-  
-    .description {
-      font-size: 0.875rem;
-      line-height: 1.5;
-    }
-  
-    .btn {
-      padding: 10px 16px;
-      font-size: 0.875rem;
-    }
   }
-  
-  @media (max-width: 480px) {
-    .leftContent,
-    .rightContent {
+
+  .trackImageBg {
+      height: 220px !important;
+  }
+
+  .textOverlay {
+      padding: 20px 24px;
+  }
+
+  .title {
+      font-size: 1.3rem;
+      line-height: 1.3;
+  }
+
+  .description {
+      font-size: 0.85rem;
+      line-height: 1.5;
+  }
+
+  .btn {
+      padding: 9px 16px;
+      font-size: 0.85rem;
+      width: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .leftContent,
+  .rightContent {
       margin-bottom: 16px;
       padding: 0;
-    }
-  
-    .trackImageBg {
-      height: 260px;
-      object-fit: cover;
-    }
-  
-    .textOverlay {
-      padding: 14px 16px;
-    }
-  
-    .title {
-      font-size: 14px;
-      line-height: 1.3;
-    }
-  
-    .description {
-      font-size: 12px;
-      line-height: 1.5;
-    }
-  
-    .btn {
-      margin-top: -7px;
-      padding: 5px 14px;
-      font-size: 12px;
-      width: fit-content;
-    }
-    .trackImageBg {
-      height: auto;
-      object-fit: cover;
-    }
   }
-  
-  @media (max-width: 375px) {
-    .trackImageBg {
-      height: 220px;
-      object-fit: cover;
-    }
-  
-    .textOverlay {
-      padding: 12px 14px;
-    }
-  
-    .title {
-      font-size: 1.05rem;
+
+  .trackImageBg {
+      height: 220px !important;
+  }
+
+  .textOverlay {
+      padding: 16px 18px;
+  }
+
+  .title {
+      font-size: 1.1rem;
+      line-height: 1.3;
+  }
+
+  .description {
+      font-size: 0.8rem;
+      line-height: 1.5;
+  }
+
+  .btn {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 11px;
+      width: fit-content;
+  }
+}
+
+@media (max-width: 375px) {
+  .trackImageBg {
+      height: 200px !important;
+  }
+
+  .textOverlay {
+      padding: 14px 16px;
+  }
+
+  .title {
+      font-size: 1rem;
       line-height: 1.25;
-    }
-  
-    .description {
+  }
+
+  .description {
       font-size: 0.75rem;
       line-height: 1.4;
-    }
-  
-    .btn {
-      padding: 8px 16px;
-      font-size: 0.75rem;
-      width: 100%;
-      text-align: center;
-    }
   }
+
+  .btn {
+      padding: 7px 14px;
+      font-size: 0.75rem;
+      width: fit-content;
+  }
+}

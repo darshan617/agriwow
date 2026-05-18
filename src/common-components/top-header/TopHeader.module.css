@@ -210,9 +210,6 @@
         font-size: 13px;
     }
 
-    /* .shopNowButton {
-       display: none;
-    } */
     .topHeaderLeft ul{
         display: none;
     }
@@ -248,7 +245,7 @@
 .drawerExtras .topHeaderLeft a {
     display: block;
     padding: 12px 0;
-    font-size: 13px;
+    font-size: 11px;
     color: #323333;
     text-decoration: none;
 }

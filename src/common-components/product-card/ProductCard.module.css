@@ -7,7 +7,7 @@
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  height: 100%;
+  min-height: auto;
 }
 
 .cardTags {
@@ -103,11 +103,17 @@
 
 .productName {
   color: #1d1d1d;
-  min-height: 32px;
   margin: 8px 0 7px;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.35;
+  min-height: calc(1.35em * 3);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .priceRow {
@@ -186,6 +192,12 @@
 @media (max-width: 1199px) {
   .productCard {
     padding: 8px 8px 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .imageWrap {
+    min-height: 130px;
   }
 }
 
