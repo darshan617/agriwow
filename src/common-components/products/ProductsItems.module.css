@@ -8,7 +8,7 @@
 .productsTitle {
   color: #111;
   letter-spacing: .2px;
-  font-size: 35px;
+  font-size: 40px;
   font-weight: 700;
   padding-bottom: 30px;
   margin: 0;
@@ -18,8 +18,8 @@
 .promoCard {
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 450px;
+  height: auto;
+  min-height: 500px;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -27,6 +27,7 @@
 .promoImage {
   object-fit: cover;
   object-position: center;
+  height: auto;
 }
 
 .promoOverlay {
@@ -313,21 +314,24 @@
   .sectionSpace {
     padding: 30px 0;
   }
+  .promoCard {
+    min-height: 450px;
+  }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   .cardsRow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .promoCard {
-    min-height: 220px;
+    min-height: 340px;
   }
 }
 
 @media (max-width: 768px) {
   .productsSection {
-    padding: 16px 0 24px;
+    padding: 16px 0 0;
   }
 
   .productsTitle {
@@ -344,41 +348,52 @@
   }
   
   .promoCard {
-    top: -44px;
-  }
+    top: -10px;
+    }
 
 }
 
-@media (max-width: 480px) {
-  .cardsRow {
-    grid-template-columns: 1fr;
-  }
-  .promoCol,
-  .cardsCol {
-    flex: 0 0 50%;
-    width: 50%;
-    max-width: 50%;
+@media (max-width: 767px) {
+  .promoCard{
+    display: none;
   }
   .productsTitle {
     font-size: 20px;
     padding-bottom: 0;
   }
-  .promoCard {
-    height: 80%;
-    top: 0;
+}
+/* @media (max-width: 576px) {
+  .promoCard{
+    display: none;
   }
+
+} */
+
+@media (max-width: 480px) {
+  .cardsRow {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .productsTitle {
+    font-size: 20px;
+    padding-bottom: 0;
+  }
+  
   .imageWrap{
     min-height: 100px;
   }
   .promoImage {
-    object-fit: scale-down;
+    display: none;
   }
+  .promoCard{
+    display: none;
+  }
+ 
 }
 @media (max-width: 375px) {
-  .promoCard {
-    top: -20px;
-  }
+ 
   .promoImage {
-    object-fit: cover;
+    display: none;
   }
 }

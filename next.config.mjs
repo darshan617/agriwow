@@ -4,7 +4,12 @@ const nextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
   images: {
-    domains: ['goyalinfotech.in'],
+    remotePatterns: [
+      {
+        hostname: 'goyalinfotech.in',
+      },
+    ],   
+    unoptimized: true,
   },
 };
 

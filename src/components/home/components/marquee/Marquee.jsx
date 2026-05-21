@@ -13,21 +13,12 @@ export default function Marquee() {
         <section className={`${styles.marqueeSection}`}>
             <div className={`${styles.marquee}`}>
                 <div className={`${styles.marqueeTrack}`}>
-                    {[...Array(2)].map((_, index) => (
+                    {[...Array(4)].map((_, index) => (
                         <div className={`${styles.marqueeContent}`} key={index}>
                             {marqueeItems.map((item, i) => (
                                 <div className={`${styles.item}`} key={i}>
-                                    <span style={{
-                                        display: "inline-block",
-                                        marginRight: 8,
-                                        width: 7,
-                                        height: 7,
-                                        background: "black",
-                                        borderRadius: "50%",
-                                        verticalAlign: "middle"
-                                    }}></span>
+                                    <span className={`${styles.dot}`}></span>
                                     <span>{item}</span>
-
                                 </div>
                             ))}
                         </div>
