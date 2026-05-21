@@ -1,6 +1,10 @@
 .title {
   font-weight: 700;
   margin-bottom: 10px;
+  font-size: 38px;
+}
+.description {
+  font-size: 18px;
 }
 
 .leftContent,
@@ -12,9 +16,9 @@
 
 .leftContent:hover,
 .rightContent:hover {
-  transform: translateY(-10px);
+  transform: translateY(-5px);
   border-radius: 20px;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  box-shadow: rgba(38, 57, 77, 0.356) 0px 20px 30px -5px;
 }
 
 .imageTextWrapper {
@@ -25,7 +29,7 @@
 
 .trackImageBg {
   width: 100% !important;
-  height: 220px !important;
+  height: 300px;
   object-fit: cover;
   display: block;
   border-radius: 20px;
@@ -48,12 +52,12 @@
   cursor: pointer;
   color: black;
   background: linear-gradient(to right, #8dba3b, #f6c417);
-  border: 1px solid transparent;
+  border: 1px solid #b9b9b9;
   border-radius: 8px;
   outline: none;
-  width: 159px;
-  padding: 9px;
-  font-size: 12px;
+  width: 200px;
+  padding: 12px;
+  font-size: 14px;
   font-weight: 600;
   transition: all 0.3s;
 }
@@ -82,7 +86,7 @@
   }
 
   .description {
-      font-size: 0.875rem;
+      font-size: 14px;
   }
 }
 

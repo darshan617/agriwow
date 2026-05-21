@@ -6,7 +6,7 @@
 
 .card {
   position: relative;
-  height: 500px;
+  height: 550px;
   border-radius: 25px;
   overflow: hidden;
 }
@@ -204,44 +204,5 @@
     width: 25px;
     height: 25px;
     padding: 5px;
-  }
-}
-
-@media (max-width: 375px) {
-  .card {
-    height: 340px;
-    border-radius: 8px;
-  }
-
-  .title {
-    font-size: 1rem;
-  }
-
-  .inner {
-    padding: 12px;
-  }
-
-  .playBtn {
-    width: 42px;
-    height: 42px;
-  }
-
-  .playIcon {
-    font-size: 1.1rem;
-  }
-
-  .footer {
-    gap: 4px;
-  }
-
-  .footerText,
-  .viewAll {
-    font-size: 0.7rem;
-  }
-
-  .navBtn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.875rem;
   }
 }

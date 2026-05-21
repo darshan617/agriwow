@@ -1,3 +1,9 @@
+/* ── Newsletter (top section) ── */
+.footer {
+    background: #333333;
+    color: #fff;
+}
+
 .footerForm input {
     padding: 15px;
     border-radius: 5px;
@@ -9,22 +15,17 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 10px;
+    color: #fff;
 }
 
 .footerPara {
     color: #8dba3b;
     margin-bottom: 2px;
-
-}
-
-.footerText {
-    color: #fff;
-
 }
 
 .footerShortPara {
-    color: #ffffff80;
-    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
 }
 
 .footerFormIconWrapper {
@@ -58,7 +59,7 @@
 
 .footerFormPara {
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     padding-top: 20px;
 }
 
@@ -67,47 +68,47 @@
 }
 
 .footerTop {
-    border-bottom: 1.5px solid #999999;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     padding: 60px 0;
 }
 
-.footer {
-    background: #323333;
-}
-
+/* ── Main footer content ── */
 .footerBottom {
-    padding: 0 0 60px;
+    padding: 0 0 48px;
 }
 
 .footerMain {
-    padding: 40px 0 8px;
+    padding: 48px 0 0;
 }
 
 .footerMainGrid {
     display: grid;
-    gap: 2rem 1.5rem;
     grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
 }
 
+/* Brand column */
 .footerBrand {
-    max-width: 320px;
+    max-width: 300px;
 }
 
 .footerLogoLink {
     display: inline-block;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .footerLogoLink img {
     height: auto;
-    max-width: 100%;
+    max-width: 170px;
+    width: auto;
 }
 
 .footerBrandText {
-    color: #ffffff80;
-    font-size: 11px;
-    line-height: 1.55;
-    margin: 0 0 20px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 24px;
 }
 
 .footerPhone {
@@ -125,9 +126,11 @@
 
 .footerPhoneLink {
     color: #fff;
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 700;
+    letter-spacing: 0.01em;
     text-decoration: none;
+    line-height: 1;
 }
 
 .footerPhoneLink:hover {
@@ -136,9 +139,8 @@
 
 .footerNavGroup {
     display: grid;
-    gap: 28px 20px;
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 24px;
 }
 
 .footerNavCol {
@@ -147,26 +149,11 @@
 
 .footerNavHeading {
     color: #8dba3b;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.04em;
-    margin: 0 0 14px;
+    letter-spacing: 0.06em;
+    margin: 0 0 16px;
     text-transform: uppercase;
-}
-
-@media (min-width: 768px) {
-    .footerNavGroup {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: flex-start;
-        gap: 2rem;
-        justify-content: space-between;
-    }
-
-    .footerNavCol {
-        flex: 1;
-    }
 }
 
 .footerNavList {
@@ -175,19 +162,27 @@
     padding: 0;
 }
 
-
 .footerNavList li:last-child {
     margin-bottom: 0;
 }
 
 .footerNavList a {
-    color: #ffffff80;
-    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 14px;
+    line-height: 1.4;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .footerNavList a:hover {
     color: #8dba3b;
+}
+
+.footerAside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
 }
 
 .footerSocialWrap {
@@ -198,20 +193,21 @@
 .footerSocial {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 6px;
 }
 
 .footerSocialBtn {
-    color: #fff;
-    border: 1px solid #fff;
-    justify-content: center;
     align-items: center;
-    width: 22px;
-    height: 22px;
+    border: 1px solid #fff;
     border-radius: 2px;
-    text-decoration: none;
-    transition: color .2s, border-color .2s, background .2s;
+    color: #fff;
     display: inline-flex;
+    font-size: 15px;
+    height: 24px;
+    justify-content: center;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    width: 24px;
 }
 
 .footerSocialBtn:hover {
@@ -224,9 +220,9 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 12px 16px;
-    justify-content: flex-end;
-    margin-top: 28px;
+    gap: 10px 14px;
+    justify-content: flex-start;
+    margin-top: 0;
 }
 
 .footerPaymentMaestro {
@@ -234,21 +230,21 @@
     line-height: 0;
 }
 
-.footerPaymentIcon {
-    display: inline-flex;
-    line-height: 0;
+.footerPayments img {
+    height: auto;
+    object-fit: contain;
 }
 
 .footerBottomRow {
-    padding-top: 22px;
-    margin-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: 40px;
+    padding-top: 24px;
     row-gap: 1rem;
 }
 
-
 .footerCopyright {
-    color: #ffffff80;
-    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
     line-height: 1.5;
     margin: 0;
 }
@@ -274,8 +270,8 @@
 }
 
 .footerLegal a {
-    color: #ffffff80;
-    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -284,41 +280,95 @@
     color: #8dba3b;
 }
 
-@media (max-width: 1024px) {
-    .footerMainGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 32px 24px;
-    }
-
-    .footerBrand {
-        grid-column: span 2;
-    }
-
-    .footerSocialWrap {
-        grid-column: span 2;
-    }
-
-    .footerText {
-        font-size: 1.6rem;
-    }
-
-    .footerForm {
-        padding-left: 0;
-        margin-top: 16px;
-    }
-}
-
-@media (max-width: 767px) {
+/* ── Tablet ── */
+@media (min-width: 768px) {
     .footerNavGroup {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px 40px;
     }
 
     .footerNavCol:last-child {
-        grid-column: 1 / -1;
+        grid-column: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .footerMainGrid {
+        grid-template-columns: minmax(220px, 1.35fr) minmax(0, 2.2fr) minmax(120px, 0.55fr);
+        column-gap: 48px;
+        row-gap: 0;
+        align-items: start;
+    }
+
+    .footerBrand {
+        grid-column: 1;
+        max-width: 280px;
+    }
+
+    .footerNavGroup {
+        grid-column: 2;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 48px;
+    }
+
+    .footerAside {
+        grid-column: 3;
+        align-items: flex-end;
+        align-self: stretch;
+        justify-content: space-between;
+        min-height: 100%;
+        padding-top: 2px;
+    }
+
+    .footerSocialWrap {
+        justify-content: flex-end;
+    }
+
+    .footerPayments {
+        justify-content: flex-end;
+        margin-top: auto;
+    }
+
+    .footerLegal {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 1200px) {
+    .footerMainGrid {
+        column-gap: 64px;
+    }
+
+    .footerNavGroup {
+        gap: 24px 72px;
+    }
+}
+
+@media (max-width: 991px) {
+    .footerMainGrid {
+        gap: 36px;
+    }
+
+    .footerAside {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .footerPayments {
+        margin-left: auto;
     }
 }
 
 @media (max-width: 768px) {
+    .footerTop {
+        padding: 40px 0;
+    }
+
     .footerTop .row {
         flex-direction: column;
         gap: 24px;
@@ -336,33 +386,24 @@
         width: 100%;
     }
 
-    .footerMainGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 28px 20px;
+    .footerMain {
+        padding-top: 36px;
     }
 
-    .footerBrand {
-        grid-column: span 2;
-    }
-
-    .footerSocialWrap {
-        grid-column: span 2;
+    .footerAside {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .footerPayments {
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: flex-start;
+        margin-left: 0;
     }
 
     .footerBottomRow {
-        flex-direction: column;
-        gap: 12px;
         text-align: center;
     }
 
     .footerLegal {
-        flex-wrap: wrap;
         justify-content: center;
         gap: 8px 16px;
     }
@@ -385,61 +426,23 @@
         font-size: 0.8rem;
     }
 
-    .footerMainGrid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
     .footerNavGroup {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: flex-start;
-        gap: 2rem;
-        justify-content: space-between;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 16px;
     }
 
     .footerNavCol:last-child {
-        grid-column: auto;
-    }
-
-    .footerBrand {
-        grid-column: span 1;
-    }
-
-    .footerSocialWrap {
-        grid-column: span 1;
-    }
-
-    .footerSocial {
-        gap: 10px;
+        grid-column: 1 / -1;
     }
 
     .footerSocialBtn {
-        width: 36px;
-        height: 36px;
-        font-size: 0.9rem;
+        width: 28px;
+        height: 28px;
+        font-size: 11px;
     }
 
     .footerNavHeading {
-        font-size: 10px;
-    }
-
-    .footerNavList li a {
-        font-size: 10px;
-    }
-
-    .footerPayments {
-        gap: 10px;
-    }
-
-    .footerLegal {
-        align-items: center;
-        gap: 6px;
-    }
-
-    .footerCopyright {
-        font-size: 0.75rem;
+        font-size: 12px;
     }
 
     .footerForm input {
@@ -454,7 +457,6 @@
         top: 20%;
         right: 5px;
     }
-
 }
 
 @media (max-width: 375px) {
@@ -467,46 +469,22 @@
         padding-left: 28px;
     }
 
-    .footerBrandText {
-        font-size: 0.8rem;
-    }
-
     .footerPhoneLink {
-        font-size: 0.85rem;
+        font-size: 1.1rem;
     }
 
     .footerSocialBtn {
-        width: 32px;
-        height: 32px;
-        font-size: 0.8rem;
-    }
-
-    .footerNavHeading {
-        font-size: 0.9rem;
-    }
-
-    .footerNavList li a {
-        font-size: 0.8rem;
+        width: 26px;
+        height: 26px;
+        font-size: 10px;
     }
 
     .footerPayments img {
-        width: 30px !important;
+        width: 32px !important;
     }
 
-    .footerCopyright {
-        font-size: 0.7rem;
-    }
-
+    .footerCopyright,
     .footerLegal a {
         font-size: 0.72rem;
-    }
-
-    .footerMainGrid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .footerBrand {
-        grid-column: span 1;
     }
 }

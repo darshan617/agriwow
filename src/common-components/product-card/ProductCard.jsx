@@ -6,8 +6,6 @@ import { FiHeart } from 'react-icons/fi'
 import imageHoverImage from '@/assets/images/hover-product.png'
 import styles from '@/common-components/product-card/ProductCard.module.css'
 
-
-
 const ProductCard = ({
     discount = '0',
     isBestSeller = true,
@@ -19,6 +17,9 @@ const ProductCard = ({
     imageHover = imageHoverImage,
     rating = '4.5',
 }) => {
+    const hoverImage = imageHover || image
+    const showHoverImage = Boolean(image && hoverImage && hoverImage !== image)
+
     return (
         <div className={`${styles.productCard}`} data-aos="fade-up" data-aos-delay="100">
 
@@ -26,70 +27,72 @@ const ProductCard = ({
                 <span className={`${styles.discountTag}`}>
                     {discount}% OFF
                 </span>
-
                 {isBestSeller && (
                     <span className={`${styles.bestsellerTag}`}>
                         BESTSELLER
                     </span>
                 )}
             </div>
+
             <div className={`${styles.imageWrap}`}>
-                <Image
-                    src={image}
-                    alt={name}
-                    width={180}
-                    height={180}
-                    className={`${styles.productImage}`}
-                />
-                <Image
-                    src={imageHover}      
-                    alt={name}
-                    width={180}
-                    height={180}
-                    className={`${styles.productImageHover}`}
-                />
+                <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
+                    <Image
+                        src={image}
+                        alt={name}
+                        fill
+                        sizes="(max-width: 575px) 45vw, (max-width: 1199px) 25vw, 20vw"
+                        className={`${styles.productImg}`}
+                    />
+                </div>
+                {showHoverImage && (
+                    <div className={`${styles.imageLayer} ${styles.imageLayerHover}`}>
+                        <Image
+                            src={hoverImage}
+                            alt={name}
+                            fill
+                            sizes="(max-width: 575px) 45vw, (max-width: 1199px) 25vw, 20vw"
+                            className={`${styles.productImg}`}
+                        />
+                    </div>
+                )}
             </div>
-            <div className={`${styles.ratingLine}`}>
-                <span className={`${styles.ratingBadge}`}>
-                    <IoMdStar style={{ marginRight: 2, verticalAlign: 'middle' }} />
-                    {rating}
-                </span>
-                <span className={`${styles.reviewText} `}>
-                    ({reviews})
-                </span>
+
+            <div className={`${styles.cardInfo}`}>
+                <div className={`${styles.ratingLine}`}>
+                    <span className={`${styles.ratingBadge}`}>
+                        <IoMdStar style={{ marginRight: 2, verticalAlign: 'middle' }} />
+                        {rating}
+                    </span>
+                    <span className={`${styles.reviewText}`}>
+                        ({reviews})
+                    </span>
+                </div>
+
+                <h3 className={`${styles.productName}`}>
+                    {name}
+                </h3>
+
+                <p className={`${styles.priceRow}`}>
+                    <span className={`${styles.currentPrice}`}>
+                        ₹ {price}
+                    </span>
+                    <span className={`${styles.oldPrice}`}>
+                        ₹ {oldPrice}
+                    </span>
+                </p>
             </div>
-            <h3 className={`${styles.productName}`}>
-                {name}
-            </h3>
-            <p className={`${styles.priceRow}`}>
-                <span className={`${styles.currentPrice}`}>
-                    ₹ {price}
-                </span>
-                <span className={`${styles.oldPrice}`}>
-                    ₹ {oldPrice}
-                </span>
-            </p>
+
             <div className={`${styles.cardActions}`}>
-                <button
-                    type="button"
-                    className={`${styles.addToCartBtn}`}
-                >
-                    <MdAddShoppingCart className={`${styles.btnIcon}`} />
-                    Add to Cart
+                <button type="button" className={`${styles.addToCartBtn}`}>
+                    <span>
+                        <MdAddShoppingCart className={`${styles.btnIcon}`} />
+                        Add to Cart
+                    </span>
                 </button>
-
-                <button
-                    type="button"
-                    className={`${styles.buyNowBtn}`}
-                >
-                    Buy Now
+                <button type="button" className={`${styles.buyNowBtn}`}>
+                    <span>Buy Now</span>
                 </button>
-
-                <button
-                    type="button"
-                    className={`${styles.wishlistBtn}`}
-                    aria-label="Add to wishlist"
-                >
+                <button type="button" className={`${styles.wishlistBtn}`} aria-label="Add to wishlist">
                     <FiHeart />
                 </button>
             </div>

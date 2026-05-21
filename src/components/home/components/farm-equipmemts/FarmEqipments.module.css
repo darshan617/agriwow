@@ -24,7 +24,54 @@
 
 .swiperWrapper {
     position: relative;
-    padding: 0 60px;
+    padding: 0 48px;
+}
+
+.productsSwiper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.productsSwiper :global(.swiper-slide) {
+    height: auto;
+}
+
+.swiperNav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.swiperNavBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    background: #ffffff;
+    color: #239c3d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    pointer-events: auto;
+    transition: background 0.2s ease;
+}
+
+.swiperNavBtn:hover {
+    background: #f0f7eb;
+}
+
+.swiperNavBtn:global(.swiper-button-disabled) {
+    opacity: 0.35;
+    cursor: not-allowed;
 }
 
 
@@ -83,12 +130,9 @@
 .productsWrapper {
     background: #dae6c5;
     border-radius: 0 0 24px 24px;
-    padding: 60px 30px;
+    padding: 30px;
+    padding-top: 60px;
     margin-top: -30px;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
 }
 
 .farmProductsSection {
@@ -101,22 +145,35 @@
     background: #8dba3b;
 }
 
+.viewAllBtnWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .viewAllBtn {
-    margin-top: 12px;
-    padding: 16px;
     border: 0;
     background: none;
     color: #239c3d;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     text-decoration: underline;
+    text-underline-offset: 4px;
     cursor: pointer;
-  }
+    padding: 8px 12px;
+}
+
+.viewAllBtn:hover {
+    color: #1a7a30;
+}
 
 @media (max-width: 1024px) {
     .productsWrapper {
-        padding: 60px 10px;
-        grid-template-columns: repeat(4, 1fr);
+        padding: 60px 10px 30px;
+    }
+
+    .swiperWrapper {
+        padding: 0 40px;
     }
 }
 
@@ -135,10 +192,11 @@
     }
 
     .productsWrapper {
-        padding: 60px 10px;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(1, 1fr);
-        gap: 10px;
+        padding: 60px 10px 10px;
+    }
+
+    .swiperWrapper {
+        padding: 0 36px;
     }
 
     .farmProductsSection {
@@ -169,8 +227,16 @@
         padding: 0;
 
     }
+    .swiperWrapper {
+        padding: 0;
+    }
+
+    .swiperNavBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
     .productsWrapper {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        padding: 60px 25px 10px;
     }
 }

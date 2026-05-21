@@ -15,10 +15,11 @@ const TopBanner = ({ categoriesData }) => {
                     spaceBetween={5}
                     slidesPerView={4}
                     loop={true}
-                    autoplay={{ delay: 2000, disableOnInteraction: false }}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
                     speed={1000}
                     breakpoints={{
-                        375: { slidesPerView: 3 },
+                        0: { slidesPerView: 3 },
+                        375: { slidesPerView: 4 },
                         425: { slidesPerView: 4 },
                         576: { slidesPerView: 5 },
                         768: { slidesPerView: 6 },

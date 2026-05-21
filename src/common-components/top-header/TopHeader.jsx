@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TopHeaderLeftLinks,
   TopHeaderHelp,
@@ -7,8 +7,17 @@ import {
 import styles from "@/common-components/top-header/TopHeader.module.css";
 
 const TopHeader = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className={styles.topHeaderBar}>
+    <div className={`${styles.topHeaderBar} ${scrolled ? styles.hidden : ""}`}>
       <div className="container">
         <div className={styles.TopHeader}>
           <div className="col-md-4">

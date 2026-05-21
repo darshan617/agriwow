@@ -46,9 +46,9 @@ const HomeComponents = () => {
       <HomeBanner />
       <Marquee />
       <ProductsItem agricultureProductsData={agricultureProductsData}/>
-      <Benefit />
-      <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
       <Detail />
+      <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
+      <Benefit />
       <IndustrialProduct industrialProductsData={industrialProductsData}/>
       <Solution />
       <GardenTool gardeningToolsData={gardeningToolsData}/>
