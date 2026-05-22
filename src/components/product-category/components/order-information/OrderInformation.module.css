@@ -1,0 +1,179 @@
+/* OrderInformation.module.css — full styles for OrderInformation.jsx */
+
+.orderInformation {
+  background: #258139;
+  padding: 30px 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.orderInformation :global(.detail-section) {
+  width: 100%;
+}
+
+.orderInformation :global(.row) {
+  align-items: stretch;
+}
+
+.orderInformation :global(.col-md-4) {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.orderInformationContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #ffffff;
+  width: 100%;
+  min-width: 0;
+}
+
+.orderInformationContentText {
+  flex: 1;
+  min-width: 0;
+}
+
+.orderInformationContentText h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.orderInformationContentText p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.orderInformationContent > svg {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.orderInformationContent img {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .orderInformation {
+    padding: 24px 0 8px;
+  }
+
+  .orderInformationContent {
+    gap: 12px;
+  }
+
+  .orderInformationContentText h2 {
+    font-size: 16px;
+  }
+
+  .orderInformationContentText p {
+    font-size: 12px;
+  }
+
+  .orderInformationContentText p br {
+    display: none;
+  }
+
+  .orderInformationContent > svg {
+    width: 52px;
+    height: 52px;
+    padding: 8px;
+  }
+
+  .orderInformationContent img {
+    width: 52px;
+    height: 52px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .orderInformation :global(.col-md-4) {
+    margin-bottom: 16px;
+  }
+
+  .orderInformationContentText h2 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .orderInformationContentText p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .orderInformationContent > svg {
+    width: 48px;
+    height: 48px;
+    padding: 8px;
+  }
+
+  .orderInformationContent img {
+    width: 48px;
+    height: 48px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 575px) {
+  .orderInformation {
+    padding: 16px 0 8px;
+  }
+
+  .orderInformation :global(.detail-section) {
+    padding: 0;
+  }
+
+  .orderInformation :global(.col-md-4) {
+    margin-bottom: 0;
+  }
+
+  .orderInformation :global(.col-md-4:last-child) .orderInformationContent {
+    padding-bottom: 0;
+  }
+
+  .orderInformationContent {
+    padding: 14px 0;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .orderInformationContentText h2 {
+    font-size: 14px;
+  }
+
+  .orderInformationContentText p {
+    font-size: 10px;
+  }
+
+  .orderInformationContent > svg {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+  }
+
+  .orderInformationContent img {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+  }
+}
