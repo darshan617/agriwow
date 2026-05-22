@@ -1,7 +1,6 @@
 import React from 'react'
-import TopHeader from '@/common-components/top-header/TopHeader'
-import Header from '@/common-components/header/Header'
-import TopBanner from '@/components/home/components/banner/top-banner/TopBanner'
+import TopHeader from '@/components/layout/top-header/TopHeader'
+import TopBanner from '@/components/layout/top-banner/TopBanner'
 import HomeBanner from '@/components/home/components/banner/home-banner/HomeBanner'
 import Marquee from '@/components/home/components/marquee/Marquee'
 import ProductsItem from '@/common-components/products/ProductsItem'
@@ -18,7 +17,7 @@ import ExclusiveDeal from '@/components/home/components/deal/ExclusiveDeal'
 import TopRating from '@/components/home/components/top-rating/TopRating'
 import VideoSection from '@/components/home/components/video/VideoSection'
 import InsightsBlog from '@/components/home/components/insights/InsightsBlog'
-import Footer from '@/common-components/footer/Footer'
+import Footer from '@/components/layout/footer/Footer'
 import { useGetHomeDataQuery } from '@/redux/apis/homeApi'
 const HomeComponents = () => {
 
@@ -41,14 +40,13 @@ const HomeComponents = () => {
   return (
     <>
       <TopHeader />
-      <Header />
-      <TopBanner categoriesData={categoriesData}/>
+      <TopBanner categoriesData={categoriesData} />
       <HomeBanner />
       <Marquee />
       <ProductsItem agricultureProductsData={agricultureProductsData}/>
-      <Benefit />
-      <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
       <Detail />
+      <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
+      <Benefit />
       <IndustrialProduct industrialProductsData={industrialProductsData}/>
       <Solution />
       <GardenTool gardeningToolsData={gardeningToolsData}/>

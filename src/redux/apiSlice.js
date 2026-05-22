@@ -7,6 +7,8 @@ export const apiSlice = createApi({
   }),
   tagTypes: [
     'HomeData',
+    'MenuProductData',
+    'Products',
   ],
   endpoints: (builder) => ({}),
 });

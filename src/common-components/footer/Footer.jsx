@@ -95,22 +95,24 @@ const Footer = () => {
                                     </ul>
                                 </nav>
                             </div>
-                            <div className={`${styles.footerSocialWrap}`}>
-                                <div className={`${styles.footerSocial}`}>
-                                    <Link href="#" className={styles.footerSocialBtn} aria-label="Facebook"><FaFacebookF /></Link>
-                                    <Link href="#" className={`${styles.footerSocialBtn}`} aria-label="X"><FaXTwitter /></Link>
-                                    <Link href="#" className={styles.footerSocialBtn} aria-label="Instagram"><FaInstagram /></Link>
-                                    <Link href="#" className={styles.footerSocialBtn} aria-label="YouTube"><FaYoutube /></Link>
+                            <div className={styles.footerAside}>
+                                <div className={styles.footerSocialWrap}>
+                                    <div className={styles.footerSocial}>
+                                        <Link href="#" className={styles.footerSocialBtn} aria-label="Facebook"><FaFacebookF /></Link>
+                                        <Link href="#" className={styles.footerSocialBtn} aria-label="X"><FaXTwitter /></Link>
+                                        <Link href="#" className={styles.footerSocialBtn} aria-label="Instagram"><FaInstagram /></Link>
+                                        <Link href="#" className={styles.footerSocialBtn} aria-label="YouTube"><FaYoutube /></Link>
+                                    </div>
+                                </div>
+                                <div className={styles.footerPayments} aria-hidden>
+                                    <span className={styles.footerPaymentMaestro} title="Maestro">
+                                        <Image src={maestro} alt="Maestro" width={35} priority />
+                                    </span>
+                                    <Image src={visa} alt="Visa" width={38} priority />
+                                    <Image src={paypal} alt="PayPal" width={38} priority />
+                                    <Image src={mastercard} alt="Mastercard" width={38} priority />
                                 </div>
                             </div>
-                        </div>
-                        <div className={`${styles.footerPayments}`} aria-hidden>
-                            <span className={`${styles.footerPaymentMaestro}`} title="Maestro">
-                                <Image src={maestro} alt="Maestro" width={35} priority />
-                            </span>
-                            <Image src={visa} alt="Visa" width={38} priority />
-                            <Image src={paypal} alt="paypal" width={38} priority />
-                            <Image src={mastercard} alt="mastercard" width={38} priority />
                         </div>
                     </div>
                     <div className={`row align-items-center ${styles.footerBottomRow}`}>

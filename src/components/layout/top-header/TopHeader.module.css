@@ -1,0 +1,320 @@
+.siteHeader {
+    position: relative;
+    width: 100%;
+    z-index: 200;
+}
+
+.topHeaderBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 201;
+    height: auto;
+    overflow: hidden;
+    background: #f0f0f0;
+    border-bottom: 1px solid #e8e8e8;
+    transition:
+        max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.35s ease,
+        border-color 0.35s ease;
+}
+
+.collapsed {
+    max-height: 0;
+    opacity: 0;
+    border-bottom-color: transparent;
+    pointer-events: none;
+}
+
+.TopHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    max-width: 100%;
+}
+
+.topHeaderLeft ul {
+    color: #323333;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    list-style: none;
+    font-weight: 500;
+}
+
+.topHeaderLeft a:hover {
+    color: #239c3d;
+}
+
+.topHeaderCenter {
+    list-style: none;
+    font-size: 16px;
+    color: #323333;
+    align-items: center;
+}
+
+.topHeaderCenter span {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.topHeaderTickerWrapper {
+    overflow: hidden;
+}
+
+.shopNowButton {
+    background: linear-gradient(to right, #f6c417, #8dba3b);
+    border: 1px solid #323333;
+    padding: 10px 18px;
+    height: auto;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.topHeaderRight h2 {
+    color: #5a5a5a;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.topHeaderRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.socialIcons {
+    align-items: center;
+}
+
+.topHeaderRight a {
+    color: #239c3d;
+    margin-bottom: 0;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.topHeaderRightIcon {
+    color: #239c3d;
+    cursor: pointer;
+    box-sizing: content-box;
+    border: 1px solid #239c3d;
+    border-radius: 2px;
+    padding: 2px;
+    font-size: 17px;
+    transition: all .3s;
+}
+
+.topHeaderTicker p {
+    animation: verticalTicker 3s linear infinite;
+    font-size: 18px;
+}
+
+@keyframes verticalTicker {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 1024px) {
+    .topHeaderLeft ul {
+        font-size: 10px;
+        gap: 0.75rem !important;
+        flex-wrap: wrap;
+    }
+
+    .topHeaderTicker p {
+        font-size: 13px;
+    }
+
+    .shopNowButton {
+        padding: 8px 14px;
+        font-size: 11px;
+    }
+
+    .topHeaderRight h2 {
+        font-size: 10px;
+    }
+
+    .topHeaderRight a {
+        font-size: 12px;
+    }
+
+    .topHeaderRightIcon {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .topHeaderBar {
+        max-height: 140px;
+    }
+
+    .topHeaderBar.collapsed {
+        max-height: 0;
+    }
+
+    .TopHeader> :global(.col-md-4) {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+
+    .topHeaderLeft ul {
+        width: 100%;
+    }
+
+    .topHeaderCenter {
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 8px !important;
+    }
+
+    .topHeaderTicker p {
+        font-size: 12px;
+    }
+
+    .topHeaderRight {
+        align-items: center;
+        width: 100%;
+    }
+
+    .TopHeader> :global(.col-md-4.d-flex) {
+        justify-content: center !important;
+    }
+
+    .socialIcons {
+        justify-content: center;
+    }
+
+    .shopNowButton {
+        padding: 7px 9px;
+        font-size: 9px;
+        width: 100px;
+    }
+}
+
+@media (max-width: 575px) {
+    .topHeaderBar {
+        max-height: 56px;
+    }
+
+    .topHeaderBar.collapsed {
+        max-height: 0;
+    }
+
+    .TopHeader {
+        flex-direction: column;
+        align-items: center;
+        padding: 8px 0;
+        justify-content: left;
+    }
+
+    .topHeaderCenter {
+        align-items: center;
+        gap: 50px !important;
+    }
+
+    .topHeaderTicker p {
+        font-size: 11px;
+    }
+
+    .topHeaderLeft ul {
+        display: none;
+    }
+
+    .topHeaderBar .topHeaderBarExtras {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .drawerExtras .topHeaderLeft a {
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+}
+
+.drawerExtras {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 18px;
+}
+
+.drawerExtras .topHeaderLeft ul {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.drawerExtras .topHeaderLeft li {
+    list-style: none;
+    border-bottom: 1px solid #ececec;
+}
+
+.drawerExtras .topHeaderLeft a {
+    display: block;
+    padding: 12px 0;
+    font-size: 11px;
+    color: #323333;
+    text-decoration: none;
+}
+
+.drawerExtras .topHeaderRight {
+    align-items: flex-start;
+    width: 100%;
+}
+
+.drawerExtras .topHeaderRight h2 {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.drawerExtras .topHeaderRight a {
+    font-size: 14px;
+}
+
+.drawerExtras .socialIcons {
+    justify-content: flex-start;
+    gap: 8px !important;
+}
+
+.drawerExtras .topHeaderRightIcon {
+    font-size: 14px;
+    padding: 4px;
+}

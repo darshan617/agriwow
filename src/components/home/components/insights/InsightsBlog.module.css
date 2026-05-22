@@ -3,8 +3,8 @@
 }
 
 .heading {
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 40px;
+    font-weight: 700;
     text-align: center;
     margin: 0 0 36px;
     color: #1a1a1a;
@@ -134,12 +134,10 @@
     cursor: pointer;
 }
 
-/* ── Swiper wrapper (mobile only) ─────────────────────────── */
 .swiper {
-    padding-bottom: 36px !important; /* room for pagination dots */
+    padding-bottom: 36px !important; 
 }
 
-/* ── Card size adjustments for swiper (≤768px) ────────────── */
 @media (max-width: 768px) {
     .section {
         padding: 0 16px 40px;
@@ -192,7 +190,7 @@
     }
 
     .heading {
-        font-size: 20px;
+        font-size: 30px;
         margin-top: 20px;
     }
 }
