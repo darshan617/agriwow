@@ -21,11 +21,20 @@ const testApi = apiSlice.injectEndpoints({
             },
             providesTags:['MenuProductData'],
         }),
+        getProducts: builder.query({
+            query: (params = {}) => ({
+                url: "/products",
+                method: "GET",
+                params,
+            }),
+            providesTags: ['Products'],
+        }),
 
     }),
 })
 
 export const {
     useGetHomeDataQuery,
-    useGetMenuProductDataQuery
+    useGetMenuProductDataQuery,
+    useGetProductsQuery,
 } = testApi

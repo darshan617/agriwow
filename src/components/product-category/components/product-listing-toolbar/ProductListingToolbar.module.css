@@ -1,0 +1,296 @@
+.toolbar {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.resultsText {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #2b2b2b;
+  line-height: 1.4;
+}
+
+.resultsCount {
+  color: #2b2b2b;
+}
+
+.sortGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sortLabel {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #2b2b2b;
+  white-space: nowrap;
+}
+
+.sortSelectWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sortSelect {
+  appearance: none;
+  min-width: 200px;
+  padding: 10px 36px 10px 14px;
+  font-size: 12.5px;
+  font-weight: 400;
+  font-family: inherit;
+  color: #2b2b2b;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+}
+
+.sortSelect:focus {
+  border-color: #239c3d;
+}
+
+.sortChevron {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  font-size: 12px;
+  color: #2b2b2b;
+}
+
+.activeFiltersRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.activeFiltersLabel {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #2b2b2b;
+  white-space: nowrap;
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 55px;
+  padding: 12px 27px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #3f8708;
+  border-radius: 6px;
+  line-height: 1.2;
+}
+
+.chipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.chipRemove:hover {
+  opacity: 0.85;
+}
+
+.clearAll {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #fd8a01;
+  text-decoration: underline;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.clearAll:hover {
+  color: #e06d0a;
+}
+
+.productListWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.productListItem {
+  min-width: 0;
+  height: 100%;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 48px 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #9a9a9a;
+}
+
+.swiperWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.productsSwiper {
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+.swiperSlide {
+  height: auto;
+}
+
+.swiperNav {
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+  display: flex;
+}
+
+.swiperNavBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  background: none;
+}
+
+.swiperNavBtn:hover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.swiperNavBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1399px) {
+  .productListWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .productListWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chip {
+    gap: 10px;
+    padding: 10px 15px;
+    font-size: 10.5px;
+  }
+
+  .activeFiltersRow {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .productListWrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .sortSelect {
+    min-width: 180px;
+  }
+
+  .productListWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sortGroup {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .chip {
+    gap: 7px;
+    padding: 7px 12px;
+    font-size: 10px;
+  }
+
+  .productListWrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activeFiltersRow {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .productListWrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sortGroup {
+    display: none;
+  }
+
+  .resultsText {
+    font-size: 10px;
+  }
+
+  .resultsCount {
+    font-size: 10px;
+  }
+
+  .topRow {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .productListWrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -1,0 +1,23 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page main {
+  flex: 1;
+  /* Clear fixed promo bar (~60px) + main header (~70px) */
+  padding-top: 130px;
+}
+
+@media (max-width: 768px) {
+  .page main {
+    padding-top: 110px;
+  }
+}
+
+@media (max-width: 575px) {
+  .page main {
+    padding-top: 100px;
+  }
+}
