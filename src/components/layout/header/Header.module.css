@@ -861,6 +861,9 @@
        .logoWrap img {
            width: 75px !important;
        }
+       .scrolled .logoWrap img {
+        width: 75px !important;
+    }
 
        .actions {
            gap: 3px;

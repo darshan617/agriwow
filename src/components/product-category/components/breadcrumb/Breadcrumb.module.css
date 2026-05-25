@@ -1,6 +1,6 @@
 .title {
   color: #333;
-  margin: 20px 0 -14px;
+  margin: 34px 0 0;
   font-size: 28px;
   font-weight: 700;
 }
@@ -36,7 +36,7 @@
   }
 
   .pageLayout {
-    padding-bottom: 80px;
+    padding-bottom: 40px;
   }
 }
 

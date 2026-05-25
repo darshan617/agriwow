@@ -6,9 +6,9 @@
   background: #ffffff;
   padding-bottom: 4px;
   position: sticky;
-  top: 24px;
+  top: 90px;
   align-self: flex-start;
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 110px);
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 2;
