@@ -91,8 +91,8 @@ const ProductsItem = ({
                                         1024: {
                                             slidesPerView: isEquipment ? 4 : 3,
                                         },
-                                        1199: {
-                                            slidesPerView: isEquipment ? 5 : 4,
+                                        1200: {
+                                            slidesPerView: isEquipment ? 4 : 4,
                                         },
                                     }}
                                     className={styles.cardsRow}
@@ -110,6 +110,9 @@ const ProductsItem = ({
                                                 oldPrice={item?.price}
                                                 reviews={item?.total_reviews}
                                                 rating={item?.rating}
+                                                isTrending={item?.is_trending}
+                                                isFeatured={item?.is_featured}
+                                                isTopRated={item?.is_top_rated}
                                             />
                                         </SwiperSlide>
                                     ))}
