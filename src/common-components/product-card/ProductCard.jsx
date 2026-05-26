@@ -5,6 +5,7 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
 import imageHoverImage from "@/assets/images/hover-product.png";
 import styles from "@/common-components/product-card/ProductCard.module.css";
+import discountIcon from "@/assets/icon/discount.png";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -83,6 +84,7 @@ const ProductCard = ({
         </p>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
+            <Image src={discountIcon} alt="Discount" width={20} height={20} />
             <span>Save ₹ 9200</span>
           </div>
         )}

@@ -12,7 +12,7 @@ import styles from '@/components/layout/header/Header.module.css'
 import { useGetMenuProductDataQuery } from '@/redux/apis/homeApi'
 
 const NAV_LINKS = [
-    { href: '#', label: 'Home' },
+    { href: '/', label: 'Home' },
     { href: '#', label: 'Products' },
     { href: '#', label: 'Blogs' },
     { href: '#', label: 'Contact us' },
@@ -25,12 +25,12 @@ const renderMenuProductColumns = (menuProductData, { linkClassName, onLinkClick 
                 key={item?.name}
                 className={`${styles.megaColumn} ${item?.name === 'Top Rating' ? styles.megaColumnTopRating : ''}`}
             >
-                <p className={styles.megaColumnTitle}>{item?.name}</p>
+                <Link href={`/product-category/${item?.slug || "#"}`} className={styles.megaColumnTitle}>{item?.name}</Link>
                 <ul className={styles.megaList}>
                     {item?.subcategories?.map((link) => (
                         <li key={link?.slug ?? link?.name}>
                             <Link
-                                href={link?.slug ?? '#'}
+                                href={`/product-category/${item?.slug}/${link?.slug || "#"}`}
                                 className={linkClassName}
                                 onClick={onLinkClick}
                             >
@@ -45,7 +45,7 @@ const renderMenuProductColumns = (menuProductData, { linkClassName, onLinkClick 
             <h2 className={styles.megaColumnTitle}>Best Seller</h2>
             <ul className={styles.megaList}>
                 {menuProductData?.data?.Product?.map((prd) => (
-                    <li key={prd?.id ?? prd?.slug ?? prd?.name}>
+                    <li key={prd?.id ?? prd?.slug ?? prd?.name}>    
                         <Link
                             href={prd?.slug ?? '#'}
                             className={styles.megaProductCard}
@@ -125,18 +125,18 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         <header className={`${styles.headerOuter} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`container`}>
                 <div className={`${styles.headerContainer}`}>
-                    <div className={`${styles.logoWrap}`}>
+                    <Link href="/" className={`${styles.logoWrap}`}>
                         <Image src={logo} alt="Agriwow logo" width={800} priority />
-                    </div>
+                    </Link>
 
                     <nav className={`${styles.navLinksDesktop}`}>
                         {NAV_LINKS.map((item) => (
-                            item.label === 'Products' ? (
-                                <div key={item.label} className={styles.navItemWithMegaMenu}>
-                                    <Link href={item.href}>{item.label}</Link>
+                            item?.label === 'Products' ? (
+                                <div key={item?.label} className={styles.navItemWithMegaMenu}>
+                                    <Link href={item?.href || "#"}>{item?.label}</Link>
                                 </div>
                             ) : (
-                                <Link key={item?.label} href={item?.href}>{item?.label}</Link>
+                                <Link key={item?.label} href={item?.href || "#"}>{item?.label}</Link>
                             )
                         ))}
                     </nav>
@@ -243,7 +243,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                             </div>
                         ) : (
                             <Link key={item.label} href={item.href} onClick={closeMenu}>
-                                {item.label}
+                                {item?.label}
                             </Link>
                         )
                     )}

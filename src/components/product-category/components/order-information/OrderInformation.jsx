@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "@/components/product-category/components/order-information/OrderInformation.module.css";
-import shield from "@/assets/icon/shield.png";
+import shield from "@/assets/icon/shield2.png";
 import { FaShippingFast, FaUndo } from "react-icons/fa";
+import shipping from "@/assets/icon/truck.png";
+import returnIcon from "@/assets/icon/undo.png";
 import Image from "next/image";
 
 const OrderInformation = () => {
@@ -13,7 +15,7 @@ const OrderInformation = () => {
             <div className="row">
               <div className="col-md-4">
                 <div className={`${styles.orderInformationContent}`}>
-                  <FaShippingFast size={48} color="#239c3d" aria-hidden />
+                  <Image src={shipping} alt="Shipping" width={60} height={60} />
                   <div className={`${styles.orderInformationContentText}`}>
                     <h2>Free Shipping on Orders Over Rs.00</h2>
                     <p>
@@ -26,7 +28,7 @@ const OrderInformation = () => {
               </div>
               <div className="col-md-4">
                 <div className={`${styles.orderInformationContent}`}>
-                  <FaUndo size={48} color="#239c3d" aria-hidden />
+                  <Image src={returnIcon} alt="Return" width={60} height={60} />
                   <div className={`${styles.orderInformationContentText}`}>
                     <h2>Easy 30-day Returns</h2>
                     <p>

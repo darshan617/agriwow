@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    z-index: 201;
+    z-index: 200;
     height: auto;
     overflow: hidden;
     background: #f0f0f0;
@@ -144,6 +144,17 @@
     }
 }
 
+@media (max-width: 1399px) {
+    .shopNowButton {
+        padding: 7px 3px;
+        font-size: 10px;
+        width: 100px;
+    }
+    .topHeaderTicker p {
+        font-size: 16px;
+    }
+}
+
 @media (max-width: 1024px) {
     .topHeaderLeft ul {
         font-size: 10px;
@@ -156,8 +167,8 @@
     }
 
     .shopNowButton {
-        padding: 8px 14px;
-        font-size: 11px;
+        padding: 8px 10px;
+        font-size: 10px;
     }
 
     .topHeaderRight h2 {
@@ -170,6 +181,14 @@
 
     .topHeaderRightIcon {
         font-size: 12px;
+    }
+}
+
+@media (max-width: 992px) {
+    .shopNowButton {
+        padding: 7px 3px;
+        font-size: 10px;
+        width: 100px;
     }
 }
 
@@ -219,13 +238,13 @@
     }
 
     .shopNowButton {
-        padding: 7px 9px;
+        padding: 7px 3px;
         font-size: 9px;
         width: 100px;
     }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 767px) {
     .topHeaderBar {
         max-height: 56px;
     }
@@ -258,6 +277,10 @@
         display: none !important;
     }
 }
+
+/* @media (max-width: 575px) {
+   
+} */
 
 @media (max-width: 480px) {
     .drawerExtras .topHeaderLeft a {
