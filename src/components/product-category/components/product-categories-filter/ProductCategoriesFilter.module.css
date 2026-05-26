@@ -21,7 +21,7 @@
   max-width: 100%;
   background: #ffffff;
   padding-bottom: 20px;
-  border-top: 1px solid #e8e8e8;
+  /* border-top: 1px solid #e8e8e8; */
   margin-top: 8px;
   box-sizing: border-box;
 }
@@ -396,7 +396,6 @@
 
   .priceSection {
     max-width: none;
-    border-top: 1px solid #e8e8e8;
   }
 }
 

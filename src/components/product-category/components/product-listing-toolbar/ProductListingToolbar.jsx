@@ -13,11 +13,7 @@ export const SORT_OPTIONS = [
   { value: "name-desc", label: "Name: Z to A" },
 ];
 
-const INITIAL_FILTERS = [
-  { id: "price", label: "Price : ₹ 10,000 - ₹ 15,000" },
-  { id: "best-seller", label: "Best Seller" },
-  { id: "in-stock", label: "In Stock" },
-];
+const INITIAL_FILTERS = [];
 
 function ProductListingToolbar({
   resultCount,
