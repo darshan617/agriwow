@@ -5,7 +5,6 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
 import imageHoverImage from "@/assets/images/hover-product.png";
 import styles from "@/common-components/product-card/ProductCard.module.css";
-import discountIcon from "@/assets/icon/discount.png";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -102,15 +101,17 @@ const ProductCard = ({
         <h3 className={`${styles.productName}`}>{name}</h3>
 
         <p className={`${styles.priceRow}`}>
+
           <span className={`${styles.currentPrice}`}>₹ {price}</span>
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
+
         </p>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
-            <Image src={discountIcon} alt="Discount" width={20} height={20} />
-            <span>Save ₹ 9200</span>
-          </div>
-        )}
+            <span className={`${styles.discountText}`}>{discount || 0}% OFF</span>
+              <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
+            </div>
+        )}  
       </div>
 
       <div className={`${styles.cardActions}`}>

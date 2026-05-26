@@ -1,6 +1,5 @@
-/* ProductCategoriesFilter.module.css — full styles for ProductCategoriesFilter.jsx */
 
-.section {
+.CategorySection {
   width: 100%;
   max-width: 320px;
   background: #ffffff;
@@ -292,7 +291,7 @@
 }
 
 @media (max-width: 1024px) {
-  .section {
+  .CategorySection {
     max-width: 250px;
   }
 
@@ -306,7 +305,7 @@
 }
 
 @media (max-width: 768px) {
-  .section {
+  .CategorySection {
     display: none;
     position: static;
     max-height: none;
@@ -320,7 +319,7 @@
     background: rgba(0, 0, 0, 0.45);
   }
 
-  .section.sectionDrawerOpen {
+  .CategorySection.sectionDrawerOpen {
     display: block;
     position: fixed;
     top: 0;
@@ -402,7 +401,7 @@
 }
 
 @media (max-width: 575px) {
-  .section.sectionDrawerOpen {
+  .CategorySection.sectionDrawerOpen {
     max-width: 100%;
     width: 100%;
     padding: 0 16px 20px;

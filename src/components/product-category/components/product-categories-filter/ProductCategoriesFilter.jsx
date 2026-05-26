@@ -91,7 +91,7 @@ function CategoryCheckbox({ slug, name, count, isChecked, href }) {
       <span className={`${style.name}`}>{name}</span>
       {typeof count === "number" && count > 0 && (
         <span className={`${style.count}`}>
-          {String(count).padStart(2, "0")}
+          {String(count).padStart(2, "0") || "0"}
         </span>
       )}
     </Link>
@@ -125,7 +125,7 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
         />
       )}
       <aside
-        className={`${style.section} ${drawerOpen ? style.sectionDrawerOpen : ""}`}
+        className={`${style.CategorySection} ${drawerOpen ? style.sectionDrawerOpen : ""}`}
       >
         {drawerOpen && (
           <div className={style.drawerHeader}>
@@ -215,7 +215,7 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
                               {typeof sub?.products_count === "number" &&
                                 sub.products_count > 0 && (
                                   <span className={`${style.count}`}>
-                                    {String(sub.products_count).padStart(2, "0")}
+                                    {String(sub.products_count).padStart(2, "0") || "0"}
                                   </span>
                                 )}
                             </Link>

@@ -194,12 +194,8 @@ function ProductListingToolbar({
           <p className={`${styles.emptyState}`}>Loading products...</p>
         ) : isError ? (
           <p className={`${styles.emptyState}`}>
-            Failed to load products.
-          </p>
-        ) : paginatedProducts.length === 0 ? (
-          <p className={`${styles.emptyState}`}>
-            No products found in this category.
-          </p>
+            No products found.
+          </p>  
         ) : (
           paginatedProducts.map((item) => (
             <ProductCard
