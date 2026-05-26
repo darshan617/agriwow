@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { FaAngleUp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import style from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter.module.css";
+import { useGetMenuProductDataQuery } from "@/redux/apis/homeApi";
 
 const PRICE_MIN_BOUND = 1000;
 const PRICE_MAX_BOUND = 200000;
@@ -59,41 +62,16 @@ function PriceRangeSlider({ minValue, maxValue, onMinChange, onMaxChange }) {
   );
 }
 
-const CATEGORIES = [
-  { id: "agriculture-sprayers", name: "Agriculture Sprayers", count: 68 },
-  { id: "farm-equipments", name: "Farm Equipment's", count: 20 },
-  {
-    id: "fogging-machines",
-    name: "Fogging Machines",
-    count: 4,
-    subcategories: [
-      { id: "garden-tools-sub", name: "Garden Tools", count: 8 },
-      { id: "nursery-tools", name: "Nursery Tools", count: 8 },
-    ],
-  },
-  {
-    id: "garden-lawn-care",
-    name: "Garden & Lawn Care",
-    count: 17,
-    subcategories: [
-      { id: "garden-tools-sub", name: "Garden Tools", count: 8 },
-      { id: "nursery-tools", name: "Nursery Tools", count: 8 },
-    ],
-  },
-  { id: "garden-tools", name: "Garden Tools", count: 27 },
-  { id: "industrial-products", name: "Industrial Products", count: 7 },
-  { id: "post-harvest", name: "Post Harvest", count: 5 },
-];
-
-function CheckboxItem({ id, name, count, isChecked, onToggle }) {
+function CategoryCheckbox({ slug, name, count, isChecked, href }) {
   return (
-    <label className={`${style.label}`} htmlFor={id}>
+    <Link href={href} className={`${style.label}`}>
       <input
         type="checkbox"
-        id={id}
+        id={slug}
         className={`${style.checkbox}`}
         checked={isChecked}
-        onChange={() => onToggle(id)}
+        readOnly
+        tabIndex={-1}
       />
       <span
         className={`${style.checkboxBox} ${isChecked ? `${style.checkboxBoxChecked}` : ""}`}
@@ -111,27 +89,31 @@ function CheckboxItem({ id, name, count, isChecked, onToggle }) {
         )}
       </span>
       <span className={`${style.name}`}>{name}</span>
-      <span className={`${style.count}`}>{String(count).padStart(2, "0")}</span>
-    </label>
+      {typeof count === "number" && count > 0 && (
+        <span className={`${style.count}`}>
+          {String(count).padStart(2, "0")}
+        </span>
+      )}
+    </Link>
   );
 }
 
 function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
+  const router = useRouter();
+  const { categorySlug: activeCategorySlug, subCategory: activeSubCategorySlug } =
+    router.query;
+
+  const { data: menuProductData, isFetching } = useGetMenuProductDataQuery();
+
+  const categories = useMemo(
+    () => menuProductData?.data?.AllCategory ?? [],
+    [menuProductData]
+  );
+
   const [isOpen, setIsOpen] = useState(true);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
-  const [selected, setSelected] = useState(new Set(["agriculture-sprayers"]));
   const [minPrice, setMinPrice] = useState(10000);
   const [maxPrice, setMaxPrice] = useState(100000);
-
-  function toggleCategory(id) {
-    const next = new Set(selected);
-    if (next.has(id)) {
-      next.delete(id);
-    } else {
-      next.add(id);
-    }
-    setSelected(next);
-  }
 
   return (
     <>
@@ -158,88 +140,124 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
             </button>
           </div>
         )}
-      <button
-        type="button"
-        className={`${style.header}`}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-      >
-        <h3 className={`${style.title}`}>Product Categories</h3>
-        <FaAngleUp
-          className={`${style.chevron} ${!isOpen ? `${style.chevronCollapsed}` : ""}`}
-        />
-      </button>
-
-      {isOpen && (
-        <ul className={`${style.list}`}>
-          {CATEGORIES.map((category) => {
-            const isChecked = selected.has(category.id);
-            const hasSubcategories =
-              category.subcategories && category.subcategories.length > 0;
-
-            return (
-              <li key={category.id} className={`${style.item}`}>
-                <CheckboxItem
-                  id={category.id}
-                  name={category.name}
-                  count={category.count}
-                  isChecked={isChecked}
-                  onToggle={toggleCategory}
-                />
-
-                {hasSubcategories && isChecked && (
-                  <ul className={`${style.subList}`}>
-                    {category.subcategories.map((sub) => (
-                      <li key={sub.id} className={`${style.subItem}`}>
-                        {/* <CheckboxItem
-                          id={sub.id}
-                          name={sub.name}
-                          count={sub.count}
-                          isChecked={selected.has(sub.id)}
-                          onToggle={toggleCategory}
-                        /> */}
-                        <span className={`${style.name}`}>{sub.name}</span>
-                        <span className={`${style.count}`}>
-                          {String(sub.count).padStart(2, "0")}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      )}
-
-      <div className={style.priceSection}>
         <button
           type="button"
-          className={style.header}
-          onClick={() => setIsPriceOpen(!isPriceOpen)}
-          aria-expanded={isPriceOpen}
+          className={`${style.header}`}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
         >
-          <h3 className={style.title}>Price</h3>
+          <h3 className={`${style.title}`}>Product Categories</h3>
           <FaAngleUp
-            className={`${style.chevron} ${!isPriceOpen ? style.chevronCollapsed : ""}`}
+            className={`${style.chevron} ${!isOpen ? `${style.chevronCollapsed}` : ""}`}
           />
         </button>
 
-        {isPriceOpen && (
-          <div className={style.priceContent}>
-            <p className={style.priceRange}>
-              ₹ {formatPrice(minPrice)} - ₹ {formatPrice(maxPrice)}
-            </p>
-            <PriceRangeSlider
-              minValue={minPrice}
-              maxValue={maxPrice}
-              onMinChange={setMinPrice}
-              onMaxChange={setMaxPrice}
-            />
-          </div>
+        {isOpen && (
+          <ul className={`${style.list}`}>
+            {isFetching && categories.length === 0 && (
+              <li className={`${style.item}`}>
+                <span className={`${style.name}`}>Loading categories...</span>
+              </li>
+            )}
+
+            {!isFetching && categories.length === 0 && (
+              <li className={`${style.item}`}>
+                <span className={`${style.name}`}>No categories available.</span>
+              </li>
+            )}
+
+            {categories.map((category) => {
+              const isCategoryActive =
+                activeCategorySlug === category?.slug;
+              const subcategories = category?.subcategories ?? [];
+              const hasSubcategories = subcategories.length > 0;
+
+              return (
+                <li key={category?.id ?? category?.slug} className={`${style.item}`}>
+                  <CategoryCheckbox
+                    slug={category?.slug}
+                    name={category?.name}
+                    count={
+                      typeof category?.products_count === "number"
+                        ? category.products_count
+                        : hasSubcategories
+                          ? subcategories.length
+                          : undefined
+                    }
+                    isChecked={isCategoryActive}
+                    href={`/product-category/${category?.slug}`}
+                  />
+
+                  {hasSubcategories && isCategoryActive && (
+                    <ul className={`${style.subList}`}>
+                      {subcategories.map((sub) => {
+                        const isSubActive =
+                          activeSubCategorySlug === sub?.slug;
+                        return (
+                          <li
+                            key={sub?.id ?? sub?.slug}
+                            className={`${style.subItem}`}
+                          >
+                            <Link
+                              href={`/product-category/${category?.slug}/${sub?.slug}`}
+                              className={`${style.label}`}
+                              style={{ padding: 0 }}
+                            >
+                              <span
+                                className={`${style.name}`}
+                                style={{
+                                  color: isSubActive ? "#239c3d" : undefined,
+                                  fontWeight: isSubActive ? 600 : 400,
+                                }}
+                              >
+                                {sub?.name}
+                              </span>
+                              {typeof sub?.products_count === "number" &&
+                                sub.products_count > 0 && (
+                                  <span className={`${style.count}`}>
+                                    {String(sub.products_count).padStart(2, "0")}
+                                  </span>
+                                )}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         )}
-      </div>
-    </aside>
+
+        <div className={style.priceSection}>
+          <button
+            type="button"
+            className={style.header}
+            onClick={() => setIsPriceOpen(!isPriceOpen)}
+            aria-expanded={isPriceOpen}
+          >
+            <h3 className={style.title}>Price</h3>
+            <FaAngleUp
+              className={`${style.chevron} ${!isPriceOpen ? style.chevronCollapsed : ""}`}
+            />
+          </button>
+
+          {isPriceOpen && (
+            <div className={style.priceContent}>
+              <p className={style.priceRange}>
+                ₹ {formatPrice(minPrice)} - ₹ {formatPrice(maxPrice)}
+              </p>
+              <PriceRangeSlider
+                minValue={minPrice}
+                maxValue={maxPrice}
+                onMinChange={setMinPrice}
+                onMaxChange={setMaxPrice}
+              />
+            </div>
+          )}
+        </div>
+      </aside>
     </>
   );
 }

@@ -17,6 +17,9 @@ const ProductCard = ({
   imageHover = imageHoverImage,
   rating = "4.5",
   type = "homePage",
+  isTrending = false,
+  isFeatured = false,
+  isTopRated = false,
 }) => {
   const hoverImage = imageHover || image;
   const showHoverImage = Boolean(image && hoverImage && hoverImage !== image);
@@ -28,7 +31,27 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        <span className={`${styles.discountTag}`}>{discount}% OFF</span>
+        {
+          type === "productPage" ? (
+            isBestSeller && (
+              <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+            )
+          ) && (
+            isTrending && (
+              <span className={`${styles.bestsellerTag}`}>TRENDING</span>
+            )
+          ) && (
+            isFeatured && (
+              <span className={`${styles.bestsellerTag}`}>FEATURED</span>
+            )
+          ) && (
+            isTopRated && (
+              <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
+            )
+          ) : (
+            <span className={`${styles.bestsellerTag  }`}>{discount}% OFF</span>
+          )
+        }
         {type === "productPage" ? (
           <button
             type="button"
