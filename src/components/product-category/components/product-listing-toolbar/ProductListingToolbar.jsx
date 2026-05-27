@@ -22,7 +22,7 @@ function ProductListingToolbar({
   onSortChange,
   pageSize = 12,
   isLoading = false,
-  isError = false,
+  isError = false,  
 }) {
   const [internalSortBy, setInternalSortBy] = useState("default");
   const sortBy = controlledSortBy ?? internalSortBy;

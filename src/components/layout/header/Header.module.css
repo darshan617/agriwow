@@ -1285,14 +1285,22 @@
     display: none;
   }
 
+  .searchWrap {
+    flex: 0 0 auto;
+    width: 32px;
+    min-width: 0;
+    max-width: 32px;
+    margin-left: auto;
+  }
 
   .searchInput {
     display: none;
   }
 
   .searchBtn {
-    right: -10px;
-    top: 2.5px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .searchWrap.searchWrapMobileOpen {
@@ -1301,6 +1309,7 @@
     left: 0;
     right: 0;
     width: 100%;
+    max-width: none;
     margin: 0;
     padding: 12px 16px;
     background: #ffffff;
@@ -1362,8 +1371,23 @@
 }
 
 @media (max-width: 768px) {
+  .headerContainer {
+    gap: 14px;
+    padding: 10px 0;
+    min-height: 52px;
+  }
+
+  .scrolled .headerContainer {
+    padding: 8px 0;
+    min-height: 48px;
+  }
+
   .logoWrap img {
     width: 120px !important;
+  }
+
+  .scrolled .logoWrap img {
+    width: 110px !important;
   }
 
   .menuToggle {
@@ -1371,8 +1395,12 @@
   }
 
   .actions {
-    margin-left: auto;
     gap: 10px;
+  }
+
+  .iconBtn {
+    width: 24px;
+    height: 24px;
   }
 
   .searchBtn {
@@ -1383,25 +1411,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .headerOuter {
-    top: 60px;
-  }
-
-  .scrolled {
-    top: 0;
-  }
-
-  .headerContainer {
-    padding: 10px 0;
-  }
-
-  .logoWrap img {
-    width: 150px !important;
-  }
-
-  .navLinksDesktop {
-    gap: 20px;
-  }
   .userDropdown {
     right: -100px;
     width: 250px;
@@ -1420,18 +1429,28 @@
   .headerContainer {
     gap: 12px;
     padding: 10px 0;
+    min-height: 48px;
+  }
+
+  .scrolled .headerContainer {
+    padding: 8px 0;
+    min-height: 44px;
   }
 
   .logoWrap img {
     width: 110px !important;
   }
 
-  .scrolled .megaDropdown {
-    top: 64px;
-  }
-
   .scrolled .logoWrap img {
     width: 100px !important;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .searchBtn {
+    right: -6px;
   }
 }
 
@@ -1479,7 +1498,7 @@
 
 @media (max-width: 320px) {
   .headerContainer {
-    gap: 0;
+    gap: 6px;
   }
 
   .logoWrap img {
@@ -1490,8 +1509,12 @@
   }
 
   .actions {
-    gap: 3px;
-    margin-left: -26px;
+    gap: 4px;
+  }
+
+  .iconBtn {
+    width: 18px;
+    height: 18px;
   }
 
   .iconBtn svg {
@@ -1506,7 +1529,9 @@
     font-size: 8px;
   }
 
-  .searchBtn {
-    right: 26px;
+  .searchBtn svg {
+    width: 14px;
+    height: 14px;
   }
 }
+ 
