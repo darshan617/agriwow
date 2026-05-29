@@ -17,7 +17,7 @@ const INITIAL_FILTERS = [];
 
 function ProductListingToolbar({
   resultCount,
-  products = [],
+  products = [],  
   sortBy: controlledSortBy,
   onSortChange,
   pageSize = 12,

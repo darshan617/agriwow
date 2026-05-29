@@ -13,7 +13,7 @@ const ProductCard = ({
   oldPrice = "0",
   reviews = "0 Reviews",
   image = null,
-  imageHover = imageHoverImage,
+  imageHover = null,
   rating = "4.5",
   type = "homePage",
   isTrending = false,
@@ -100,12 +100,12 @@ const ProductCard = ({
 
         <h3 className={`${styles.productName}`}>{name}</h3>
 
-        <p className={`${styles.priceRow}`}>
+        <div className={`${styles.priceRow}`}>
 
           <span className={`${styles.currentPrice}`}>₹ {price}</span>
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
 
-        </p>
+        </div>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
             <span className={`${styles.discountText}`}>{discount || 0}% OFF</span>

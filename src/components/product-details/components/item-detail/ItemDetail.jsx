@@ -48,7 +48,7 @@ const ItemDetail = () => {
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
-        <div className={`${styles.imageDetail} col-md-4`}>
+        <div className={`${styles.imageDetail} col-lg-4`}>
           <div className={`${styles.mainImageWrapper}`}>
             <Image
               src={imageDetail[selectedIndex]?.image}
@@ -126,7 +126,7 @@ const ItemDetail = () => {
           </div>
         </div>
 
-        <div className={`${styles.productInfo} col-md-5`}>
+        <div className={`${styles.productInfo} col-lg-5`}>
           <h2 className={`${styles.productName}`}>
             Neptune Mini Hose Reel | 10M Heavy Duty Hose | <br /> Versatile
             7-in-1 Spray Nozzle with Hose Connector | <br /> Ideal for Car Wash,
@@ -268,7 +268,7 @@ const ItemDetail = () => {
               {policiesData.map((policy, index) => (
                 <div key={index} className={`${styles.policyItem}`}>
                   <span className={`${styles.policyIcon}`}>
-                    <Image src={policy.icon} alt={policy.label} width={22} height={22} />
+                    <Image src={policy.icon} alt={policy.label} width={20} height={20} />
                   </span>
                   <span className={`${styles.policyLabel}`}>{policy.label}</span>
                 </div>

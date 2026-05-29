@@ -1,0 +1,11 @@
+.viewAllBtn button{
+    background: none;
+    border: 0;  
+    font-size: 20px;
+    cursor: pointer;
+}
+.title{
+    font-size: 30px;
+    font-weight: 700;
+
+}
