@@ -1,9 +1,12 @@
+import { useState } from "react";
 import Head from "next/head";
 import HomeComponents from "@/components/home/HomeComponents";
 
+
 export default function Home() {
 
-return (
+
+  return (
     <>
       <Head>
         <title>AgriWow</title>
@@ -11,6 +14,7 @@ return (
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeComponents />
+
     </>
   );
 }
