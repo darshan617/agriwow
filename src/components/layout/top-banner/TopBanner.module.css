@@ -70,6 +70,12 @@
     }
 }
 
+@media (max-width: 576px) {
+    .topBannerWrapper {
+        margin-top: 100px;
+    }
+}
+
 @media (max-width: 480px) {
     .categoryImgWrapper {
         height: 50px;

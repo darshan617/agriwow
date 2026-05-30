@@ -61,7 +61,7 @@ const ProductCategoryList = () => {
 
   return (
     <div>
-      <div className="container">
+      <div className={`${styles.productSection} container`}>
         <h2 className={`${styles.title}`}>{categoryName || "Products"}</h2>
         <div className={`${styles.breadcrumb} `}>
           <div style={{ margin: "16px 0" }}>

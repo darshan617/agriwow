@@ -13,20 +13,16 @@ export const SORT_OPTIONS = [
   { value: "name-desc", label: "Name: Z to A" },
 ];
 
-const INITIAL_FILTERS = [
-  { id: "price", label: "Price : ₹ 10,000 - ₹ 15,000" },
-  { id: "best-seller", label: "Best Seller" },
-  { id: "in-stock", label: "In Stock" },
-];
+const INITIAL_FILTERS = [];
 
 function ProductListingToolbar({
   resultCount,
-  products = [],
+  products = [],  
   sortBy: controlledSortBy,
   onSortChange,
   pageSize = 12,
   isLoading = false,
-  isError = false,
+  isError = false,  
 }) {
   const [internalSortBy, setInternalSortBy] = useState("default");
   const sortBy = controlledSortBy ?? internalSortBy;
@@ -194,12 +190,8 @@ function ProductListingToolbar({
           <p className={`${styles.emptyState}`}>Loading products...</p>
         ) : isError ? (
           <p className={`${styles.emptyState}`}>
-            Failed to load products.
-          </p>
-        ) : paginatedProducts.length === 0 ? (
-          <p className={`${styles.emptyState}`}>
-            No products found in this category.
-          </p>
+            No products found.
+          </p>  
         ) : (
           paginatedProducts.map((item) => (
             <ProductCard

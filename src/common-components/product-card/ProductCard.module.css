@@ -56,8 +56,14 @@
   z-index: 1;
 }
 
+.discountRow .discountText {
+  color: #8dba3b;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .discountRow span {
-  color: #101010;
+  color: rgba(172, 0, 0, 0.877);
   font-size: 12px;
   font-weight: 500;
 }
@@ -114,7 +120,9 @@
   top: 0;
   left: 0;
   right: 0;
-  transition: opacity 0.2s ease, transform 0.25s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s ease;
 }
 
 .ratingBadge {
@@ -208,7 +216,9 @@
   background: rgba(242, 242, 242, 0.97);
   transform: translateY(100%);
   opacity: 0;
-  transition: transform 0.25s ease, opacity 0.2s ease;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
 }
 
 .productCard:hover .cardActions {
@@ -233,7 +243,7 @@
 
 .addToCartBtn::before,
 .buyNowBtn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -60%;
@@ -250,7 +260,7 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 4px;  
+  gap: 4px;
 }
 
 .addToCartBtn {
@@ -263,8 +273,6 @@
 .addToCartBtn::before {
   background: #1ea53b;
 }
-
-
 
 .addToCartBtn:hover::before {
   transform: skewX(-20deg) translateX(400%);
@@ -300,27 +308,28 @@
   cursor: pointer;
   font-size: 14px;
   background: transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .wishlistBtn:hover {
   color: #e0334b;
   border-color: #e0334b;
 }
-@media (max-width: 1600px){
+@media (max-width: 1600px) {
   .addToCartBtn,
   .buyNowBtn {
     padding: 7px 0;
     font-size: 12px;
   }
+}
 
-} 
-
-@media (max-width: 1440px){
+@media (max-width: 1440px) {
   .addToCartBtn,
   .buyNowBtn {
     padding: 5px 0;
-    font-size: 9  px;
+    font-size: 9 px;
   }
 }
 
@@ -328,11 +337,13 @@
   .productCard {
     padding: 8px 8px 10px;
   }
-  /* .addToCartBtn,
-  .buyNowBtn {
-    padding: 4px 0;
-    font-size: 9px;
-  } */
+}
+@media (max-width: 1080px) {
+  .addToCartBtn span,
+  .buyNowBtn span {
+    gap: 0px !important;
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -418,9 +429,9 @@
     min-height: 320px;
   }
 
-  .addToCartBtn,
-  .buyNowBtn {
-    padding: 7px 0;
+  .addToCartBtn span,
+  .buyNowBtn span {
+    gap: 0px !important;
     font-size: 11px;
   }
 }
@@ -434,9 +445,9 @@
     font-size: 13px;
   }
 
-  .addToCartBtn,
-  .buyNowBtn {
-    padding: 7px 0;
-    font-size: 9px;
+  .addToCartBtn span,
+  .buyNowBtn span {
+    gap: 0px !important;
+    font-size: 10px;
   }
 }

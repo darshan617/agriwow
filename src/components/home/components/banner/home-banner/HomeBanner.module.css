@@ -220,7 +220,7 @@
 
   .bannerBackground {
     object-fit: contain;
-    height: 300px;
+    height: auto;
   }
 
   .title {
