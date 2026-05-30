@@ -2,7 +2,7 @@ import ProductCategoryCompnent from "@/components/product-category/ProductCatego
 import React from "react";
 
 const ProductCategory = () => {
-  return <ProductCategoryCompnent />;
+  return <ProductCategoryCompnent />
 };
 
 export default ProductCategory;

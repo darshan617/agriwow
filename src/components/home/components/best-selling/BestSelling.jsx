@@ -1,7 +1,8 @@
 import React from 'react'
-import Image from 'next/image'
 import ProductsItem from '@/common-components/products/ProductsItem'
 import bannerImage from '@/assets/images/selling.png'
+import sprayerImage from '@/assets/images/selling-1.png'
+import pumpImage from '@/assets/images/selling-2.png'
 
 const BestSelling = ({ bestSellingData }) => {
   return (
@@ -11,6 +12,27 @@ const BestSelling = ({ bestSellingData }) => {
       bannerImage={bannerImage}
       agricultureProductsData={bestSellingData}
       variant="bestSelling"
+      overlayVariant="bestSelling"
+      overlayHeading={<>Product Range</>}
+      overlayProducts={[
+        {
+          image: sprayerImage,
+          align: 'left',
+          labelLines: [
+            { icon: 'leaf', text: 'Agriculture' },
+            { text: 'Sprayers' },
+          ],
+        },
+        {
+          image: pumpImage,
+          align: 'right',
+          labelLines: [
+            { text: 'Portable', icon: 'drop', iconAfter: true },
+            { text: 'Water Pump' },
+          ],
+        },
+      ]}
+      overlayFooter="Everything You Need for Smart Farming"
     />
 
   )

@@ -9,6 +9,9 @@ export const apiSlice = createApi({
     'HomeData',
     'MenuProductData',
     'Products',
+    'ProductsByCategory',
+    'ProductsBySubCategory',
+    'SearchProducts',
   ],
   endpoints: (builder) => ({}),
 });

@@ -3,7 +3,7 @@ import TopHeader from '@/components/layout/top-header/TopHeader'
 import TopBanner from '@/components/layout/top-banner/TopBanner'
 import HomeBanner from '@/components/home/components/banner/home-banner/HomeBanner'
 import Marquee from '@/components/home/components/marquee/Marquee'
-import ProductsItem from '@/common-components/products/ProductsItem'
+// import AgricultureSprayers from '@/components/home/components/agriculture-sprayers/AgricultureSprayers'
 import Benefit from '@/components/home/components/benifit/Benefit'
 import FarmEquipments from '@/components/home/components/farm-equipmemts/FarmEquipments'
 import Detail from '@/components/home/components/detail/Detail'
@@ -19,6 +19,7 @@ import VideoSection from '@/components/home/components/video/VideoSection'
 import InsightsBlog from '@/components/home/components/insights/InsightsBlog'
 import Footer from '@/components/layout/footer/Footer'
 import { useGetHomeDataQuery } from '@/redux/apis/homeApi'
+import ProductsItem from '@/common-components/products/ProductsItem'
 const HomeComponents = () => {
 
   const {data: homeData, isLoading: isHomeDataLoading} = useGetHomeDataQuery() 
@@ -43,7 +44,7 @@ const HomeComponents = () => {
       <TopBanner categoriesData={categoriesData} />
       <HomeBanner />
       <Marquee />
-      <ProductsItem agricultureProductsData={agricultureProductsData}/>
+      <ProductsItem  agricultureProductsData={agricultureProductsData} title="Agriculture Sprayers" bannerTitle = 'Power Sprayer' bannerDescription ={<>Performance <br /> That Grows With You</>} />
       <Detail />
       <FarmEquipments farmEquipmentsData={farmEquipmentsData}/>
       <Benefit />

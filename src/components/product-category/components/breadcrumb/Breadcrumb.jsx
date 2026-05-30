@@ -1,16 +1,50 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { IoClose } from "react-icons/io5";
 import styles from "@/components/product-category/components/breadcrumb/Breadcrumb.module.css";
 import ProductCategoriesFilter from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter";
 import ProductListingToolbar, {
   SORT_OPTIONS,
 } from "@/components/product-category/components/product-listing-toolbar/ProductListingToolbar";
-import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
+import {
+  useGetProductsByCategoryQuery,
+  useGetProductsBySubCategoryQuery,
+} from "@/redux/apis/homeApi";
+
+const humanize = (slug = "") =>
+  slug
+    .toString()
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
 const ProductCategoryList = () => {
-  const { data: homeData } = useGetHomeDataQuery();
-  const products = homeData?.data?.products?.garden_tools ?? [];
+  const router = useRouter();
+  const { categorySlug, subCategory } = router.query;
+
+  const categoryQuery = useGetProductsByCategoryQuery(categorySlug, {
+    skip: !categorySlug || !!subCategory,
+  });
+
+  const subCategoryQuery = useGetProductsBySubCategoryQuery(
+    { categorySlug, subCategorySlug: subCategory },
+    { skip: !categorySlug || !subCategory }
+  );
+
+  const activeQuery = subCategory ? subCategoryQuery : categoryQuery;
+  const { isFetching, isError } = activeQuery;
+  const products = useMemo(
+    () => activeQuery.data?.data ?? [],
+    [activeQuery.data]
+  );
+
+  const categoryName =
+    products?.[0]?.category?.name || humanize(categorySlug);
+  const subCategoryName =
+    products?.[0]?.subcategory?.name || humanize(subCategory);
+
   const [sortBy, setSortBy] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -24,45 +58,60 @@ const ProductCategoryList = () => {
     setSortOpen(false);
     setFilterOpen(true);
   }
+
   return (
     <div>
-      <div className="container">
-        <h2 className={`${styles.title}`}>Garden & Lawn Care</h2>
+      <div className={`${styles.productSection} container`}>
+        <h2 className={`${styles.title}`}>{categoryName || "Products"}</h2>
         <div className={`${styles.breadcrumb} `}>
-          <div  style={{ margin: "16px 0" }}>
+          <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
                 <Link href="/">Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/products">Products</Link>
+                <Link href="/">Products</Link>
               </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li>
-                <Link href="/products/garden-and-lawn-care">
-                  Garden & Lawn Care
-                </Link>
-              </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li>
-                <Link href="/products/garden-tools">Garden Tools</Link>
-              </li>
+              {categorySlug && (
+                <>
+                  <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
+                  <li>
+                    <Link href={`/product-category/${categorySlug}`}>
+                      {categoryName}
+                    </Link>
+                  </li>
+                </>
+              )}
+              {subCategory && (
+                <>
+                  <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
+                  <li>
+                    <Link
+                      href={`/product-category/${categorySlug}/${subCategory}`}
+                    >
+                      {subCategoryName}
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
 
-        <div className={styles.pageLayout}>
+        <div className={`${styles.pageLayout}`}>
           <ProductCategoriesFilter
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
           />
-          <div className={styles.mainContent}>
+          <div className={`${styles.mainContent}`}>
             <ProductListingToolbar
-              resultCount={products.length || 8}
+              resultCount={products.length}
               products={products}
               sortBy={sortBy}
               onSortChange={setSortBy}
+              isLoading={isFetching}
+              isError={isError}
             />
           </div>
         </div>

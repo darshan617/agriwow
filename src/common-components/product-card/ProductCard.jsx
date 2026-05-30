@@ -13,9 +13,12 @@ const ProductCard = ({
   oldPrice = "0",
   reviews = "0 Reviews",
   image = null,
-  imageHover = imageHoverImage,
+  imageHover = null,
   rating = "4.5",
   type = "homePage",
+  isTrending = false,
+  isFeatured = false,
+  isTopRated = false,
 }) => {
   const hoverImage = imageHover || image;
   const showHoverImage = Boolean(image && hoverImage && hoverImage !== image);
@@ -27,7 +30,27 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        <span className={`${styles.discountTag}`}>{discount}% OFF</span>
+        {
+          type === "productPage" ? (
+            isBestSeller && (
+              <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+            )
+          ) && (
+            isTrending && (
+              <span className={`${styles.bestsellerTag}`}>TRENDING</span>
+            )
+          ) && (
+            isFeatured && (
+              <span className={`${styles.bestsellerTag}`}>FEATURED</span>
+            )
+          ) && (
+            isTopRated && (
+              <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
+            )
+          ) : (
+            <span className={`${styles.bestsellerTag  }`}>{discount}% OFF</span>
+          )
+        }
         {type === "productPage" ? (
           <button
             type="button"
@@ -77,15 +100,18 @@ const ProductCard = ({
 
         <h3 className={`${styles.productName}`}>{name}</h3>
 
-        <p className={`${styles.priceRow}`}>
+        <div className={`${styles.priceRow}`}>
+
           <span className={`${styles.currentPrice}`}>₹ {price}</span>
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
-        </p>
+
+        </div>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
-            <span>Save ₹ 9200</span>
-          </div>
-        )}
+            <span className={`${styles.discountText}`}>{discount || 0}% OFF</span>
+              <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
+            </div>
+        )}  
       </div>
 
       <div className={`${styles.cardActions}`}>
