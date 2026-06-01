@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import Img1 from "@/assets/products/item1.jpg";
-import Img2 from "@/assets/products/item2.jpg";
-import Img3 from "@/assets/products/item3.jpg";
-import Img4 from "@/assets/products/item4.jpg";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { FaShareAlt, FaHeart, FaStar, FaTruck, FaAward, FaLock, FaUndo } from "react-icons/fa";
+import {
+  FaShareAlt,
+  FaHeart,
+  FaStar,
+} from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import rise from "@/assets/icon/rise.png";
 import coupon from "@/assets/icon/coupon.png";
@@ -19,24 +19,11 @@ import return1 from "@/assets/icon/return1.png";
 
 import "swiper/css";
 
-const ItemDetail = () => {
+const ItemDetail = ({ productDetails }) => {
+  console.log("productDetails", productDetails);
+  const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const imageDetail = [
-    { id: 1, image: Img1 },
-    { id: 2, image: Img2 },
-    { id: 3, image: Img3 },
-    { id: 4, image: Img4 },
-    { id: 5, image: Img4 },
-  ];
-
-  const specifications = [
-    { label: "Brand", value: "NEPTUNE SIMPLIFY FARMING" },
-    { label: "Material", value: "Plastic, Polyvinyl Chloride" },
-    { label: "Colour", value: "Multicolour" },
-    { label: "Item dimensions L x W x H", value: "25 x 17 x 31 Centimeters" },
-    { label: "Style", value: "Wall Mount" },
-  ];
+  const [showAll, setShowAll] = useState(false);
 
   const policiesData = [
     { icon: shipping, label: "Free Shipping" },
@@ -48,11 +35,11 @@ const ItemDetail = () => {
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
-        <div className={`${styles.imageDetail} col-lg-4`}>
+        <div className={`${styles.imageDetail} col-lg-5`}>
           <div className={`${styles.mainImageWrapper}`}>
             <Image
-              src={imageDetail[selectedIndex]?.image}
-              alt={`Product view ${selectedIndex + 1}`}
+              src={productDetails?.data?.gallery[selectedIndex]}
+              alt={productDetails?.data?.gallery[selectedIndex]?.alt}
               className={styles.mainImage}
               width={100}
               height={100}
@@ -60,7 +47,7 @@ const ItemDetail = () => {
             <div className={`${styles.quickActions}`}>
               <button
                 type="button"
-                className={`${styles.quickActionBtn}`}
+                className={`${styles.quickActionBtn1}`}
                 aria-label="Share product"
               >
                 <FaShareAlt />
@@ -96,7 +83,7 @@ const ItemDetail = () => {
                 576: { slidesPerView: 4 },
               }}
             >
-              {imageDetail.map((item, index) => (
+              {productDetails?.data?.gallery.map((item, index) => (
                 <SwiperSlide key={item.id}>
                   <button
                     type="button"
@@ -107,8 +94,8 @@ const ItemDetail = () => {
                     aria-label={`Show image ${item.id}`}
                   >
                     <Image
-                      src={item.image}
-                      alt={`Product thumbnail ${item.id}`}
+                      src={item}
+                      alt={`Product thumbnail ${item}`}
                       className={styles.thumbImage}
                       width={100}
                       height={100}
@@ -126,11 +113,9 @@ const ItemDetail = () => {
           </div>
         </div>
 
-        <div className={`${styles.productInfo} col-lg-5`}>
+        <div className={`${styles.productInfo} col-lg-4`}>
           <h2 className={`${styles.productName}`}>
-            Neptune Mini Hose Reel | 10M Heavy Duty Hose | <br /> Versatile
-            7-in-1 Spray Nozzle with Hose Connector | <br /> Ideal for Car Wash,
-            Lawn Care & Household Watering
+            {productDetails?.data?.name}
           </h2>
           <div
             className={`${styles.productDescription} d-flex flex-row justify-content-between`}
@@ -153,8 +138,12 @@ const ItemDetail = () => {
                   </span>
                 </span>
                 <p className={`${styles.priceRow}`}>
-                  <span className={`${styles.currentPrice}`}>₹ 2,150</span>
-                  <span className={`${styles.oldPrice}`}>₹ 4,000.00</span>
+                  <span className={`${styles.currentPrice}`}>
+                    ₹ {productDetails?.data?.price}
+                  </span>
+                  <span className={`${styles.oldPrice}`}>
+                    ₹ {productDetails?.data?.selling_price}
+                  </span>
                 </p>
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
@@ -165,28 +154,37 @@ const ItemDetail = () => {
                       alt="discount"
                       width={18}
                       height={18}
+                      fetchPriority="high"
+                      priority={true}
                     />
                   </div>
                   <span className={`${styles.discountText}`}>
-                    Save ₹ 1,850.00
+                    Save ₹{" "}
+                    {productDetails?.data?.selling_price -
+                      productDetails?.data?.price}
                   </span>
                 </div>
-                <div className={`${styles.boughtPeopleRow}`}>
-                  <div
-                    className={`${styles.discountImg} d-inline-flex align-items-center`}
-                  >
-                    <Image src={rise} alt="rise" width={18} height={18} />
+                {productData?.recently_bought?.count > 0 && (
+                  <div className={`${styles.boughtPeopleRow}`}>
+                    <div
+                      className={`${styles.discountImg} d-inline-flex align-items-center`}
+                    >
+                      <Image src={rise} alt="rise" width={18} height={18} />
+                    </div>
+                    <span className={`${styles.peopleBought}`}>
+                      {productData?.recently_bought?.count} people bought this
+                      recently
+                    </span>
                   </div>
-                  <span className={`${styles.peopleBought}`}>
-                    1502+ people bought this recently
-                  </span>
-                </div>
+                )}
               </div>
             </div>
             <div
               className={`${styles.stockStatus} d-inline-flex align-items-center`}
             >
-              <span className={`${styles.stockStatusText}`}>In Stock</span>
+              <span className={`${styles.stockStatusText}`}>
+                {productDetails?.data?.in_stock ? "In Stock" : "Out of Stock"}
+              </span>
             </div>
           </div>
 
@@ -208,24 +206,9 @@ const ItemDetail = () => {
             <div className={`${styles.aboutProductContent}`}>
               <p className={`${styles.aboutProductSubTitle}`}>Key Features</p>
               <ul className={`${styles.aboutProductList}`}>
-                <li className={`${styles.aboutProductListItem}`}>
-                  10 m heavy-duty hose
-                </li>
-                <li className={`${styles.aboutProductListItem}`}>
-                  Portable & wall-mounted reel
-                </li>
-                <li className={`${styles.aboutProductListItem}`}>
-                  7-in-1 spray nozzle
-                </li>
-                <li className={`${styles.aboutProductListItem}`}>
-                  Quick hose connector
-                </li>
-                <li className={`${styles.aboutProductListItem}`}>
-                  For car wash & lawn care
-                </li>
-                <li className={`${styles.aboutProductListItem}`}>
-                  Easy household watering
-                </li>
+                {productDetails?.data?.key_features?.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
               </ul>
             </div>
 
@@ -235,31 +218,49 @@ const ItemDetail = () => {
               </h3>
               <table className={`${styles.productSpecificationsTable}`}>
                 <tbody>
-                  {specifications.map((spec, index) => (
-                    <tr key={index}>
-                      <td className={`${styles.specLabel}`}>{spec.label}</td>
-                      <td className={`${styles.specValue}`}>{spec.value}</td>
-                    </tr>
-                  ))}
+                  {productDetails?.data?.specification?.map(
+                    (specification, index) => (
+                      <tr key={index}>
+                        <td className={`${styles.specLabel}`}>
+                          {specification.key}
+                        </td>
+                        <td className={`${styles.specValue}`}>
+                          {specification.value}
+                        </td>
+                      </tr>
+                    ),
+                  )}
                 </tbody>
               </table>
-              <button className={`${styles.showAllButton}`}>
-                Show All Specifications
-              </button>
             </div>
             <div className={`${styles.aboutProductContent}`}>
               <h3 className={`${styles.aboutProductSubTitle}`}>
                 Product Details
               </h3>
-              <p className={`${styles.aboutProductDetailsText}`}>
-                Neptune Simplify Farming Mini Garden Hose Reel is a compact,
-                heavy-duty <br /> 10M hose solution designed for both portable
-                use and wall mounting. <br /> Equipped with a versatile 7-in-1
-                spray nozzle and durable hose connector, <br />
-                it delivers smooth water flow for . Easy to use, tangle-free,
-                and built... <br />
-              </p>
-              <button className={`${styles.showAllButton}`}>Read More</button>
+              <p
+                className={`${styles.aboutProductDetailsText}`}
+                dangerouslySetInnerHTML={{
+                  __html: showAll
+                    ? productDetails?.data?.description
+                    : productDetails?.data?.description || "-",
+                }}
+              />
+              {!showAll && (
+                <button
+                  className={`${styles.showAllButton}`}
+                  onClick={() => setShowAll(true)}
+                >
+                  Read More
+                </button>
+              )}
+              {showAll && (
+                <button
+                  className={`${styles.showAllButton}`}
+                  onClick={() => setShowAll(false)}
+                >
+                  Read Less
+                </button>
+              )}
             </div>
           </div>
 
@@ -268,9 +269,16 @@ const ItemDetail = () => {
               {policiesData.map((policy, index) => (
                 <div key={index} className={`${styles.policyItem}`}>
                   <span className={`${styles.policyIcon}`}>
-                    <Image src={policy.icon} alt={policy.label} width={20} height={20} />
+                    <Image
+                      src={policy.icon}
+                      alt={policy.label}
+                      width={20}
+                      height={20}
+                    />
                   </span>
-                  <span className={`${styles.policyLabel}`}>{policy.label}</span>
+                  <span className={`${styles.policyLabel}`}>
+                    {policy.label}
+                  </span>
                 </div>
               ))}
             </div>

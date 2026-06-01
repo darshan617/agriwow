@@ -17,9 +17,11 @@
   import styles from "@/components/layout/header/Header.module.css";
   import {
     useGetHomeDataQuery,
-    useGetMenuProductDataQuery,
     useLazySearchProductsQuery,
   } from "@/redux/apis/homeApi";
+  import {
+    useGetMenuProductDataQuery,
+  } from "@/redux/apis/categoryApi";
   import CustomPopup from "@/components/custom-popup/CustomPopup";
   import Login from "@/components/auth/login/Login";
   import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";

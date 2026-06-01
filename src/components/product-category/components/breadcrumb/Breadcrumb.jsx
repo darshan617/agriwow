@@ -10,7 +10,7 @@ import ProductListingToolbar, {
 import {
   useGetProductsByCategoryQuery,
   useGetProductsBySubCategoryQuery,
-} from "@/redux/apis/homeApi";
+} from "@/redux/apis/categoryApi";
 
 const humanize = (slug = "") =>
   slug
@@ -19,7 +19,7 @@ const humanize = (slug = "") =>
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-
+  
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router.query;

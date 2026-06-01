@@ -6,12 +6,9 @@ export const apiSlice = createApi({
     baseUrl: "https://goyalinfotech.in/agriwow/public/api",
   }),
   tagTypes: [
-    'HomeData',
-    'MenuProductData',
-    'Products',
-    'ProductsByCategory',
-    'ProductsBySubCategory',
-    'SearchProducts',
+    "home",
+    "category",
+    "products",
   ],
   endpoints: (builder) => ({}),
 });
