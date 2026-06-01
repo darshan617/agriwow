@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
-
+import { useRouter } from "next/router";
 const Login = () => {
+  const router = useRouter();
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const [isMounted, setIsMounted] = useState(false);
@@ -12,6 +13,9 @@ const Login = () => {
   }, []);
 
   if (!isMounted) return null;
+  const handleContinue = () => {
+    router.push(`/auth/verify-otp`);
+  };
   return (
     <div className={`${styles.root} `} role="dialog" aria-modal="true">
 
@@ -58,8 +62,7 @@ const Login = () => {
               maxLength={10}
             />
           </div>
-
-          <button className={`${styles.continueBtn}`}>CONTINUE</button>
+          <button className={`${styles.continueBtn}`} onClick={handleContinue}>CONTINUE</button>
 
           <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />

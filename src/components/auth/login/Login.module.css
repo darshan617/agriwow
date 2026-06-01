@@ -1,224 +1,171 @@
-  .root {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  
-  .overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .modal {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    border-radius: 16px;
-    overflow: hidden;
-    width: 100%;
-    max-width: 640px;
-    min-height: 420px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
-    /* background: #fff; */
-  }
-  
-  .closeBtn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.85);
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-  }
-    
-  .leftPanel {
-    background: linear-gradient(160deg, #43a047 0%, #2e7d32 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 80px 30px 0;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .leftContent {
-    z-index: 1;
-  }
-  
-  .leftHeading {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.3;
-    margin: 0;
-  }
-  
-  .highlight {
-    color: #ffe082;
-    display: block;
-  }
-  
-  .leftSubtext {
-    margin-top: 12px;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.6;
-  }
-  
-  .illustrationWrapper {
-    align-self: center;
-    margin-top: auto;
-    padding-bottom: 0;
-  }
-  
-  /* Right Panel */
-  
-  .rightPanel {
-    flex: 1;
-    padding: 40px 32px 24px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .formTitle {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 20px;
-  }
-  
-  .label {
-    font-size: 13px;
-    color: #444;
-    margin-bottom: 6px;
-    display: block;
-  }
-  
-  .phoneRow {
-    display: flex;
-    align-items: center;
-    border: 1.5px solid #d0d0d0;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 16px;
-    background: #fff;
-  }
-  
-  .countrySelect {
-    border: none;
-    outline: none;
-    padding: 12px 6px 12px 12px;
-    font-size: 14px;
-    color: #222;
-    background: transparent;
-    cursor: pointer;
-    appearance: auto;
-  }
-  
-  .divider {
-    width: 1px;
-    height: 24px;
-    background: #d0d0d0;
-    margin: 0 4px;
-  }
-  
-  .phoneInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 12px;
-    font-size: 15px;
-    color: #222;
-    background: transparent;
-  }
-  
-  .continueBtn {
-    width: 100%;
-    padding: 14px 0;
-    background: linear-gradient(90deg, #43a047, #2e7d32);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    cursor: pointer;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 14px rgba(46, 125, 50, 0.25);
-    transition: opacity 0.2s ease;
-  }
-  
-  .continueBtn:hover {
-    opacity: 0.9;
-  }
-  
-  .orRow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    gap: 10px;
-  }
-  
-  .orLine {
-    flex: 1;
-    height: 1px;
-    background: #e0e0e0;
-  }
-  
-  .orText {
-    font-size: 13px;
-    color: #888;
-  }
-  
-  .socialBtn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 0;
-    border: 1.5px solid #d0d0d0;
-    border-radius: 8px;
-    background: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-  
-  .socialBtn:hover {
-    background: #f7f7f7;
-  }
-  
-  .terms {
-    margin-top: auto;
-    padding-top: 16px;
-    font-size: 9px;
-    color: #888;
-    text-align: center;
-  }
-  
-  .link {
-    color: rgb(62, 62, 255);
-    text-decoration: underline;
-    font-weight: 500;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
+.modal {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 640px;
+  min-height: 420px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+.leftPanel {
+  background: linear-gradient(160deg, #43a047 0%, #2e7d32 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 80px 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.leftHeading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.highlight {
+  color: #ffe082;
+  display: block;
+}
+
+.leftSubtext {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+/* Right Panel */
+
+.rightPanel {
+  flex: 1;
+  padding: 40px 32px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+}
+
+.label {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.phoneRow {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+.countrySelect {
+  border: none;
+  outline: none;
+  padding: 12px 6px 12px 12px;
+  font-size: 14px;
+  color: #222;
+  background: transparent;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.phoneInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  font-size: 15px;
+  color: #222;
+  background: transparent;
+}
+
+.continueBtn {
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #43a047, #2e7d32);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.25);
+  transition: opacity 0.2s ease;
+}
+
+.continueBtn:hover {
+  opacity: 0.9;
+}
+
+.orRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+
+.orLine {
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.orText {
+  font-size: 13px;
+  color: #888;
+}
+
+.socialBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.socialBtn:hover {
+  background: #f7f7f7;
+}
+
+.terms {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 9px;
+  color: #888;
+  text-align: center;
+}
+
+.link {
+  color: rgb(62, 62, 255);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

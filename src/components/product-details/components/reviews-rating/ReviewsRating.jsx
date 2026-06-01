@@ -8,7 +8,7 @@ import { FaThumbsUp, FaThumbsDown, FaChevronRight   } from "react-icons/fa6";
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
 
 const RATING_BARS = [
-  { label: 5, pct: 80 },
+  { label: 5, pct: 50 },
   { label: 4, pct: 20 },
   { label: 3, pct: 0 },
   { label: 2, pct: 0 },
@@ -38,12 +38,12 @@ const Stars = ({ count }) => (
   </div>
 );
 
-const RatingSummary = ({ average, totalRatings, totalReviews, bars }) => (
+const RatingSummary = ({ average, totalRatings, totalReviews, bars, ratingData  }) => (
   <div className={`${styles.ratingSummary}`}>
     <div className={`${styles.avgScore} `}>
       <div className={`${styles.avgNumber}`}>
-        {average} <span className={`${styles.avgNumberStar}`}>★</span>
-      </div>
+        {ratingData?.average_rating} <span className={`${styles.avgNumberStar}`}>★</span>
+      </div>  
       <div className={`${styles.avgLabel}`}>
         Average Rating based on {totalRatings}
         <br />
@@ -52,15 +52,18 @@ const RatingSummary = ({ average, totalRatings, totalReviews, bars }) => (
     </div>
 
     <div className={`${styles.ratingBars}`}>
-      {bars.map(({ label, pct }) => (
-        <div className={`${styles.barRow}`} key={label}>
-          <span className={`${styles.barLabel}`}>{label}</span>
-          <div className={`${styles.barTrack}`}>
-            <div className={`${styles.barFill}`} style={{ width: `${pct}%` }} />
+      {ratingData?.rating_breakdown?.map(( rating, idx ) => {
+        console.log("rating", rating);
+        return (
+          <div className={`${styles.barRow}`} key={idx}>
+            <span className={`${styles.barLabel}`}>{rating?.star}</span>
+            <div className={`${styles.barTrack}`}>
+              <div className={`${styles.barFill}`} style={{ width: `${rating?.percentage}%` }} />
+            </div>
+            <span className={`${styles.barPct}`}>{ rating?.percentage }%</span>
           </div>
-          <span className={`${styles.barPct}`}>{pct}%</span>
-        </div>
-      ))}
+        )
+      })}
     </div>
   </div>
 );
@@ -76,7 +79,6 @@ const ReviewCard = ({ review }) => {
           <div className={`${styles.reviewerMeta}`}>
             <span className={`${styles.reviewerName}`}>{name}</span>
             <span className={`${styles.verifiedBadge}`}>
-              {" "}
               Verified Purchase
             </span>
           </div>
@@ -105,6 +107,7 @@ const ReviewCard = ({ review }) => {
 };
 
 const ReviewsRating = ({
+  productDetails = null,
   productName = "Neptune Mini Hose Reel | 10M Heavy Duty Hose | Versatile 7-in-1 Spray Nozzle with Hose Connector | Ideal for Car Wash, Lawn Care & Household Watering",
   averageRating = 4.8,
   totalRatings = 5,
@@ -113,7 +116,10 @@ const ReviewsRating = ({
   reviews = REVIEWS,
   onWriteReview = () => {},
   onViewMore = () => {},
+  ratingData = null,
 }) => {
+  console.log("ratingData", ratingData);
+  const productData = productDetails?.data;
   return (
     <div className={`${styles.reviewsWrapper} container`}>
       <div className={`${styles.reviewsHeader}`}>
@@ -134,6 +140,7 @@ const ReviewsRating = ({
         totalRatings={totalRatings}
         totalReviews={totalReviews}
         bars={ratingBars}
+        ratingData={ratingData}
       />
 
       <div className={`${styles.reviewsList}`}>
