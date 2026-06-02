@@ -2,31 +2,15 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useLoginMutation } from "@/redux/apis/authApi";
-const Login = () => {
+import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi"; 
+const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
-  const [phone, setPhone] = useState("");
+
   const [countryCode, setCountryCode] = useState("+91");
   const [isMounted, setIsMounted] = useState(false);
 
 
-  const [login, {isLoading: isLoginLoading}] = useLoginMutation()
-  const handleLogin = async () => {
-    try {
-      const res = await login({
-        body: {
-          phone: phone
-        }
-      })
-      console.log(res, "res");
-      if(res?.data?.success){
-      
-      }
-    } catch (error) {
-      console.log(error, "error");
-      
-    }
-  }
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -82,7 +66,7 @@ const Login = () => {
               maxLength={10}
             />
           </div>
-          <button className={`${styles.continueBtn}`} onClick={handleLogin}>CONTINUE</button>
+          <button className={`${styles.continueBtn}`} onClick={handleLogin} disabled={isAuthLoading}>{isAuthLoading ? 'LOADING...' : 'CONTINUE'}</button>
 
           <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />

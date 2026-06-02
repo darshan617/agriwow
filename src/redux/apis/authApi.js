@@ -1,28 +1,26 @@
-import React from "react";
 import { apiSlice } from "../apiSlice";
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    auth: builder.mutation({
       query: ({ body }) => {
         return {
-          url: "/login",
+          url: "/auth",
           method: "POST",
           body: body,
         };
       },
       invalidatesTags: ["auth"],
     }),
-    register: builder.mutation({
+    verifyOtp: builder.mutation({
       query: ({ body }) => {
         return {
-          url: "/register",
+          url: "/verify-otp",
           method: "POST",
           body: body,
         };
       },
-      invalidatesTags: ["auth"],
+      invalidatesTags: ["verifyOtp"],
     }),
   }),
 });
-
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useAuthMutation, useVerifyOtpMutation } = authApi;
