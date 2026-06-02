@@ -1,0 +1,519 @@
+.productInfo{
+  position: sticky;
+  top: 100px; 
+  align-self: flex-start;
+  z-index: 10;
+
+}
+
+.breadcrumb ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+  margin-top: 50px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .breadcrumb ul {
+    font-size: 12px;
+  }
+}
+@media (max-width: 575px) {
+  .breadcrumb ul {
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+}
+
+
+.coupon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 30px 15px;
+    border: 1px solid #239c3d;
+    border-radius: 8px;
+    background: linear-gradient(to left, #b4d44e, #e6f5cc, #f1fbdf);
+    margin-bottom: 50px;
+
+  }
+  .couponText {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+.couponDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 20px 0; */
+}
+.couponDetails p{
+    margin: 0;
+}
+.couponArrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  .productCartWrapper {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .productCartHeader {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1.5fr 1.5fr;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .productCartRow {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1.5fr 1.5fr;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  .productCartInfo {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  
+  .productCartImage {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .productCartContent h4 {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    color: #222;
+  }
+  
+  .productCartContent span {
+    color: #777;
+    font-size: 15px;
+  }
+  
+  .productCartPrice {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .productCartQuantity {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    border: 1px solid #d5e6a8;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .productCartDelete,
+  .productCartPlus {
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: #d5e6a8;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .productCartCount {
+    width: 55px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .productCartSubtotal h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+  }
+  
+  .productCartSubtotal span {
+    color: #2f9e44;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+    .productCartHeader {
+      display: none;
+    }
+  
+    .productCartRow {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  
+    .productCartInfo {
+      flex-direction: column;
+    }
+  
+    .productCartPrice,
+    .productCartQuantity,
+    .productCartSubtotal {
+      padding-left: 98px;
+    }
+  }
+
+  .coupon2 {
+    margin-top: 20px;
+    background: #f2f8ef;
+    padding: 16px 20px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .couponLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #2d8f39;
+  }
+  
+  .couponText2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .removeCoupon {
+    border: none;
+    background: transparent;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  
+  .checkoutSection {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+  }
+  
+  .checkoutBtn {
+    width: auto;
+    background: #2f8629;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 50px;
+  }
+  
+  .checkoutBtn span {
+    font-size: 15px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .checkoutBtn p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+@media (max-width: 1366px) {
+  .productCartHeader,
+  .productCartRow {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .checkoutBtn {
+    width: fit-content;
+  }
+  
+.breadcrumb ul {
+  margin-top: 20px ;
+}
+}
+
+@media (max-width: 1024px) {
+  
+  .coupon,
+  .coupon2 {
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 10px;  
+  }
+
+  .productImg {
+    width: 90px;
+    height: 90px;
+  }
+
+  .productCartContent h4 {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .productCartPrice,
+  .productCartSubtotal h5 {
+    font-size: 16px;
+  }
+
+  .checkoutBtn {
+    padding: 14px 20px;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 768px) {
+  .productInfo {
+    position: static;
+    top: auto;
+  }
+
+  .productCartWrapper {
+    margin-top: 10px;
+  }
+
+  .productCartRow {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "info info"
+      "qty subtotal";
+    gap: 12px;
+    padding: 14px 12px;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    background: #ffffff;
+  }
+
+  .productCartInfo {
+    grid-area: info;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .productImg {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+  }
+
+  .productCartPrice {
+    display: none;
+  }
+
+  .productCartQuantity {
+    grid-area: qty;
+    border-color: #b3d2f6;
+    align-self: end;
+    padding: 0;
+  }
+
+  .productCartSubtotal {
+    grid-area: subtotal;
+    text-align: right;
+    align-self: end;
+  }
+
+  .productCartSubtotal h5 {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .productCartSubtotal span {
+    margin-top: 2px;
+    color: #8a8a8a;
+    font-size: 12px;
+  }
+
+  .coupon {
+    padding: 16px 12px;
+    margin-bottom: 20px;
+    gap: 8px;
+  }
+
+  .couponDetails p {
+    font-size: 14px;
+  }
+
+  .coupon2 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .couponText2 {
+    font-size: 15px;
+  }
+
+  .removeCoupon {
+    font-size: 14px;
+  }
+
+  .checkoutSection {
+    margin-top: 16px;
+  }
+
+ 
+
+  .checkoutBtn span {
+    font-size: 14px;
+  }
+  .productCartContent br{
+    display: none;
+
+  }
+}
+
+@media (max-width: 575px) {
+  .coupon {
+    align-items: flex-start;
+  }
+
+  .couponText {
+    font-size: 14px;
+  }
+
+  .couponDetails p {
+    font-size: 13px;
+  }
+
+  .productCartInfo {
+    gap: 10px;
+  }
+
+  .productImg {
+    width: 70px;
+    height: 70px;
+  }
+
+  .productCartPrice,
+  .productCartQuantity,
+  .productCartSubtotal {
+    padding-left: 0;
+  }
+
+  .productCartContent h4 {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .productCartContent span {
+    font-size: 13px;
+  }
+
+  .productCartDelete,
+  .productCartPlus {
+    width: 34px;
+    height: 34px;
+  }
+
+  .productCartCount {
+    width: 44px;
+    font-size: 14px;
+  }
+
+
+  .checkoutBtn {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 425px) {
+  .coupon {
+    padding: 12px 10px;
+  }
+
+  .couponText {
+    font-size: 13px;
+  }
+
+  .couponDetails p {
+    font-size: 12px;
+  }
+
+  .couponText2 {
+    font-size: 13px;
+  }
+
+  .removeCoupon {
+    font-size: 13px;
+  }
+
+  .productCartContent h4 {
+    font-size: 12px;
+  }
+
+  .productCartPrice,
+  .productCartSubtotal h5 {
+    font-size: 14px;
+  }
+
+  .productCartSubtotal span {
+    font-size: 12px;
+  }
+
+  .checkoutBtn span {
+    font-size: 11px;
+  }
+
+  .checkoutBtn p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .breadcrumb ul {
+    font-size: 10px;
+  }
+
+  .couponArrow {
+    margin-left: 6px;
+  }
+
+  .productImg {
+    width: 56px;
+    height: 56px;
+  }
+
+  .productCartDelete,
+  .productCartPlus {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .productCartCount {
+    width: 38px;
+    font-size: 13px;
+  }
+
+  .checkoutBtn {
+    padding: 8px 10px;
+  }
+}
+
+

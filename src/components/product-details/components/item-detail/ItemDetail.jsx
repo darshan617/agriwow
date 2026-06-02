@@ -4,11 +4,7 @@ import styles from "@/components/product-details/components/item-detail/ItemDeta
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import {
-  FaShareAlt,
-  FaHeart,
-  FaStar,
-} from "react-icons/fa";
+import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import rise from "@/assets/icon/rise.png";
 import coupon from "@/assets/icon/coupon.png";
