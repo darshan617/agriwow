@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaAngleUp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import style from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter.module.css";
-import { useGetMenuProductDataQuery } from "@/redux/apis/homeApi";
+import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 
 const PRICE_MIN_BOUND = 1000;
 const PRICE_MAX_BOUND = 200000;

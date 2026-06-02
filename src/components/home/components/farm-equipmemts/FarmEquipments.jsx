@@ -63,6 +63,7 @@ const FarmEquipments = ({
                             {farmEquipmentsData?.map((item) => (
                                 <SwiperSlide key={item?.id}>
                                     <ProductCard
+                                        type="productPage"
                                         image={item?.gallery[0]}
                                         imageHover={item?.gallery[1]}
                                         discount={item?.discount}
@@ -72,6 +73,7 @@ const FarmEquipments = ({
                                         oldPrice={item?.price}
                                         reviews={item?.total_reviews}
                                         rating={item?.rating}
+                                        slug={item?.slug}
                                     />
                                 </SwiperSlide>
                             ))}

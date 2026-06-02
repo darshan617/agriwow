@@ -5,6 +5,8 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
 import imageHoverImage from "@/assets/images/hover-product.png";
 import styles from "@/common-components/product-card/ProductCard.module.css";
+import { useRouter } from "next/router";
+import Link from "next/link";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -19,9 +21,15 @@ const ProductCard = ({
   isTrending = false,
   isFeatured = false,
   isTopRated = false,
+  slug = null,
 }) => {
+  const router = useRouter();
   const hoverImage = imageHover || image;
   const showHoverImage = Boolean(image && hoverImage && hoverImage !== image);
+
+  const handleBuyNow = (slug) => {
+    router.push(`/product-details/${slug}`);
+  }
 
   return (
     <div
@@ -66,7 +74,7 @@ const ProductCard = ({
         )}
       </div>
 
-      <div className={`${styles.imageWrap}`}>
+      <Link href={`/product-details/${slug}`} className={`${styles.imageWrap}`}>
         <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
           <Image
             src={image}
@@ -87,9 +95,9 @@ const ProductCard = ({
             />
           </div>
         )}
-      </div>
+      </Link>
 
-      <div className={`${styles.cardInfo}`}>
+      <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
         <div className={`${styles.ratingLine}`}>
           <span className={`${styles.ratingBadge}`}>
             <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
@@ -112,7 +120,7 @@ const ProductCard = ({
               <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
             </div>
         )}  
-      </div>
+      </Link>
 
       <div className={`${styles.cardActions}`}>
         <button type="button" className={`${styles.addToCartBtn}`}>
@@ -121,7 +129,7 @@ const ProductCard = ({
             Add to Cart
           </span>
         </button>
-        <button type="button" className={`${styles.buyNowBtn}`}>
+        <button type="button" className={`${styles.buyNowBtn}`} onClick={() => handleBuyNow(slug)}>
           <span>Buy Now</span>
         </button>
         {type !== "productPage" && (

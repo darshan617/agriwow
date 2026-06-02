@@ -209,6 +209,7 @@ function ProductListingToolbar({
               oldPrice={item?.price}
               reviews={item?.reviews?.length ?? item?.total_reviews ?? 0}
               rating={item?.rating ?? "4.5"}
+              slug={item?.slug}
             />
           ))
         )}
