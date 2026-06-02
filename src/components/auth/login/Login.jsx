@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-const Login = () => {
+import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi"; 
+const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
-  const [phone, setPhone] = useState("");
+
   const [countryCode, setCountryCode] = useState("+91");
   const [isMounted, setIsMounted] = useState(false);
+
+
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -62,7 +66,7 @@ const Login = () => {
               maxLength={10}
             />
           </div>
-          <button className={`${styles.continueBtn}`} onClick={handleContinue}>CONTINUE</button>
+          <button className={`${styles.continueBtn}`} onClick={handleLogin} disabled={isAuthLoading}>{isAuthLoading ? 'LOADING...' : 'CONTINUE'}</button>
 
           <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />

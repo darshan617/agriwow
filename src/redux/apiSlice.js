@@ -9,6 +9,7 @@ export const apiSlice = createApi({
     "home",
     "category",
     "products",
+    "auth",
   ],
   endpoints: (builder) => ({}),
 });
