@@ -18,13 +18,13 @@ import {
   useGetHomeDataQuery,
   useLazySearchProductsQuery,
 } from "@/redux/apis/homeApi";
-import {
-  useGetMenuProductDataQuery,
-} from "@/redux/apis/categoryApi";
+import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 const TRENDING_SEARCHES = [
   "Fooging Machines",
@@ -44,11 +44,6 @@ const USER_MENU_ITEMS = [
   { href: "#", label: "My Profile", icon: HiOutlineUserCircle },
   { href: "#", label: "My Orders", icon: PiPackageThin },
 ];
-
-const USER_PROFILE = {
-  name: "Saif Shaikh",
-  initial: "S",
-};
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -127,6 +122,7 @@ const renderMenuProductColumns = (
 );
 
 const Header = ({ scrolled: scrolledFromParent }) => {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
   const [scrolledLocal, setScrolledLocal] = useState(false);
@@ -152,8 +148,15 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setSearchOpen(false);
     setMobileSearchOpen(false);
   };
-  const [showPopup, setShowPopup] = useState('');
+  const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
+  const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
+  const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
+
+  const userData = Cookies?.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+    : {};
+  console.log(userData, "userData");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -187,7 +190,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   const clearHistory = () => persistHistory([]);
 
-  const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
+  // login ====================
   const handleLogin = async () => {
     try {
       const res = await auth({
@@ -195,15 +198,16 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           phone: phone,
         },
       });
+      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
-        setShowPopup('verify-otp');
+        setShowPopup("verify-otp");
       }
     } catch (error) {
       console.log(error, "error");
     }
   };
 
-  const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
+  // otp verify ===================
   const handleVerify = async (otp) => {
     try {
       const res = await verifyOtp({
@@ -214,16 +218,25 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       });
       if (res?.data?.success || res?.data?.status) {
         if (res?.data?.token) {
-          localStorage.setItem("agriwow:token", res.data.token);
+          Cookies.set("userData", JSON.stringify(res?.data?.user));
+          Cookies.set("userToken", JSON.stringify(res?.data?.token));
+          setShowPopup("");
+          setPhone("");
+        } else {
+          console.error("OTP verification failed", res?.error);
         }
-        setShowPopup('');
-        setPhone('');
-      } else {
-        console.error("OTP verification failed", res?.error);
       }
     } catch (error) {
       console.log(error, "error");
     }
+  };
+
+  //logout ==============
+  const handleLogout = () => {
+    Cookies.remove("userData");
+    Cookies.remove("userToken");
+    // console.log('clickkkkkkkkkkk');
+    router?.reload();
   };
 
   useEffect(() => {
@@ -665,7 +678,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
                 onClick={() => {
-                  setShowPopup('login');
+                  Object?.keys(userData)?.length
+                    ? setUserMenuOpen(true)
+                    : setShowPopup("login");
                 }}
               >
                 <FaUserCircle size={21} />
@@ -675,9 +690,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 <div className={`${styles.userDropdown}`} role="menu">
                   <div className={`${styles.userDropdownHeader}`}>
                     <div className={`${styles.userAvatar}`}>
-                      <span>{USER_PROFILE.initial}</span>
+                      <span>{userData?.name?.split("")?.[0]}</span>
                     </div>
-                    <p className={`${styles.userName}`}>{USER_PROFILE.name}</p>
+                    <p className={`${styles.userName}`}>{userData?.name}</p>
                   </div>
 
                   <ul className={`${styles.userMenuList}`}>
@@ -705,7 +720,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                     <button
                       type="button"
                       className={`${styles.userSignOutBtn}`}
-                      onClick={closeUserMenu}
+                      onClick={handleLogout}
                     >
                       <HiOutlinePower size={18} />
                       <span>Logout</span>
@@ -825,8 +840,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         </div>
       </aside>
 
-      {showPopup === 'login' && (
-        <CustomPopup onclose={() => setShowPopup('')}>
+      {showPopup === "login" && (
+        <CustomPopup onclose={() => setShowPopup("")}>
           <Login
             handleLogin={handleLogin}
             phone={phone}
@@ -835,8 +850,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           />
         </CustomPopup>
       )}
-      {showPopup === 'verify-otp' && (
-        <CustomPopup onclose={() => setShowPopup('')}>
+      {showPopup === "verify-otp" && (
+        <CustomPopup onclose={() => setShowPopup("")}>
           <VerifyOtp
             handleVerify={handleVerify}
             phone={phone}
