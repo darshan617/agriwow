@@ -187,7 +187,7 @@ const ProductsItem = ({
                         isFeatured={item?.is_featured}
                         isTopRated={item?.is_top_rated}
                         slug={item?.slug}
-
+productId={item?.id}
                       />
                     </SwiperSlide>
                   ))}

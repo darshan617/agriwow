@@ -818,6 +818,14 @@
   box-shadow: 0 0 0 3px rgba(24, 182, 196, 0.18);
 }
 
+.userAvatarTrigger {
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  margin-bottom: 0;
+  box-shadow: 0 0 0 2px rgba(24, 182, 196, 0.18);
+}
+
 .userName {
   margin: 0 0 6px;
   font-size: 16px;

@@ -3,10 +3,11 @@ import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
-import imageHoverImage from "@/assets/images/hover-product.png";
 import styles from "@/common-components/product-card/ProductCard.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
+import Cookies from "js-cookie";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -22,14 +23,42 @@ const ProductCard = ({
   isFeatured = false,
   isTopRated = false,
   slug = null,
+  productId = null,
 }) => {
   const router = useRouter();
   const hoverImage = imageHover || image;
   const showHoverImage = Boolean(image && hoverImage && hoverImage !== image);
 
+  const userData = Cookies?.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+    : null;
+
+    console.log(userData, "userData");
+
   const handleBuyNow = (slug) => {
     router.push(`/product-details/${slug}`);
   }
+
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+
+  const handleAddToCart = async () => {
+    try {
+      const res = await addToCart({
+        body: {
+          user_id: userData?.id,
+          product_id: productId,
+          quantity: 1,
+        }
+      });
+      console.log(res, "res");
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
 
   return (
     <div
@@ -123,7 +152,7 @@ const ProductCard = ({
       </Link>
 
       <div className={`${styles.cardActions}`}>
-        <button type="button" className={`${styles.addToCartBtn}`}>
+        <button type="button" className={`${styles.addToCartBtn}`} onClick={handleAddToCart}>
           <span>
             <MdAddShoppingCart className={`${styles.btnIcon}`} />
             Add to Cart

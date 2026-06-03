@@ -25,6 +25,7 @@ import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const TRENDING_SEARCHES = [
   "Fooging Machines",
@@ -152,11 +153,13 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [phone, setPhone] = useState("");
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
+  const {showToast} = useToast();
 
   const userData = Cookies?.get("userData")
     ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : {};
-  console.log(userData, "userData");
+  const isLoggedIn = Object.keys(userData).length > 0;
+  const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -220,6 +223,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
           Cookies.set("userToken", JSON.stringify(res?.data?.token));
+          showToast(res?.data?.message, "success");
           setShowPopup("");
           setPhone("");
         } else {
@@ -678,19 +682,26 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
                 onClick={() => {
-                  Object?.keys(userData)?.length
-                    ? setUserMenuOpen(true)
-                    : setShowPopup("login");
+                  isLoggedIn ? setUserMenuOpen(true) : setShowPopup("login");
                 }}
               >
-                <FaUserCircle size={21} />
+                {isLoggedIn ? (
+                  <span
+                    className={`${styles.userAvatar} ${styles.userAvatarTrigger}`}
+                    aria-hidden
+                  >
+                    {userInitial}
+                  </span>
+                ) : (
+                  <FaUserCircle size={21} />
+                )}
               </button>
 
               {userMenuOpen && (
                 <div className={`${styles.userDropdown}`} role="menu">
                   <div className={`${styles.userDropdownHeader}`}>
                     <div className={`${styles.userAvatar}`}>
-                      <span>{userData?.name?.split("")?.[0]}</span>
+                      <span>{userInitial}</span>
                     </div>
                     <p className={`${styles.userName}`}>{userData?.name}</p>
                   </div>
