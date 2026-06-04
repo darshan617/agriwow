@@ -1,7 +1,16 @@
-/* ─── Hero ───────────────────────────────────────────────────────────────────── */
 
 .hero {
   padding: 0 0 40px;
+}
+.heading{
+  margin-top: 40px;
+}
+.breadcrumb ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 14px;
 }
 
 .heroContent {
@@ -9,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 48px 24px 40px;
+  padding: 0 24px 40px;
 }
 
 .title {
@@ -28,7 +37,6 @@
   line-height: 1.5;
 }
 
-/* ─── Search ─────────────────────────────────────────────────────────────────── */
 
 .searchForm {
   position: relative;
@@ -79,7 +87,6 @@
   color: #2d9e4e;
 }
 
-/* ─── Category Tabs ───────────────────────────────────────────────────────────── */
 
 .categoryNav {
   width: auto;
@@ -230,7 +237,7 @@
   background: #239c3d;
   border-radius: 6px;
   text-decoration: none;
-  white-space: nowrap;
+  outline: none;
   transition: background-color 0.2s ease;
 }
 
@@ -239,10 +246,9 @@
   color: #ffffff;
 }
 
-/* ─── Blog Grid ───────────────────────────────────────────────────────────────── */
 
 .blogList {
-  padding: 0 0 48px;
+  padding: 48px 0;
 }
 
 .blogListTitle {
@@ -265,7 +271,6 @@
   font-size: 15px;
 }
 
-/* ─── Blog Card ───────────────────────────────────────────────────────────────── */
 
 .blogCard {
   display: flex;
@@ -283,7 +288,7 @@
 }
 
 .blogCardImage {
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .blogCardBody {
@@ -366,7 +371,6 @@
   color: #1f8534;
 }
 
-/* ─── Pagination ──────────────────────────────────────────────────────────────── */
 
 .paginationWrapper {
   display: flex;
@@ -434,17 +438,102 @@
   user-select: none;
 }
 
-/* ─── Responsive ──────────────────────────────────────────────────────────────── */
 
-@media (max-width: 991px) {
+@media (max-width: 1366px) {
+  .featuredTitle {
+    font-size: 20px;
+  }
+
+  .featuredBody {
+    padding: 24px 24px;
+  }
+
+  .blogListGrid {
+    gap: 22px;
+  }
+  .heading{
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 34px;
+  }
+
+  .featuredCard {
+    flex-direction: column;
+  }
+
+  .featuredMedia {
+    flex: none;
+    width: 100%;
+    min-height: 220px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .featuredBody {
+    padding: 22px 20px;
+  }
+
+  .featuredTitle {
+    font-size: 20px;
+  }
+
+  .featuredExcerpt {
+    -webkit-line-clamp: 4;
+  }
+
   .blogListGrid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .heroContent {
+    padding: 40px 20px 36px;
+  }
+
+  .searchForm {
+    max-width: 100%;
+  }
+
+  .featuredTitle {
+    font-size: 18px;
+  }
+
+  .featuredExcerpt {
+    font-size: 13px;
+  }
+
+  .featuredMeta {
+    gap: 14px;
+    font-size: 12px;
+  }
+
+  .readMoreBtn {
+    padding: 9px 18px;
+    font-size: 13px;
+  }
+
+  .blogListGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .blogListTitle {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 768px) {
   .heroContent {
-    padding: 32px 16px 32px;
+    padding: 0 16px 32px;
   }
 
   .title {
@@ -474,7 +563,6 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -522,10 +610,6 @@
     width: 100%;
   }
 
-  .blogList {
-    padding: 0 16px 40px;
-  }
-
   .blogListGrid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -541,5 +625,150 @@
 
   .paginationWrapper {
     padding: 0 16px 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .heroContent {
+    padding: 0 14px 0;
+  }
+
+  .searchInput {
+    height: 46px;
+    font-size: 14px;
+    padding: 0 48px 0 16px;
+  }
+
+  .categoryBtn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .featuredMedia {
+    min-height: 180px;
+  }
+
+  .featuredTitle {
+    font-size: 17px;
+  }
+
+  .featuredExcerpt {
+    -webkit-line-clamp: 3;
+  }
+
+  .featuredFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .readMoreBtn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .blogListGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .blogList {
+    padding: 32px 0 0;
+  }
+
+  .paginationWrapper {
+    padding: 0 12px 32px;
+  }
+
+  .paginationBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+  .heading{
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .heroContent {
+    padding: 0 12px 0;
+  }
+
+  .categoryNav {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .categoryBtn {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .featuredBody {
+    padding: 16px 14px;
+  }
+
+  .featuredTitle {
+    font-size: 16px;
+  }
+
+  .featuredCategory {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .featuredMeta {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .blogCardBody {
+    padding: 14px 12px 12px;
+  }
+
+  .blogCardTitle {
+    font-size: 14px;
+  }
+
+  .blogCardExcerpt {
+    font-size: 12px;
+  }
+
+  .blogCardMeta {
+    font-size: 11px;
+  }
+
+  .blogCardCategory {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .paginationBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .pagination {
+    gap: 5px;
+  }
+
+  .paginationWrapper {
+    padding: 0 10px 28px;
   }
 }

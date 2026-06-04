@@ -233,6 +233,11 @@
 
 @media (max-width: 991px) {
   .sidebar {
-    margin-top: 32px;
+    margin-top: 0;
+  }
+}
+@media (max-width: 768px) {
+  .sidebar {
+    margin-top: 20px;
   }
 }
