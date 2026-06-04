@@ -9,14 +9,19 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 
-export default function App({ Component, pageProps, ...rest }) {
-  const { store } = storeWrapper.useWrappedStore(rest);
+function AppContent({ Component, pageProps }) {
   useEffect(() => {
     Aos.init({
       duration: 1000,
       once: true,
     });
   }, []);
+
+  return <Component {...pageProps} />;
+}
+
+export default function App({ Component, pageProps, ...rest }) {
+  const { store } = storeWrapper.useWrappedStore(rest);
   return (
     <Provider store={store}>
       <Head>
@@ -26,7 +31,7 @@ export default function App({ Component, pageProps, ...rest }) {
         />
       </Head>
       <ToastProvider>
-          <Component {...pageProps} />
+        <AppContent Component={Component} pageProps={pageProps} />
       </ToastProvider>
     </Provider>
   );

@@ -222,7 +222,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       if (res?.data?.success || res?.data?.status) {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
-          Cookies.set("userToken", JSON.stringify(res?.data?.token));
+          Cookies.set("userToken", res?.data?.token);
           showToast(res?.data?.message, "success");
           setShowPopup("");
           setPhone("");

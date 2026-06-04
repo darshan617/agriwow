@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import Cookies from "js-cookie";
+import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -40,6 +42,10 @@ const ProductCard = ({
   }
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
+  const [addToWishlist, { isLoading: isWishlistLoading }] = useAddToWishlistMutation();
+  const { showToast } = useToast();
+
+
 
   const handleAddToCart = async () => {
     try {
@@ -60,6 +66,25 @@ const ProductCard = ({
     }
   };
 
+  const handleAddToWishlist = async () => {
+    console.log('kkkk');
+      
+    try {
+      const res = await addToWishlist({
+        body: { 
+          user_id: userData?.id,
+          product_id: productId,
+        }
+      });
+      console.log(res, "res");
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
   return (
     <div
       className={`${styles.productCard}`}
@@ -93,6 +118,7 @@ const ProductCard = ({
             type="button"
             className={`${styles.wishlistBtn}`}
             aria-label="Add to wishlist"
+            onClick={handleAddToWishlist}
           >
             <FiHeart />
           </button>
@@ -166,6 +192,7 @@ const ProductCard = ({
             type="button"
             className={`${styles.wishlistBtn}`}
             aria-label="Add to wishlist"
+            onClick={handleAddToWishlist}
           >
             <FiHeart />
           </button>

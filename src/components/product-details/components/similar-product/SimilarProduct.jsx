@@ -47,6 +47,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                 similar_products?.reviews?.length ?? similar_products?.review_count ?? 0
               }
               rating={similar_products?.rating}
+              productId={similar_products?.id}
             />
           </div>
         ))}
