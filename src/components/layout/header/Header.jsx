@@ -49,7 +49,7 @@ const USER_MENU_ITEMS = [
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "#", label: "Products" },
-  { href: "#", label: "Blogs" },
+  { href: "/blog", label: "Blogs" },
   { href: "#", label: "Contact us" },
 ];
 
@@ -746,7 +746,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               className={`${styles.iconBtn}`}
               aria-label="Wishlist"
             >
-              <FaHeart size={21} />
+              <Link href="/wishlist">
+                <FaHeart size={21} />
+              </Link>
               <span className={styles.badge}>0</span>
             </button>
             <button
@@ -754,7 +756,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               className={`${styles.iconBtn}`}
               aria-label="Cart"
             >
-              <FaShoppingCart size={21} />
+              <Link href="/cart">
+                <FaShoppingCart size={21} />
+              </Link>
               <span className={styles.badge}>0</span>
             </button>
             <button
