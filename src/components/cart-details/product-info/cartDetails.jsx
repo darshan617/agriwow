@@ -1,27 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "@/components/cart-details/product-info/cartDetails.module.css";
 import Link from "next/link";
 import { FaCircleCheck } from "react-icons/fa6";
 import { LuTag } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 import { ImBin } from "react-icons/im";
-import productImage from "@/assets/products/item4.jpg";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import {
+  getCartSessionId,
+  useGetCartDataQuery,
+} from "@/redux/apis/addToCartApi";
+import { useRemoveFromCartMutation } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
-const cartDetails = () => {
-  const [quantity, setQuantity] = useState(1);
+const CartDetails = ({
+  cartItems = [],
+  isLoading = false,
+  getQuantity,
+  onIncrease,
+  onDecrease,
+}) => {
+  const [removeFromCart] = useRemoveFromCartMutation();
+  const { showToast } = useToast();
 
-  const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
-  };
-
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
+  const handleRemoveFromCart = async (cartId) => {
+    const res = await removeFromCart({
+      body: {
+        cart_id: cartId,
+      },
+    });
+    console.log(res, "res");
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res?.data?.message, "success");
+    } else {
+      showToast(res?.data?.message, "error");
     }
   };
-
 
   return (
     <>
@@ -59,73 +75,76 @@ const cartDetails = () => {
           </span>
         </div>
 
-        <div className={styles.productCartWrapper}>
-          <div className={styles.productCartHeader}>
-            <div>PRODUCT</div>
-            <div>Price</div>
-            <div>Quantity</div>
+        {!isLoading && cartItems.length === 0 && <p>Your cart is empty.</p>}
+        {cartItems.length > 0 && (
+        <div className={styles.productCartHeader}>
+          <div>PRODUCT</div>
+          <div>Price</div>
+          <div>Quantity</div>
             <div>Subtotal</div>
           </div>
+        )}
 
-          <div className={styles.productCartRow}>
-            <div className={styles.productCartInfo}>
-              <Image
-                src={productImage}
-                alt="product-img"
-                className={styles.productImg}
-              />
+        {cartItems.map((item) => {
+          const qty = getQuantity(item);
 
-              <div className={styles.productCartContent}>
-                <h4>
-                  Kisankraft Mini 1 Inch Petrol | 1HP | Heavy
-                  <br />
-                  Duty | Head
-                  <br />
-                  Variable 7-21m | Spray Nozzle with Hose
-                  <br />
-                  Connector |...
-                </h4>
+          return (
+            <div className={styles.productCartWrapper} key={item.id}>
+              <div className={styles.productCartRow}>
+                <div className={styles.productCartInfo}>
+                  <Image
+                    src={item.product.thumbnail}
+                    alt="product-img"
+                    className={styles.productImg}
+                    width={62}
+                    height={62}
+                  />
 
-                <span>SKU: KK-PWP-001</span>
+                  <div className={styles.productCartContent}>
+                    <h4>{item?.product?.name}</h4>
+                    <span>SKU: {item?.product?.sku}</span>
+                  </div>
+                </div>
+
+                <div className={styles.productCartPrice}>
+                  ₹ {item?.product?.price}
+                </div>
+
+                <div className={styles.productCartQuantity}>
+                  {qty === 1 ? (
+                    <button
+                      className={styles.productCartDelete}
+                      onClick={() => handleRemoveFromCart(item.id)}
+                    >
+                      <ImBin />
+                    </button>
+                  ) : (
+                    <button
+                      className={styles.productCartDelete}
+                      onClick={() => onDecrease(item.id, qty)}
+                    >
+                      -
+                    </button>
+                  )}
+
+                  <span className={styles.productCartCount}>{qty}</span>
+
+                  <button
+                    className={styles.productCartPlus}
+                    onClick={() => onIncrease(item.id, qty)}
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div className={styles.productCartSubtotal}>
+                  <h5>₹ {item?.product?.price * qty}</h5>
+                  <span>You save ₹ {item?.product?.discount}</span>
+                </div>
               </div>
             </div>
-
-            <div className={styles.productCartPrice}>₹ 2,160.00</div>
-
-            <div className={styles.productCartQuantity}>
-              {quantity === 1 ? (
-                <button
-                  className={styles.productCartDelete}
-                >
-                  <ImBin />
-                </button>
-              ) : (
-                <button
-                  className={styles.productCartDelete}
-                  onClick={handleDecrease}
-                >
-                  -
-                </button>
-              )}
-
-              <span className={styles.productCartCount}>
-                {quantity}
-              </span>
-
-              <button
-                className={styles.productCartPlus}
-                onClick={handleIncrease}
-              >
-                +
-              </button>
-            </div>
-
-            <div className={styles.productCartSubtotal}>
-              <h5>₹ 2,160.00</h5>
-              <span>You save ₹ 327.87</span>
-            </div>
-          </div>
-        </div>
+          );
+        })}
 
         <div className={styles.coupon2}>
           <div className={styles.couponLeft}>
@@ -137,9 +156,7 @@ const cartDetails = () => {
             </span>
           </div>
 
-          <button className={styles.removeCoupon}>
-            Remove Coupon
-          </button>
+          <button className={styles.removeCoupon}>Remove Coupon</button>
         </div>
 
         <div className={styles.checkoutSection}>
@@ -159,4 +176,4 @@ const cartDetails = () => {
   );
 };
 
-export default cartDetails;
+export default CartDetails;

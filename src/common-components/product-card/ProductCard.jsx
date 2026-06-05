@@ -3,12 +3,16 @@ import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
+import { RxCross2 } from "react-icons/rx";
 import styles from "@/common-components/product-card/ProductCard.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import Cookies from "js-cookie";
-import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
+import {
+  useAddToWishlistMutation, 
+  useRemoveFromWishlistMutation,
+} from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 const ProductCard = ({
   discount = "0",
@@ -26,8 +30,12 @@ const ProductCard = ({
   isTopRated = false,
   slug = null,
   productId = null,
+  userId = null,
+  path = null,
 }) => {
   const router = useRouter();
+  const isWishlistPage =
+    router.pathname === "/wishlist" || path === "/wishlist";
   const hoverImage = imageHover || image;
   const showHoverImage = Boolean(image && hoverImage && hoverImage !== image);
 
@@ -42,7 +50,10 @@ const ProductCard = ({
   }
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
-  const [addToWishlist, { isLoading: isWishlistLoading }] = useAddToWishlistMutation();
+  const [addToWishlist, { isLoading: isWishlistLoading }] =
+    useAddToWishlistMutation();
+  const [removeFromWishlist, { isLoading: isRemoveWishlistLoading }] =
+    useRemoveFromWishlistMutation();
   const { showToast } = useToast();
 
 
@@ -67,22 +78,51 @@ const ProductCard = ({
   };
 
   const handleAddToWishlist = async () => {
-    console.log('kkkk');
-      
-    try {
-      const res = await addToWishlist({
-        body: { 
-          user_id: userData?.id,
-          product_id: productId,
-        }
-      });
-      console.log(res, "res");
-      if (res?.data?.success || res?.data?.status) {
-        showToast(res?.data?.message, "success");
-      }
-    } catch (error) {
-      console.log(error, "error");
-      showToast(error?.data?.message, "error");
+    if (!userData?.id) {
+      showToast("Please log in to add items to your wishlist", "warning");
+      return;
+    }
+
+    const res = await addToWishlist({
+      body: {
+        user_id: userData.id,
+        product_id: productId,
+      },
+    });
+
+    if (res.error) {
+      showToast(
+        res.error?.data?.message || "Failed to add to wishlist",
+        "error"
+      );
+      return;
+    }
+
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res?.data?.message || "Added to wishlist", "success");
+    } else {
+      showToast(res?.data?.message || "Failed to add to wishlist", "error");
+    }
+  };
+
+  const handleRemoveFromWishlist = async () => {
+    if (!userData?.id) {
+      showToast("Please log in to manage your wishlist", "warning");
+      return;
+    }
+
+    const res = await removeFromWishlist({
+      body: {
+        product_id: productId,
+      },
+    });
+console.log(res, "res");
+
+
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res?.data?.message || "Removed from wishlist", "success");
+    } else {
+      showToast(res?.data?.message || "Failed to remove from wishlist", "error");
     }
   };
   return (
@@ -114,14 +154,27 @@ const ProductCard = ({
           )
         }
         {type === "productPage" ? (
-          <button
-            type="button"
-            className={`${styles.wishlistBtn}`}
-            aria-label="Add to wishlist"
-            onClick={handleAddToWishlist}
-          >
-            <FiHeart />
-          </button>
+          isWishlistPage ? (
+            <button
+              type="button"
+              className={`${styles.wishlistBtn} ${styles.removeBtn}`}
+              aria-label="Remove from wishlist"
+              onClick={handleRemoveFromWishlist}
+              disabled={isRemoveWishlistLoading}
+            >
+              <RxCross2 />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={`${styles.wishlistBtn}`}
+              aria-label="Add to wishlist"
+              onClick={handleAddToWishlist}
+              disabled={isWishlistLoading}
+            >
+              <FiHeart />
+            </button>
+          )
         ) : (
           isBestSeller && (
             <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>

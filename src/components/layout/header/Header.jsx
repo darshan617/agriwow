@@ -26,6 +26,12 @@ import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useGetWishlistQuery } from "@/redux/apis/addToWishlist";
+import {
+  getCartSessionId,
+  useGetCartDataQuery,
+  useMergeCartMutation,
+} from "@/redux/apis/addToCartApi";
 
 const TRENDING_SEARCHES = [
   "Fooging Machines",
@@ -52,7 +58,6 @@ const NAV_LINKS = [
   { href: "/blog", label: "Blogs" },
   { href: "#", label: "Contact us" },
 ];
-
 const renderMenuProductColumns = (
   menuProductData,
   { linkClassName, onLinkClick } = {},
@@ -139,7 +144,16 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const userMenuRef = useRef(null);
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
+  const userData = Cookies?.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+    : {};
   const { data: menuProductData } = useGetMenuProductDataQuery();
+  const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
+    skip: !userData?.id,
+  });
+  const { data: cartData } = useGetCartDataQuery(undefined, {
+    skip: !(Cookies.get("userToken") || getCartSessionId()),
+  });
   const { data: homeData } = useGetHomeDataQuery();
   const [triggerSearch, { data: searchData, isFetching: isSearching }] =
     useLazySearchProductsQuery();
@@ -153,11 +167,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [phone, setPhone] = useState("");
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
+  const [mergeCart] = useMergeCartMutation();
   const {showToast} = useToast();
 
-  const userData = Cookies?.get("userData")
-    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
-    : {};
   const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
 
@@ -223,6 +235,18 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
           Cookies.set("userToken", res?.data?.token);
+
+          const sessionId = getCartSessionId();
+          if (sessionId) {
+            try {
+              await mergeCart({
+                body: { session_id: sessionId },
+              }).unwrap();
+            } catch (mergeError) {
+              console.error("Cart merge failed", mergeError);
+            }
+          }
+
           showToast(res?.data?.message, "success");
           setShowPopup("");
           setPhone("");
@@ -239,7 +263,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const handleLogout = () => {
     Cookies.remove("userData");
     Cookies.remove("userToken");
-    // console.log('clickkkkkkkkkkk');
+    Cookies.remove("cartSessionId");
     router?.reload();
   };
 
@@ -428,6 +452,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   }, []);
 
   if (!isMounted) return null;
+
+  const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
 
   return (
     <header
@@ -749,7 +775,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/wishlist">
                 <FaHeart size={21} />
               </Link>
-              <span className={styles.badge}>0</span>
+              {wishlistData?.data?.length >= 0 && (
+                <span className={styles.badge}>{wishlistData?.data?.length}</span>
+              )}
+
             </button>
             <button
               type="button"
@@ -759,7 +788,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/cart">
                 <FaShoppingCart size={21} />
               </Link>
-              <span className={styles.badge}>0</span>
+              <span className={styles.badge}>{cartItems?.length ?? 0}</span>
             </button>
             <button
               type="button"

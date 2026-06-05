@@ -15,6 +15,9 @@ export const apiSlice = createApi({
     "allBlogCategories",
     "addToWishlist",
     "getWishlist",
+    "removeFromWishlist",
+    'getCartData',
+    'ProductsByCategory'
   ],
   endpoints: (builder) => ({}),
 });

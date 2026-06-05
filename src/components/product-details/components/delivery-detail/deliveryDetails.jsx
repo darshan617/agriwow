@@ -8,6 +8,8 @@ import stock from "@/assets/icon/ready-stock.png";
 import cod from "@/assets/icon/cash-on-delivery.png";
 import returns from "@/assets/icon/return.png";
 import Image from "next/image";
+import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const deliveryIcons = {
   pincode: (
@@ -64,6 +66,26 @@ export default function DeliveryDetails({ productDetails }) {
   const [pincode, setPincode] = useState("226016");
   const [inputVal, setInputVal] = useState("226016");
   const [qty, setQty] = useState(1);
+  const [addToCart] = useAddToCartMutation();
+  const { showToast } = useToast();
+
+  const handleAddToCart = async (productId) => {
+    try {
+      const res = await addToCart({
+        body: {
+          product_id: productId,
+          quantity: qty,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      showToast(error?.data?.message || "Failed to add to cart", "error");
+    }
+  };
 
   const unitPrice = Number(productDetails?.data?.price || 0);
   const unitSellingPrice = Number(
@@ -125,7 +147,8 @@ export default function DeliveryDetails({ productDetails }) {
           </div>
         </div>
 
-        <button className={styles.ddBtnCart}>
+
+        <button className={styles.ddBtnCart} onClick={() => handleAddToCart(productDetails?.data?.id)}>
           Add to Cart
         </button>
 

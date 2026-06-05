@@ -1,21 +1,11 @@
 import Cookies from "js-cookie";
 import { apiSlice } from "../apiSlice";
 
-const userToken = Cookies?.get("userToken")
-  ? decodeURIComponent(Cookies?.get("userToken"))
-  : null;
-
-console.log(Cookies?.get("userToken"), "userTokensssssssssssssssss");
-
-console.log(userToken, "userToken");
-
 const addToWishlistApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addToWishlist: builder.mutation({
       query: ({ body }) => {
         const userToken = Cookies.get("userToken");
-
-        console.log("token:", userToken);
 
         return {
           url: "/add-to-wishlist",
@@ -29,24 +19,36 @@ const addToWishlistApi = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: ["addToWishlist"],
+      invalidatesTags: ["getWishlist"],
     }),
 
-    addToWishlist: builder.mutation({
-      query: ({ userId }) => {
+    getWishlist: builder.query({
+      query: (userId) => {
         const userToken = Cookies.get("userToken");
-
-        console.log("token:", userToken);
-
         return {
-          url: `get-wishlist?user_id=${userId}`,
+          url: `/get-wishlist?user_id=${userId}`,
           method: "GET",
           headers: {
             ...(userToken && {
               Authorization: `Bearer ${userToken}`,
             }),
+          },
+        };
+      },
+      providesTags: ["getWishlist"],
+    }),
+
+    removeFromWishlist: builder.mutation({
+      query: ({ body }) => {
+        const userToken = Cookies.get("userToken");
+        return {
+          url: `/remove-wishlist-item`,
+          method: "POST",
+          headers: {
+            ...(userToken && { Authorization: `Bearer ${userToken}` }),
             "Content-Type": "application/json",
           },
+          body: body, 
         };
       },
       invalidatesTags: ["getWishlist"],
@@ -57,4 +59,5 @@ const addToWishlistApi = apiSlice.injectEndpoints({
 export const {
   useAddToWishlistMutation,
   useGetWishlistQuery,
+  useRemoveFromWishlistMutation,
 } = addToWishlistApi;

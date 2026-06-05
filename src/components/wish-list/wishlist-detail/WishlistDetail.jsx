@@ -1,7 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Cookies from "js-cookie";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
+import { useGetWishlistQuery } from "@/redux/apis/addToWishlist";
+import ProductCard from "@/common-components/product-card/ProductCard";
 import emptyWishlistImg from "@/assets/images/wishlist.jpg";
 import categoryImg1 from "@/assets/category-image/1.png";
 import categoryImg2 from "@/assets/category-image/2.png";
@@ -24,8 +27,49 @@ const FALLBACK_CATEGORIES = [
   { name: "Medical Supplies", slug: "medical-supplies", image: categoryImg6 },
 ];
 
-const WishlistDetail = ({ itemCount = 0 }) => {
+const normalizeWishlistItems = (wishlistData) => {
+  const raw = wishlistData?.data;
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  if (Array.isArray(raw?.wishlist)) return raw.wishlist;
+  if (Array.isArray(raw?.products)) return raw.products;
+  if (Array.isArray(raw?.items)) return raw.items;
+  return [];
+};
+
+const WishlistDetail = () => {
+  const [userId, setUserId] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const raw = Cookies.get("userData");
+    if (raw) {
+      try {
+        const userData = JSON.parse(decodeURIComponent(raw));
+        setUserId(userData?.id ?? null);
+      } catch {
+        setUserId(null);
+      }
+    }
+    setIsMounted(true);
+  }, []);
+
   const { data: homeData } = useGetHomeDataQuery();
+
+  const { data: wishlistData, isLoading, isFetching } = useGetWishlistQuery(
+    userId,
+    { skip: !userId }
+  );
+
+  const wishlistItems = useMemo(
+    () => normalizeWishlistItems(wishlistData),
+    [wishlistData]
+  );
+
+  const itemCount = wishlistItems.length;
+  const hasItems = itemCount > 0;
+  const showEmpty =
+    isMounted && !hasItems && !isLoading && !isFetching;
 
   const trendingCategories = useMemo(() => {
     const fromApi = homeData?.data?.categories;
@@ -49,29 +93,66 @@ const WishlistDetail = ({ itemCount = 0 }) => {
         </h1>
       </div>
 
-      <div className={styles.emptySection}>
-        <div className={styles.emptyVisual}>
-          <Image
-            src={emptyWishlistImg}
-            alt=""
-            className={styles.emptyImage}
-            width={420}
-            height={320}
-            priority
-          />
-        </div>
+      {showEmpty && (
+        <div className={styles.emptySection}>
+          <div className={styles.emptyVisual}>
+            <Image
+              src={emptyWishlistImg}
+              alt=""
+              className={styles.emptyImage}
+              width={420}
+              height={320}
+              priority
+            />
+          </div>
 
-        <div className={styles.emptyContent}>
-          <h2 className={styles.emptyTitle}>Your Wishlist is empty!</h2>
-          <p className={styles.emptyText}>
-            Explore more &amp; shortlist your favourite items. Review them
-            anytime and add to cart
-          </p>
-          <Link href="/" className={styles.shopBtn}>
-            START SHOPPING
-          </Link>
+          <div className={styles.emptyContent}>
+            <h2 className={styles.emptyTitle}>Your Wishlist is empty!</h2>
+            <p className={styles.emptyText}>
+              Explore more &amp; shortlist your favourite items. Review them
+              anytime and add to cart
+            </p>
+            <Link href="/" className={styles.shopBtn}>
+              START SHOPPING
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
+
+      {hasItems && (
+        <div className={styles.productsSection}>
+          <div className={styles.productsGrid}>
+            {wishlistItems.map((item) => {
+              const product = item?.product ?? item;
+              return (
+                <ProductCard
+                  key={item?.id ?? product?.id}
+                  type="productPage"
+                  image={product?.thumbnail ?? product?.gallery?.[0]}
+                  imageHover={
+                    product?.gallery?.[1] ?? product?.gallery?.[0]
+                  }
+                  discount={product?.discount}
+                  isBestSeller={product?.is_best_selling}
+                  isTrending={product?.is_trending}
+                  isFeatured={product?.is_featured}
+                  isTopRated={product?.is_top_rated}
+                  name={product?.name}
+                  price={product?.selling_price}
+                  oldPrice={product?.price}
+                  reviews={
+                    product?.reviews?.length ?? product?.total_reviews ?? 0
+                  }
+                  rating={product?.rating ?? "4.5"}
+                  slug={product?.slug}
+                  productId={product?.id}
+                  path="/wishlist"
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className={styles.trendingSection}>
         <h2 className={styles.trendingTitle}>Trending Categories</h2>
