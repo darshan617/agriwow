@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/components/cart-details/product-info/cartDetails.module.css";
 import Link from "next/link";
 import { FaCircleCheck } from "react-icons/fa6";
-import { LuTag } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
 import { ImBin } from "react-icons/im";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -10,10 +9,15 @@ import Image from "next/image";
 import Cookies from "js-cookie";
 import {
   getCartSessionId,
-  useGetCartDataQuery,
+  useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
 import { useRemoveFromCartMutation } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
+import CustomPopup from "@/components/custom-popup/CustomPopup";
+import Login from "@/components/auth/login/Login";
+import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
+import emptyCartImg from "@/assets/images/empty-cart.jpg";
 
 const CartDetails = ({
   cartItems = [],
@@ -21,9 +25,78 @@ const CartDetails = ({
   getQuantity,
   onIncrease,
   onDecrease,
+  appliedCoupon = null,
+  onRemoveCoupon,
 }) => {
   const [removeFromCart] = useRemoveFromCartMutation();
+  const [mergeCart] = useMergeCartMutation();
+  const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
+  const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const { showToast } = useToast();
+  const [showPopup, setShowPopup] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const userData = Cookies?.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+    : {};
+  const isLoggedIn = Object.keys(userData).length > 0;
+
+  const handleLogin = async () => {
+    try {
+      const res = await auth({
+        body: {
+          phone: phone,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        setShowPopup("verify-otp");
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
+  const handleVerify = async (otp) => {
+    try {
+      const res = await verifyOtp({
+        body: {
+          otp: otp,
+          phone: phone,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        if (res?.data?.token) {
+          Cookies.set("userData", JSON.stringify(res?.data?.user));
+          Cookies.set("userToken", res?.data?.token);
+
+          const sessionId = getCartSessionId();
+          if (sessionId) {
+            try {
+              await mergeCart({
+                body: { session_id: sessionId },
+              }).unwrap();
+            } catch (mergeError) {
+              console.error("Cart merge failed", mergeError);
+            }
+          }
+
+          showToast(res?.data?.message, "success");
+          setShowPopup("");
+          setPhone("");
+        } else {
+          console.error("OTP verification failed", res?.error);
+        }
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!isLoggedIn) {
+      setShowPopup("login");
+    }
+  };
 
   const handleRemoveFromCart = async (cartId) => {
     const res = await removeFromCart({
@@ -60,22 +133,55 @@ const CartDetails = ({
       </div>
 
       <div className={styles.productInfo}>
-        <div className={styles.coupon}>
-          <FaCircleCheck size={30} color="#239c3d" />
+        {appliedCoupon && (
+          <div className={styles.coupon}>
+            <FaCircleCheck size={30} color="#239c3d" />
 
-          <div className={styles.couponDetails}>
-            <span className={styles.couponText}>Coupon applieda</span>
-            <p>You saved ₹327.87 with coupon "AGRIWOW10"</p>
+            <div className={styles.couponDetails}>
+              <span className={styles.couponText}>Coupon applied</span>
+
+              <p>
+                You saved ₹{appliedCoupon.discount_amount ?? 0} with coupon "
+                {appliedCoupon.coupon?.code ?? ""}"
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className={`${styles.couponArrow} d-inline-flex justify-content-end`}
+              onClick={onRemoveCoupon}
+              aria-label="Remove coupon"
+            >
+              <RxCross2 size={20} />
+            </button>
+          </div>
+        )}
+
+        {cartItems.length === 0 && (
+        <div className={styles.emptySection}>
+          <div className={styles.emptyVisual}>
+            <Image
+              src={emptyCartImg}
+              alt=""
+              className={styles.emptyImage}
+              width={420}
+              height={320}
+              priority
+            />
           </div>
 
-          <span
-            className={`${styles.couponArrow} d-inline-flex justify-content-end`}
-          >
-            <RxCross2 size={20} />
-          </span>
+          <div className={styles.emptyContent}>
+            <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
+            <p className={styles.emptyText}>
+            Add product and proceed
+            </p>
+            <Link href="/product-category/agriculture-sprayers" className={styles.shopBtn}>
+              CONTINUE SHOPPING
+            </Link>
+          </div>
         </div>
+      )}
 
-        {!isLoading && cartItems.length === 0 && <p>Your cart is empty.</p>}
         {cartItems.length > 0 && (
         <div className={styles.productCartHeader}>
           <div>PRODUCT</div>
@@ -162,7 +268,7 @@ const CartDetails = ({
 
         {cartItems.length > 0 && (
           <div className={styles.checkoutSection}>
-            <button className={styles.checkoutBtn}>
+            <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
                 <span>PROCEED TO CHECKOUT</span>
                 <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
@@ -175,6 +281,26 @@ const CartDetails = ({
           </div>
         )}
       </div>
+
+      {showPopup === "login" && (
+        <CustomPopup onclose={() => setShowPopup("")}>
+          <Login
+            handleLogin={handleLogin}
+            phone={phone}
+            setPhone={setPhone}
+            isAuthLoading={isAuthLoading}
+          />
+        </CustomPopup>
+      )}
+      {showPopup === "verify-otp" && (
+        <CustomPopup onclose={() => setShowPopup("")}>
+          <VerifyOtp
+            handleVerify={handleVerify}
+            phone={phone}
+            isLoading={isVerifyOtpLoading}
+          />
+        </CustomPopup>
+      )}
     </>
   );
 };
