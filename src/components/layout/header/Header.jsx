@@ -49,7 +49,7 @@ const SEARCH_HISTORY_MAX = 6;
 
 const USER_MENU_ITEMS = [
   { href: "#", label: "My Profile", icon: HiOutlineUserCircle },
-  { href: "#", label: "My Orders", icon: PiPackageThin },
+  { href: "/my-order", label: "My Orders", icon: PiPackageThin },
 ];
 
 const NAV_LINKS = [

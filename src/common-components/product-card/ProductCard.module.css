@@ -345,12 +345,10 @@
   .productCard {
     padding: 8px 8px 10px;
   }
-}
-@media (max-width: 1080px) {
   .addToCartBtn span,
-  .buyNowBtn span {
+  .buyNowBtn {
+    font-size: 10px;
     gap: 0px !important;
-    font-size: 11px;
   }
 }
 

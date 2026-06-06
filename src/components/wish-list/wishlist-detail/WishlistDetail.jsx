@@ -37,7 +37,13 @@ const normalizeWishlistItems = (wishlistData) => {
   return [];
 };
 
-const WishlistDetail = () => {
+const WishlistDetail = ({
+  title = "My Wishlist",
+  emptyTitle = "Your Wishlist is empty!",
+  emptyText = "Explore more & shortlist your favourite items. Review them anytime and add to cart",
+  shopBtnText = "START SHOPPING",
+  shopBtnHref = "/",
+}) => {
   const [userId, setUserId] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -88,9 +94,9 @@ const WishlistDetail = () => {
   return (
     <section className={styles.wishlistPanel}>
       <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>
-          My Wishlist ({itemCount} {itemLabel})
-        </h1>
+        {title && <h1 className={styles.pageTitle}>
+          {title} ({itemCount} {itemLabel})
+        </h1>}
       </div>
 
       {showEmpty && (
@@ -107,13 +113,12 @@ const WishlistDetail = () => {
           </div>
 
           <div className={styles.emptyContent}>
-            <h2 className={styles.emptyTitle}>Your Wishlist is empty!</h2>
+            <h2 className={styles.emptyTitle}>{emptyTitle}</h2>
             <p className={styles.emptyText}>
-              Explore more &amp; shortlist your favourite items. Review them
-              anytime and add to cart
+              {emptyText}
             </p>
-            <Link href="/" className={styles.shopBtn}>
-              START SHOPPING
+            <Link href={shopBtnHref} className={styles.shopBtn}>
+              {shopBtnText}
             </Link>
           </div>
         </div>

@@ -57,7 +57,7 @@ const Cart = () => {
     <Layout>
       <div className="container">
         <div className="row">
-          <div className="col-xl-8 col-12">
+          <div className={`${cartItems.length > 0 ? 'col-xl-8' : 'col-xl-12' }  col-12`}>
             <CartDetails
               cartItems={cartItems}
               isLoading={isLoading}
