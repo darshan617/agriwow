@@ -1,0 +1,208 @@
+.summaryCard {
+  background: #f5f5f5;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.summaryHeader {
+  padding: 24px 35px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.summaryHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+.summaryBody {
+  padding: 28px 35px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.summaryRow span:first-child {
+  font-size: 14px;
+  color: #333;
+}
+
+.summaryRow span:last-child {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+.discount {
+  color: #2c9a43 !important;
+}
+
+.freeShipping {
+  color: #2c9a43;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.divider {
+  margin: 24px 0;
+  border: none;
+  border-top: 1px solid #d4d4d4;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.totalRow h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.totalRow p {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.saveText {
+  margin-top: 14px;
+  color: #2c9a43;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.couponCard {
+  background: linear-gradient(180deg, #d8ed9e 0%, #e6efd2 100%);
+  border-radius: 12px;
+  padding: 30px 35px;
+}
+
+.couponTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.couponForm {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.couponInput {
+  flex: 1;
+  height: 46px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 0 15px;
+  font-size: 14px;
+  outline: none;
+}
+
+.applyBtn {
+  width: 120px;
+  border: none;
+  background: #2d8d2f;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.emptyCouponBox {
+  background: #fff;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+}
+
+.couponImage {
+  width: 130px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.emptyCouponBox p {
+  margin: 0;
+  color: #444;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.viewAllBtn {
+  width: 100%;
+  display: flex;
+  margin-top: 12px;
+  padding: 16px 0 0;
+  border: 0;
+  background: none;
+  color: #239c3d;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .summaryHeader h3,
+  .couponTitle {
+    font-size: 16px;
+  }
+  .summaryHeader {
+    padding: 10px;
+  }
+  .summaryBody {
+    padding: 10px;
+  }
+
+  .summaryRow span,
+  .freeShipping {
+    font-size: 14px;
+  }
+
+  .totalRow h4 {
+    font-size: 14px;
+  }
+
+  .saveText {
+    font-size: 14px;
+  }
+/* 
+  .couponForm {
+    flex-direction: column;
+  } */
+
+  .applyBtn {
+    justify-content: center;
+    height: auto;
+  }
+    .couponCard {
+    padding: 10px;
+  }
+  .summaryRow {
+    margin-bottom: 10px;
+  }
+  .divider {
+    margin: 10px 0;
+  }
+  .couponInput {
+    padding: 10px !important;
+  }
+  .cartSummaryWrapper{
+    padding: 20px 0 !important;
+  }
+}

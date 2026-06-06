@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/router";
+import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi"; 
+import { getCartSessionId, useMergeCartMutation } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
+const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
+  const router = useRouter();
 
-const Login = () => {
-  const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const [isMounted, setIsMounted] = useState(false);
 
@@ -12,6 +16,11 @@ const Login = () => {
   }, []);
 
   if (!isMounted) return null;
+  const sessionId = getCartSessionId();
+  const handleContinue = () => {
+    router.push(`/auth/verify-otp`);
+  };
+
   return (
     <div className={`${styles.root} `} role="dialog" aria-modal="true">
 
@@ -58,8 +67,7 @@ const Login = () => {
               maxLength={10}
             />
           </div>
-
-          <button className={`${styles.continueBtn}`}>CONTINUE</button>
+          <button className={`${styles.continueBtn}`} onClick={handleLogin} disabled={isAuthLoading}>{isAuthLoading ? 'LOADING...' : 'CONTINUE'}</button>
 
           <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />

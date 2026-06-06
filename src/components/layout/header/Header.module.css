@@ -818,6 +818,14 @@
   box-shadow: 0 0 0 3px rgba(24, 182, 196, 0.18);
 }
 
+.userAvatarTrigger {
+  width: 27px;
+  height: 27px;
+  font-size: 13px;
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
 .userName {
   margin: 0 0 6px;
   font-size: 16px;
@@ -1470,6 +1478,11 @@
   .iconBtn {
     width: 24px;
     height: 24px;
+  }
+  .userAvatarTrigger {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
   }
 }
 

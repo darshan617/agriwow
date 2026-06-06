@@ -311,11 +311,19 @@
   transition:
     color 0.15s ease,
     border-color 0.15s ease;
+
 }
 
 .wishlistBtn:hover {
   color: #e0334b;
-  border-color: #e0334b;
+}
+.removeBtn {
+  position: absolute;
+  right: 0;
+}
+
+.removeBtn:hover {
+  color: #1d1d1d;
 }
 @media (max-width: 1600px) {
   .addToCartBtn,
@@ -337,12 +345,10 @@
   .productCard {
     padding: 8px 8px 10px;
   }
-}
-@media (max-width: 1080px) {
   .addToCartBtn span,
-  .buyNowBtn span {
+  .buyNowBtn {
+    font-size: 10px;
     gap: 0px !important;
-    font-size: 11px;
   }
 }
 
