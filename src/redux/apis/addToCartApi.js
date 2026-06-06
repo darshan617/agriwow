@@ -74,7 +74,16 @@ const addToCartApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["getCartData"],
     }),
+    applyCoupon: builder.mutation({
+      query:({body}) => ({
+        url: "/apply-coupon",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["applyCoupon"]
+    })
   }),
 });
 
-export const { useAddToCartMutation, useGetCartDataQuery, useRemoveFromCartMutation, useMergeCartMutation } = addToCartApi;
+export const { useAddToCartMutation, useGetCartDataQuery, useRemoveFromCartMutation, useMergeCartMutation, useApplyCouponMutation } = addToCartApi;     

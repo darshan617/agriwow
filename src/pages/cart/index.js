@@ -14,6 +14,7 @@ import {
 const Cart = () => {
   const [canFetchCart, setCanFetchCart] = useState(false);
   const [quantities, setQuantities] = useState({});
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   useEffect(() => {
     setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
@@ -63,11 +64,19 @@ const Cart = () => {
               getQuantity={getQuantity}
               onIncrease={handleIncrease}
               onDecrease={handleDecrease}
+              appliedCoupon={appliedCoupon}
+              onRemoveCoupon={() => setAppliedCoupon(null)}
             />
           </div>
-          <div className="col-xl-4 col-12">
-            <CartSummery cartItems={cartItemsWithQuantities} />
-          </div>
+          {cartItems.length > 0 && (
+            <div className="col-xl-4 col-12">
+              <CartSummery
+                cartItems={cartItemsWithQuantities}
+                appliedCoupon={appliedCoupon}
+                setAppliedCoupon={setAppliedCoupon}
+              />
+            </div>
+          )}
         </div>
       </div>
       <OrderInformation />
