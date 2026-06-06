@@ -54,6 +54,8 @@ const CustomerInfo = () => {
     }
   }, []);
 
+
+
   const isActive = (matchPath) =>
     router.pathname === matchPath || router.asPath === matchPath;
 
@@ -68,7 +70,7 @@ const CustomerInfo = () => {
             <li className={styles.breadcrumbSeparator} aria-hidden>
               /
             </li>
-            <li className={styles.breadcrumbActive}>My Wishlist</li>
+            <li className={styles.breadcrumbActive} style={{textTransform: "capitalize"}}>{router.pathname.split("/")?.pop()?.replace("-", " ")}</li>
           </ul>
         </nav>
 

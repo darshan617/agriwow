@@ -6,12 +6,13 @@ import {
   TopHeaderSocial,
 } from "@/components/layout/top-header/TopHeaderExtras";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
+import { useRouter } from "next/router";
 
 const SCROLL_THRESHOLD = 20;
 
 const TopHeader = () => {
   const [scrolled, setScrolled] = useState(false);
-  
+  const router = useRouter();
 
   useEffect(() => {
     let ticking = false;
@@ -47,7 +48,7 @@ const TopHeader = () => {
                     Sale Up to <span>60% Off</span> on Everything*
                   </p>
                 </div>
-                <button className={styles.shopNowButton}>Shop Now</button>
+                <button onClick={() => router.push("/product-category/agriculture-sprayers")} className={styles.shopNowButton}>Shop Now</button>
               </div>
             </div>
             <div
