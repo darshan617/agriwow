@@ -311,11 +311,19 @@
   transition:
     color 0.15s ease,
     border-color 0.15s ease;
+
 }
 
 .wishlistBtn:hover {
   color: #e0334b;
-  border-color: #e0334b;
+}
+.removeBtn {
+  position: absolute;
+  right: 0;
+}
+
+.removeBtn:hover {
+  color: #1d1d1d;
 }
 @media (max-width: 1600px) {
   .addToCartBtn,

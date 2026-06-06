@@ -3,23 +3,24 @@ import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi"; 
+import { getCartSessionId, useMergeCartMutation } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
 
   const [countryCode, setCountryCode] = useState("+91");
   const [isMounted, setIsMounted] = useState(false);
 
-
-
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   if (!isMounted) return null;
+  const sessionId = getCartSessionId();
   const handleContinue = () => {
     router.push(`/auth/verify-otp`);
   };
+
   return (
     <div className={`${styles.root} `} role="dialog" aria-modal="true">
 
