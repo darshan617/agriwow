@@ -146,7 +146,7 @@ const CartDetails = ({
           );
         })}
 
-        <div className={styles.coupon2}>
+        {/* <div className={styles.coupon2}>
           <div className={styles.couponLeft}>
             <LuTag size={18} />
 
@@ -157,20 +157,23 @@ const CartDetails = ({
           </div>
 
           <button className={styles.removeCoupon}>Remove Coupon</button>
-        </div>
+        </div> */}
 
-        <div className={styles.checkoutSection}>
-          <button className={styles.checkoutBtn}>
-            <div>
-              <span>PROCEED TO CHECKOUT</span>
-              <p>₹ 1,832.13</p>
-            </div>
 
-            <span className={styles.arrow}>
-              <MdOutlineKeyboardArrowRight size={30} />
-            </span>
-          </button>
-        </div>
+        {cartItems.length > 0 && (
+          <div className={styles.checkoutSection}>
+            <button className={styles.checkoutBtn}>
+              <div>
+                <span>PROCEED TO CHECKOUT</span>
+                <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
+              </div>
+
+              <span className={styles.arrow}>
+                <MdOutlineKeyboardArrowRight size={30} />
+              </span>
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
