@@ -21,6 +21,19 @@ const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["verifyOtp"],
     }),
+    googleLogin: builder.mutation({
+      query: ({ body }) => {
+        return {
+          url: "/google-login",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: body,
+        };
+      },
+    }),
   }),
 });
-export const { useAuthMutation, useVerifyOtpMutation } = authApi;
+export const { useAuthMutation, useVerifyOtpMutation, useGoogleLoginMutation } =
+  authApi;

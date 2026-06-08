@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function AppContent({ Component, pageProps }) {
   useEffect(() => {
@@ -19,20 +20,18 @@ function AppContent({ Component, pageProps }) {
 
   return <Component {...pageProps} />;
 }
-
 export default function App({ Component, pageProps, ...rest }) {
   const { store } = storeWrapper.useWrappedStore(rest);
   return (
-    <Provider store={store}>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-      </Head>
-      <ToastProvider>
-        <AppContent Component={Component} pageProps={pageProps} />
-      </ToastProvider>
-    </Provider>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <ToastProvider>
+          <AppContent Component={Component} pageProps={pageProps} />
+        </ToastProvider>
+      </Provider>
+    </GoogleOAuthProvider>
   );
 }

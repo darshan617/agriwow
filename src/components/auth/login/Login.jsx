@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi"; 
-import { getCartSessionId, useMergeCartMutation } from "@/redux/apis/addToCartApi";
+import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
+import {
+  getCartSessionId,
+  useMergeCartMutation,
+} from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { GoogleLogin } from "@react-oauth/google";
+import GoogleLoginBtn from "@/components/google-login-btn/GoogleLoginBtn";
 const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
 
@@ -23,10 +28,7 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
 
   return (
     <div className={`${styles.root} `} role="dialog" aria-modal="true">
-
       <div className={`${styles.modal}`}>
-
-
         <div className={`${styles.leftPanel}`}>
           <div className={`${styles.leftContent}`}>
             <h2 className={`${styles.leftHeading}`}>
@@ -67,7 +69,13 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
               maxLength={10}
             />
           </div>
-          <button className={`${styles.continueBtn}`} onClick={handleLogin} disabled={isAuthLoading}>{isAuthLoading ? 'LOADING...' : 'CONTINUE'}</button>
+          <button
+            className={`${styles.continueBtn}`}
+            onClick={handleLogin}
+            disabled={isAuthLoading}
+          >
+            {isAuthLoading ? "LOADING..." : "CONTINUE"}
+          </button>
 
           <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />
@@ -75,10 +83,13 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
             <div className={`${styles.orLine}`} />
           </div>
 
-          <button className={`${styles.socialBtn}`} style={{ marginTop: 12 }}>
+          {/* <button className={`${styles.socialBtn}`} style={{ marginTop: 12 }}>
             <FcGoogle size={18} style={{ marginRight: 8 }} />
             Continue with Google
-          </button>
+          </button> */}
+          <h1>
+            <GoogleLoginBtn />
+          </h1>
 
           <p className={`${styles.terms}`}>
             By continuing, you agree to our{" "}
