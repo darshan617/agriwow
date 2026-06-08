@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import Cookies from "js-cookie";
 import {
-  useAddToWishlistMutation, 
+  useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
@@ -43,11 +43,9 @@ const ProductCard = ({
     ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : null;
 
-    console.log(userData, "userData");
-
   const handleBuyNow = (slug) => {
     router.push(`/product-details/${slug}`);
-  }
+  };
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [addToWishlist, { isLoading: isWishlistLoading }] =
@@ -56,8 +54,6 @@ const ProductCard = ({
     useRemoveFromWishlistMutation();
   const { showToast } = useToast();
 
-
-
   const handleAddToCart = async () => {
     try {
       const res = await addToCart({
@@ -65,7 +61,7 @@ const ProductCard = ({
           user_id: userData?.id,
           product_id: productId,
           quantity: 1,
-        }
+        },
       });
       console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
@@ -93,7 +89,7 @@ const ProductCard = ({
     if (res.error) {
       showToast(
         res.error?.data?.message || "Failed to add to wishlist",
-        "error"
+        "error",
       );
       return;
     }
@@ -116,13 +112,15 @@ const ProductCard = ({
         product_id: productId,
       },
     });
-console.log(res, "res");
-
+    console.log(res, "res");
 
     if (res?.data?.success || res?.data?.status) {
       showToast(res?.data?.message || "Removed from wishlist", "success");
     } else {
-      showToast(res?.data?.message || "Failed to remove from wishlist", "error");
+      showToast(
+        res?.data?.message || "Failed to remove from wishlist",
+        "error",
+      );
     }
   };
   return (
@@ -132,27 +130,22 @@ console.log(res, "res");
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        {
-          type === "productPage" ? (
-            isBestSeller && (
-              <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
-            )
-          ) && (
-            isTrending && (
-              <span className={`${styles.bestsellerTag}`}>TRENDING</span>
-            )
-          ) && (
-            isFeatured && (
-              <span className={`${styles.bestsellerTag}`}>FEATURED</span>
-            )
-          ) && (
-            isTopRated && (
-              <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
-            )
-          ) : (
-            <span className={`${styles.bestsellerTag  }`}>{discount}% OFF</span>
+        {type === "productPage" ? (
+          isBestSeller && (
+            <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+          ) &&
+          isTrending && (
+            <span className={`${styles.bestsellerTag}`}>TRENDING</span>
+          ) &&
+          isFeatured && (
+            <span className={`${styles.bestsellerTag}`}>FEATURED</span>
+          ) &&
+          isTopRated && (
+            <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
           )
-        }
+        ) : (
+          <span className={`${styles.bestsellerTag}`}>{discount}% OFF</span>
+        )}
         {type === "productPage" ? (
           isWishlistPage ? (
             <button
@@ -217,27 +210,35 @@ console.log(res, "res");
         <h3 className={`${styles.productName}`}>{name}</h3>
 
         <div className={`${styles.priceRow}`}>
-
           <span className={`${styles.currentPrice}`}>₹ {price}</span>
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
-
         </div>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
-            <span className={`${styles.discountText}`}>{discount || 0}% OFF</span>
-              <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
-            </div>
-        )}  
+            <span className={`${styles.discountText}`}>
+              {discount || 0}% OFF
+            </span>
+            <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
+          </div>
+        )}
       </Link>
 
       <div className={`${styles.cardActions}`}>
-        <button type="button" className={`${styles.addToCartBtn}`} onClick={handleAddToCart}>
+        <button
+          type="button"
+          className={`${styles.addToCartBtn}`}
+          onClick={handleAddToCart}
+        >
           <span>
             <MdAddShoppingCart className={`${styles.btnIcon}`} />
             Add to Cart
           </span>
         </button>
-        <button type="button" className={`${styles.buyNowBtn}`} onClick={() => handleBuyNow(slug)}>
+        <button
+          type="button"
+          className={`${styles.buyNowBtn}`}
+          onClick={() => handleBuyNow(slug)}
+        >
           <span>Buy Now</span>
         </button>
         {type !== "productPage" && (
