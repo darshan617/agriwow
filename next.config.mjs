@@ -3,12 +3,13 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       {
-        hostname: 'goyalinfotech.in',
+        hostname: "goyalinfotech.in",
       },
-    ],   
+    ],
     unoptimized: true,
   },
 };

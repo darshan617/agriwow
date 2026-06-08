@@ -157,14 +157,42 @@
   justify-content: center;
 }
 
+.couponItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.couponItem p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
+
+.couponItem button {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #eeb31e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 @media (max-width: 768px) {
+
   .summaryHeader h3,
   .couponTitle {
     font-size: 16px;
   }
+
   .summaryHeader {
     padding: 10px;
   }
+
   .summaryBody {
     padding: 10px;
   }
@@ -181,7 +209,8 @@
   .saveText {
     font-size: 14px;
   }
-/* 
+
+  /* 
   .couponForm {
     flex-direction: column;
   } */
@@ -190,19 +219,24 @@
     justify-content: center;
     height: auto;
   }
-    .couponCard {
+
+  .couponCard {
     padding: 10px;
   }
+
   .summaryRow {
     margin-bottom: 10px;
   }
+
   .divider {
     margin: 10px 0;
   }
+
   .couponInput {
     padding: 10px !important;
   }
-  .cartSummaryWrapper{
+
+  .cartSummaryWrapper {
     padding: 20px 0 !important;
   }
 }

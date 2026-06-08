@@ -1,10 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./VerifyOtp.module.css";
+import { useResendOtpMutation } from "@/redux/apis/authApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
+  const { showToast } = useToast();
   const length = 6;
-  const [otp, setOtp] = useState(Array(length).fill(""));
   const inputRefs = useRef([]);
+  const timerRef = useState();
+  const [otp, setOtp] = useState(Array(length).fill(""));
+  const [resendOtp, { isLoading: isResendOtpLoading }] = useResendOtpMutation();
+  const [timeLeft, setTimeLeft] = useState(30);
 
   const handleChange = (val, i) => {
     const digit = val.replace(/[^0-9]/g, "").slice(-1);
@@ -49,6 +55,39 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
   };
 
   const isComplete = otp.join("").length === length;
+
+  const handleResendOtp = async () => {
+    try {
+      const res = await resendOtp({
+        body: {
+          phone: phone,
+        },
+      });
+      if (res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   return (
     <div className={styles.modal}>
@@ -102,18 +141,25 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
         <div className={styles.resendRow}>
           <span className={styles.resendLeft}>
             Didn't receive the code? <br />
-            <strong>Resend in 00:00</strong>
+            <strong>
+              Resend in {`00:${timeLeft.toString().padStart(2, "0")}`}
+            </strong>
           </span>
-          <button className={`${styles.resendBtn}`}>RESEND OTP</button>
+          <button
+            className={`${styles.resendBtn}`}
+            onClick={handleResendOtp}
+            disabled={timeLeft !== Number(0) || isResendOtpLoading}
+            style={{
+              opacity: timeLeft !== Number(0) || isResendOtpLoading ? 0.5 : 1,
+              cursor:
+                timeLeft !== Number(0) || isResendOtpLoading
+                  ? "not-allowed"
+                  : "pointer",
+            }}
+          >
+            {isResendOtpLoading ? "RESENDING OTP..." : "RESEND OTP"}
+          </button>
         </div>
-
-        <div className={`${styles.orRow}`}>
-          <div className={`${styles.orLine}`} />
-          <span className={`${styles.orText}`}>or</span>
-          <div className={`${styles.orLine}`} />
-        </div>
-
-        <button className={`${styles.pwBtn}`}>LOGIN WITH PASSWORD</button>
       </div>
     </div>
   );
