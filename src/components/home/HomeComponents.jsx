@@ -50,16 +50,16 @@ const HomeComponents = ({ homeData }) => {
         }
       />
       <Detail />
-      <FarmEquipments farmEquipmentsData={farmEquipmentsData} />
+      <FarmEquipments farmEquipmentsData={farmEquipmentsData} categoriesData={categoriesData} viewAllLink="/product-category/farm-mechanization-equipments"/>
       <Benefit />
-      <IndustrialProduct industrialProductsData={industrialProductsData} />
+      <IndustrialProduct industrialProductsData={industrialProductsData} viewAllLink="/product-category/industrial-products"/>
       <Solution />
-      <GardenTool gardeningToolsData={gardeningToolsData} />
-      <PostHarvest postHarvestData={postHarvestData} />
-      <FoogingMachine foogingMachineData={foogingMachineData} />
-      <BestSelling bestSellingData={bestSellingData} />
+      <GardenTool gardeningToolsData={gardeningToolsData} viewAllLink="/product-category/garden-tools"/>
+      <PostHarvest postHarvestData={postHarvestData} viewAllLink="/product-category/post-harvest"/>
+      <FoogingMachine foogingMachineData={foogingMachineData} viewAllLink="/product-category/fogging-machines"/>
+      <BestSelling bestSellingData={bestSellingData} viewAllLink="/product-category/best-selling"/>
       <ExclusiveDeal />
-      <TopRating topRatedData={topRatedData} />
+      <TopRating topRatedData={topRatedData} viewAllLink="/product-category/top-rating"/>
       <VideoSection />
       <InsightsBlog insightsBlogData={insightsBlogData} />
       <Footer />

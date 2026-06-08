@@ -8,6 +8,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ProductsItem = ({
   bannerTitle,
@@ -26,6 +27,8 @@ const ProductsItem = ({
   hideOverlay = false,
   customOverlay,
   bannerImageProps = {},
+  categorySlug,
+  viewAllLink = "/product-category/agriculture-sprayers",
   viewAllLink = "/product-category/agriculture-sprayers",
 }) => {
   const {
@@ -37,7 +40,7 @@ const ProductsItem = ({
   const isIndustrialOverlay = overlayVariant === "industrial";
   const isPostHarvestOverlay = overlayVariant === "postHarvest";
   const isBestSellingOverlay = overlayVariant === "bestSelling";
-
+  const router = useRouter();
   const productsSectionClassNames = [
     styles.productsSection,
     isEquipment && styles.productsSectionEquipment,
@@ -142,7 +145,7 @@ const ProductsItem = ({
                     nextEl: ".swiper-btn-next",
                   }}
                   autoplay={{
-                    delay: 3000,
+                    delay: 9000,
                     disableOnInteraction: false,
                   }}
                   spaceBetween={16}
@@ -220,8 +223,8 @@ const ProductsItem = ({
                     : styles.viewAllWrapper
                 }
               >
-                <Link href={viewAllLink} className={`${styles.viewAllBtn} `}>
-                    View All
+                <Link href={viewAllLink} className={`${styles.viewAllBtn} `} >
+                 View All
                 </Link>
               </div>
             </div>

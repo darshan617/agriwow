@@ -63,6 +63,9 @@ function PriceRangeSlider({ minValue, maxValue, onMinChange, onMaxChange }) {
 }
 
 function CategoryCheckbox({ slug, name, count, isChecked, href }) {
+  // ✅ displayCount is inside the component so `count` prop is in scope
+  const displayCount = count ?? 0;
+
   return (
     <Link href={href} className={`${style.label}`}>
       <input
@@ -90,18 +93,18 @@ function CategoryCheckbox({ slug, name, count, isChecked, href }) {
       </span>
       <span className={`${style.name}`}>{name}</span>
       {typeof count === "number" && count > 0 && (
-        <span className={`${style.count}`}>
-          {String(count).padStart(2, "0") || "0"}
-        </span>
+        <span className={`${style.count}`}>{displayCount}</span>
       )}
     </Link>
   );
 }
 
-function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
+function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose, resultCount }) {
   const router = useRouter();
-  const { categorySlug: activeCategorySlug, subCategory: activeSubCategorySlug } =
-    router.query;
+  const {
+    categorySlug: activeCategorySlug,
+    subCategory: activeSubCategorySlug,
+  } = router.query;
 
   const { data: menuProductData, isFetching } = useGetMenuProductDataQuery();
 
@@ -140,6 +143,7 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
             </button>
           </div>
         )}
+
         <button
           type="button"
           className={`${style.header}`}
@@ -167,23 +171,24 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
             )}
 
             {categories.map((category) => {
-              const isCategoryActive =
-                activeCategorySlug === category?.slug;
+              const isCategoryActive = activeCategorySlug === category?.slug;
               const subcategories = category?.subcategories ?? [];
               const hasSubcategories = subcategories.length > 0;
+
+          
+              const categoryCount =
+                isCategoryActive && resultCount != null
+                  ? resultCount
+                  : hasSubcategories
+                    // ? subcategories.length
+                    // : undefined;
 
               return (
                 <li key={category?.id ?? category?.slug} className={`${style.item}`}>
                   <CategoryCheckbox
                     slug={category?.slug}
                     name={category?.name}
-                    count={
-                      typeof category?.products_count === "number"
-                        ? category.products_count
-                        : hasSubcategories
-                          ? subcategories.length
-                          : undefined
-                    }
+                    count={categoryCount}
                     isChecked={isCategoryActive}
                     href={`/product-category/${category?.slug}`}
                   />
@@ -191,8 +196,16 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
                   {hasSubcategories && isCategoryActive && (
                     <ul className={`${style.subList}`}>
                       {subcategories.map((sub) => {
-                        const isSubActive =
-                          activeSubCategorySlug === sub?.slug;
+                        const isSubActive = activeSubCategorySlug === sub?.slug;
+
+                        const subCount =
+                          isSubActive && resultCount != null
+                            ? resultCount
+                            : typeof sub?.products_count === "number" &&
+                              sub.products_count > 0
+                              ? sub.products_count
+                              : undefined;
+
                         return (
                           <li
                             key={sub?.id ?? sub?.slug}
@@ -212,12 +225,11 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose }) {
                               >
                                 {sub?.name}
                               </span>
-                              {typeof sub?.products_count === "number" &&
-                                sub.products_count > 0 && (
-                                  <span className={`${style.count}`}>
-                                    {String(sub.products_count).padStart(2, "0") || "0"}
-                                  </span>
-                                )}
+                              {typeof subCount === "number" && subCount > 0 && (
+                                <span className={`${style.count}`}>
+                                  {String(subCount).padStart(2, "0")}
+                                </span>
+                              )}
                             </Link>
                           </li>
                         );

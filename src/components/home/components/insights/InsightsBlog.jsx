@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const stripHtml = (html) => html?.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim() ?? ''
@@ -51,7 +52,7 @@ const PostCard = ({ post }) => (
 
 const InsightsBlog = ({ insightsBlogData }) => {
   const [isMobile, setIsMobile] = useState(false)
-
+  const router = useRouter()
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
     setIsMobile(mq.matches)

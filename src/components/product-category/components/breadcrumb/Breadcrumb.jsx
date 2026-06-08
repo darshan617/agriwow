@@ -19,7 +19,7 @@ const humanize = (slug = "") =>
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-  
+
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router.query;
@@ -39,6 +39,9 @@ const ProductCategoryList = () => {
     () => activeQuery.data?.data ?? [],
     [activeQuery.data]
   );
+
+  // ✅ resultCount: actual number of products for the active category/subcategory
+  const resultCount = products.length;
 
   const categoryName =
     products?.[0]?.category?.name || humanize(categorySlug);
@@ -63,7 +66,7 @@ const ProductCategoryList = () => {
     <div>
       <div className={`${styles.productSection} container`}>
         <h2 className={`${styles.title}`}>{categoryName || "Products"}</h2>
-        <div className={`${styles.breadcrumb} `}>
+        <div className={`${styles.breadcrumb}`}>
           <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
@@ -103,10 +106,11 @@ const ProductCategoryList = () => {
           <ProductCategoriesFilter
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
+            resultCount={resultCount}
           />
           <div className={`${styles.mainContent}`}>
             <ProductListingToolbar
-              resultCount={products.length}
+              resultCount={resultCount}
               products={products}
               sortBy={sortBy}
               onSortChange={setSortBy}

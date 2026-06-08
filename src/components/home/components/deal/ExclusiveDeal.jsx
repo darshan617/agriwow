@@ -30,11 +30,13 @@ const ExclusiveDeal = () => {
                                         <p className={`${styles.exclusiveDealItemDescription}`}>
                                             Advanced technology for <br />better sorting and processing.
                                         </p>
+                                        <Link href="/product-category/agriculture-sprayers">
                                         <button type="button" className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}>
                                             <Link href="/product-category/agriculture-sprayers">
                                                 Shop Now
                                             </Link>
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
