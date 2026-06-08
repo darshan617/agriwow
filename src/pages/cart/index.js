@@ -9,16 +9,18 @@ import Cookies from "js-cookie";
 import {
   getCartSessionId,
   useGetCartDataQuery,
+  useUpdateCartMutation,
 } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const Cart = () => {
+  const { showToast } = useToast();
   const [canFetchCart, setCanFetchCart] = useState(false);
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
-
-  useEffect(() => {
-    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
-  }, []);
+  const [couponCode, setCouponCode] = useState("");
+  const [updateCart, { isLoading: isUpdateCartLoading }] =
+    useUpdateCartMutation();
 
   const { data: cartData, isLoading } = useGetCartDataQuery(undefined, {
     skip: !canFetchCart,
@@ -34,7 +36,7 @@ const Cart = () => {
         ...item,
         quantity: getQuantity(item),
       })),
-    [cartItems, quantities]
+    [cartItems, quantities],
   );
 
   const handleIncrease = (id, currentQty) => {
@@ -53,11 +55,36 @@ const Cart = () => {
     }
   };
 
+  const handleUpdateCart = async (id, quantity) => {
+    try {
+      const res = await updateCart({
+        body: {
+          cart_id: id,
+          quantity: quantity,
+          coupon_code: couponCode,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
+  useEffect(() => {
+    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
+  }, []);
+
   return (
     <Layout>
       <div className="container">
         <div className="row">
-          <div className={`${cartItems.length > 0 ? 'col-xl-8' : 'col-xl-12' }  col-12`}>
+          <div
+            className={`${cartItems.length > 0 ? "col-xl-8" : "col-xl-12"}  col-12`}
+          >
             <CartDetails
               cartItems={cartItems}
               isLoading={isLoading}
@@ -65,7 +92,11 @@ const Cart = () => {
               onIncrease={handleIncrease}
               onDecrease={handleDecrease}
               appliedCoupon={appliedCoupon}
-              onRemoveCoupon={() => setAppliedCoupon(null)}
+              onRemoveCoupon={() => {
+                setAppliedCoupon(null);
+                setCouponCode("");
+              }}
+              handleUpdateCart={handleUpdateCart}
             />
           </div>
           {cartItems.length > 0 && (
@@ -74,6 +105,9 @@ const Cart = () => {
                 cartItems={cartItemsWithQuantities}
                 appliedCoupon={appliedCoupon}
                 setAppliedCoupon={setAppliedCoupon}
+                couponCode={couponCode}
+                setCouponCode={setCouponCode}
+                handleUpdateCart={handleUpdateCart}
               />
             </div>
           )}
