@@ -4,11 +4,14 @@ import React from "react";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useMergeCartMutation } from "@/redux/apis/addToCartApi";
 
 const GoogleLoginBtn = () => {
   const router = useRouter();
   const [googleLogin, { isLoading }] = useGoogleLoginMutation();
   const { showToast } = useToast();
+  const [mergeCart, { isLoading: isMergeCartLoading }] = useMergeCartMutation();
+  const sessionId = Cookies.get("cartSessionId") || null;
   const handleLoginSignup = async (credentialResponse) => {
     try {
       const response = await googleLogin({
@@ -22,6 +25,16 @@ const GoogleLoginBtn = () => {
         Cookies.set("userData", JSON.stringify(response?.data?.user));
         Cookies.set("userToken", response?.data?.token);
         router?.reload();
+
+        if (sessionId) {
+          try {
+            await mergeCart({
+              body: { session_id: sessionId },
+            }).unwrap();
+          } catch (mergeError) {
+            console.error("Cart merge failed", mergeError);
+          }
+        }
       } else {
         showToast("Login failed", "error");
       }
