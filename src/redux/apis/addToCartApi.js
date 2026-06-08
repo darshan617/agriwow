@@ -86,10 +86,17 @@ const addToCartApi = apiSlice.injectEndpoints({
       query: ({ body }) => ({
         url: "/update-cart",
         method: "POST",
-        headers: getCartRequestHeaders(),
         body,
+        headers: getCartRequestHeaders(),
       }),
       invalidatesTags: ["getCartData"],
+    }),
+    getAvailableCoupons: builder.query({
+      query: () => ({
+        url: "/available-coupons",
+        method: "GET",
+        headers: getCartRequestHeaders(),
+      }),
     }),
   }),
 });
@@ -101,4 +108,5 @@ export const {
   useMergeCartMutation,
   useApplyCouponMutation,
   useUpdateCartMutation,
+  useGetAvailableCouponsQuery,
 } = addToCartApi;

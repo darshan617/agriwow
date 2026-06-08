@@ -6,9 +6,11 @@ import Cookies from "js-cookie";
 import {
   getCartSessionId,
   useApplyCouponMutation,
+  useGetAvailableCouponsQuery,
   useGetCartDataQuery,
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { FaCopy } from "react-icons/fa";
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -19,12 +21,7 @@ const CartSummery = ({
   handleUpdateCart,
 }) => {
   const [canFetchCart, setCanFetchCart] = useState(false);
-
   const { showToast } = useToast();
-
-  useEffect(() => {
-    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
-  }, []);
 
   const { data: cartData } = useGetCartDataQuery(undefined, {
     skip: !canFetchCart || cartItemsProp !== undefined,
@@ -39,6 +36,9 @@ const CartSummery = ({
     (acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
     0,
   );
+
+  const { data: availableCoupons } = useGetAvailableCouponsQuery();
+  console.log(availableCoupons);
 
   const discountAmount = appliedCoupon?.discount_amount ?? 0;
   const discountedSubtotal = subtotal - discountAmount;
@@ -83,6 +83,9 @@ const CartSummery = ({
       showToast(res?.data?.message || "Failed to apply coupon", "error");
     }
   };
+  useEffect(() => {
+    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
+  }, []);
   return (
     <div className={`${styles.cartSummaryWrapper} py-5`}>
       <div className={`${styles.summaryCard}`}>
@@ -155,18 +158,31 @@ const CartSummery = ({
           </button>
         </div>
 
-        <div className={`${styles.emptyCouponBox}`}>
-          <Image
-            src={NoCoupon}
-            alt="product-img"
-            className={`${styles.productImg}`}
-          />
-          <p>No coupon & Offer available now</p>
-        </div>
+        {availableCoupons?.data?.length > 0 ? (
+          availableCoupons?.data?.map((coupon) => (
+            <div key={coupon?.id} className={`${styles.couponItem}`}>
+              <p>{coupon?.code}</p>
+              <button
+                onClick={() => setCouponCode(coupon?.code)}
+                className={`${styles.applyBtn}`}
+              >
+                Copy Code <FaCopy />
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className={`${styles.emptyCouponBox}`}>
+            <Image
+              src={NoCoupon}
+              alt="product-img"
+              className={`${styles.productImg}`}
+            />
+          </div>
+        )}
 
-        <button type="button" className={`${styles.viewAllBtn} `}>
+        {/* <button type="button" className={`${styles.viewAllBtn} `}>
           View All Coupons & Offers
-        </button>
+        </button> */}
       </div>
     </div>
   );
