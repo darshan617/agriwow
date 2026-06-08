@@ -7,26 +7,10 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
   const { showToast } = useToast();
   const length = 6;
   const inputRefs = useRef([]);
+  const timerRef = useState();
   const [otp, setOtp] = useState(Array(length).fill(""));
   const [resendOtp, { isLoading: isResendOtpLoading }] = useResendOtpMutation();
   const [timeLeft, setTimeLeft] = useState(30);
-  const timerRef = useState();
-
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   const handleChange = (val, i) => {
     const digit = val.replace(/[^0-9]/g, "").slice(-1);
@@ -88,6 +72,22 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
       console.log(error, "error");
     }
   };
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   return (
     <div className={styles.modal}>
