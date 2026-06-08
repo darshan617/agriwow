@@ -27,6 +27,7 @@ const CartDetails = ({
   onDecrease,
   appliedCoupon = null,
   onRemoveCoupon,
+  handleUpdateCart = () => {},
 }) => {
   const [removeFromCart] = useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
@@ -158,35 +159,36 @@ const CartDetails = ({
         )}
 
         {cartItems.length === 0 && (
-        <div className={styles.emptySection}>
-          <div className={styles.emptyVisual}>
-            <Image
-              src={emptyCartImg}
-              alt=""
-              className={styles.emptyImage}
-              width={420}
-              height={320}
-              priority
-            />
-          </div>
+          <div className={styles.emptySection}>
+            <div className={styles.emptyVisual}>
+              <Image
+                src={emptyCartImg}
+                alt=""
+                className={styles.emptyImage}
+                width={420}
+                height={320}
+                priority
+              />
+            </div>
 
-          <div className={styles.emptyContent}>
-            <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
-            <p className={styles.emptyText}>
-            Add product and proceed
-            </p>
-            <Link href="/product-category/agriculture-sprayers" className={styles.shopBtn}>
-              CONTINUE SHOPPING
-            </Link>
+            <div className={styles.emptyContent}>
+              <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
+              <p className={styles.emptyText}>Add product and proceed</p>
+              <Link
+                href="/product-category/agriculture-sprayers"
+                className={styles.shopBtn}
+              >
+                CONTINUE SHOPPING
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
         {cartItems.length > 0 && (
-        <div className={styles.productCartHeader}>
-          <div>PRODUCT</div>
-          <div>Price</div>
-          <div>Quantity</div>
+          <div className={styles.productCartHeader}>
+            <div>PRODUCT</div>
+            <div>Price</div>
+            <div>Quantity</div>
             <div>Subtotal</div>
           </div>
         )}
@@ -227,7 +229,10 @@ const CartDetails = ({
                   ) : (
                     <button
                       className={styles.productCartDelete}
-                      onClick={() => onDecrease(item.id, qty)}
+                      onClick={() => {
+                        onDecrease(item.id, qty);
+                        handleUpdateCart(item?.id, qty - 1);
+                      }}
                     >
                       -
                     </button>
@@ -237,7 +242,10 @@ const CartDetails = ({
 
                   <button
                     className={styles.productCartPlus}
-                    onClick={() => onIncrease(item.id, qty)}
+                    onClick={() => {
+                      onIncrease(item.id, qty);
+                      handleUpdateCart(item?.id, qty + 1);
+                    }}
                   >
                     +
                   </button>
@@ -265,13 +273,19 @@ const CartDetails = ({
           <button className={styles.removeCoupon}>Remove Coupon</button>
         </div> */}
 
-
         {cartItems.length > 0 && (
           <div className={styles.checkoutSection}>
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
                 <span>PROCEED TO CHECKOUT</span>
-                <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
+                <p>
+                  ₹{" "}
+                  {cartItems.reduce(
+                    (acc, item) =>
+                      acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+                    0,
+                  )}
+                </p>
               </div>
 
               <span className={styles.arrow}>

@@ -43,8 +43,7 @@ const addToCartApi = apiSlice.injectEndpoints({
           if (data?.session_id) {
             setCartSessionId(data.session_id);
           }
-        } catch {
-        }
+        } catch {}
       },
       invalidatesTags: ["getCartData"],
     }),
@@ -75,15 +74,31 @@ const addToCartApi = apiSlice.injectEndpoints({
       invalidatesTags: ["getCartData"],
     }),
     applyCoupon: builder.mutation({
-      query:({body}) => ({
+      query: ({ body }) => ({
         url: "/apply-coupon",
         method: "POST",
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["applyCoupon"]
-    })
+      invalidatesTags: ["applyCoupon", "getCartData"],
+    }),
+    updateCart: builder.mutation({
+      query: ({ body }) => ({
+        url: "/update-cart",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["getCartData"],
+    }),
   }),
 });
 
-export const { useAddToCartMutation, useGetCartDataQuery, useRemoveFromCartMutation, useMergeCartMutation, useApplyCouponMutation } = addToCartApi;     
+export const {
+  useAddToCartMutation,
+  useGetCartDataQuery,
+  useRemoveFromCartMutation,
+  useMergeCartMutation,
+  useApplyCouponMutation,
+  useUpdateCartMutation,
+} = addToCartApi;

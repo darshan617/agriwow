@@ -10,6 +10,7 @@
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
   /* background: #fff; */
 }
+
 .leftPanel {
   background: linear-gradient(160deg, #43a047 0%, #2e7d32 100%);
   display: flex;
@@ -49,11 +50,13 @@
   margin-top: auto;
   padding-bottom: 0;
 }
+
 .rightPanel {
   flex: 1;
   padding: 40px 32px 24px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .formTitle {
@@ -97,139 +100,142 @@
   background: #d0d0d0;
   margin: 0 4px;
 }
-.formSubtitle{
-    font-size: 12px;
-    color: #444;
+
+.formSubtitle {
+  font-size: 12px;
+  color: #444;
 }
 
 .otpRow {
-    display: flex;
-    gap: 0;
-    align-items: center;
-    justify-content: space-between;
-    border: 1.5px solid #ddd;
-    border-radius: 12px;
-    padding: 14px 20px;
-    margin-bottom: 20px;
-    background: #fff;
-  }
-  
-  .otpInput {
-    width: 36px;
-    height: 28px;
-    border: none;
-    border-radius: 0;
-    font-size: 18px;
-    font-family: 'DM Mono', monospace;
-    text-align: center;
-    outline: none;
-    background: transparent;
-    color: #111;
-    transition: border-color 0.15s;
-    -moz-appearance: textfield;
-  }
-  
-  .otpInput::-webkit-outer-spin-button,
-  .otpInput::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-  .otpInput::placeholder {
-    color: #aaa;
-    font-size: 20px;
-  }
-  
-  .otpInput:focus {
-    border-bottom-color: #c0392b;
-  }
-  .otpInput.filled {
-    border-bottom-color: #c0392b;
-  }
+  display: flex;
+  gap: 0;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  background: #fff;
+}
 
-  .resendRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .resendLeft {
-    font-size: 12.5px;
-    color: #555;
-    line-height: 1.6;
-  }
-  
-  .resendLeft strong {
-    color: #111;
-    font-weight: 600;
-  }
-  
-  .resendBtn {
-    background: none;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: #c0392b;
-    cursor: pointer;
-    letter-spacing: 0.03em;
-  }
-  
-  .resendBtn:hover {
-    text-decoration: underline;
-  }
-    
+.otpInput {
+  width: 36px;
+  height: 28px;
+  border: none;
+  border-radius: 0;
+  font-size: 18px;
+  font-family: 'DM Mono', monospace;
+  text-align: center;
+  outline: none;
+  background: transparent;
+  color: #111;
+  transition: border-color 0.15s;
+  -moz-appearance: textfield;
+}
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #bbb;
-    font-size: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .divider::before,
-  .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #eee;
-  }
+.otpInput::-webkit-outer-spin-button,
+.otpInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
-  .orRow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    gap: 10px;
-  }
-  
-  .orLine {
-    flex: 1;
-    height: 1px;
-    background: #e0e0e0;
-  }
-  
-  .orText {
-    font-size: 13px;
-    color: #888;
-  }
-  
+.otpInput::placeholder {
+  color: #aaa;
+  font-size: 20px;
+}
 
-  .pwBtn {
-    width: 100%;
-    padding: 14px;
-    background: #43a047;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  
-  .pwBtn:hover {
-    background: #2e7d32;
-  }
+.otpInput:focus {
+  border-bottom-color: #c0392b;
+}
+
+.otpInput.filled {
+  border-bottom-color: #c0392b;
+}
+
+.resendRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.resendLeft {
+  font-size: 12.5px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.resendLeft strong {
+  color: #111;
+  font-weight: 600;
+}
+
+.resendBtn {
+  background: none;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #c0392b;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
+
+.resendBtn:hover {
+  text-decoration: underline;
+}
+
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #bbb;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.orRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+
+.orLine {
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.orText {
+  font-size: 13px;
+  color: #888;
+}
+
+
+.pwBtn {
+  width: 100%;
+  padding: 14px;
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pwBtn:hover {
+  background: #2e7d32;
+}

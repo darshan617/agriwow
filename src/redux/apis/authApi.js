@@ -32,8 +32,23 @@ const authApi = apiSlice.injectEndpoints({
           body: body,
         };
       },
+      invalidatesTags: ["auth"],
+    }),
+    resendOtp: builder.mutation({
+      query: ({ body }) => {
+        return {
+          url: "/resend-otp",
+          method: "POST",
+          body: body,
+        };
+      },
+      invalidatesTags: ["auth"],
     }),
   }),
 });
-export const { useAuthMutation, useVerifyOtpMutation, useGoogleLoginMutation } =
-  authApi;
+export const {
+  useAuthMutation,
+  useVerifyOtpMutation,
+  useGoogleLoginMutation,
+  useResendOtpMutation,
+} = authApi;

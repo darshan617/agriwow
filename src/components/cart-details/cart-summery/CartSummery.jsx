@@ -14,9 +14,12 @@ const CartSummery = ({
   cartItems: cartItemsProp,
   appliedCoupon,
   setAppliedCoupon,
+  couponCode,
+  setCouponCode,
+  handleUpdateCart,
 }) => {
   const [canFetchCart, setCanFetchCart] = useState(false);
-  const [couponCode, setCouponCode] = useState("");
+
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -33,23 +36,20 @@ const CartSummery = ({
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
 
   const subtotal = cartItems.reduce(
-    (acc, item) =>
-      acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+    (acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
     0,
   );
 
   const discountAmount = appliedCoupon?.discount_amount ?? 0;
   const discountedSubtotal = subtotal - discountAmount;
-  const gstAmount = discountedSubtotal * 0.18;
+  const gstAmount = subtotal * 0.18;
   const shippingAmount = cartItems.reduce(
-    (acc, item) =>
-      acc + (item?.product?.shipping ?? 0) * (item?.quantity ?? 0),
+    (acc, item) => acc + (item?.product?.shipping ?? 0) * (item?.quantity ?? 0),
     0,
   );
   const totalAmount = discountedSubtotal + gstAmount + shippingAmount;
   const productSavings = cartItems.reduce(
-    (acc, item) =>
-      acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
+    (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
   );
 
@@ -78,6 +78,7 @@ const CartSummery = ({
         grand_total: res.data.grand_total,
       });
       showToast(res?.data?.message || "Coupon applied", "success");
+      handleUpdateCart();
     } else {
       showToast(res?.data?.message || "Failed to apply coupon", "error");
     }
@@ -106,7 +107,7 @@ const CartSummery = ({
               {appliedCoupon
                 ? appliedCoupon.coupon?.type === "percentage"
                   ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount})`
-                  : `₹ ${discountAmount}`
+                  : `₹ -${discountAmount}`
                 : "-"}
             </span>
           </div>
@@ -142,7 +143,7 @@ const CartSummery = ({
             placeholder="Enter Coupon Code"
             className={`${styles.couponInput}`}
             value={couponCode}
-            onChange={(e) => setCouponCode(e.target.value)}
+            onChange={(e) => setCouponCode(e?.target?.value)}
           />
 
           <button
@@ -162,8 +163,8 @@ const CartSummery = ({
           />
           <p>No coupon & Offer available now</p>
         </div>
-        
-      <button type="button" className={`${styles.viewAllBtn} `}>
+
+        <button type="button" className={`${styles.viewAllBtn} `}>
           View All Coupons & Offers
         </button>
       </div>
