@@ -18,6 +18,7 @@ import CustomPopup from "@/components/custom-popup/CustomPopup";
 import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
+import { useRouter } from "next/router";
 
 const CartDetails = ({
   cartItems = [],
@@ -31,6 +32,7 @@ const CartDetails = ({
   hideCheckoutButton = false,
   handleUpdateCart = () => {},
 }) => {
+  const router = useRouter();
   const [removeFromCart] = useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
@@ -280,11 +282,18 @@ const CartDetails = ({
         </div> */}
 
         {cartItems?.length > 0 && !hideCheckoutButton && (
-          <Link href={"/checkout"} className={styles.checkoutSection}>
+          <Link
+            href={router?.asPath === "/cart" ? "/checkout" : "/payment"}
+            className={styles.checkoutSection}
+          >
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
                 <div>
-                  <span>PROCEED TO CHECKOUT</span>
+                  <span>
+                    {router?.asPath === "/cart"
+                      ? "PROCEED TO CHECKOUT"
+                      : "PROCEED TO PAYMENT"}
+                  </span>
                   <p>
                     ₹{" "}
                     {cartItems?.reduce(

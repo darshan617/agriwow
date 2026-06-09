@@ -2,12 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import Cookies from "js-cookie";
 import { MdMyLocation } from "react-icons/md";
 import styles from "./AddressForm.module.css";
+import {
+  useAddDeliveryAddressMutation,
+  useUpdateDeliveryAddressMutation,
+} from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const EMPTY_FORM = {
   name: "",
   email: "",
   phone: "",
-  alternatePhone: "",
+  alternate_phone: "",
   flat: "",
   area: "",
   landmark: "",
@@ -17,12 +22,68 @@ const EMPTY_FORM = {
   country: "INDIA",
 };
 
-const AddressForm = ({ onClose, onSave }) => {
+const AddressForm = ({
+  onClose,
+  onSave,
+  initialValues = null,
+  title,
+  isEditing = false,
+  addressId = null,
+}) => {
+  const { showToast } = useToast();
   const [form, setForm] = useState(EMPTY_FORM);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
 
+  const [addDeliveryAddress, { isLoading: isAddDeliveryAddressLoading }] =
+    useAddDeliveryAddressMutation();
+  const [updateDeliveryAddress, { isLoading: isUpdateDeliveryAddressLoading }] =
+    useUpdateDeliveryAddressMutation();
+
+  const handleAddDeliveryAddress = async () => {
+    try {
+      const res = await addDeliveryAddress({ body: form });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res.data.message, "success");
+      }
+      console.log(res, "res");
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
+  const handleUpdateDeliveryAddress = async () => {
+    try {
+      const res = await updateDeliveryAddress({
+        body: { ...form, id: addressId },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res.data.message, "success");
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
   useEffect(() => {
+    if (initialValues) {
+      setForm({
+        name: initialValues.name || "",
+        email: initialValues.email || "",
+        phone: initialValues.phone || "",
+        alternate_phone: initialValues.alternate_phone || "",
+        flat: initialValues.flat || "",
+        area: initialValues.area || "",
+        landmark: initialValues.landmark || "",
+        pincode: initialValues.pincode || "",
+        city: initialValues.city || "",
+        state: initialValues.state || "",
+        country: initialValues.country || "INDIA",
+      });
+      if (initialValues.phone) setIsPhoneVerified(true);
+      return;
+    }
+
     const raw = Cookies.get("userData");
     if (!raw) return;
 
@@ -36,9 +97,9 @@ const AddressForm = ({ onClose, onSave }) => {
       }));
       if (userData?.phone) setIsPhoneVerified(true);
     } catch {
-      /* ignore malformed cookie */
+      console.log("error");
     }
-  }, []);
+  }, [initialValues]);
 
   const updateField = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -108,7 +169,7 @@ const AddressForm = ({ onClose, onSave }) => {
 
   return (
     <form className={styles.root} onSubmit={handleSubmit}>
-      <h2 className={styles.title}>Add Delivery Address</h2>
+      <h2 className={styles.title}>{title || "Add Delivery Address"}</h2>
 
       <div className={styles.grid}>
         <div className={styles.field}>
@@ -162,8 +223,8 @@ const AddressForm = ({ onClose, onSave }) => {
             type="tel"
             className={styles.input}
             placeholder="Enter Alternate Phone Number"
-            value={form.alternatePhone}
-            onChange={updateField("alternatePhone")}
+            value={form.alternate_phone}
+            onChange={updateField("alternate_phone")}
             maxLength={10}
           />
         </div>
@@ -265,8 +326,17 @@ const AddressForm = ({ onClose, onSave }) => {
           type="submit"
           className={styles.saveBtn}
           disabled={!isFormValid}
+          onClick={
+            isEditing ? handleUpdateDeliveryAddress : handleAddDeliveryAddress
+          }
         >
-          SAVE ADDRESS
+          {isAddDeliveryAddressLoading || isUpdateDeliveryAddressLoading
+            ? isEditing
+              ? "UPDATING..."
+              : "ADDING..."
+            : isEditing
+              ? "UPDATE"
+              : "SAVE ADDRESS"}
         </button>
       </div>
     </form>
