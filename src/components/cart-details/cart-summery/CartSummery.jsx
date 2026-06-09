@@ -8,6 +8,7 @@ import {
   useApplyCouponMutation,
   useGetAvailableCouponsQuery,
   useGetCartDataQuery,
+  useUpdateCartMutation,
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { FaCopy } from "react-icons/fa";
@@ -19,15 +20,15 @@ const CartSummery = ({
   couponCode,
   setCouponCode,
   handleUpdateCart,
+  cartData,
 }) => {
-  const [canFetchCart, setCanFetchCart] = useState(false);
   const { showToast } = useToast();
-
-  const { data: cartData } = useGetCartDataQuery(undefined, {
-    skip: !canFetchCart || cartItemsProp !== undefined,
-  });
-
+  console.log(cartData, "cartData");
   const [applyCoupon, { isLoading }] = useApplyCouponMutation();
+  const { data: availableCoupons } = useGetAvailableCouponsQuery();
+  console.log(availableCoupons);
+  const [updateCart, { isLoading: isUpdateCartLoading }] =
+    useUpdateCartMutation();
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
@@ -37,17 +38,12 @@ const CartSummery = ({
     0,
   );
 
-  const { data: availableCoupons } = useGetAvailableCouponsQuery();
-  console.log(availableCoupons);
-
-  const discountAmount = appliedCoupon?.discount_amount ?? 0;
+  const discountAmount =
+    appliedCoupon?.discount_amount ?? cartData?.coupon?.discount_amount ?? 0;
   const discountedSubtotal = subtotal - discountAmount;
   const gstAmount = subtotal * 0.18;
-  const shippingAmount = cartItems.reduce(
-    (acc, item) => acc + (item?.product?.shipping ?? 0) * (item?.quantity ?? 0),
-    0,
-  );
-  const totalAmount = discountedSubtotal + gstAmount + shippingAmount;
+  const shippingAmount = cartData?.cart_summary?.shipping_charge ?? 0;
+  const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
@@ -83,9 +79,28 @@ const CartSummery = ({
       showToast(res?.data?.message || "Failed to apply coupon", "error");
     }
   };
+
+  const handleRemoveCoupon = async () => {
+    const res = await updateCart({
+      body: {
+        coupon_code: "",
+      },
+    });
+    if (res?.data?.success || res?.data?.status) {
+      setAppliedCoupon(null);
+      showToast(res?.data?.message || "Coupon removed", "success");
+      handleUpdateCart();
+    } else {
+      showToast(res?.data?.message || "Failed to remove coupon", "error");
+    }
+  };
+
   useEffect(() => {
-    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
-  }, []);
+    if (cartData?.coupon?.code) {
+      setCouponCode(cartData?.coupon?.code);
+    }
+  }, [cartData]);
+
   return (
     <div className={`${styles.cartSummaryWrapper} py-5`}>
       <div className={`${styles.summaryCard}`}>
@@ -96,7 +111,7 @@ const CartSummery = ({
         <div className={`${styles.summaryBody}`}>
           <div className={`${styles.summaryRow}`}>
             <span>Subtotal</span>
-            <span>₹ {subtotal}</span>
+            <span>₹ {subtotal.toFixed(2)}</span>
           </div>
 
           <div className={`${styles.summaryRow}`}>
@@ -109,15 +124,17 @@ const CartSummery = ({
             <span className={`${styles.discount}`}>
               {appliedCoupon
                 ? appliedCoupon.coupon?.type === "percentage"
-                  ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount})`
-                  : `₹ -${discountAmount}`
-                : "-"}
+                  ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount.toFixed(2)})`
+                  : `₹ -${discountAmount.toFixed(2)}`
+                : cartData?.coupon?.type === "percentage"
+                  ? `${cartData?.coupon?.value ?? 0}% (₹${cartData?.coupon?.discount_amount.toFixed(2)})`
+                  : `₹ -${cartData?.coupon?.discount_amount.toFixed(2)}`}
             </span>
           </div>
 
           <div className={`${styles.summaryRow}`}>
             <span>Shipping</span>
-            <span>₹ {shippingAmount}</span>
+            <span>₹ {shippingAmount.toFixed(2)}</span>
           </div>
           {shippingAmount > 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
@@ -148,7 +165,7 @@ const CartSummery = ({
             type="text"
             placeholder="Enter Coupon Code"
             className={`${styles.couponInput}`}
-            value={couponCode}
+            value={couponCode || cartData?.coupon?.code}
             onChange={(e) => setCouponCode(e?.target?.value)}
           />
 
@@ -159,6 +176,12 @@ const CartSummery = ({
           >
             {isLoading ? "Applying..." : "Apply"}
           </button>
+          {/* <button
+            className={`${styles.removeCouponBtn}`}
+            onClick={handleRemoveCoupon}
+          >
+            Remove Coupon
+          </button> */}
         </div>
 
         {availableCoupons?.data?.length > 0 ? (

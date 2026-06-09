@@ -279,14 +279,21 @@ const CartDetails = ({
           <button className={styles.removeCoupon}>Remove Coupon</button>
         </div> */}
 
-
-        {cartItems.length > 0 && !hideCheckoutButton && (
+        {cartItems?.length > 0 && !hideCheckoutButton && (
           <div className={styles.checkoutSection}>
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
                 <Link href="/checkout">
                   <span>PROCEED TO CHECKOUT</span>
-                  <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
+                  <p>
+                    ₹{" "}
+                    {cartItems?.reduce(
+                      (acc, item) =>
+                        acc +
+                        (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+                      0,
+                    )}
+                  </p>
                 </Link>
               </div>
 
