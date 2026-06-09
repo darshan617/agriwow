@@ -6,7 +6,7 @@ import { FaChevronLeft, FaChevronRight, FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
 import styles from "@/components/blog-listing/latest-blog/LatestBlog.module.css";
 import TrandingBlog from "../trending-blog/TrandingBlog";
-import { useGetAllBlogCategoriesMutation, useGetBlogListingMutation } from "@/redux/apis/bloglistingApi";
+import { useGetAllBlogCategoriesMutation, useGetBlogListingMutation } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
 const BLOGS_PER_PAGE = 6;
@@ -252,7 +252,7 @@ const LatestBlog = () => {
                   <h2 className={styles.blogListTitle}>Latest Blogs</h2>
                   <div className={styles.blogListGrid}>
                     {paginatedBlogs?.map((post) => (
-                      <div key={post.id} className={styles.blogCard}>
+                      <Link key={post.id} href={`/blog/${post?.slug}`} className={styles.blogCard}>
                         <div className={styles.blogCardMedia}>
                           <Image
                             src={post?.image}
@@ -292,7 +292,7 @@ const LatestBlog = () => {
                             Read more
                           </Link>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>

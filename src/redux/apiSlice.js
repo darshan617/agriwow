@@ -19,6 +19,8 @@ export const apiSlice = createApi({
     "getCartData",
     "ProductsByCategory",
     "applyCoupon",
+    "blog",
+    "relatedBlogs",,
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),
