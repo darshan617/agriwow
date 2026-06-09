@@ -149,7 +149,7 @@ const ReviewsRating = ({
         ))}
       </div>
 
-      <a
+      <Link
         className={`${styles.viewMore}`}
         href="#"
         onClick={(e) => {
@@ -159,7 +159,7 @@ const ReviewsRating = ({
       >
         View More Reviews
         <span className={`${styles.arrowCircle}`}><FaChevronRight /></span>
-      </a>
+      </Link>
     </div>
   );
 };

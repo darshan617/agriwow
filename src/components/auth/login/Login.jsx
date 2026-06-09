@@ -10,6 +10,7 @@ import {
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { GoogleLogin } from "@react-oauth/google";
 import GoogleLoginBtn from "@/components/google-login-btn/GoogleLoginBtn";
+import Link from "next/link";
 const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
 
@@ -93,13 +94,13 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
 
           <p className={`${styles.terms}`}>
             By continuing, you agree to our{" "}
-            <a href="#" className={`${styles.link}`}>
+            <Link href="#" className={`${styles.link}`}>
               Terms of Use
-            </a>{" "}
+            </Link>{" "}
             &amp;{" "}
-            <a href="#" className={`${styles.link}`}>
+            <Link href="#" className={`${styles.link}`}>
               Privacy Policy
-            </a>
+            </Link>
             .
           </p>
         </div>

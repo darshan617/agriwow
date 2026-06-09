@@ -29,7 +29,7 @@ const ProductsItem = ({
   bannerImageProps = {},
   categorySlug,
   viewAllLink = "/product-category/agriculture-sprayers",
-  viewAllLink = "/product-category/agriculture-sprayers",
+
 }) => {
   const {
     className: bannerImageClassName,

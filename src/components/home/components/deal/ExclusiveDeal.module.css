@@ -104,6 +104,9 @@
     font-size: 13px;
     font-weight: 700;
     transition: all 0.3s;
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .bannerBtn:hover {

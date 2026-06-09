@@ -30,12 +30,11 @@ const ExclusiveDeal = () => {
                                         <p className={`${styles.exclusiveDealItemDescription}`}>
                                             Advanced technology for <br />better sorting and processing.
                                         </p>
-                                        <Link href="/product-category/agriculture-sprayers">
-                                        <button type="button" className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}>
-                                            <Link href="/product-category/agriculture-sprayers">
-                                                Shop Now
-                                            </Link>
-                                        </button>
+                                        <Link
+                                            href="/product-category/agriculture-sprayers"
+                                            className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}
+                                        >
+                                            Shop Now
                                         </Link>
                                     </div>
                                 </div>
@@ -63,9 +62,12 @@ const ExclusiveDeal = () => {
                                 </div>
                             </div>
                             <div className={styles.exclusiveDealBtnWrapper}>
-                                <button type="button" className={`${styles.bannerBtn} ${styles.bannerBtnTablet}`}>
+                                <Link
+                                    href="/product-category/agriculture-sprayers"
+                                    className={`${styles.bannerBtn} ${styles.bannerBtnTablet}`}
+                                >
                                     Shop Now
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
