@@ -22,6 +22,7 @@ import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
+import { useLogoutMutation } from "@/redux/apis/authApi";
 import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
@@ -169,7 +170,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [mergeCart] = useMergeCartMutation();
   const {showToast} = useToast();
-
+  const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
 
@@ -260,11 +261,18 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   };
 
   //logout ==============
-  const handleLogout = () => {
-    Cookies.remove("userData");
-    Cookies.remove("userToken");
-    Cookies.remove("cartSessionId");
-    router?.reload();
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      Cookies.remove("userData");
+      Cookies.remove("userToken");
+      Cookies.remove("cartSessionId");
+      showToast("Logged out successfully", "success");
+      router?.reload(); 
+    } catch (error) {
+      console.error("Logout failed", error);
+      showToast(error?.data?.message || "Failed to logout", "error");
+    } 
   };
 
   useEffect(() => {
@@ -758,6 +766,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                       type="button"
                       className={`${styles.userSignOutBtn}`}
                       onClick={handleLogout}
+                      disabled={isLogoutLoading}
                     >
                       <HiOutlinePower size={18} />
                       <span>Logout</span>

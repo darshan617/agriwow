@@ -21,17 +21,15 @@
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
-  
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .popupWide {
-    max-width: 960px;
+    max-width: 720px;
     min-height: auto;
     align-items: stretch;
-    justify-content: stretch;
   }
   
   .closeBtn {
@@ -49,3 +47,16 @@
     justify-content: center;
     cursor: pointer;
   }
+
+  
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0 16px;
+  }
+
+  .popup {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+  }
+}

@@ -242,7 +242,7 @@ const LatestBlog = () => {
                           {featuredPost?.blog_date}
                         </span>
                       </div>
-                      <Link href={"#"} className={styles.readMoreBtn}>
+                      <Link href={`/blog/${featuredPost?.slug}`} className={styles.readMoreBtn}>
                         Read more
                       </Link>
                     </div>
@@ -288,7 +288,7 @@ const LatestBlog = () => {
                               {post?.blog_date}
                             </span>
                           </div>
-                          <Link href={`#`} className={styles.blogCardReadMore}>
+                          <Link href={`/blog/${post?.slug}`} className={styles.blogCardReadMore}>
                             Read more
                           </Link>
                         </div>

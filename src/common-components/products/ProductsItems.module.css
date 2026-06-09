@@ -20,7 +20,7 @@
   object-position: top;
   width: 100%;
   height: auto;
-  min-height: 500px;
+  min-height: 500px; 
   border-radius: 6px;
   overflow: hidden;
 }
@@ -153,19 +153,6 @@
   z-index: 3;
 }
 
-.promoCardIndustrial::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.25) 45%,
-    rgba(0, 0, 0, 0) 70%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
 
 .overlayContentIndustrial {
   padding: 36px 20px 0;
@@ -411,8 +398,7 @@
 }
 
 .viewAllBtn {
-  /* margin-top: 20px !important; */
-  /* display: flex; */
+  padding-top: 10px;
   border: 0;
   background: none;
   color: #239c3d;
@@ -430,7 +416,7 @@
   justify-content: flex-end;
   /* position: absolute; */
   gap: 8px;
-  margin-top: 16px;
+  /* margin-top: 16px; */
   display: flex;
   width: 100%;
 }
@@ -453,6 +439,7 @@
 }
 
 .centerViewAll {
+  margin-top: 12px;
   display: flex;
   justify-content: center;
 }
@@ -469,6 +456,26 @@
   .bestSellingFooter {
     font-size: 11px;
     padding: 8px 10px;
+  }
+  .cardsRow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .productCard {
+    padding: 8px 8px 10px;
+  }
+  .sectionSpace {
+    padding: 40px 0;
+  }
+  .promoCol {
+    display: none;
+  }
+
+  .cardsCol {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
   }
 }
 

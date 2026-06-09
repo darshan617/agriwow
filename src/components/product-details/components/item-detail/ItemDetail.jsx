@@ -13,13 +13,50 @@ import quality from "@/assets/icon/quality.png";
 import secure from "@/assets/icon/payment.png";
 import return1 from "@/assets/icon/return1.png";
 
+import CustomPopup from "@/components/custom-popup/CustomPopup";
 import "swiper/css";
+
+const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
 const ItemDetail = ({ productDetails }) => {
   console.log("productDetails", productDetails);
   const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [showAll, setShowAll] = useState(false);
+  const [showProductPopup, setShowProductPopup] = useState(false);
+  const [activePopupTab, setActivePopupTab] = useState("specifications");
+
+  const specifications = productDetails?.data?.specification ?? [];
+  const visibleSpecifications = specifications.slice(
+    0,
+    SPECIFICATIONS_PREVIEW_COUNT,
+  );
+
+  const openProductPopup = (tab = "specifications") => {
+    setActivePopupTab(tab);
+    setShowProductPopup(true);
+  };
+
+  const closeProductPopup = () => {
+    setShowProductPopup(false);
+    setActivePopupTab("specifications");
+  };
+
+  const renderSpecificationsTable = (specs, isPopup = false) => (
+    <table
+      className={`${styles.productSpecificationsTable} ${
+        isPopup ? styles.popupSpecificationsTable : ""
+      }`}
+    >
+      <tbody>
+        {specs.map((specification, index) => (
+          <tr key={index}>
+            <td className={`${styles.specLabel}`}>{specification.key}</td>
+            <td className={`${styles.specValue}`}>{specification.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
   const policiesData = [
     { icon: shipping, label: "Free Shipping" },
@@ -144,6 +181,7 @@ const ItemDetail = ({ productDetails }) => {
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
                 >
+                  {productDetails?.data?.discount > 0 && (
                   <div className={`${styles.discountImg}`}>
                     <Image
                       src={DiscountImg}
@@ -151,14 +189,17 @@ const ItemDetail = ({ productDetails }) => {
                       width={18}
                       height={18}
                       fetchPriority="high"
-                      priority={true}
-                    />
-                  </div>
-                  <span className={`${styles.discountText}`}>
-                    Save ₹{" "}
-                    {productDetails?.data?.selling_price -
-                      productDetails?.data?.price}
-                  </span>
+                        priority={true}
+                      />
+                    </div>
+                  )}
+                  {productDetails?.data?.discount > 0 && (
+                    <span className={`${styles.discountText}`}>
+                      Save ₹{" "}
+                      {productDetails?.data?.selling_price -
+                        productDetails?.data?.price}
+                    </span>
+                  )}
                 </div>
                 {productData?.recently_bought?.count > 0 && (
                   <div className={`${styles.boughtPeopleRow}`}>
@@ -201,33 +242,35 @@ const ItemDetail = ({ productDetails }) => {
 
             <div className={`${styles.aboutProductContent}`}>
               <p className={`${styles.aboutProductSubTitle}`}>Key Features</p>
+              
               <ul className={`${styles.aboutProductList}`}>
-                {productDetails?.data?.key_features?.map((feature, index) => (
+                {productDetails?.data?.key_features?.slice(0, 3).map((feature, index) => (
                   <li key={index}>{feature}</li>
                 ))}
               </ul>
+              <button
+                type="button"
+                className={`${styles.showAllButton}`}
+                onClick={() => openProductPopup("key_features")}
+              >
+                 View All
+              </button>
             </div>
 
             <div className={`${styles.aboutProductContent}`}>
               <h3 className={`${styles.aboutProductSubTitle}`}>
                 Product Specifications
               </h3>
-              <table className={`${styles.productSpecificationsTable}`}>
-                <tbody>
-                  {productDetails?.data?.specification?.map(
-                    (specification, index) => (
-                      <tr key={index}>
-                        <td className={`${styles.specLabel}`}>
-                          {specification.key}
-                        </td>
-                        <td className={`${styles.specValue}`}>
-                          {specification.value}
-                        </td>
-                      </tr>
-                    ),
-                  )}
-                </tbody>
-              </table>
+              {renderSpecificationsTable(visibleSpecifications)}
+              {specifications.length > SPECIFICATIONS_PREVIEW_COUNT && (
+                <button
+                  type="button"
+                  className={`${styles.showAllButton}`}
+                  onClick={() => openProductPopup("specifications")}
+                >
+                  See all Specifications
+                </button>
+              )}
             </div>
             <div className={`${styles.aboutProductContent}`}>
               <h3 className={`${styles.aboutProductSubTitle}`}>
@@ -236,27 +279,16 @@ const ItemDetail = ({ productDetails }) => {
               <p
                 className={`${styles.aboutProductDetailsText}`}
                 dangerouslySetInnerHTML={{
-                  __html: showAll
-                    ? productDetails?.data?.description
-                    : productDetails?.data?.description || "-",
+                  __html: productDetails?.data?.description || "-",
                 }}
               />
-              {!showAll && (
-                <button
-                  className={`${styles.showAllButton}`}
-                  onClick={() => setShowAll(true)}
-                >
-                  Read More
-                </button>
-              )}
-              {showAll && (
-                <button
-                  className={`${styles.showAllButton}`}
-                  onClick={() => setShowAll(false)}
-                >
-                  Read Less
-                </button>
-              )}
+              <button
+                type="button"
+                className={`${styles.showAllButton}`}
+                onClick={() => openProductPopup("details")}
+              >
+                Read More
+              </button>
             </div>
           </div>
 
@@ -281,6 +313,82 @@ const ItemDetail = ({ productDetails }) => {
           </div>
         </div>
       </div>
+
+      {showProductPopup && (
+        <CustomPopup onclose={closeProductPopup} wide>
+          <div className={`${styles.productInfoPopup}`}>
+            <div className={`${styles.productInfoPopupTabs}`}>
+              <button
+                type="button"
+                className={`${styles.productInfoPopupTab} ${
+                  activePopupTab === "specifications"
+                    ? styles.productInfoPopupTabActive
+                    : ""
+                }`}
+                onClick={() => setActivePopupTab("specifications")}
+              >
+                Specifications
+              </button>
+              <button
+                type="button"
+                className={`${styles.productInfoPopupTab} ${
+                  activePopupTab === "details"
+                    ? styles.productInfoPopupTabActive
+                    : ""
+                }`}
+                onClick={() => setActivePopupTab("details")}
+              >
+                Product Details
+              </button>
+              <button
+                type="button"
+                className={`${styles.productInfoPopupTab} ${
+                  activePopupTab === "key_features"
+                    ? styles.productInfoPopupTabActive
+                    : ""
+                }`}
+                onClick={() => setActivePopupTab("key_features")}
+              >
+                Key Features
+              </button>
+            </div>
+
+            <div className={`${styles.productInfoPopupBody}`}>
+              {activePopupTab === "specifications" &&
+                renderSpecificationsTable(specifications, true)}
+              {activePopupTab === "details" && (
+                <div
+                  className={`${styles.productInfoPopupDetails}`}
+                  dangerouslySetInnerHTML={{
+                    __html: productDetails?.data?.description || "-",
+                  }}
+                />
+              )}
+              {activePopupTab === "key_features" && (
+                <div
+                  className={`${styles.productInfoPopupDetails}`}
+                >
+                  <ul className={`${styles.aboutProductList}`}>
+                    {productDetails?.data?.key_features?.map((feature, index) => (
+                      <li key={index}>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            
+
+            {/* <button
+              type="button"
+              className={`${styles.showLessButton}`}
+              onClick={closeProductPopup}
+            >
+              SHOW LESS
+            </button> */}
+          </div>
+        </CustomPopup>
+      )}
     </div>
   );
 };

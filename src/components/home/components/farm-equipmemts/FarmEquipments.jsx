@@ -7,6 +7,7 @@ import "swiper/css";
 import farmEquipments from "@/assets/images/agri-equipments.jpg";
 import styles from "@/components/home/components/farm-equipmemts/FarmEqipments.module.css";
 import ProductCard from "@/common-components/product-card/ProductCard";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const FarmEquipments = ({
@@ -14,8 +15,18 @@ const FarmEquipments = ({
   bannerImage = farmEquipments,
   title = "Farm Equipment's",
   bannerAlt = "Farm Equipments",
+  categorySlug,
+  subCategorySlug,
+  categoriesData,
   viewAllLink = "/product-category/farm-mechanization-equipments",
 }) => {
+  console.log(categoriesData, "categoriesData");
+  const router = useRouter();
+  const resolvedCategorySlug =
+    categorySlug || farmEquipmentsData?.[0]?.category?.slug;
+  const resolvedSubCategorySlug =
+    subCategorySlug || farmEquipmentsData?.[0]?.subcategory?.slug;
+
   return (
     <section className="sectionSpace" data-aos="zoom-in">
       <div className="container">

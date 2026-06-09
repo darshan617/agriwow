@@ -172,7 +172,7 @@
 }
 
 .megaList li {
-  min-width: 0;
+  font-size: 14px;
 }
 
 .megaLink {
@@ -503,6 +503,15 @@
   color: #6e6e6e;
   text-align: center;
   border-top: 1px solid #f0f0f0;
+}
+
+.searchResultsPanel {
+  scrollbar-width: thin;
+  scrollbar-color: #7ac043a6 transparent;
+}
+
+.searchResultsPanel::-webkit-scrollbar-thumb:hover {
+  background-color: #b0b0b0;
 }
 
 .searchForm {
@@ -931,7 +940,7 @@
   min-width: 14px;
   height: 14px;
   border-radius: 7px;
-  padding: 0 2px;
+  padding: 4px;
   background: #7ac043;
   color: #ffffff;
   font-size: 9px;

@@ -6,6 +6,7 @@ import { FaThumbsUp, FaThumbsDown, FaChevronRight   } from "react-icons/fa6";
 
 
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
+import Link from "next/link";
 
 const RATING_BARS = [
   { label: 5, pct: 50 },
@@ -149,7 +150,7 @@ const ReviewsRating = ({
         ))}
       </div>
 
-      <a
+      <Link
         className={`${styles.viewMore}`}
         href="#"
         onClick={(e) => {
@@ -159,7 +160,7 @@ const ReviewsRating = ({
       >
         View More Reviews
         <span className={`${styles.arrowCircle}`}><FaChevronRight /></span>
-      </a>
+      </Link>
     </div>
   );
 };

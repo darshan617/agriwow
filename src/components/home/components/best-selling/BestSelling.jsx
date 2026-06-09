@@ -4,12 +4,13 @@ import bannerImage from '@/assets/images/selling.png'
 import sprayerImage from '@/assets/images/selling-1.png'
 import pumpImage from '@/assets/images/selling-2.png'
 
-const BestSelling = ({ bestSellingData }) => {
+const BestSelling = ({ bestSellingData, viewAllLink = "/product-category/best-selling" }) => {
   return (
     <ProductsItem
       sectionClassName=""
       title="Best Selling"
       bannerImage={bannerImage}
+      viewAllLink={viewAllLink}
       agricultureProductsData={bestSellingData}
       variant="bestSelling"
       overlayVariant="bestSelling"
