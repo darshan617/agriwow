@@ -3,7 +3,7 @@ import styles from "./CustomPopup.module.css";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
 
-const CustomPopup = ({ onclose = () => {}, wide = false, children, wide = false }) => {
+const CustomPopup = ({ onclose = () => {},  children, wide = false }) => {
   useEffect(() => {
     const scrollY = window.scrollY;
     const prevOverflow = document.body.style.overflow;
