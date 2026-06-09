@@ -3,11 +3,14 @@ import styles from "./CustomPopup.module.css";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
 
-const CustomPopup = ({ onclose = () => {}, children }) => {
+const CustomPopup = ({ onclose = () => {}, wide = false, children }) => {
   return createPortal(
     <div className={styles.root}>
       <div className={styles.overlay} onClick={onclose}>
-        <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={`${styles.popup} ${wide ? styles.popupWide : ""}`}
+          onClick={(e) => e.stopPropagation()}
+        >
           {children}
           <button
              onClick={() => {

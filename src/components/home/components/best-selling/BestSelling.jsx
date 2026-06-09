@@ -13,6 +13,7 @@ const BestSelling = ({ bestSellingData }) => {
       agricultureProductsData={bestSellingData}
       variant="bestSelling"
       overlayVariant="bestSelling"
+      viewAllLink="/product-category/best-selling"
       overlayHeading={<>Product Range</>}
       overlayProducts={[
         {
@@ -38,4 +39,4 @@ const BestSelling = ({ bestSellingData }) => {
   )
 }
 
-export default BestSelling
+export default BestSelling;

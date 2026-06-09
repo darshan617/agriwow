@@ -9,6 +9,7 @@ const GardenTool = ({ gardeningToolsData }) => {
             bannerImage={gardenToolBanner}
             title="Garden Tools"
             farmEquipmentsData={gardeningToolsData}
+            viewAllLink="/product-category/garden-lawn-care"
         />
     </div>
     );

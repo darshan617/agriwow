@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import Link from 'next/link'
 
 const stripHtml = (html) => html?.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim() ?? ''
 
@@ -90,7 +91,9 @@ const InsightsBlog = ({ insightsBlogData }) => {
         )}
 
         <div className={`${styles.viewAll}`}>
-          <button type="button" className={`${styles.viewAllBtn}`}>View All</button>
+          <Link href="/blog" className={`${styles.viewAllBtn}`}>
+           View All
+          </Link>
         </div>
       </div>
     </section>
