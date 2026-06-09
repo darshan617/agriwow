@@ -11,6 +11,7 @@ const IndustrialProduct = ({ industrialProductsData }) => {
             bannerImage={industrialBanner}
             agricultureProductsData={industrialProductsData}
             overlayVariant="industrial"
+            viewAllLink="/product-category/industrial-products"
             overlayHeading={
                 <>
                     Built for Power
@@ -20,8 +21,8 @@ const IndustrialProduct = ({ industrialProductsData }) => {
                     <span className={`${styles.overlayAccent}`}>for Performance</span>
                 </>
             }
-        />
-    )
-}
+    />
+  );
+};
 
-export default IndustrialProduct
+export default IndustrialProduct;

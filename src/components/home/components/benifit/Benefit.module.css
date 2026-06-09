@@ -65,7 +65,6 @@
 .pillToggle {
   display: flex;
   justify-content: center;
-  cursor: pointer;
   background: none;
   border: none;
   align-items: center;
