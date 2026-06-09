@@ -16,9 +16,12 @@ export const apiSlice = createApi({
     "addToWishlist",
     "getWishlist",
     "removeFromWishlist",
-    'getCartData',
-    'ProductsByCategory',
-    "applyCoupon"
+    "getCartData",
+    "ProductsByCategory",
+    "applyCoupon",
+    "blog",
+    "relatedBlogs",,
   ],
+  overrideExisting: true,
   endpoints: (builder) => ({}),
 });

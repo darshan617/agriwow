@@ -98,6 +98,32 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
       }),
     }),
+    addDeliveryAddress: builder.mutation({
+      query: ({ body }) => ({
+        url: "/add-address",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["getCartData"],
+    }),
+    getAllDeliveryAddresses: builder.query({
+      query: () => ({
+        url: "/all-addresses",
+        method: "GET",
+        headers: getCartRequestHeaders(),
+      }),
+      invalidatesTags: ["getCartData"],
+    }),
+    updateDeliveryAddress: builder.mutation({
+      query: ({ body }) => ({
+        url: "/update-address",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["getCartData"],
+    }),
   }),
 });
 
@@ -109,4 +135,7 @@ export const {
   useApplyCouponMutation,
   useUpdateCartMutation,
   useGetAvailableCouponsQuery,
+  useAddDeliveryAddressMutation,
+  useGetAllDeliveryAddressesQuery,
+  useUpdateDeliveryAddressMutation,
 } = addToCartApi;

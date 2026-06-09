@@ -18,6 +18,7 @@ import CustomPopup from "@/components/custom-popup/CustomPopup";
 import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
+import { useRouter } from "next/router";
 
 const CartDetails = ({
   cartItems = [],
@@ -31,6 +32,7 @@ const CartDetails = ({
   hideCheckoutButton = false,
   handleUpdateCart = () => {},
 }) => {
+  const router = useRouter();
   const [removeFromCart] = useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
@@ -219,7 +221,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartPrice}>
-                  ₹ {item?.product?.price}
+                  ₹ {item?.product?.selling_price}
                 </div>
 
                 <div className={styles.productCartQuantity}>
@@ -256,7 +258,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartSubtotal}>
-                  <h5>₹ {item?.product?.price * qty}</h5>
+                  <h5>₹ {item?.product?.selling_price * qty}</h5>
                   {item?.product?.discount > 0 && (
                     <span>You save ₹ {item?.product?.discount * qty}</span>
                   )}
@@ -279,22 +281,37 @@ const CartDetails = ({
           <button className={styles.removeCoupon}>Remove Coupon</button>
         </div> */}
 
-
-        {cartItems.length > 0 && !hideCheckoutButton && (
-          <div className={styles.checkoutSection}>
+        {cartItems?.length > 0 && !hideCheckoutButton && (
+          <Link
+            href={router?.asPath === "/cart" ? "/checkout" : "/payment"}
+            className={styles.checkoutSection}
+          >
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
-                <Link href="/checkout">
-                  <span>PROCEED TO CHECKOUT</span>
-                  <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
-                </Link>
+                <div>
+                  <span>
+                    {router?.asPath === "/cart"
+                      ? "PROCEED TO CHECKOUT"
+                      : "PROCEED TO PAYMENT"}
+                  </span>
+                  <p>
+                    ₹{" "}
+                    {cartItems?.reduce(
+                      (acc, item) =>
+                        acc +
+                        (item?.product?.selling_price ?? 0) *
+                          (item?.quantity ?? 0),
+                      0,
+                    )}
+                  </p>
+                </div>
               </div>
 
               <span className={styles.arrow}>
                 <MdOutlineKeyboardArrowRight size={30} />
               </span>
             </button>
-          </div>
+          </Link>
         )}
       </div>
 
