@@ -108,6 +108,7 @@ const Cart = () => {
                 couponCode={couponCode}
                 setCouponCode={setCouponCode}
                 handleUpdateCart={handleUpdateCart}
+                cartData={cartData}
               />
             </div>
           )}

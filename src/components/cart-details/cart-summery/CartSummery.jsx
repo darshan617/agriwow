@@ -34,7 +34,8 @@ const CartSummery = ({
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
 
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+    (acc, item) =>
+      acc + (item?.product?.selling_price ?? 0) * (item?.quantity ?? 0),
     0,
   );
 
@@ -121,14 +122,22 @@ const CartSummery = ({
 
           <div className={`${styles.summaryRow}`}>
             <span>Discount</span>
-            <span className={`${styles.discount}`}>
+            <span
+              className={`${styles.discount}`}
+              style={{
+                color:
+                  (discountAmount || cartData?.coupon?.discount_amount) > 0
+                    ? "#2c9a43"
+                    : "black",
+              }}
+            >
               {appliedCoupon
                 ? appliedCoupon.coupon?.type === "percentage"
                   ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount.toFixed(2)})`
                   : `₹ -${discountAmount.toFixed(2)}`
                 : cartData?.coupon?.type === "percentage"
-                  ? `${cartData?.coupon?.value ?? 0}% (₹${cartData?.coupon?.discount_amount.toFixed(2)})`
-                  : `₹ -${cartData?.coupon?.discount_amount.toFixed(2)}`}
+                  ? `${cartData?.coupon?.value ?? 0}% (₹${cartData?.coupon?.discount_amount.toFixed(2) ?? 0})`
+                  : `₹ -${cartData?.coupon?.discount_amount.toFixed(2) ?? 0}`}
             </span>
           </div>
 
@@ -152,7 +161,9 @@ const CartSummery = ({
 
           <div className={`${styles.saveText}`}>
             {productSavings + discountAmount > 0 && (
-              <span>You save ₹ {productSavings + discountAmount} on this order</span>
+              <span>
+                You save ₹ {productSavings + discountAmount} on this order
+              </span>
             )}
           </div>
         </div>

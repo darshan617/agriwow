@@ -219,7 +219,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartPrice}>
-                  ₹ {item?.product?.price}
+                  ₹ {item?.product?.selling_price}
                 </div>
 
                 <div className={styles.productCartQuantity}>
@@ -256,7 +256,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartSubtotal}>
-                  <h5>₹ {item?.product?.price * qty}</h5>
+                  <h5>₹ {item?.product?.selling_price * qty}</h5>
                   {item?.product?.discount > 0 && (
                     <span>You save ₹ {item?.product?.discount * qty}</span>
                   )}
