@@ -6,6 +6,7 @@ import { FaThumbsUp, FaThumbsDown, FaChevronRight   } from "react-icons/fa6";
 
 
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
+import Link from "next/link";
 
 const RATING_BARS = [
   { label: 5, pct: 50 },
