@@ -27,6 +27,8 @@ const CartDetails = ({
   onDecrease,
   appliedCoupon = null,
   onRemoveCoupon,
+  hideBreadcrumb = false,
+  hideCheckoutButton = false,
   handleUpdateCart = () => {},
 }) => {
   const [removeFromCart] = useRemoveFromCartMutation();
@@ -115,23 +117,25 @@ const CartDetails = ({
 
   return (
     <>
-      <div className={`${styles.breadcrumb}`}>
-        <div style={{ margin: "16px 0" }}>
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-            <li>
-              <Link href="/">Shop</Link>
-            </li>
-            <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-            <li className={styles.breadcrumbItem1}>
-              <Link href="/cart">Cart</Link>
-            </li>
-          </ul>
+      {!hideBreadcrumb && (
+        <div className={`${styles.breadcrumb}`}>
+          <div style={{ margin: "16px 0" }}>
+            <ul>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
+              <li>
+                <Link href="/">Shop</Link>
+              </li>
+              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
+              <li className={styles.breadcrumbItem1}>
+                <Link href="/cart">Cart</Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.productInfo}>
         {appliedCoupon && (
@@ -194,7 +198,7 @@ const CartDetails = ({
         )}
 
         {cartItems.map((item) => {
-          const qty = getQuantity(item);
+          const qty = getQuantity ? getQuantity(item) : item.quantity;
 
           return (
             <div className={styles.productCartWrapper} key={item.id}>
@@ -273,19 +277,15 @@ const CartDetails = ({
           <button className={styles.removeCoupon}>Remove Coupon</button>
         </div> */}
 
-        {cartItems.length > 0 && (
+
+        {cartItems.length > 0 && !hideCheckoutButton && (
           <div className={styles.checkoutSection}>
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
-                <span>PROCEED TO CHECKOUT</span>
-                <p>
-                  ₹{" "}
-                  {cartItems.reduce(
-                    (acc, item) =>
-                      acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0),
-                    0,
-                  )}
-                </p>
+                <Link href="/checkout">
+                  <span>PROCEED TO CHECKOUT</span>
+                  <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
+                </Link>
               </div>
 
               <span className={styles.arrow}>

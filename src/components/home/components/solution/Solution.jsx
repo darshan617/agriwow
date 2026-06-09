@@ -3,6 +3,7 @@ import Image from 'next/image'
 import trackImage from '@/assets/images/track.png'
 import solutionImage from '@/assets/images/solution.png'
 import styles from '@/components/home/components/solution/Solution.module.css'
+import Link from 'next/link'
 
 const Solution = () => {
     return (
@@ -17,7 +18,9 @@ const Solution = () => {
                                     <h2 className={`${styles.title}`}>Track Your Order <br />Easily</h2>
                                     <p className={`${styles.description}`}>Stay updated with real-time tracking <br />from dispatch to doorstep</p>
                                     <button type="button" className={`${styles.btn}`}>
-                                        Track Now
+                                        <Link href="/my-order">
+                                            Track Now
+                                        </Link>
                                     </button>
                                 </div>
                             </div>
@@ -31,7 +34,9 @@ const Solution = () => {
                                     <h2 className={`${styles.title}`}>All-in-One Farming <br />Solutions</h2>
                                     <p className={`${styles.description}`}>From sprayers to industrial tools - everything <br />you need for modern farming in one place.</p>
                                     <button type="button" className={`${styles.btn}`}>
+                                        <Link href="/product-category/agriculture-sprayers">
                                         Explore Products
+                                        </Link>
                                     </button>
                                 </div>
                             </div>

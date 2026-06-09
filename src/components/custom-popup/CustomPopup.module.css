@@ -26,6 +26,13 @@
     align-items: center;
     justify-content: center;
   }
+
+  .popupWide {
+    max-width: 960px;
+    min-height: auto;
+    align-items: stretch;
+    justify-content: stretch;
+  }
   
   .closeBtn {
     position: absolute;

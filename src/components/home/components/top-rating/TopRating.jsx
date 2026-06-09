@@ -21,7 +21,7 @@ const TopRating = ({ topRatedData }) => {
             <div className={styles.topRatingExplore}>Explore now</div>
           </div>
         }
-   
+        viewAllLink="/product-category/top-rated"
       />
   )
 }

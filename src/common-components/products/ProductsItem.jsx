@@ -26,6 +26,7 @@ const ProductsItem = ({
   hideOverlay = false,
   customOverlay,
   bannerImageProps = {},
+  viewAllLink = "/product-category/agriculture-sprayers",
 }) => {
   const {
     className: bannerImageClassName,
@@ -60,7 +61,7 @@ const ProductsItem = ({
 
             {!isEquipment && (
               <div className={`col-lg-3 col-md-4 col-12 ${styles.promoCol}`}>
-                <Link href="/">
+                <Link href={viewAllLink}>
                   <div
                     className={`${styles.promoCard} ${isIndustrialOverlay ? styles.promoCardIndustrial : ""}`}
                   >
@@ -187,7 +188,7 @@ const ProductsItem = ({
                         isFeatured={item?.is_featured}
                         isTopRated={item?.is_top_rated}
                         slug={item?.slug}
-productId={item?.id}
+                        productId={item?.id}
                       />
                     </SwiperSlide>
                   ))}
@@ -219,9 +220,9 @@ productId={item?.id}
                     : styles.viewAllWrapper
                 }
               >
-                <button type="button" className={`${styles.viewAllBtn} `}>
-                  View All
-                </button>
+                <Link href={viewAllLink} className={`${styles.viewAllBtn} `}>
+                    View All
+                </Link>
               </div>
             </div>
           </div>

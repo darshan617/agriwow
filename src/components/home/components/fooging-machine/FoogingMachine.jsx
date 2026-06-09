@@ -9,6 +9,7 @@ const FoogingMachine = ({ foogingMachineData }) => {
         title={<span style={{ color: '#000',textShadow: 'none' }}>Fogging Machine</span>}
         bannerImage={foogingMachineBanner}
         farmEquipmentsData={foogingMachineData}
+        viewAllLink="/product-category/fogging-machines"
       />
     </div>
   );

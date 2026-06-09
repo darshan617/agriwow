@@ -5,6 +5,7 @@ import accurate from '@/assets/icon/accurate.png'
 import quality from '@/assets/icon/high-quality.png'
 import shield from '@/assets/icon/shield.png'
 import styles from '@/components/home/components/deal/ExclusiveDeal.module.css'
+import Link from 'next/link'
 
 const ExclusiveDeal = () => {
     return (
@@ -30,7 +31,9 @@ const ExclusiveDeal = () => {
                                             Advanced technology for <br />better sorting and processing.
                                         </p>
                                         <button type="button" className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}>
-                                            Shop Now
+                                            <Link href="/product-category/agriculture-sprayers">
+                                                Shop Now
+                                            </Link>
                                         </button>
                                     </div>
                                 </div>

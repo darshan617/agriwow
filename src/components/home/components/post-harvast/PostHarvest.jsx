@@ -12,6 +12,7 @@ const PostHarvest = ({ postHarvestData }) => {
         bannerImage={postHarvestBanner}
         agricultureProductsData={postHarvestData}
         overlayVariant="postHarvest"  
+        viewAllLink="/product-category/post-harvest"
         overlayHeading={
           <>
             <p className={styles.overlayAccent}>
