@@ -280,28 +280,29 @@ const CartDetails = ({
         </div> */}
 
         {cartItems?.length > 0 && !hideCheckoutButton && (
-          <div className={styles.checkoutSection}>
+          <Link href={"/checkout"} className={styles.checkoutSection}>
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
-                <Link href="/checkout">
+                <div>
                   <span>PROCEED TO CHECKOUT</span>
                   <p>
                     ₹{" "}
                     {cartItems?.reduce(
                       (acc, item) =>
                         acc +
-                        (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+                        (item?.product?.selling_price ?? 0) *
+                          (item?.quantity ?? 0),
                       0,
                     )}
                   </p>
-                </Link>
+                </div>
               </div>
 
               <span className={styles.arrow}>
                 <MdOutlineKeyboardArrowRight size={30} />
               </span>
             </button>
-          </div>
+          </Link>
         )}
       </div>
 
