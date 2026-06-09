@@ -1,4 +1,6 @@
+import Cookies from "js-cookie";
 import { apiSlice } from "../apiSlice";
+
 const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     auth: builder.mutation({
@@ -20,6 +22,22 @@ const authApi = apiSlice.injectEndpoints({
         };
       },
       invalidatesTags: ["verifyOtp"],
+    }),
+    logout: builder.mutation({
+      query: () => {
+        const userToken = Cookies.get("userToken");
+        return {
+          url: "/logout",
+          method: "POST",
+          headers: {
+            ...(userToken && {
+              Authorization: `Bearer ${userToken}`,
+            }),
+            "Content-Type": "application/json",
+          },
+        };
+      },
+      invalidatesTags: ["auth"],
     }),
     googleLogin: builder.mutation({
       query: ({ body }) => {
@@ -48,7 +66,7 @@ const authApi = apiSlice.injectEndpoints({
 });
 export const {
   useAuthMutation,
-  useVerifyOtpMutation,
+  useVerifyOtpMutation, useLogoutMutation,
   useGoogleLoginMutation,
   useResendOtpMutation,
 } = authApi;

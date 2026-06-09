@@ -49,6 +49,9 @@
 }
 
 .btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
   color: black;
   background: linear-gradient(to right, #8dba3b, #f6c417);

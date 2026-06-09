@@ -14,6 +14,7 @@ import {
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useBuyProductMutation } from "@/redux/apis/buyProductApi";
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -43,8 +44,35 @@ const ProductCard = ({
     ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : null;
 
-  const handleBuyNow = (slug) => {
-    router.push(`/product-details/${slug}`);
+  console.log(userData, "userData");
+
+  const handleBuyProduct = async () => {
+    if (!userData?.id) {
+      showToast("Please log in to buy products", "warning");
+      return;
+    }
+
+    const res = await buyProduct({
+      body: {
+        user_id: userData.id,
+        product_id: productId,
+        quantity: 1,
+      },
+    });
+
+    if (res.error) {
+      showToast(
+        res.error?.data?.message || "Failed to process buy now",
+        "error",
+      );
+      return;
+    }
+
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res?.data?.message || "Redirecting to checkout", "success");
+    } else {
+      showToast(res?.data?.message || "Failed to process buy now", "error");
+    }
   };
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
@@ -53,7 +81,7 @@ const ProductCard = ({
   const [removeFromWishlist, { isLoading: isRemoveWishlistLoading }] =
     useRemoveFromWishlistMutation();
   const { showToast } = useToast();
-
+  const [buyProduct, { isLoading: isBuyProductLoading }] = useBuyProductMutation();
   const handleAddToCart = async () => {
     try {
       const res = await addToCart({
@@ -130,22 +158,22 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        {type === "productPage" ? (
-          isBestSeller && (
-            <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
-          ) &&
-          isTrending && (
-            <span className={`${styles.bestsellerTag}`}>TRENDING</span>
-          ) &&
-          isFeatured && (
-            <span className={`${styles.bestsellerTag}`}>FEATURED</span>
-          ) &&
-          isTopRated && (
-            <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
-          )
-        ) : (
-          <span className={`${styles.bestsellerTag}`}>{discount}% OFF</span>
-        )}
+        {type === "productPage"
+          ? isBestSeller && (
+              <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+            ) &&
+            isTrending && (
+              <span className={`${styles.bestsellerTag}`}>TRENDING</span>
+            ) &&
+            isFeatured && (
+              <span className={`${styles.bestsellerTag}`}>FEATURED</span>
+            ) &&
+            isTopRated && (
+              <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
+            )
+          : discount > 0 && (
+              <span className={`${styles.discountTag}`}>{discount}% OFF</span>
+            )}
         {type === "productPage" ? (
           isWishlistPage ? (
             <button
@@ -160,7 +188,7 @@ const ProductCard = ({
           ) : (
             <button
               type="button"
-              className={`${styles.wishlistBtn}`}
+              className={`${styles.wishlistBtnnnnn}`}
               aria-label="Add to wishlist"
               onClick={handleAddToWishlist}
               disabled={isWishlistLoading}
@@ -215,10 +243,14 @@ const ProductCard = ({
         </div>
         {type === "productPage" && (
           <div className={`${styles.discountRow}`}>
-            <span className={`${styles.discountText}`}>
-              {discount || 0}% OFF
-            </span>
-            <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
+            {discount > 0 && (
+              <span className={`${styles.discountText}`}>
+                {discount || 0}% OFF
+              </span>
+            )}
+            {discount > 0 && (
+              <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
+            )}
           </div>
         )}
       </Link>
@@ -237,7 +269,8 @@ const ProductCard = ({
         <button
           type="button"
           className={`${styles.buyNowBtn}`}
-          onClick={() => handleBuyNow(slug)}
+          onClick={handleBuyProduct}
+          disabled={isBuyProductLoading}
         >
           <span>Buy Now</span>
         </button>

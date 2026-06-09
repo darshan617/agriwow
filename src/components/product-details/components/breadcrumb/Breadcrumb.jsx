@@ -2,11 +2,12 @@ import React from "react";
 import styles from "@/components/product-category/components/breadcrumb/Breadcrumb.module.css";
 import Link from "next/link";
 
-const Breadcrumb = ({ productDetails }) => {
+const Breadcrumb = ({ productDetails, blogDetails }) => {
   const categorySlug = "category-slug";
   const categoryName = "Category Name";
   const subCategory = "sub-category";
   const subCategoryName = "Sub Category Name";
+  const blogTitle = blogDetails?.data?.title;
   return (
     <div className="container">
       {/* <h2 className={`${styles.title}`}>Garden & Lawn Care</h2> */}

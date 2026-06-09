@@ -3,11 +3,12 @@ import ProductsItem from '@/common-components/products/ProductsItem'
 import topRating from '@/assets/images/top-rating.png'
 import styles from './TopRating.module.css'
 
-const TopRating = ({ topRatedData }) => {
+const TopRating = ({ topRatedData, viewAllLink = "/product-category/top-rating" }) => {
   return (
       <ProductsItem
         sectionClassName=""
         title="Top Rating"
+        viewAllLink={viewAllLink}
         bannerImage={topRating}
         bannerImageProps={{
           className: styles.topRatingPromoImage,

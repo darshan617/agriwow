@@ -2,12 +2,12 @@
   position: relative;
   background: #f2f2f2;
   border-radius: 6px;
-  padding: 15px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  min-height: 450px;
+  height: 450px;
   transition: padding-bottom 0.25s ease;
 }
 
@@ -16,16 +16,21 @@
 }
 
 .cardTags {
+  position: absolute;
+  top: 11px;
+  left: 8px;
+  right: 0;
+  z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  min-height: 20px;
+  /* min-height: 20px; */
   flex-shrink: 0;
 }
 
 .discountTag {
-  background: #8dba3b;
+  background: #e0334b;
   color: #ffffff;
   font-size: 9px;
   font-weight: 700;
@@ -34,13 +39,16 @@
   letter-spacing: 0.3px;
 }
 
-.bestsellerTag {
-  background: #fd8a01;
+.cardTags .bestsellerTag {
+  position: relative;
+  top: 0;
+  right: 8px;
+  background: #239c3d;
   color: #ffffff;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   padding: 3px 7px;
-  border-radius: 3px;
+  border-radius: 0 3px 3px 0;
   /* margin-left: auto; */
 }
 
@@ -101,7 +109,8 @@
 }
 
 .productImg {
-  object-fit: contain;
+  width: 100% !important;
+  /* object-fit: contain; */
 }
 
 .cardInfo {
@@ -296,8 +305,25 @@
 .btnIcon {
   font-size: 14px;
 }
+.wishlistBtnnnnn {
+  border: none;
+  border-radius: 3px;
+  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6f6f6f;
+  cursor: pointer;
+  font-size: 14px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+  position: absolute;
+  top: 7px;
+  left: 4px;
+}
 
-.wishlistBtn {
+.wishlistBtn{
   border: none;
   border-radius: 3px;
   width: 28px;
@@ -314,12 +340,15 @@
 
 }
 
-.wishlistBtn:hover {
+.wishlistBtn:hover,
+.wishlistBtnnnnn:hover {
   color: #e0334b;
 }
 .removeBtn {
   position: absolute;
-  right: 0;
+  top: 7px;
+  right: 4px;
+  background: #f2f2f2;
 }
 
 .removeBtn:hover {
@@ -338,6 +367,9 @@
   .buyNowBtn {
     padding: 5px 0;
     font-size: 9 px;
+  }
+  .productImg {
+    object-fit: fill;
   }
 }
 
@@ -366,6 +398,12 @@
 @media (max-width: 992px) {
   .productCard {
     min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .productImg {
+    object-fit: fill;
   }
 }
 
@@ -428,6 +466,10 @@
     padding: 7px 0;
     font-size: 13px;
   }
+  
+.productImg {
+  object-fit: contain;
+}
 }
 
 @media (max-width: 768px) {

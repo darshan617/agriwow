@@ -119,8 +119,9 @@ const CartSummery = ({
             <span>Shipping</span>
             <span>₹ {shippingAmount}</span>
           </div>
-
-          <div className={`${styles.freeShipping}`}>Free shipping</div>
+          {shippingAmount > 0 && (
+            <div className={`${styles.freeShipping}`}>Free shipping</div>
+          )}
 
           <hr className={`${styles.divider}`} />
 
@@ -133,7 +134,9 @@ const CartSummery = ({
           </div>
 
           <div className={`${styles.saveText}`}>
-            You save ₹ {productSavings + discountAmount} on this order
+            {productSavings + discountAmount > 0 && (
+              <span>You save ₹ {productSavings + discountAmount} on this order</span>
+            )}
           </div>
         </div>
       </div>

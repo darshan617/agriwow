@@ -90,6 +90,7 @@
   grid-template-columns: 5fr 1fr 1.5fr 1.5fr;
   align-items: center;
   padding: 20px 0;
+    border-bottom: 1px solid #d9d9d9;
   gap: 5px
 }
 

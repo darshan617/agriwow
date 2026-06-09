@@ -7,6 +7,7 @@ import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import videoThumb from '@/assets/video/video1.jpg'
 import styles from '@/components/home/components/video/VideoSection.module.css'
+import Link from 'next/link'
 
 const videoSlides = [
   {
@@ -55,7 +56,7 @@ const VideoSection = () => {
                                         <h2 className={`${styles.title}`}>
                                             {slide.title || ''}
                                         </h2>
-                                        <a
+                                        <Link
                                             href={slide.youtubeUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -63,19 +64,19 @@ const VideoSection = () => {
                                             aria-label={`Watch${slide.title ? ` ${slide.title}` : ''} on YouTube`}
                                         >
                                             <IoPlay className={`${styles.playIcon}`} aria-hidden="true" />
-                                        </a>    
+                                        </Link>    
                                         <div className={`${styles.footer}`}>
                                             <span className={`${styles.footerText}`}>
                                                 Watch more videos on Youtube
                                             </span>
-                                            <a
+                                            <Link
                                                 href="https://www.youtube.com/"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={`${styles.viewAll}`}
                                             >
                                                 View All
-                                            </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
