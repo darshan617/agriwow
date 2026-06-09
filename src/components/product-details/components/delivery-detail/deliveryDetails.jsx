@@ -12,21 +12,11 @@ import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const deliveryIcons = {
-  pincode: (
-    <Image src={noEntry} alt="no entry" width={20} height={20} />
-  ),
-  freeDelivery: (
-    <Image src={truck} alt="truck" width={20} height={20} />
-  ),
-  delivery: (
-    <Image src={stock} alt="stock" width={20} height={20} />
-  ),
-  cod: (
-    <Image src={cod} alt="cod" width={20} height={20} />
-  ),
-  returns: (
-    <Image src={returns} alt="returns" width={20} height={20} />
-  ),
+  pincode: <Image src={noEntry} alt="no entry" width={20} height={20} />,
+  freeDelivery: <Image src={truck} alt="truck" width={20} height={20} />,
+  delivery: <Image src={stock} alt="stock" width={20} height={20} />,
+  cod: <Image src={cod} alt="cod" width={20} height={20} />,
+  returns: <Image src={returns} alt="returns" width={20} height={20} />,
 };
 
 const infoItems = (pincode) => [
@@ -88,9 +78,7 @@ export default function DeliveryDetails({ productDetails }) {
   };
 
   const unitPrice = Number(productDetails?.data?.price || 0);
-  const unitSellingPrice = Number(
-    productDetails?.data?.selling_price || 0
-  );
+  const unitSellingPrice = Number(productDetails?.data?.selling_price || 0);
 
   const totalPrice = unitPrice * qty;
   const totalSellingPrice = unitSellingPrice * qty;
@@ -99,34 +87,27 @@ export default function DeliveryDetails({ productDetails }) {
   return (
     <div className={styles.ddCard}>
       <div className={styles.ddPriceSection}>
-          {productDetails?.data?.discount > 0 && (
-        <div className={styles.ddBadge}>
-          {productDetails?.data?.discount > 0 && (
-            <span>
-              {productDetails?.data?.discount || 0}% OFF
-            </span>
-          )}
-        </div>
+        {productDetails?.data?.discount > 0 && (
+          <div className={styles.ddBadge}>
+            {productDetails?.data?.discount > 0 && (
+              <span>{productDetails?.data?.discount || 0}% OFF</span>
+            )}
+          </div>
         )}
 
         <p className={styles.priceRow}>
           <span className={styles.currentPrice}>
-            ₹ {totalPrice.toLocaleString()}
+            ₹ {totalSellingPrice.toLocaleString()}
           </span>
 
           <span className={styles.oldPrice}>
-            ₹ {totalSellingPrice.toLocaleString()}
+            ₹ {totalPrice.toLocaleString()}
           </span>
         </p>
 
         <div className={styles.discountRow}>
           {productDetails?.data?.discount > 0 && (
-          <Image
-            src={discountIcon}
-            alt="discount"
-            width={16}
-            height={16}
-          />
+            <Image src={discountIcon} alt="discount" width={16} height={16} />
           )}
           {productDetails?.data?.discount > 0 && (
             <span>Save ₹ {totalSaving.toLocaleString()}</span>
@@ -157,14 +138,14 @@ export default function DeliveryDetails({ productDetails }) {
           </div>
         </div>
 
-
-        <button className={styles.ddBtnCart} onClick={() => handleAddToCart(productDetails?.data?.id)}>
+        <button
+          className={styles.ddBtnCart}
+          onClick={() => handleAddToCart(productDetails?.data?.id)}
+        >
           Add to Cart
         </button>
 
-        <button className={styles.ddBtnBuy}>
-          Buy Now
-        </button>
+        <button className={styles.ddBtnBuy}>Buy Now</button>
 
         <button
           className={styles.ddBtnWhatsapp}
@@ -172,7 +153,7 @@ export default function DeliveryDetails({ productDetails }) {
             const phoneNumber = "919082681149";
             const productName = productDetails?.data?.name || "Product";
             const text = encodeURIComponent(
-              `Hi, I'm interested in ordering: ${productName}`
+              `Hi, I'm interested in ordering: ${productName}`,
             );
             window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
           }}
@@ -182,7 +163,6 @@ export default function DeliveryDetails({ productDetails }) {
           </svg>
           Order on WhatsApp
         </button>
-   
 
         <div className={`${styles.ddSecureIcon} d-flex gap-2`}>
           <Image
@@ -237,17 +217,13 @@ export default function DeliveryDetails({ productDetails }) {
 
             <div>
               <div
-                className={`${styles.ddInfoTitle} ${
-                  styles[item.colorClass]
-                }`}
+                className={`${styles.ddInfoTitle} ${styles[item.colorClass]}`}
               >
                 {item.title}
               </div>
 
               {item.desc && (
-                <div className={styles.ddInfoDesc}>
-                  {item.desc}
-                </div>
+                <div className={styles.ddInfoDesc}>{item.desc}</div>
               )}
             </div>
           </div>

@@ -41,7 +41,9 @@ const DeliveryAddress = ({ cartItems }) => {
         name: userData?.name || prev.name,
         mobile: userData?.phone || prev.mobile,
       }));
-    } catch {    }
+    } catch (error) {
+      console.log(error, "error");
+    }
   }, []);
 
   return (
@@ -84,7 +86,11 @@ const DeliveryAddress = ({ cartItems }) => {
           <p className={styles.addressMobile}>Mobile : {address.mobile}</p>
 
           <div className={styles.addressActions}>
-            <button type="button" className={styles.changeBtn} onClick={() => setShowAddressForm(true)}>
+            <button
+              type="button"
+              className={styles.changeBtn}
+              onClick={() => setShowAddressForm(true)}
+            >
               Change Delivery Address
             </button>
             <button

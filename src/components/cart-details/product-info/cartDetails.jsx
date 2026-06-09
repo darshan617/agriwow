@@ -219,7 +219,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartPrice}>
-                  ₹ {item?.product?.price}
+                  ₹ {item?.product?.selling_price}
                 </div>
 
                 <div className={styles.productCartQuantity}>
@@ -256,7 +256,7 @@ const CartDetails = ({
                 </div>
 
                 <div className={styles.productCartSubtotal}>
-                  <h5>₹ {item?.product?.price * qty}</h5>
+                  <h5>₹ {item?.product?.selling_price * qty}</h5>
                   {item?.product?.discount > 0 && (
                     <span>You save ₹ {item?.product?.discount * qty}</span>
                   )}
@@ -279,14 +279,21 @@ const CartDetails = ({
           <button className={styles.removeCoupon}>Remove Coupon</button>
         </div> */}
 
-
-        {cartItems.length > 0 && !hideCheckoutButton && (
+        {cartItems?.length > 0 && !hideCheckoutButton && (
           <div className={styles.checkoutSection}>
             <button className={styles.checkoutBtn} onClick={handleCheckout}>
               <div>
                 <Link href="/checkout">
                   <span>PROCEED TO CHECKOUT</span>
-                  <p>₹ {cartItems.reduce((acc, item) => acc + (item?.product?.price ?? 0) * (item?.quantity ?? 0), 0)}</p> 
+                  <p>
+                    ₹{" "}
+                    {cartItems?.reduce(
+                      (acc, item) =>
+                        acc +
+                        (item?.product?.price ?? 0) * (item?.quantity ?? 0),
+                      0,
+                    )}
+                  </p>
                 </Link>
               </div>
 

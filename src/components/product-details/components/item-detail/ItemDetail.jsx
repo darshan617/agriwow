@@ -172,23 +172,23 @@ const ItemDetail = ({ productDetails }) => {
                 </span>
                 <p className={`${styles.priceRow}`}>
                   <span className={`${styles.currentPrice}`}>
-                    ₹ {productDetails?.data?.price}
+                    ₹ {productDetails?.data?.selling_price}
                   </span>
                   <span className={`${styles.oldPrice}`}>
-                    ₹ {productDetails?.data?.selling_price}
+                    ₹ {productDetails?.data?.price}
                   </span>
                 </p>
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
                 >
                   {productDetails?.data?.discount > 0 && (
-                  <div className={`${styles.discountImg}`}>
-                    <Image
-                      src={DiscountImg}
-                      alt="discount"
-                      width={18}
-                      height={18}
-                      fetchPriority="high"
+                    <div className={`${styles.discountImg}`}>
+                      <Image
+                        src={DiscountImg}
+                        alt="discount"
+                        width={18}
+                        height={18}
+                        fetchPriority="high"
                         priority={true}
                       />
                     </div>
@@ -242,18 +242,20 @@ const ItemDetail = ({ productDetails }) => {
 
             <div className={`${styles.aboutProductContent}`}>
               <p className={`${styles.aboutProductSubTitle}`}>Key Features</p>
-              
+
               <ul className={`${styles.aboutProductList}`}>
-                {productDetails?.data?.key_features?.slice(0, 3).map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
+                {productDetails?.data?.key_features
+                  ?.slice(0, 3)
+                  .map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
               </ul>
               <button
                 type="button"
                 className={`${styles.showAllButton}`}
                 onClick={() => openProductPopup("key_features")}
               >
-                 View All
+                View All
               </button>
             </div>
 
@@ -365,19 +367,17 @@ const ItemDetail = ({ productDetails }) => {
                 />
               )}
               {activePopupTab === "key_features" && (
-                <div
-                  className={`${styles.productInfoPopupDetails}`}
-                >
+                <div className={`${styles.productInfoPopupDetails}`}>
                   <ul className={`${styles.aboutProductList}`}>
-                    {productDetails?.data?.key_features?.map((feature, index) => (
-                      <li key={index}>{feature}</li>
-                    ))}
+                    {productDetails?.data?.key_features?.map(
+                      (feature, index) => (
+                        <li key={index}>{feature}</li>
+                      ),
+                    )}
                   </ul>
                 </div>
               )}
             </div>
-
-            
 
             {/* <button
               type="button"

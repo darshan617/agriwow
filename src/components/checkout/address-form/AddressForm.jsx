@@ -57,46 +57,48 @@ const AddressForm = ({ onClose, onSave }) => {
     );
   }, [form]);
 
+  // const handleUseLocation = () => {
+  //   if (!navigator.geolocation) return;
+
+  //   setIsLocating(true);
+  //   navigator.geolocation.getCurrentPosition(
+  //     async (position) => {
+  //       try {
+  //         const { latitude, longitude } = position.coords;
+  //         const res = await fetch(
+  //           `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+  //         );
+  //         const data = await res.json();
+  //         const addr = data?.address || {};
+
+  //         setForm((prev) => ({
+  //           ...prev,
+  //           area:
+  //             [addr.road, addr.suburb, addr.neighbourhood]
+  //               .filter(Boolean)
+  //               .join(", ") || prev.area,
+  //           city:
+  //             addr.city ||
+  //             addr.town ||
+  //             addr.village ||
+  //             addr.county ||
+  //             prev.city,
+  //           state: addr.state || prev.state,
+  //           pincode: addr.postcode || prev.pincode,
+  //           country: (addr.country || prev.country).toUpperCase(),
+  //         }));
+  //       } catch {
+  //         /* location reverse-geocode failed */
+  //       } finally {
+  //         setIsLocating(false);
+  //       }
+  //     },
+  //     () => setIsLocating(false),
+  //   );
+  // };
   const handleUseLocation = () => {
-    if (!navigator.geolocation) return;
-
-    setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
-          );
-          const data = await res.json();
-          const addr = data?.address || {};
-
-          setForm((prev) => ({
-            ...prev,
-            area:
-              [addr.road, addr.suburb, addr.neighbourhood]
-                .filter(Boolean)
-                .join(", ") || prev.area,
-            city:
-              addr.city ||
-              addr.town ||
-              addr.village ||
-              addr.county ||
-              prev.city,
-            state: addr.state || prev.state,
-            pincode: addr.postcode || prev.pincode,
-            country: (addr.country || prev.country).toUpperCase(),
-          }));
-        } catch {
-          /* location reverse-geocode failed */
-        } finally {
-          setIsLocating(false);
-        }
-      },
-      () => setIsLocating(false),
-    );
+    console.log("use location");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isFormValid) return;
