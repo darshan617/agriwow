@@ -1,6 +1,6 @@
 import ProductCard from "@/common-components/product-card/ProductCard";
-import { FaChevronRight } from "react-icons/fa";
-import React from "react";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "@/components/product-details/components/similar-product/SimilerProduct.module.css";
 
@@ -8,62 +8,130 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   const router = useRouter();
   const visibleItems = similarProducts.slice(0, 5);
 
-  if (!visibleItems.length) {
-    return null;
-  }
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const trackRef = useRef(null);
 
-  const handleViewAll = () => {
-    if (categorySlug) {
-      router.push(`/product-category/${categorySlug}`);
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      // if (w <= 425) setVisibleCount(1);
+      if (w <= 575) setVisibleCount(1);
+      else if (w <= 768) setVisibleCount(2);
+      else if (w <= 1199) setVisibleCount(3);
+      else if (w <= 1800) setVisibleCount(5);
+      else setVisibleCount(5);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  if (!visibleItems.length) return null;
+
+  const maxIndex = Math.max(0, visibleItems.length - visibleCount);
+  const isAtStart = currentIndex === 0;
+  const isAtEnd = currentIndex >= maxIndex;
+
+  const slide = (nextIndex) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(nextIndex);
+    setTimeout(() => setIsAnimating(false), 350);
+  };
+
+  const handleNext = () => {
+    if (!isAtEnd) {
+      slide(currentIndex + 1);
     }
   };
 
+  const handlePrev = () => {
+    if (!isAtStart) slide(currentIndex - 1);
+  };
+
+  const GAP = 16;
+  const translatePct = (currentIndex / visibleCount) * 100;
+
   return (
     <div className="container mt-4">
-      <h2 className={`${styles.title} mb-4`}>Similar Products</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Similar Products</h2>
+      </div>
 
-      <div className={`${styles.productsRow} row `}>
-        {visibleItems.map((similar_products
-) => (
+      <div className={styles.sliderRoot}>
+        <button
+          className={`${styles.navBtn} ${isAtStart ? styles.hidden : ""}`}
+          onClick={handlePrev}
+          aria-label="Previous"
+        >
+          <FaChevronLeft />
+        </button>
+
+        {/* Track viewport */}
+        <div className={styles.viewport}>
           <div
-            className={`${styles.productItem} col-lg-2 col-md-4 col-sm-6 mb-4`}
-            key={similar_products
-              ?.id ?? similar_products?.slug ?? similar_products?.name}
+            ref={trackRef}
+            className={styles.track}
+            style={{
+              transform: `translateX(calc(-${translatePct}% - ${currentIndex * GAP}px))`,
+              transition: isAnimating ? "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)" : "none",
+            }}
           >
-            <ProductCard
-              type="productPage"
-              slug={similar_products?.slug}
-              image={similar_products?.gallery?.[0]}
-              imageHover={similar_products?.gallery?.[1]}
-              discount={similar_products?.discount}
-              isBestSeller={similar_products?.is_best_selling}
-              isTrending={similar_products?.is_trending}
-              isFeatured={similar_products?.is_featured}
-              isTopRated={similar_products?.is_top_rated}
-              name={similar_products?.name}
-              price={similar_products?.selling_price}
-              oldPrice={similar_products?.price}
-              reviews={
-                similar_products?.reviews?.length ?? similar_products?.review_count ?? 0
-              }
-              rating={similar_products?.rating}
-              productId={similar_products?.id}
-            />
+            {visibleItems.map((product) => (
+              <div
+                className={styles.slide}
+                key={product?.id ?? product?.slug ?? product?.name}
+                style={{ "--visible-count": visibleCount }}
+              >
+                <ProductCard
+                  type="productPage"
+                  slug={product?.slug}
+                  image={product?.gallery?.[0]}
+                  imageHover={product?.gallery?.[1]}
+                  discount={product?.discount}
+                  isBestSeller={product?.is_best_selling}
+                  isTrending={product?.is_trending}
+                  isFeatured={product?.is_featured}
+                  isTopRated={product?.is_top_rated}
+                  name={product?.name}
+                  price={product?.selling_price}
+                  oldPrice={product?.price}
+                  reviews={product?.reviews?.length ?? product?.review_count ?? 0}
+                  rating={product?.rating}
+                  productId={product?.id}
+                />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
 
-        <div className={`${styles.viewAllBtn} col-lg-2 col-md-4 col-sm-6 mb-4 d-flex align-items-center justify-content-end`}>
-          <button                                           
-            className="btn btn-outline-secondary rounded-circle"                                            
-            style={{ width: "48px", height: "48px", fontSize: "20px" }}                                           
-            title="View All"                                            
-          >                                           
-            <FaChevronRight />                                            
-          </button>                                           
-        </div>                                            
-      </div>                                            
-    </div>                                            
-  );                                            
-};                                            
-                                            
+        <button
+          className={styles.navBtn}
+          onClick={handleNext}
+          aria-label={isAtEnd ? "View All" : "Next"}
+          title={isAtEnd ? "View All" : "Next"}
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+
+      {maxIndex > 0 && (
+        <div className={styles.dots}>
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <span
+              key={i}
+              className={`${styles.dot} ${i === currentIndex ? styles.activeDot : ""}`}
+              onClick={() => slide(i)}
+              role="button"
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default SimilarProduct;
