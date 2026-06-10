@@ -28,7 +28,7 @@ console.log(productDetails);
         categorySlug={categorySlug}
       />
       <ReviewsRating ratingData={productDetails?.data?.rating_summary} />
-      <Faqs />
+      <Faqs productData={productDetails?.data} />
       <OrderInformation />
     </Layout> 
   )

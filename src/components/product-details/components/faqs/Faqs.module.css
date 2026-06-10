@@ -70,7 +70,6 @@
 
 .faqFooter {
   margin-top: 28px;
-  text-align: left;
 }
 
 .faqFooterText {
@@ -78,6 +77,13 @@
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 14px;
+}
+
+.faqFooterButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .bannerBtn {
@@ -88,8 +94,20 @@
   font-size: 13px;
   font-weight: 700;
   transition: all 0.3s;
+  cursor: pointer;
+  display: block;
+  width: auto;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .bannerBtn:hover {
   background: linear-gradient(to right, #f6c417, #8dba3b);
+}
+.noFaqAvailable {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 14px;
+  text-align: center;
 }
