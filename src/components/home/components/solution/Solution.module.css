@@ -17,8 +17,8 @@
 .leftContent:hover,
 .rightContent:hover {
   transform: translateY(-5px);
-  border-radius: 20px;
-  box-shadow: rgba(38, 57, 77, 0.356) 0px 20px 30px -5px;
+  /* border-radius: 20px; */
+  /* box-shadow: rgba(38, 57, 77, 0.356) 0px 20px 30px -5px; */
 }
 
 .imageTextWrapper {
