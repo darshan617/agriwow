@@ -17,10 +17,13 @@ export const apiSlice = createApi({
     "getWishlist",
     "removeFromWishlist",
     "getCartData",
+    "getAvailableCoupons",
     "ProductsByCategory",
     "applyCoupon",
+    "SearchProducts",
     "blog",
     "relatedBlogs",
+
     "faqs",
   ],
   overrideExisting: true,

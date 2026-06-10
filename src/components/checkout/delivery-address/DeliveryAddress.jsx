@@ -5,13 +5,6 @@ import AddressForm from "@/components/checkout/address-form/AddressForm";
 import styles from "@/components/checkout/delivery-address/DeliveryAddress.module.css";
 import { useGetAllDeliveryAddressesQuery } from "@/redux/apis/addToCartApi";
 
-const DEFAULT_ADDRESS = {
-  name: "saif shaikh",
-  address:
-    "Aranya - The Park | Malad West, Mumbai, Mumbai, Maharashtra, INDIA - 400095",
-  mobile: "9082681149",
-};
-
 const formatAddressLine = (form) => {
   const parts = [
     form.flat,
@@ -29,7 +22,7 @@ const formatAddressLine = (form) => {
 const formatApiAddressLine = (addr) => {
   const streetPart = [addr.flat, addr.area, addr.landmark]
     .filter(Boolean)
-    .join(" | ");
+    .join(", ");
   const locationPart = [addr.city, addr.state, addr.country]
     .filter(Boolean)
     .join(", ");
@@ -39,9 +32,14 @@ const formatApiAddressLine = (addr) => {
   return line;
 };
 
-const DeliveryAddress = ({ cartItems }) => {
-  const [address, setAddress] = useState(DEFAULT_ADDRESS);
-  const [showAddressForm, setShowAddressForm] = useState(false);
+const DeliveryAddress = ({
+  handleUpdateCart,
+  cartData,
+  setShowAddressForm,
+  showAddressForm,
+  refetchCartData,
+}) => {
+  const [address, setAddress] = useState({});
   const [showAllAddresses, setShowAllAddresses] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
@@ -62,6 +60,7 @@ const DeliveryAddress = ({ cartItems }) => {
   };
 
   const handleDeliverHere = (addr) => {
+    handleUpdateCart(null, null, addr.id);
     setAddress({
       name: addr.name,
       address: formatApiAddressLine(addr),
@@ -79,10 +78,10 @@ const DeliveryAddress = ({ cartItems }) => {
 
   useEffect(() => {
     if (!allAddresses?.data?.length) return;
-
     const defaultAddr =
-      allAddresses.data.find((item) => item.is_default === 1) ||
-      allAddresses.data[0];
+      allAddresses.data.find(
+        (item) => item?.id === cartData?.selected_address?.id,
+      ) || allAddresses.data[0];
 
     setAddress({
       name: defaultAddr.name,
@@ -90,7 +89,7 @@ const DeliveryAddress = ({ cartItems }) => {
       mobile: defaultAddr.phone,
     });
     setSelectedAddressId(defaultAddr.id);
-  }, [allAddresses]);
+  }, [allAddresses, cartData]);
 
   useEffect(() => {
     const raw = Cookies.get("userData");
@@ -127,18 +126,31 @@ const DeliveryAddress = ({ cartItems }) => {
 
       <div className={styles.content}>
         <p className={styles.sectionLabel}>
-          Delivery Address ({addressCount || 1})
+          Delivery Address ({addressCount || 0})
         </p>
         <div className={styles.addressCard}>
-          <p className={styles.addressName}>{address.name}</p>
-          <p className={styles.addressLine}>{address.address}</p>
-          <p className={styles.addressMobile}>Mobile : {address.mobile}</p>
+          {address?.address ? (
+            <>
+              <p className={styles.addressName}>{address?.name}</p>
+              <p className={styles.addressLine}>{address?.address}</p>
+              <p className={styles.addressMobile}>Mobile : {address?.mobile}</p>
+            </>
+          ) : (
+            <p className="m-0 small">
+              No Address Found. Please add a new address.
+            </p>
+          )}
 
           <div className={styles.addressActions}>
             <button
               type="button"
               className={styles.changeBtn}
               onClick={() => handleChangeDeliveryAddress()}
+              disabled={!address?.address}
+              style={{
+                opacity: !address?.address ? 0.5 : 1,
+                cursor: !address?.address ? "not-allowed" : "pointer",
+              }}
             >
               Change Delivery Address
             </button>
@@ -174,6 +186,7 @@ const DeliveryAddress = ({ cartItems }) => {
               setEditingAddress(null);
             }}
             onSave={(form) => {
+              handleUpdateCart(null, null, form.id);
               setAddress({
                 name: form.name,
                 address: formatAddressLine(form),
@@ -181,8 +194,9 @@ const DeliveryAddress = ({ cartItems }) => {
               });
               refetchAllAddresses();
             }}
-            isEditing={true}
+            isEditing={!!editingAddress}
             addressId={editingAddress?.id}
+            refetchCartData={refetchCartData}
           />
         </CustomPopup>
       )}
