@@ -99,7 +99,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                   price={product?.selling_price}
                   oldPrice={product?.price}
                   reviews={product?.reviews?.length ?? product?.review_count ?? 0}
-                  rating={product?.rating}
+                  average_rating={product?.average_rating}
                   productId={product?.id}
                 />
               </div>

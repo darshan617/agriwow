@@ -14,7 +14,6 @@ const BestSelling = ({ bestSellingData, viewAllLink = "/product-category/best-se
       agricultureProductsData={bestSellingData}
       variant="bestSelling"
       overlayVariant="bestSelling"
-      viewAllLink="/product-category/best-selling"
       overlayHeading={<>Product Range</>}
       overlayProducts={[
         {

@@ -16,6 +16,9 @@ import return1 from "@/assets/icon/return1.png";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import AllCoupons from "@/components/all-coupons/AllCoupons";
 import "swiper/css";
+import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
+import Cookies from "js-cookie";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
@@ -67,6 +70,33 @@ const ItemDetail = ({ productDetails }) => {
     { icon: return1, label: "10 Days Return" },
   ];
 
+  const userData = Cookies.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+    : null;
+  const [addToWishlist, { isLoading: isAddToWishlistLoading }] =
+    useAddToWishlistMutation();
+  const { showToast } = useToast();
+
+  const handleWishlist = async (productId) => {
+    if (!userData?.id) {
+      showToast("Please log in to add items to your wishlist", "warning");
+      return;
+    }
+
+    const res = await addToWishlist({
+      body: {
+        user_id: userData.id,
+        product_id: productId,
+      },
+    });
+
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res?.data?.message, "success");
+    } else {
+      showToast(res?.data?.message || "Failed to add to wishlist", "error");
+    }
+  };
+
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -88,9 +118,11 @@ const ItemDetail = ({ productDetails }) => {
                 <FaShareAlt />
               </button>
               <button
+                onClick={() => handleWishlist(productDetails?.data?.id)}
                 type="button"
                 className={`${styles.quickActionBtn}`}
                 aria-label="Wishlist"
+                disabled={isAddToWishlistLoading}
               >
                 <FaHeart />
               </button>
@@ -160,16 +192,16 @@ const ItemDetail = ({ productDetails }) => {
                 <span
                   className={`${styles.productReviewCountStar} d-inline-flex gap-1`}
                 >
-                  <FaStar className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar className={`${styles.productReviewCountStarIcon}`} />
+                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 1 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
+                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 2 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
+                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 3 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
+                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 4 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
+                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 5 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                 </span>
-                <span className={`${styles.productReviewCountValue}`}>4.5</span>
+                <span className={`${styles.productReviewCountValue}`}>{productDetails?.data?.rating_summary?.average_rating}</span>
                 <span className={`${styles.productReviewCountText}`}>
                   <span className={`${styles.productReviewCountValue}`}>
-                    (35 reviews)
+                    ({productDetails?.data?.rating_summary?.total_reviews} reviews)
                   </span>
                 </span>
                 <p className={`${styles.priceRow}`}>

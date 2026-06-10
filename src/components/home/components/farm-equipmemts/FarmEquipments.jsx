@@ -85,7 +85,7 @@ const FarmEquipments = ({
                     price={item?.selling_price}
                     oldPrice={item?.price}
                     reviews={item?.total_reviews}
-                    rating={item?.rating}
+                    average_rating={item?.average_rating}
                     slug={item?.slug}
                     productId={item?.id}
                   />
