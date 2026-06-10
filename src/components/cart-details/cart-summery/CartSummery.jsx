@@ -145,7 +145,7 @@ const CartSummery = ({
             <span>Shipping</span>
             <span>₹ {shippingAmount.toFixed(2)}</span>
           </div>
-          {shippingAmount > 0 && (
+          {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
 
