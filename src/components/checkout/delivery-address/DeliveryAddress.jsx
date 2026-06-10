@@ -109,21 +109,6 @@ const DeliveryAddress = ({
 
   return (
     <section className={styles.checkoutSection}>
-      <div className={styles.stepper}>
-        <div className={styles.stepperInner}>
-          <div className={styles.stepLabels}>
-            <span className={styles.stepLabelActive}>
-              Address &amp; Product Summary
-            </span>
-            <span className={styles.stepLabelInactive}>Payment</span>
-          </div>
-          <div className={styles.progressTrack}>
-            <div className={styles.progressFill} />
-            <span className={styles.progressDot} />
-          </div>
-        </div>
-      </div>
-
       <div className={styles.content}>
         <p className={styles.sectionLabel}>
           Delivery Address ({addressCount || 0})

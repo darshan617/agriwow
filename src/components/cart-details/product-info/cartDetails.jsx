@@ -321,7 +321,7 @@ const CartDetails = ({
               </div>
             ) : (
               <Link
-                href={isCartPage ? "/checkout" : "/payment"}
+                href={isCartPage ? "/checkout" : "/payments"}
                 className={styles.checkoutSection}
               >
                 <button type="button" className={styles.checkoutBtn}>

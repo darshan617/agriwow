@@ -14,6 +14,7 @@
 
   background: var(--checkout-bg);
   padding: 0 0 40px;
+  margin-top: 0;
 }
 
 .stepper {
@@ -82,9 +83,9 @@
 }
 
 .content {
-  max-width: 1700px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 32px 24px 0;
+  padding: 32px 20px 0;
 }
 
 .gstCard {
@@ -206,6 +207,7 @@
 }
 
 @media (max-width: 1550px) {
+
   .stepperInner,
   .content {
     max-width: 1400px;
