@@ -304,19 +304,10 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .CategorySection {
     display: none;
     position: static;
-    max-height: none;
-  }
-
-  .drawerOverlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 1100;
-    background: rgba(0, 0, 0, 0.45);
   }
 
   .CategorySection.sectionDrawerOpen {
@@ -354,6 +345,23 @@
       opacity: 1;
     }
   }
+}
+
+@media (max-width: 768px) {
+  .CategorySection {
+    display: none;
+    position: static;
+  }
+
+  .drawerOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+
 
   .drawerHeader {
     display: flex;

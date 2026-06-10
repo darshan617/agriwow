@@ -187,7 +187,7 @@ const BlogDetailsComponent = () => {
     { slug: router?.query?.slug },
     { skip: !router?.query?.slug },
   );
-  const stripHtml = (html) => html?.replace(/<[^>]*>/g, '') ?? '';
+  const stripHtml = (html) => html?.replace(/<[^>]*>/g, "") ?? "";
   const relatedBlogs = relatedBlogsData?.data;
   return (
     <div className={styles.page}>
@@ -286,8 +286,8 @@ const BlogDetailsComponent = () => {
           />
         </div>
 
-        {/* <div className={styles.content}>
-            <p>
+        <div className={styles.content}>
+          {/* <p>
               Efficiency in the field isn’t just about how hard you work—it’s
               about how smart you spray. For farmers and gardeners using a
               manual spray pump—whether a knapsack or compression sprayer—the
@@ -432,23 +432,22 @@ const BlogDetailsComponent = () => {
               Treat your sprayer with the same precision as large-scale
               equipment—and you’ll see the difference in both yield and cost
               efficiency.
-            </p>
-
-            <div className={styles.tags}>
-              <p className={styles.tagsTitle}>Tags:</p>
-              {TAGS.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div> */}
+            </p> */}
+        </div>
         <div
           className={styles.blogContent}
           dangerouslySetInnerHTML={{
             __html: blogDetailsData?.data?.description,
           }}
         ></div>
+        <div className={styles.tags}>
+          <p className={styles.tagsTitle}>Tags:</p>
+          {TAGS.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              {tag}
+            </span>
+          ))}
+        </div>
       </article>
 
       <section className={styles.relatedSection}>

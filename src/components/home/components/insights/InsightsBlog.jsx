@@ -23,7 +23,10 @@ const formatBlogDate = (dateStr) => {
 }
 
 const PostCard = ({ post }) => (
-  <article className={`${styles.card}`}>
+  <Link
+    href={`/blog/${post?.slug}`}
+  >
+    <article className={`${styles.card}`}>
     <div className={`${styles.media}`}>
       <Image
         src={post?.image || blogImage}
@@ -48,6 +51,7 @@ const PostCard = ({ post }) => (
       <p className={`${styles.excerpt}`}>{stripHtml(post?.short_description)}</p>
     </div>
   </article>
+  </Link>
 )
 
 const InsightsBlog = ({ insightsBlogData }) => {

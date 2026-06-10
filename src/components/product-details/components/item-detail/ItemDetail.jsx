@@ -14,6 +14,7 @@ import secure from "@/assets/icon/payment.png";
 import return1 from "@/assets/icon/return1.png";
 
 import CustomPopup from "@/components/custom-popup/CustomPopup";
+import AllCoupons from "@/components/all-coupons/AllCoupons";
 import "swiper/css";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
@@ -23,6 +24,7 @@ const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showProductPopup, setShowProductPopup] = useState(false);
+  const [showCouponsDrawer, setShowCouponsDrawer] = useState(false);
   const [activePopupTab, setActivePopupTab] = useState("specifications");
 
   const specifications = productDetails?.data?.specification ?? [];
@@ -225,11 +227,22 @@ const ItemDetail = ({ productDetails }) => {
             </div>
           </div>
 
-          <div className={`${styles.coupon}`}>
+          <div
+            className={`${styles.coupon}`}
+            role="button"
+            tabIndex={0}
+            onClick={() => setShowCouponsDrawer(true)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setShowCouponsDrawer(true);
+              }
+            }}
+          >
             <Image src={coupon} alt="coupon" width={30} height={30} />
             <span className={`${styles.couponText}`}>All coupons & offers</span>
             <span
-              className={`${styles.couponArrow} d-inline-flex justify-content-end`}
+              className={`${styles.couponArrow} d-inline-flex `}
             >
               <FiChevronRight />
             </span>
@@ -315,6 +328,13 @@ const ItemDetail = ({ productDetails }) => {
           </div>
         </div>
       </div>
+
+      <AllCoupons
+        open={showCouponsDrawer}
+        onClose={() => setShowCouponsDrawer(false)}
+        productId={productData?.id}
+        productName={productData?.name}
+      />
 
       {showProductPopup && (
         <CustomPopup onclose={closeProductPopup} wide>
