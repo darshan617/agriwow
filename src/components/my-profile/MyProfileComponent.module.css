@@ -1,0 +1,148 @@
+.profilePage {
+    background-color: #f9fafb;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .profileWrapper {
+    width: 100%;
+  }
+  
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .profileTitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+  }
+  
+  .btnEdit {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #239c3d;
+    background-color: #e8f5ee;
+    border: 1px solid #b8e0c6;
+    padding: 7px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  
+  .btnEdit:hover {
+    background-color: #b8e0c6;
+  }
+  
+  .editIcon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+  
+  /* ── Profile card ── */
+  .profileCard {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  /* ── Field row ── */
+  .profileField {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .profileField--bordered {
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  /* ── Label ── */
+  .fieldLabel {
+    display: block;
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+  
+  .fieldRequired {
+    color: #f87171;
+    margin-left: 2px;
+  }
+  
+  /* ── Input ── */
+  .fieldInput {
+    width: 100%;
+    font-size: 14px;
+    color: #1f2937;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: default;
+    transition: border-color 0.15s ease, padding-bottom 0.15s ease;
+    box-sizing: border-box;
+  }
+  
+  .fieldInput:disabled {
+    opacity: 1;
+    -webkit-text-fill-color: #1f2937;
+  }
+  
+  .fieldInput--active {
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 4px;
+    cursor: text;
+  }
+  
+  .fieldInput--active:focus {
+    border-bottom-color: #f87171;
+  }
+  
+  /* ── Action buttons ── */
+  .profileActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  
+  .btnCancel {
+    font-size: 13px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background-color: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  
+  .btnCancel:hover {
+    background-color: #f9fafb;
+  }
+  
+  .btnSave {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #b8e0c6;
+    background-color: #e8f5ee;
+    color: #239c3d;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  
+  .btnSave:hover {
+    background-color: #b8e0c6;
+  }

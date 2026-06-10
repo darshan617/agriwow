@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+import {
+  getUserData,
+  USER_DATA_UPDATED_EVENT,
+} from "@/helpers/userData";
 import { FaHeart, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMapPin, HiOutlineBriefcase } from "react-icons/hi2";
 import { PiPackageThin } from "react-icons/pi";
@@ -13,13 +16,13 @@ import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css
 
 const MENU_ITEMS = [
   {
-    href: "#",
+    href: "/my-profile",
     label: "My Address",
     icon: HiOutlineMapPin,
     matchPath: "/my-address",
   },
   {
-    href: "#",
+    href: "/my-orders",
     label: "My Orders",
     icon: PiPackageThin,
     matchPath: "/my-orders",
@@ -42,16 +45,23 @@ const CustomerInfo = () => {
   );
 
   useEffect(() => {
-    const raw = Cookies.get("userData");
-    if (!raw) return;
-
-    try {
-      const userData = JSON.parse(decodeURIComponent(raw));
+    const syncDisplayName = (userData) => {
       const name = userData?.name || GUEST_DISPLAY_NAME;
       setDisplayName(name);
       setUserInitial(name.charAt(0).toUpperCase() || "");
-    } catch {
-    }
+    };
+
+    const userData = getUserData();
+    if (userData) syncDisplayName(userData);
+
+    const handleUserDataUpdate = (event) => {
+      syncDisplayName(event.detail);
+    };
+
+    window.addEventListener(USER_DATA_UPDATED_EVENT, handleUserDataUpdate);
+    return () => {
+      window.removeEventListener(USER_DATA_UPDATED_EVENT, handleUserDataUpdate);
+    };
   }, []);
 
 
@@ -78,6 +88,7 @@ const CustomerInfo = () => {
           <div className={styles.profileAvatar} aria-hidden>    
             {userInitial ? <span>{userInitial}</span> : <FaUserCircle />}
           </div>
+          
           <div className={styles.profileMeta}>
             <p className={styles.profileLabel}>Name</p>
             <p className={styles.profileName}>{displayName}</p>
