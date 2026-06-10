@@ -1,0 +1,89 @@
+.stepper {
+  --checkout-primary: #239c3d;
+  --checkout-text-inactive: #bdbdbd;
+  --checkout-border: #e8e8e8;
+  --checkout-surface: #ffffff;
+
+  background: var(--checkout-surface);
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--checkout-border);
+  margin-bottom: 0;
+}
+
+.stepperInner {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.stepLabels {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.stepLabelActive {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--checkout-primary);
+  text-transform: uppercase;
+}
+
+.stepLabelCompleted {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--checkout-primary);
+  text-transform: uppercase;
+}
+
+.stepLabelInactive {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--checkout-text-inactive);
+  text-transform: uppercase;
+}
+
+.progressTrack {
+  position: relative;
+  height: 3px;
+  background: #e0e0e0;
+  border-radius: 999px;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--checkout-primary);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progressDot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--checkout-primary);
+  border: 2px solid var(--checkout-surface);
+  box-shadow: 0 0 0 1px var(--checkout-primary);
+  transition: left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .stepper {
+    padding: 20px 0 18px;
+  }
+
+  .stepLabelActive,
+  .stepLabelCompleted,
+  .stepLabelInactive {
+    font-size: 11px;
+  }
+}

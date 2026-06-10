@@ -2,6 +2,7 @@
 
 import Layout from "@/components/layout/Layout";
 import React, { useEffect, useMemo, useState } from "react";
+import CheckoutStepper from "@/components/checkout/checkout-stepper/CheckoutStepper";
 import DeliveryAddress from "@/components/checkout/delivery-address/DeliveryAddress";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
@@ -87,6 +88,7 @@ const Checkout = () => {
   return (
     <Layout>
       <div className="container">
+        <CheckoutStepper activeStep={1} />
         <div className="row">
           <div className="col-lg-8">
             <DeliveryAddress
