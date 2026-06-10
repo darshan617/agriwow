@@ -29,6 +29,7 @@ const AddressForm = ({
   title,
   isEditing = false,
   addressId = null,
+  refetchCartData,
 }) => {
   const { showToast } = useToast();
   const [form, setForm] = useState(EMPTY_FORM);
@@ -45,6 +46,7 @@ const AddressForm = ({
       const res = await addDeliveryAddress({ body: form });
       if (res?.data?.success || res?.data?.status) {
         showToast(res.data.message, "success");
+        refetchCartData();
       }
       console.log(res, "res");
     } catch (error) {

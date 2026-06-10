@@ -2,6 +2,7 @@
 
 import Layout from "@/components/layout/Layout";
 import React, { useEffect, useMemo, useState } from "react";
+import CheckoutStepper from "@/components/checkout/checkout-stepper/CheckoutStepper";
 import DeliveryAddress from "@/components/checkout/delivery-address/DeliveryAddress";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
@@ -20,15 +21,17 @@ const Checkout = () => {
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState("");
+  const [showAddressForm, setShowAddressForm] = useState(false);
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
-  const handleUpdateCart = async (id, quantity) => {
+  const handleUpdateCart = async (id, quantity, address_id = null) => {
     try {
       const res = await updateCart({
         body: {
           cart_id: id,
           quantity: quantity,
           coupon_code: couponCode,
+          address_id: address_id,
         },
       });
       if (res?.data?.success || res?.data?.status) {
@@ -45,7 +48,11 @@ const Checkout = () => {
     setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
   }, []);
 
-  const { data: cartData, isLoading } = useGetCartDataQuery(undefined, {
+  const {
+    data: cartData,
+    isLoading,
+    refetch: refetchCartData,
+  } = useGetCartDataQuery(undefined, {
     skip: !canFetchCart,
   });
 
@@ -81,11 +88,20 @@ const Checkout = () => {
   return (
     <Layout>
       <div className="container">
+        <CheckoutStepper activeStep={1} />
         <div className="row">
           <div className="col-lg-8">
-            <DeliveryAddress />
+            <DeliveryAddress
+              handleUpdateCart={handleUpdateCart}
+              cartData={cartData}
+              setShowAddressForm={setShowAddressForm}
+              showAddressForm={showAddressForm}
+              refetchCartData={refetchCartData}
+            />
             <div className="mt-4">
               <CartDetails
+                cartData={cartData}
+                setShowAddressForm={setShowAddressForm}
                 // hideBreadcrumb
                 // hideCheckoutButton
                 cartItems={cartItems}

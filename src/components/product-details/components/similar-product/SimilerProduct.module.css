@@ -1,11 +1,151 @@
-.viewAllBtn button{
-    background: none;
-    border: 0;  
-    font-size: 20px;
-    cursor: pointer;
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
-.title{
-    font-size: 30px;
-    font-weight: 700;
 
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.viewAllLink:hover {
+  color: #111;
+}
+
+/* ── Slider root: nav buttons + viewport in a row ── */
+.sliderRoot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Viewport: clips the sliding track ── */
+.viewport {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Track: all cards laid out in a single row ── */
+.track {
+  display: flex;
+  gap: 16px;
+  will-change: transform;
+}
+
+/* ── Each slide: width driven by --visible-count CSS variable ── */
+.slide {
+  flex: 0 0 calc(
+    (100% - (var(--visible-count, 4) - 1) * 16px) / var(--visible-count, 4)
+  );
+  min-width: 0;
+}
+
+/* ── Nav buttons ── */
+.navBtn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.navBtn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Dots ── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.dot:hover {
+  background: #999;
+}
+
+.activeDot {
+  background: #333;
+  transform: scale(1.25);
+}
+
+/* ── Responsive: only title size changes; card count via JS → --visible-count ── */
+@media (max-width: 768px) {
+  .title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 575px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .navBtn {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 425px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .navBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .title {
+    font-size: 18px;
+  }
 }

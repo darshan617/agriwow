@@ -24,7 +24,7 @@ const ProductCard = ({
   reviews = "0 Reviews",
   image = null,
   imageHover = null,
-  rating = "4.5",
+  average_rating = null,
   type = "homePage",
   isTrending = false,
   isFeatured = false,
@@ -230,7 +230,7 @@ const ProductCard = ({
         <div className={`${styles.ratingLine}`}>
           <span className={`${styles.ratingBadge}`}>
             <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
-            {rating}
+            {average_rating || 0}
           </span>
           <span className={`${styles.reviewText}`}>({reviews})</span>
         </div>

@@ -19,6 +19,7 @@ const Cart = () => {
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState("");
+
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
 
@@ -55,13 +56,14 @@ const Cart = () => {
     }
   };
 
-  const handleUpdateCart = async (id, quantity) => {
+  const handleUpdateCart = async (id, quantity, address_id = null) => {
     try {
       const res = await updateCart({
         body: {
           cart_id: id,
           quantity: quantity,
           coupon_code: couponCode,
+          address_id: address_id,
         },
       });
       if (res?.data?.success || res?.data?.status) {
@@ -86,6 +88,7 @@ const Cart = () => {
             className={`${cartItems.length > 0 ? "col-xl-8" : "col-xl-12"}  col-12`}
           >
             <CartDetails
+              cartData={cartData}
               cartItems={cartItems}
               isLoading={isLoading}
               getQuantity={getQuantity}

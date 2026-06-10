@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/components/cart-details/product-info/cartDetails.module.css";
 import Link from "next/link";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -31,6 +31,8 @@ const CartDetails = ({
   hideBreadcrumb = false,
   hideCheckoutButton = false,
   handleUpdateCart = () => {},
+  cartData = {},
+  setShowAddressForm = () => {},
 }) => {
   const router = useRouter();
   const [removeFromCart] = useRemoveFromCartMutation();
@@ -41,10 +43,28 @@ const CartDetails = ({
   const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
 
-  const userData = Cookies?.get("userData")
-    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
-    : {};
-  const isLoggedIn = Object.keys(userData).length > 0;
+  const getIsLoggedIn = () => {
+    const cookie = Cookies?.get("userData");
+    if (!cookie) return false;
+    try {
+      const data = JSON.parse(decodeURIComponent(cookie));
+      return Object.keys(data).length > 0;
+    } catch {
+      return false;
+    }
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
+
+  const isCartPage = router?.asPath === "/cart";
+  const isCheckoutPage = router?.asPath === "/checkout";
+  const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
+
+  const cartTotal = cartItems?.reduce(
+    (acc, item) =>
+      acc + (item?.product?.selling_price ?? 0) * (item?.quantity ?? 0),
+    0,
+  );
 
   const handleLogin = async () => {
     try {
@@ -86,20 +106,18 @@ const CartDetails = ({
           }
 
           showToast(res?.data?.message, "success");
+          setIsLoggedIn(true);
           setShowPopup("");
           setPhone("");
+          if (isCartPage) {
+            router.push("/checkout");
+          }
         } else {
           console.error("OTP verification failed", res?.error);
         }
       }
     } catch (error) {
       console.log(error, "error");
-    }
-  };
-
-  const handleCheckout = () => {
-    if (!isLoggedIn) {
-      setShowPopup("login");
     }
   };
 
@@ -268,53 +286,64 @@ const CartDetails = ({
           );
         })}
 
-        {/* <div className={styles.coupon2}>
-          <div className={styles.couponLeft}>
-            <LuTag size={18} />
-
-            <span className={styles.couponText2}>
-              <strong>AGRIWOW10</strong> coupon applied. You saved ₹ 327.87 on
-              this order.
-            </span>
-          </div>
-
-          <button className={styles.removeCoupon}>Remove Coupon</button>
-        </div> */}
-
         {cartItems?.length > 0 && !hideCheckoutButton && (
-          <Link
-            href={router?.asPath === "/cart" ? "/checkout" : "/payment"}
-            className={styles.checkoutSection}
-          >
-            <button className={styles.checkoutBtn} onClick={handleCheckout}>
-              <div>
-                <div>
-                  <span>
-                    {router?.asPath === "/cart"
-                      ? "PROCEED TO CHECKOUT"
-                      : "PROCEED TO PAYMENT"}
+          <>
+            {isLoggedIn && isCheckoutPage && !hasSelectedAddress ? (
+              <div className="w-100 d-flex justify-content-end mt-3">
+                <button
+                  type="button"
+                  className={styles.checkoutBtn + " p-3"}
+                  onClick={() => setShowAddressForm(true)}
+                >
+                  <span>Add Delivery Address To Proceed</span>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={20} />
                   </span>
-                  <p>
-                    ₹{" "}
-                    {cartItems?.reduce(
-                      (acc, item) =>
-                        acc +
-                        (item?.product?.selling_price ?? 0) *
-                          (item?.quantity ?? 0),
-                      0,
-                    )}
-                  </p>
-                </div>
+                </button>
               </div>
-
-              <span className={styles.arrow}>
-                <MdOutlineKeyboardArrowRight size={30} />
-              </span>
-            </button>
-          </Link>
+            ) : !isLoggedIn ? (
+              <div className={styles.checkoutSection}>
+                <button
+                  type="button"
+                  className={styles.checkoutBtn}
+                  onClick={() => setShowPopup("login")}
+                >
+                  <div>
+                    <div>
+                      <span>PROCEED TO CHECKOUT</span>
+                      <p>₹ {cartTotal}</p>
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                href={isCartPage ? "/checkout" : "/payments"}
+                className={styles.checkoutSection}
+              >
+                <button type="button" className={styles.checkoutBtn}>
+                  <div>
+                    <div>
+                      <span>
+                        {isCartPage
+                          ? "PROCEED TO CHECKOUT"
+                          : "PROCEED TO PAYMENT"}
+                      </span>
+                      <p>₹ {cartTotal}</p>
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
+                </button>
+              </Link>
+            )}
+          </>
         )}
       </div>
-
       {showPopup === "login" && (
         <CustomPopup onclose={() => setShowPopup("")}>
           <Login

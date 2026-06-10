@@ -169,7 +169,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [mergeCart] = useMergeCartMutation();
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
@@ -214,7 +214,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           phone: phone,
         },
       });
-      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
       }
@@ -268,11 +267,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       Cookies.remove("userToken");
       Cookies.remove("cartSessionId");
       showToast("Logged out successfully", "success");
-      router?.reload(); 
+      router?.reload();
     } catch (error) {
       console.error("Logout failed", error);
       showToast(error?.data?.message || "Failed to logout", "error");
-    } 
+    }
   };
 
   useEffect(() => {
@@ -556,7 +555,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                           const categorySlug = product?.category?.slug;
                           const href =
                             categorySlug && product?.slug
-                              ? `/product-category/${categorySlug}/${product.slug}`
+                              ? `/product-details/${product.slug}`
                               : "#";
                           return (
                             <li key={product?.id ?? product?.slug}>
@@ -785,9 +784,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 <FaHeart size={21} />
               </Link>
               {wishlistData?.data?.length >= 0 && (
-                <span className={styles.badge}>{wishlistData?.data?.length}</span>
+                <span className={styles.badge}>
+                  {wishlistData?.data?.length}
+                </span>
               )}
-
             </button>
             <button
               type="button"

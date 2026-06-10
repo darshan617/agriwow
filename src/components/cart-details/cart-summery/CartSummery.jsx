@@ -21,6 +21,7 @@ const CartSummery = ({
   setCouponCode,
   handleUpdateCart,
   cartData,
+  hideCoupon = false,
 }) => {
   const { showToast } = useToast();
   console.log(cartData, "cartData");
@@ -33,17 +34,23 @@ const CartSummery = ({
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
 
-  const subtotal = cartItems.reduce(
+  const cartSummary = cartData?.cart_summary ?? {};
+
+  const calculatedSubtotal = cartItems.reduce(
     (acc, item) =>
       acc + (item?.product?.selling_price ?? 0) * (item?.quantity ?? 0),
     0,
   );
 
+  const subtotal = cartSummary.subtotal ?? calculatedSubtotal;
   const discountAmount =
-    appliedCoupon?.discount_amount ?? cartData?.coupon?.discount_amount ?? 0;
-  const discountedSubtotal = subtotal - discountAmount;
-  const gstAmount = subtotal * 0.18;
-  const shippingAmount = cartData?.cart_summary?.shipping_charge ?? 0;
+    cartSummary.discount_amount ??
+    appliedCoupon?.discount_amount ??
+    cartData?.coupon?.discount_amount ??
+    0;
+  const gstAmount =
+    cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
+  const shippingAmount = cartSummary.shipping_charge ?? 0;
   const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
@@ -120,32 +127,34 @@ const CartSummery = ({
             <span>₹ {gstAmount.toFixed(2)}</span>
           </div>
 
-          <div className={`${styles.summaryRow}`}>
-            <span>Discount</span>
-            <span
-              className={`${styles.discount}`}
-              style={{
-                color:
-                  (discountAmount || cartData?.coupon?.discount_amount) > 0
-                    ? "#2c9a43"
-                    : "black",
-              }}
-            >
-              {appliedCoupon
-                ? appliedCoupon.coupon?.type === "percentage"
-                  ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount.toFixed(2)})`
-                  : `₹ -${discountAmount.toFixed(2)}`
-                : cartData?.coupon?.type === "percentage"
-                  ? `${cartData?.coupon?.value ?? 0}% (₹${cartData?.coupon?.discount_amount.toFixed(2) ?? 0})`
-                  : `₹ -${cartData?.coupon?.discount_amount.toFixed(2) ?? 0}`}
-            </span>
-          </div>
+          {(discountAmount || cartData?.coupon?.discount_amount) > 0 && (
+            <div className={`${styles.summaryRow}`}>
+              <span>Discount</span>
+              <span
+                className={`${styles.discount}`}
+                style={{
+                  color:
+                    (discountAmount || cartData?.coupon?.discount_amount) > 0
+                      ? "#2c9a43"
+                      : "black",
+                }}
+              >
+                {appliedCoupon
+                  ? appliedCoupon.coupon?.type === "percentage"
+                    ? `${appliedCoupon.coupon?.value ?? 0}% (₹${discountAmount.toFixed(2)})`
+                    : `₹ -${discountAmount.toFixed(2)}`
+                  : cartData?.coupon?.type === "percentage"
+                    ? `${cartData?.coupon?.value ?? 0}% (₹${cartData?.coupon?.discount_amount.toFixed(2) ?? 0})`
+                    : `₹ -${cartData?.coupon?.discount_amount.toFixed(2) ?? 0}`}
+              </span>
+            </div>
+          )}
 
           <div className={`${styles.summaryRow}`}>
             <span>Shipping</span>
             <span>₹ {shippingAmount.toFixed(2)}</span>
           </div>
-          {shippingAmount > 0 && (
+          {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
 
@@ -168,59 +177,61 @@ const CartSummery = ({
           </div>
         </div>
       </div>
-      <div className={`${styles.couponCard}`}>
-        <h3 className={`${styles.couponTitle} `}>Apply Coupon</h3>
+      {!hideCoupon && (
+        <div className={`${styles.couponCard}`}>
+          <h3 className={`${styles.couponTitle} `}>Apply Coupon</h3>
 
-        <div className={`${styles.couponForm}`}>
-          <input
-            type="text"
-            placeholder="Enter Coupon Code"
-            className={`${styles.couponInput}`}
-            value={couponCode || cartData?.coupon?.code}
-            onChange={(e) => setCouponCode(e?.target?.value)}
-          />
+          <div className={`${styles.couponForm}`}>
+            <input
+              type="text"
+              placeholder="Enter Coupon Code"
+              className={`${styles.couponInput}`}
+              value={couponCode || cartData?.coupon?.code}
+              onChange={(e) => setCouponCode(e?.target?.value)}
+            />
 
-          <button
-            className={`${styles.applyBtn}`}
-            onClick={handleApplyCoupon}
-            disabled={isLoading}
-          >
-            {isLoading ? "Applying..." : "Apply"}
-          </button>
-          {/* <button
+            <button
+              className={`${styles.applyBtn}`}
+              onClick={handleApplyCoupon}
+              disabled={isLoading}
+            >
+              {isLoading ? "Applying..." : "Apply"}
+            </button>
+            {/* <button
             className={`${styles.removeCouponBtn}`}
             onClick={handleRemoveCoupon}
           >
             Remove Coupon
           </button> */}
-        </div>
-
-        {availableCoupons?.data?.length > 0 ? (
-          availableCoupons?.data?.map((coupon) => (
-            <div key={coupon?.id} className={`${styles.couponItem}`}>
-              <p>{coupon?.code}</p>
-              <button
-                onClick={() => setCouponCode(coupon?.code)}
-                className={`${styles.applyBtn}`}
-              >
-                Copy Code <FaCopy />
-              </button>
-            </div>
-          ))
-        ) : (
-          <div className={`${styles.emptyCouponBox}`}>
-            <Image
-              src={NoCoupon}
-              alt="product-img"
-              className={`${styles.productImg}`}
-            />
           </div>
-        )}
 
-        {/* <button type="button" className={`${styles.viewAllBtn} `}>
+          {availableCoupons?.data?.length > 0 ? (
+            availableCoupons?.data?.map((coupon) => (
+              <div key={coupon?.id} className={`${styles.couponItem}`}>
+                <p>{coupon?.code}</p>
+                <button
+                  onClick={() => setCouponCode(coupon?.code)}
+                  className={`${styles.applyBtn}`}
+                >
+                  Copy Code <FaCopy />
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className={`${styles.emptyCouponBox}`}>
+              <Image
+                src={NoCoupon}
+                alt="product-img"
+                className={`${styles.productImg}`}
+              />
+            </div>
+          )}
+
+          {/* <button type="button" className={`${styles.viewAllBtn} `}>
           View All Coupons & Offers
         </button> */}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
