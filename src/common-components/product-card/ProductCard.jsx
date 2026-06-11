@@ -15,7 +15,10 @@ import {
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { useBuyProductMutation } from "@/redux/apis/buyProductApi";
+import {
+  markBuyNowAddPending,
+  useBuyProductMutation,
+} from "@/redux/apis/buyProductApi";
 
 const ProductCard = ({
   discount = "0",
@@ -76,6 +79,11 @@ const ProductCard = ({
   };
 
   const handleBuyProduct = async () => {
+    markBuyNowAddPending({
+      productId,
+      quantity: 1,
+      userId: userData?.id,
+    });
     router?.push({
       pathname: `/checkout`,
       query: {

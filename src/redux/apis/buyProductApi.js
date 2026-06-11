@@ -1,6 +1,37 @@
 import Cookies from "js-cookie";
 import { apiSlice } from "../apiSlice";
 
+const BUY_NOW_ADD_PENDING_KEY = "buyNowAddPending";
+
+export const markBuyNowAddPending = ({ productId, quantity, userId }) => {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(
+    BUY_NOW_ADD_PENDING_KEY,
+    JSON.stringify({ productId, quantity, userId }),
+  );
+};
+
+export const isBuyNowAddPending = (query = {}) => {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = sessionStorage.getItem(BUY_NOW_ADD_PENDING_KEY);
+    if (!raw) return false;
+    const pending = JSON.parse(raw);
+    return (
+      String(pending.productId) === String(query.productId) &&
+      String(pending.quantity) === String(query.quantity) &&
+      String(pending.userId) === String(query.userId)
+    );
+  } catch {
+    return false;
+  }
+};
+
+export const clearBuyNowAddPending = () => {
+  if (typeof window === "undefined") return;
+  sessionStorage.removeItem(BUY_NOW_ADD_PENDING_KEY);
+};
+
 const headers = () => {
   const userToken = Cookies.get("userToken");
   return {
@@ -15,8 +46,6 @@ const buyProductApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     buyProduct: builder.mutation({
       query: ({ body }) => {
-        const userToken = Cookies.get("userToken");
-
         return {
           url: "/buy-now/add",
           method: "POST",
@@ -43,6 +72,24 @@ const buyProductApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["getBuyNowData"],
     }),
+    placeOrder: builder.mutation({
+      query: ({ body }) => ({
+        url: "/checkout/place-order",
+        method: "POST",
+        headers: headers(),
+        body,
+      }),
+      invalidatesTags: ["getBuyNowData"],
+    }),
+    verifyPayment: builder.mutation({
+      query: ({ body }) => ({
+        url: "/verify-payment",
+        method: "POST",
+        headers: headers(),
+        body,
+      }),
+      invalidatesTags: ["getBuyNowData"],
+    }),
   }),
 });
 
@@ -50,4 +97,6 @@ export const {
   useBuyProductMutation,
   useUpdateBuyNowMutation,
   useGetBuyNowDataQuery,
+  usePlaceOrderMutation,
+  useVerifyPaymentMutation,
 } = buyProductApi;

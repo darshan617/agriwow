@@ -19,7 +19,11 @@ import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
-import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
+import {
+  usePlaceOrderMutation,
+  useUpdateBuyNowMutation,
+  useVerifyPaymentMutation,
+} from "@/redux/apis/buyProductApi";
 
 const CartDetails = ({
   cartItems = [],
@@ -47,7 +51,10 @@ const CartDetails = ({
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
     useUpdateBuyNowMutation();
-
+  const [placeOrder, { isLoading: isPlaceOrderLoading }] =
+    usePlaceOrderMutation();
+  const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
+    useVerifyPaymentMutation();
   console.log(cartItems, "cartItems");
 
   const getIsLoggedIn = () => {
@@ -152,6 +159,71 @@ const CartDetails = ({
       });
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
+  //place order
+  const handlePlaceOrder = async (source, type, address_id = null) => {
+    try {
+      const res = await placeOrder({
+        body: {
+          source: source,
+          payment_type: type,
+          address_id: address_id,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        const razorpay = res?.data?.razorpay;
+
+        const options = {
+          key: razorpay.key,
+          amount: razorpay.amount,
+          currency: razorpay.currency,
+          name: razorpay.name,
+          description: razorpay.description,
+          order_id: razorpay.order_id,
+          prefill: razorpay.prefill,
+          handler: async function (response) {
+            console.log("Payment Success", response);
+            const verifyPaymentRes = await verifyPayment({
+              body: {
+                razorpay_payment_id: response.razorpay_payment_id,
+                order_id: res?.data?.order_id,
+                razorpay_order_id: razorpay.order_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            });
+            if (
+              verifyPaymentRes?.data?.success ||
+              verifyPaymentRes?.data?.status
+            ) {
+              console.log(res, "res✅");
+              showToast(verifyPaymentRes?.data?.message, "success");
+            } else {
+              showToast(verifyPaymentRes?.data?.message, "error");
+            }
+          },
+
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+
+        rzp.on("payment.failed", function (response) {
+          console.log("Payment Failed", response.error);
+          showToast(response.error.description, "error");
+        });
+
+        rzp.open();
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -359,19 +431,12 @@ const CartDetails = ({
                   </span>
                 </button>
               </div>
-            ) : (
-              <Link
-                href={isCartPage ? "/checkout" : "/payments"}
-                className={styles.checkoutSection}
-              >
+            ) : isCartPage ? (
+              <Link href="/checkout" className={styles.checkoutSection}>
                 <button type="button" className={styles.checkoutBtn}>
                   <div>
                     <div>
-                      <span>
-                        {isCartPage
-                          ? "PROCEED TO CHECKOUT"
-                          : "PROCEED TO PAYMENT"}
-                      </span>
+                      <span>PROCEED TO CHECKOUT</span>
                       <p>₹ {cartTotal}</p>
                     </div>
                   </div>
@@ -380,6 +445,31 @@ const CartDetails = ({
                   </span>
                 </button>
               </Link>
+            ) : (
+              <>
+                <button
+                  onClick={() =>
+                    handlePlaceOrder(
+                      router?.query?.productId ? "buy_now" : "cart",
+                      "partial",
+                      cartData?.selected_address?.id,
+                    )
+                  }
+                >
+                  Partial Checkout
+                </button>
+                <button
+                  onClick={() =>
+                    handlePlaceOrder(
+                      router?.query?.productId ? "buy_now" : "cart",
+                      "full",
+                      cartData?.selected_address?.id,
+                    )
+                  }
+                >
+                  Full Checkout
+                </button>
+              </>
             )}
           </>
         )}
