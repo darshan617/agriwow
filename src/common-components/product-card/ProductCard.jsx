@@ -56,7 +56,6 @@ const ProductCard = ({
     useBuyProductMutation();
   const { showToast } = useToast();
 
-
   const handleAddToCart = async () => {
     try {
       const res = await addToCart({
@@ -77,32 +76,14 @@ const ProductCard = ({
   };
 
   const handleBuyProduct = async () => {
-    if (!userData?.id) {
-      showToast("Please log in to buy products", "warning");
-      return;
-    }
-
-    const res = await buyProduct({
-      body: {
-        user_id: userData.id,
-        product_id: productId,
+    router?.push({
+      pathname: `/checkout`,
+      query: {
+        productId: productId,
         quantity: 1,
+        userId: userData?.id,
       },
     });
-
-    if (res.error) {
-      showToast(
-        res.error?.data?.message || "Failed to process buy now",
-        "error"
-      );
-      return;
-    }
-
-    if (res?.data?.success || res?.data?.status) {
-      showToast(res?.data?.message || "Redirecting to checkout", "success");
-    } else {
-      showToast(res?.data?.message || "Failed to process buy now", "error");
-    }
   };
 
   const handleAddToWishlist = async () => {
@@ -121,7 +102,7 @@ const ProductCard = ({
     if (res.error) {
       showToast(
         res.error?.data?.message || "Failed to add to wishlist",
-        "error"
+        "error",
       );
       return;
     }
@@ -150,7 +131,7 @@ const ProductCard = ({
     } else {
       showToast(
         res?.data?.message || "Failed to remove from wishlist",
-        "error"
+        "error",
       );
     }
   };
@@ -181,9 +162,7 @@ const ProductCard = ({
           ) : (
             <>
               {discount > 0 && (
-                <span className={`${styles.discountTag}`}>
-                  {discount}% OFF
-                </span>
+                <span className={`${styles.discountTag}`}>{discount}% OFF</span>
               )}
               {isBestSeller && (
                 <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
@@ -241,10 +220,7 @@ const ProductCard = ({
         )}
       </Link>
 
-      <Link
-        href={`/product-details/${slug}`}
-        className={`${styles.cardInfo}`}
-      >
+      <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
         {average_rating > 0 && (
           <div className={`${styles.ratingLine}`}>
             <span className={`${styles.ratingBadge}`}>

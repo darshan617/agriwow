@@ -124,6 +124,15 @@ const addToCartApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["getCartData"],
     }),
+    deleteDeliveryAddress: builder.mutation({
+      query: ({ body }) => ({
+        url: "/delete-address",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["getCartData"],
+    }),
   }),
 });
 
@@ -138,4 +147,5 @@ export const {
   useAddDeliveryAddressMutation,
   useGetAllDeliveryAddressesQuery,
   useUpdateDeliveryAddressMutation,
+  useDeleteDeliveryAddressMutation,
 } = addToCartApi;
