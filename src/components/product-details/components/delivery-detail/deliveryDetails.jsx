@@ -10,6 +10,8 @@ import returns from "@/assets/icon/return.png";
 import Image from "next/image";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const deliveryIcons = {
   pincode: <Image src={noEntry} alt="no entry" width={20} height={20} />,
@@ -53,6 +55,10 @@ const infoItems = (pincode) => [
 ];
 
 export default function DeliveryDetails({ productDetails }) {
+  const router = useRouter();
+  const userData = Cookies.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+    : null;
   const [pincode, setPincode] = useState("226016");
   const [inputVal, setInputVal] = useState("226016");
   const [qty, setQty] = useState(1);
@@ -145,7 +151,21 @@ export default function DeliveryDetails({ productDetails }) {
           Add to Cart
         </button>
 
-        <button className={styles.ddBtnBuy}>Buy Now</button>
+        <button
+          className={styles.ddBtnBuy}
+          onClick={() => {
+            router?.push({
+              pathname: `/checkout`,
+              query: {
+                productId: productDetails?.data?.id,
+                quantity: qty,
+                userId: userData?.id,
+              },
+            });
+          }}
+        >
+          Buy Now
+        </button>
 
         <button
           className={styles.ddBtnWhatsapp}

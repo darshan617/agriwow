@@ -352,6 +352,14 @@
   background: #d4edda;
 }
 
+.deleteAddressBtn {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 4px;
+  background: #fef0f0;
+  color: #f44336;
+}
+
 @media (max-width: 768px) {
   .stepper {
     padding: 20px 0 18px;

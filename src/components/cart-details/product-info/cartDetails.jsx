@@ -19,11 +19,14 @@ import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
+import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
 
 const CartDetails = ({
   cartItems = [],
   isLoading = false,
   getQuantity,
+  getItemKey = (item) => item?.buy_now_id ?? item?.id,
+  isBuyNowFlow = false,
   onIncrease,
   onDecrease,
   appliedCoupon = null,
@@ -35,13 +38,17 @@ const CartDetails = ({
   setShowAddressForm = () => {},
 }) => {
   const router = useRouter();
+  const { showToast } = useToast();
+  const [showPopup, setShowPopup] = useState("");
+  const [phone, setPhone] = useState("");
   const [removeFromCart] = useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
-  const { showToast } = useToast();
-  const [showPopup, setShowPopup] = useState("");
-  const [phone, setPhone] = useState("");
+  const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
+    useUpdateBuyNowMutation();
+
+  console.log(cartItems, "cartItems");
 
   const getIsLoggedIn = () => {
     const cookie = Cookies?.get("userData");
@@ -56,8 +63,8 @@ const CartDetails = ({
 
   const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
 
-  const isCartPage = router?.asPath === "/cart";
-  const isCheckoutPage = router?.asPath === "/checkout";
+  const isCartPage = router?.pathname === "/cart";
+  const isCheckoutPage = router?.pathname === "/checkout";
   const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
 
   const cartTotal = cartItems?.reduce(
@@ -135,6 +142,24 @@ const CartDetails = ({
     }
   };
 
+  const handleUpdateCartForBuyNow = async (id, quantity) => {
+    try {
+      const res = await updateBuyNow({
+        body: {
+          buy_now_id: id,
+          quantity: quantity,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
   return (
     <>
       {!hideBreadcrumb && (
@@ -218,10 +243,11 @@ const CartDetails = ({
         )}
 
         {cartItems.map((item) => {
+          const itemKey = getItemKey(item);
           const qty = getQuantity ? getQuantity(item) : item.quantity;
 
           return (
-            <div className={styles.productCartWrapper} key={item.id}>
+            <div className={styles.productCartWrapper} key={itemKey}>
               <div className={styles.productCartRow}>
                 <div className={styles.productCartInfo}>
                   <Image
@@ -254,8 +280,15 @@ const CartDetails = ({
                     <button
                       className={styles.productCartDelete}
                       onClick={() => {
-                        onDecrease(item.id, qty);
-                        handleUpdateCart(item?.id, qty - 1);
+                        onDecrease(itemKey, qty);
+                        if (isBuyNowFlow) {
+                          handleUpdateCartForBuyNow(itemKey, qty - 1);
+                        } else {
+                          handleUpdateCart(
+                            item?.id || item?.product?.id,
+                            qty - 1,
+                          );
+                        }
                       }}
                     >
                       -
@@ -267,8 +300,15 @@ const CartDetails = ({
                   <button
                     className={styles.productCartPlus}
                     onClick={() => {
-                      onIncrease(item.id, qty);
-                      handleUpdateCart(item?.id, qty + 1);
+                      onIncrease(itemKey, qty);
+                      if (isBuyNowFlow) {
+                        handleUpdateCartForBuyNow(itemKey, qty + 1);
+                      } else {
+                        handleUpdateCart(
+                          item?.id || item?.product?.id,
+                          qty + 1,
+                        );
+                      }
                     }}
                   >
                     +
