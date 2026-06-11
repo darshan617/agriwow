@@ -227,14 +227,15 @@ const ProductCard = ({
       </Link>
 
       <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
+      {average_rating > 0 && (
         <div className={`${styles.ratingLine}`}>
           <span className={`${styles.ratingBadge}`}>
             <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
-            {average_rating || 0}
+            {average_rating}
           </span>
           <span className={`${styles.reviewText}`}>({reviews})</span>
         </div>
-
+      )}
         <h3 className={`${styles.productName}`}>{name}</h3>
 
         <div className={`${styles.priceRow}`}>

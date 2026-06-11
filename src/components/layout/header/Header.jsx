@@ -49,7 +49,7 @@ const SEARCH_HISTORY_KEY = "agriwow:searchHistory";
 const SEARCH_HISTORY_MAX = 6;
 
 const USER_MENU_ITEMS = [
-  { href: "#", label: "My Profile", icon: HiOutlineUserCircle },
+  { href: "/my-profile", label: "My Profile", icon: HiOutlineUserCircle },
   { href: "/my-order", label: "My Orders", icon: PiPackageThin },
 ];
 

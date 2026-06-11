@@ -180,7 +180,7 @@ const ItemDetail = ({ productDetails }) => {
           </div>
         </div>
 
-        <div className={`${styles.productInfo} col-lg-4`}>
+        <div className={`${styles.productInfo} col-lg-5`}>
           <h2 className={`${styles.productName}`}>
             {productDetails?.data?.name}
           </h2>
@@ -189,21 +189,25 @@ const ItemDetail = ({ productDetails }) => {
           >
             <div className={`${styles.productPrice}`}>
               <div className={`${styles.productReviewCount}`}>
-                <span
-                  className={`${styles.productReviewCountStar} d-inline-flex gap-1`}
-                >
+                {productDetails?.data?.rating_summary?.average_rating > 0 && (
+                <span className={`${styles.productReviewCountStar} d-inline-flex gap-1`}>
                   <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 1 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                   <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 2 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                   <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 3 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                   <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 4 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                   <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 5 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
                 </span>
+                )}
+                {productDetails?.data?.rating_summary?.average_rating > 0 && (
                 <span className={`${styles.productReviewCountValue}`}>{productDetails?.data?.rating_summary?.average_rating}</span>
+                )}
+                {productDetails?.data?.rating_summary?.total_reviews > 0 && (
                 <span className={`${styles.productReviewCountText}`}>
                   <span className={`${styles.productReviewCountValue}`}>
                     ({productDetails?.data?.rating_summary?.total_reviews} reviews)
                   </span>
                 </span>
+                )}
                 <p className={`${styles.priceRow}`}>
                   <span className={`${styles.currentPrice}`}>
                     ₹ {productDetails?.data?.selling_price}
