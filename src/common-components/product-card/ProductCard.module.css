@@ -208,7 +208,7 @@
 }
 
 .productCard:hover .productName {
-  transform: translateY(-20px);
+  /* transform: translateY(-20px); */
 }
 
 
@@ -354,6 +354,11 @@
 
 .removeBtn:hover {
   color: #1d1d1d;
+}
+
+.wishlistBtn.wishlistActive,
+.wishlistActive {
+  color: #e0334b !important;
 }
 @media (max-width: 1600px) {
   .addToCartBtn,

@@ -5,9 +5,12 @@ import { storeWrapper } from "@/redux/store";
 import { homeApi } from "@/redux/apis/homeApi";
 
 export const getServerSideProps = storeWrapper.getServerSideProps(
-  (store) => async () => {
+  (store) => async (context) => {
+    const userToken = context.req?.cookies?.userToken;
     const result = await store.dispatch(
-      homeApi.endpoints.getHomeData.initiate(),
+      homeApi.endpoints.getHomeData.initiate(
+        userToken ? { userToken } : undefined,
+      ),
     );
 
     return {
