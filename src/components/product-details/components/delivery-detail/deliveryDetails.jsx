@@ -9,6 +9,7 @@ import cod from "@/assets/icon/cash-on-delivery.png";
 import returns from "@/assets/icon/return.png";
 import Image from "next/image";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
+import { markBuyNowAddPending } from "@/redux/apis/buyProductApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -154,6 +155,11 @@ export default function DeliveryDetails({ productDetails }) {
         <button
           className={styles.ddBtnBuy}
           onClick={() => {
+            markBuyNowAddPending({
+              productId: productDetails?.data?.id,
+              quantity: qty,
+              userId: userData?.id,
+            });
             router?.push({
               pathname: `/checkout`,
               query: {

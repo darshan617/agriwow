@@ -15,6 +15,8 @@ import {
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import {
+  clearBuyNowAddPending,
+  isBuyNowAddPending,
   useBuyProductMutation,
   useGetBuyNowDataQuery,
 } from "@/redux/apis/buyProductApi";
@@ -33,6 +35,23 @@ const Checkout = () => {
   const [buyProduct, { isLoading: isBuyProductLoading }] =
     useBuyProductMutation();
   const buyNowAddedRef = useRef(false);
+  const [buyNowSynced, setBuyNowSynced] = useState(false);
+
+  const shouldAddBuyNowProduct = useMemo(
+    () =>
+      Boolean(
+        router?.isReady &&
+          router?.query?.productId &&
+          router?.query?.quantity &&
+          router?.query?.userId,
+      ),
+    [
+      router?.isReady,
+      router?.query?.productId,
+      router?.query?.quantity,
+      router?.query?.userId,
+    ],
+  );
 
   const isBuyNowFlow = useMemo(
     () =>
@@ -62,7 +81,11 @@ const Checkout = () => {
     isLoading: isBuyNowLoading,
     refetch: refetchBuyNowData,
   } = useGetBuyNowDataQuery(undefined, {
-    skip: !router?.isReady || !canFetchCart || !isBuyNowFlow,
+    skip:
+      !router?.isReady ||
+      !canFetchCart ||
+      !isBuyNowFlow ||
+      (shouldAddBuyNowProduct && !buyNowSynced),
   });
 
   const activeCartData = isBuyNowFlow ? buyNowData : cartData;
@@ -102,7 +125,8 @@ const Checkout = () => {
         },
       });
       if (res?.data?.success || res?.data?.status) {
-        refetchBuyNowData();
+        clearBuyNowAddPending();
+        setBuyNowSynced(true);
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -144,6 +168,12 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
+    if (router?.isReady && isBuyNowFlow && !shouldAddBuyNowProduct) {
+      setBuyNowSynced(true);
+    }
+  }, [router?.isReady, isBuyNowFlow, shouldAddBuyNowProduct]);
+
+  useEffect(() => {
     if (isBuyNowFlow) {
       if (buyNowData?.data) {
         const items = Array.isArray(buyNowData.data)
@@ -159,27 +189,22 @@ const Checkout = () => {
   }, [cartData?.data, buyNowData?.data, isBuyNowFlow]);
 
   useEffect(() => {
-    if (
-      !router?.isReady ||
-      !canFetchCart ||
-      !isBuyNowFlow ||
-      !router?.query?.productId ||
-      !router?.query?.quantity ||
-      !router?.query?.userId ||
-      buyNowAddedRef.current
-    ) {
+    if (!router?.isReady || !canFetchCart || !shouldAddBuyNowProduct) {
       return;
     }
+
+    if (!isBuyNowAddPending(router.query)) {
+      setBuyNowSynced(true);
+      return;
+    }
+
+    if (buyNowAddedRef.current) {
+      return;
+    }
+
     buyNowAddedRef.current = true;
     handleBuyProduct();
-  }, [
-    router?.isReady,
-    canFetchCart,
-    isBuyNowFlow,
-    router?.query?.productId,
-    router?.query?.quantity,
-    router?.query?.userId,
-  ]);
+  }, [router?.isReady, canFetchCart, shouldAddBuyNowProduct, router.query]);
 
   return (
     <Layout>
