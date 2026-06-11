@@ -107,6 +107,7 @@
 
 .productImg {
   width: 100% !important;
+  height: 300px !important;
   /* object-fit: contain; */
 }
 
@@ -151,11 +152,11 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.35;
-  min-height: calc(1.35em * 2);
+  /* min-height: calc(1.35em * 2); */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
   word-break: break-word;
   /* position: absolute; */
@@ -182,6 +183,10 @@
 .productCard:hover .priceRow {
   /* opacity: 1; */
   transform: translateY(-45px);
+}
+.productCard:hover .productName {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
 }
 
 .currentPrice,
