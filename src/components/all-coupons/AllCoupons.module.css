@@ -20,7 +20,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: min(420px, 86vw);
+  width: 500px;
   height: 100vh;
   height: 100dvh;
   display: flex;
@@ -260,7 +260,7 @@
   animation: accordionFade 0.25s ease;
 }
 .logo{
-  width: 200px;
+  width: 150px;
   height: auto;
   margin-bottom: 18px;
 }
