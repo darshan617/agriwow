@@ -32,7 +32,8 @@ const HomeComponents = ({ homeData }) => {
   const insightsBlogData = homeData?.data?.blogs;
   const bestSellingData = homeData?.data?.products?.best_selling;
   const topRatedData = homeData?.data?.products?.top_rated;
-
+console.log(homeData, "homeDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+ 
   return (
     <>
       <TopHeader />

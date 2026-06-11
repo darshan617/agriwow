@@ -1,15 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { getUserData, saveUserData } from '@/helpers/userData'
+import React, { useState } from 'react'
 import styles from "@/components/my-profile/MyProfileComponent.module.css"
 import { FaRegEdit } from "react-icons/fa";
-
-const mapUserToForm = (userData) => ({
-  fullName: userData?.name || '',
-  email: userData?.email || '',
-  mobile: userData?.phone || '',
-})
 
 const MyProfileComponent = () => {
   const [isEditing, setIsEditing] = useState(false)
@@ -20,30 +13,13 @@ const MyProfileComponent = () => {
   })
   const [saved, setSaved] = useState(form)
 
-  useEffect(() => {
-    const userData = getUserData()
-    if (!userData) return
-
-    const initial = mapUserToForm(userData)
-    setForm(initial)
-    setSaved(initial)
-  }, [])
-
   const handleEdit = () => {
     setSaved({ ...form })
     setIsEditing(true)
   }
 
   const handleSave = () => {
-    const userData = getUserData()
-    if (userData) {
-      saveUserData({
-        ...userData,
-        name: form.fullName,
-        email: form.email,
-        phone: form.mobile,
-      })
-    }
+
     setSaved({ ...form })
     setIsEditing(false)
   }
@@ -100,7 +76,6 @@ const MyProfileComponent = () => {
           ))}
         </div>
 
-        {/* Action Buttons */}
         {isEditing && (
           <div className={styles.profileActions}>
             <button className={styles.btnCancel} onClick={handleCancel}>

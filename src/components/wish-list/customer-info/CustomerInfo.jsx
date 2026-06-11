@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-  getUserData,
-  USER_DATA_UPDATED_EVENT,
-} from "@/helpers/userData";
-import { FaHeart, FaUserCircle } from "react-icons/fa";
-import { HiOutlineMapPin, HiOutlineBriefcase } from "react-icons/hi2";
+import Cookies from "js-cookie";
+import { FaHeart, FaOutlineHeart, FaUserCircle } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+
+import { HiOutlineMapPin } from "react-icons/hi2";
 import { PiPackageThin } from "react-icons/pi";
-import { TbBox } from "react-icons/tb";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import coinIcon from "@/assets/icon/coin.png";
 import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css";
 
 const MENU_ITEMS = [
@@ -22,49 +17,40 @@ const MENU_ITEMS = [
     matchPath: "/my-address",
   },
   {
-    href: "/my-orders",
+    href: "/my-order",
     label: "My Orders",
     icon: PiPackageThin,
-    matchPath: "/my-orders",
+    matchPath: "/my-order",
   },
   {
     href: "/wishlist",
     label: "My Wishlist",
-    icon: FaHeart,
+    icon: FaRegHeart ,
     matchPath: "/wishlist",
   },
 ];
 
 const GUEST_DISPLAY_NAME = "Guest User";
-
+const GUEST_USER_INITIAL = "G";
 const CustomerInfo = () => {
   const router = useRouter();
   const [displayName, setDisplayName] = useState(GUEST_DISPLAY_NAME);
   const [userInitial, setUserInitial] = useState(
-    GUEST_DISPLAY_NAME.charAt(0).toUpperCase(),
+    GUEST_USER_INITIAL,
   );
 
   useEffect(() => {
-    const syncDisplayName = (userData) => {
+    const raw = Cookies.get("userData");
+    if (!raw) return;
+
+    try {
+      const userData = JSON.parse(decodeURIComponent(raw));
       const name = userData?.name || GUEST_DISPLAY_NAME;
       setDisplayName(name);
-      setUserInitial(name.charAt(0).toUpperCase() || "");
-    };
-
-    const userData = getUserData();
-    if (userData) syncDisplayName(userData);
-
-    const handleUserDataUpdate = (event) => {
-      syncDisplayName(event.detail);
-    };
-
-    window.addEventListener(USER_DATA_UPDATED_EVENT, handleUserDataUpdate);
-    return () => {
-      window.removeEventListener(USER_DATA_UPDATED_EVENT, handleUserDataUpdate);
-    };
+      setUserInitial(name.charAt(0).toUpperCase() || GUEST_USER_INITIAL);
+    } catch {
+    }
   }, []);
-
-
 
   const isActive = (matchPath) =>
     router.pathname === matchPath || router.asPath === matchPath;
