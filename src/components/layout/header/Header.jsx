@@ -57,7 +57,7 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "#", label: "Products" },
   { href: "/blog", label: "Blogs" },
-  { href: "#", label: "Contact us" },
+  { href: "/contact-us", label: "Contact us" },
 ];
 const renderMenuProductColumns = (
   menuProductData,
