@@ -27,7 +27,10 @@ import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { useGetWishlistQuery } from "@/redux/apis/addToWishlist";
+import {
+  getWishlistItems,
+  useGetWishlistQuery,
+} from "@/redux/apis/addToWishlist";
 import {
   getCartSessionId,
   useGetCartDataQuery,
@@ -49,16 +52,41 @@ const SEARCH_HISTORY_KEY = "agriwow:searchHistory";
 const SEARCH_HISTORY_MAX = 6;
 
 const USER_MENU_ITEMS = [
-  { href: "#", label: "My Profile", icon: HiOutlineUserCircle },
+  { href: "/my-profile", label: "My Profile", icon: HiOutlineUserCircle },
   { href: "/my-order", label: "My Orders", icon: PiPackageThin },
 ];
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "#", label: "Products" },
-  { href: "/blog", label: "Blogs" },
-  { href: "#", label: "Contact us" },
+  { href: "/blog?category=all", label: "Blogs" },
+  { href: "/contact-us", label: "Contact us" },
 ];
+
+const normalizePath = (path = "") => {
+  const clean = path.split("?")[0].split("#")[0];
+  if (clean === "/" || clean === "") return "/";
+  return clean.replace(/\/$/, "");
+};
+
+const isNavLinkActive = (item, asPath) => {
+  const pathname = normalizePath(asPath);
+
+  if (item.label === "Home") {
+    return pathname === "/";
+  }
+  if (item.label === "Products") {
+    return (
+      pathname.startsWith("/product-category") ||
+      pathname.startsWith("/product-details")
+    );
+  }
+  if (item.href && item.href !== "#") {
+    const href = normalizePath(item.href);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+  return false;
+};
 const renderMenuProductColumns = (
   menuProductData,
   { linkClassName, onLinkClick } = {},
@@ -152,6 +180,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
     skip: !userData?.id,
   });
+  const wishlistCount = useMemo(
+    () => getWishlistItems(wishlistData).length,
+    [wishlistData],
+  );
   const { data: cartData } = useGetCartDataQuery(undefined, {
     skip: !(Cookies.get("userToken") || getCartSessionId()),
   });
@@ -473,17 +505,27 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           </Link>
 
           <nav className={`${styles.navLinksDesktop}`}>
-            {NAV_LINKS.map((item) =>
-              item?.label === "Products" ? (
+            {NAV_LINKS.map((item) => {
+              const isActive = isNavLinkActive(item, router.asPath);
+              return item?.label === "Products" ? (
                 <div key={item?.label} className={styles.navItemWithMegaMenu}>
-                  <Link href={item?.href || "#"}>{item?.label}</Link>
+                  <Link
+                    href={item?.href || "#"}
+                    className={isActive ? styles.navLinkActive : ""}
+                  >
+                    {item?.label}
+                  </Link>
                 </div>
               ) : (
-                <Link key={item?.label} href={item?.href || "#"}>
+                <Link
+                  key={item?.label}
+                  href={item?.href || "#"}
+                  className={isActive ? styles.navLinkActive : ""}
+                >
                   {item?.label}
                 </Link>
-              ),
-            )}
+              );
+            })}
           </nav>
 
           <div
@@ -783,10 +825,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/wishlist">
                 <FaHeart size={21} />
               </Link>
-              {wishlistData?.data?.length >= 0 && (
-                <span className={styles.badge}>
-                  {wishlistData?.data?.length}
-                </span>
+              {wishlistCount > 0 && (
+                <span className={styles.badge}>{wishlistCount}</span>
               )}
             </button>
             <button
@@ -849,12 +889,13 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           </button>
         </div>
         <div className={`${styles.drawerLinks}`}>
-          {NAV_LINKS?.map((item) =>
-            item?.label === "Products" ? (
+          {NAV_LINKS?.map((item) => {
+            const isActive = isNavLinkActive(item, router.asPath);
+            return item?.label === "Products" ? (
               <div key={item?.label} className={styles.drawerNavItem}>
                 <button
                   type="button"
-                  className={`${styles.drawerProductsToggle} ${productsExpanded ? `${styles.drawerProductsToggleOpen}` : ""}`}
+                  className={`${styles.drawerProductsToggle} ${productsExpanded ? styles.drawerProductsToggleOpen : ""} ${isActive ? styles.navLinkActive : ""}`}
                   onClick={() => setProductsExpanded((open) => !open)}
                   aria-expanded={productsExpanded}
                   aria-controls="drawer-mega-products"
@@ -882,11 +923,16 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 </div>
               </div>
             ) : (
-              <Link key={item.label} href={item.href} onClick={closeMenu}>
+              <Link
+                key={item.label}
+                href={item.href}
+                className={isActive ? styles.navLinkActive : ""}
+                onClick={closeMenu}
+              >
                 {item?.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </div>
         <div className={`${styles.drawerTopExtras}`}>
           <TopHeaderExtras variant="drawer" />

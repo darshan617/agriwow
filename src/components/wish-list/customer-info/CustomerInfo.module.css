@@ -1,6 +1,6 @@
 .sidebar {
   position: sticky;
-  top: 100px;
+  top: 40px;
   align-self: flex-start;
   display: flex;
   flex-direction: column;
@@ -148,7 +148,7 @@
   padding: 0;
 }
 
-.navItem + .navItem {
+.navItem+.navItem {
   border-top: 1px solid #ececec;
 }
 
@@ -211,10 +211,11 @@
 }
 
 @media (max-width: 1199px) {
-  .sidebar{
+  .sidebar {
     display: none;
   }
 }
+
 @media (max-width: 767px) {
   .sidebar {
     position: static;

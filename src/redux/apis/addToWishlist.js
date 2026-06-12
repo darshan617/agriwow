@@ -19,7 +19,15 @@ const addToWishlistApi = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: ["getWishlist"],
+      invalidatesTags: [
+        "getWishlist",
+        "home",
+        "products",
+        "ProductsByCategory",
+        "ProductsBySubCategory",
+        "product",
+        "SearchProducts",
+      ],
     }),
 
     getWishlist: builder.query({
@@ -48,13 +56,31 @@ const addToWishlistApi = apiSlice.injectEndpoints({
             ...(userToken && { Authorization: `Bearer ${userToken}` }),
             "Content-Type": "application/json",
           },
-          body: body, 
+          body: body,
         };
       },
-      invalidatesTags: ["getWishlist"],
+      invalidatesTags: [
+        "getWishlist",
+        "home",
+        "products",
+        "ProductsByCategory",
+        "ProductsBySubCategory",
+        "product",
+        "SearchProducts",
+      ],
     }),
   }),
 });
+
+export const getWishlistItems = (wishlistData) => {
+  const raw = wishlistData?.data;
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  if (Array.isArray(raw?.wishlist)) return raw.wishlist;
+  if (Array.isArray(raw?.products)) return raw.products;
+  if (Array.isArray(raw?.items)) return raw.items;
+  return [];
+};
 
 export const {
   useAddToWishlistMutation,

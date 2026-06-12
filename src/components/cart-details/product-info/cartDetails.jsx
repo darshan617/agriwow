@@ -19,11 +19,18 @@ import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
+import {
+  usePlaceOrderMutation,
+  useUpdateBuyNowMutation,
+  useVerifyPaymentMutation,
+} from "@/redux/apis/buyProductApi";
 
 const CartDetails = ({
   cartItems = [],
   isLoading = false,
   getQuantity,
+  getItemKey = (item) => item?.buy_now_id ?? item?.id,
+  isBuyNowFlow = false,
   onIncrease,
   onDecrease,
   appliedCoupon = null,
@@ -35,13 +42,20 @@ const CartDetails = ({
   setShowAddressForm = () => {},
 }) => {
   const router = useRouter();
+  const { showToast } = useToast();
+  const [showPopup, setShowPopup] = useState("");
+  const [phone, setPhone] = useState("");
   const [removeFromCart] = useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
-  const { showToast } = useToast();
-  const [showPopup, setShowPopup] = useState("");
-  const [phone, setPhone] = useState("");
+  const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
+    useUpdateBuyNowMutation();
+  const [placeOrder, { isLoading: isPlaceOrderLoading }] =
+    usePlaceOrderMutation();
+  const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
+    useVerifyPaymentMutation();
+  console.log(cartItems, "cartItems");
 
   const getIsLoggedIn = () => {
     const cookie = Cookies?.get("userData");
@@ -56,8 +70,8 @@ const CartDetails = ({
 
   const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
 
-  const isCartPage = router?.asPath === "/cart";
-  const isCheckoutPage = router?.asPath === "/checkout";
+  const isCartPage = router?.pathname === "/cart";
+  const isCheckoutPage = router?.pathname === "/checkout";
   const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
 
   const cartTotal = cartItems?.reduce(
@@ -135,27 +149,118 @@ const CartDetails = ({
     }
   };
 
+  const handleUpdateCartForBuyNow = async (id, quantity) => {
+    try {
+      const res = await updateBuyNow({
+        body: {
+          buy_now_id: id,
+          quantity: quantity,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        // showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
+  //place order
+  const handlePlaceOrder = async (source, type, address_id = null) => {
+    try {
+      const res = await placeOrder({
+        body: {
+          source: source,
+          payment_type: type,
+          address_id: address_id,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        const razorpay = res?.data?.razorpay;
+
+        const options = {
+          key: razorpay.key,
+          amount: razorpay.amount,
+          currency: razorpay.currency,
+          name: razorpay.name,
+          description: razorpay.description,
+          order_id: razorpay.order_id,
+          prefill: razorpay.prefill,
+          handler: async function (response) {
+            setShowPopup("payment");
+            console.log("Payment Success", response);
+            const verifyPaymentRes = await verifyPayment({
+              body: {
+                razorpay_payment_id: response.razorpay_payment_id,
+                order_id: res?.data?.order_id,
+                razorpay_order_id: razorpay.order_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            });
+
+            if (
+              verifyPaymentRes?.data?.success ||
+              verifyPaymentRes?.data?.status
+            ) {
+              showToast(
+                "Payment Successful" || verifyPaymentRes?.data?.message,
+                "success",
+              );
+              router.push("/");
+            } else {
+              showToast(
+                "Payment Failed" || verifyPaymentRes?.data?.message,
+                "error",
+              );
+            }
+          },
+
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+
+        rzp.on("payment.failed", function (response) {
+          console.log("Payment Failed", response.error);
+          showToast(response.error.description, "error");
+        });
+
+        rzp.open();
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
+  useEffect(() => {
+    if (cartItems.length > 0 && !router.query.buy_now_id) {
+      const itemKey = getItemKey(cartItems[0]);
+
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            buy_now_id: itemKey,
+          },
+        },
+        undefined,
+        { shallow: true },
+      );
+    }
+  }, [cartItems, router]);
   return (
     <>
-      {!hideBreadcrumb && (
-        <div className={`${styles.breadcrumb}`}>
-          <div style={{ margin: "16px 0" }}>
-            <ul>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li>
-                <Link href="/">Shop</Link>
-              </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li className={styles.breadcrumbItem1}>
-                <Link href="/cart">Cart</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
+      
 
       <div className={styles.productInfo}>
         {appliedCoupon && (
@@ -218,10 +323,11 @@ const CartDetails = ({
         )}
 
         {cartItems.map((item) => {
+          const itemKey = getItemKey(item);
           const qty = getQuantity ? getQuantity(item) : item.quantity;
 
           return (
-            <div className={styles.productCartWrapper} key={item.id}>
+            <div className={styles.productCartWrapper} key={itemKey}>
               <div className={styles.productCartRow}>
                 <div className={styles.productCartInfo}>
                   <Image
@@ -254,8 +360,15 @@ const CartDetails = ({
                     <button
                       className={styles.productCartDelete}
                       onClick={() => {
-                        onDecrease(item.id, qty);
-                        handleUpdateCart(item?.id, qty - 1);
+                        onDecrease(itemKey, qty);
+                        if (isBuyNowFlow) {
+                          handleUpdateCartForBuyNow(itemKey, qty - 1);
+                        } else {
+                          handleUpdateCart(
+                            item?.id || item?.product?.id,
+                            qty - 1,
+                          );
+                        }
                       }}
                     >
                       -
@@ -267,8 +380,15 @@ const CartDetails = ({
                   <button
                     className={styles.productCartPlus}
                     onClick={() => {
-                      onIncrease(item.id, qty);
-                      handleUpdateCart(item?.id, qty + 1);
+                      onIncrease(itemKey, qty);
+                      if (isBuyNowFlow) {
+                        handleUpdateCartForBuyNow(itemKey, qty + 1);
+                      } else {
+                        handleUpdateCart(
+                          item?.id || item?.product?.id,
+                          qty + 1,
+                        );
+                      }
                     }}
                   >
                     +
@@ -319,19 +439,12 @@ const CartDetails = ({
                   </span>
                 </button>
               </div>
-            ) : (
-              <Link
-                href={isCartPage ? "/checkout" : "/payments"}
-                className={styles.checkoutSection}
-              >
+            ) : isCartPage ? (
+              <Link href="/checkout" className={styles.checkoutSection}>
                 <button type="button" className={styles.checkoutBtn}>
                   <div>
                     <div>
-                      <span>
-                        {isCartPage
-                          ? "PROCEED TO CHECKOUT"
-                          : "PROCEED TO PAYMENT"}
-                      </span>
+                      <span>PROCEED TO CHECKOUT</span>
                       <p>₹ {cartTotal}</p>
                     </div>
                   </div>
@@ -340,6 +453,52 @@ const CartDetails = ({
                   </span>
                 </button>
               </Link>
+            ) : (
+              <div className="d-flex justify-content-end mt-3 gap-3">
+                <button
+                  type="button"
+                  className={styles.checkoutBtn}
+                  onClick={() =>
+                    handlePlaceOrder(
+                      router?.query?.productId ? "buy_now" : "cart",
+                      "partial",
+                      cartData?.selected_address?.id,
+                    )
+                  }
+                >
+                  <div>
+                    <div>
+                      <span>Partial Payment (30%)</span>
+                      {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.checkoutBtn}
+                  onClick={() =>
+                    handlePlaceOrder(
+                      router?.query?.productId ? "buy_now" : "cart",
+                      "full",
+                      cartData?.selected_address?.id,
+                    )
+                  }
+                >
+                  <div>
+                    <div>
+                      <span> Full Payment</span>
+                      {/* <p>₹ {cartTotal}</p> */}
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
+                </button>
+              </div>
             )}
           </>
         )}
@@ -361,6 +520,23 @@ const CartDetails = ({
             phone={phone}
             isLoading={isVerifyOtpLoading}
           />
+        </CustomPopup>
+      )}
+      {showPopup === "payment" && (
+        <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
+          <div>
+            <div className="d-flex justify-content-center mb-3">
+              <div className="spinner-border text-success" role="status">
+                <span className="visually-hidden">
+                  Verifying Your Payment...
+                </span>
+              </div>
+            </div>
+            <p className="text-center m-0 fs-4">
+              {" "}
+              Verifying Your Payment. Please wait...{" "}
+            </p>
+          </div>
         </CustomPopup>
       )}
     </>

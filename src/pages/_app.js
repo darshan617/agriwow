@@ -9,6 +9,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Script from "next/script";
 
 function AppContent({ Component, pageProps }) {
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps, ...rest }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <ToastProvider>
+          <Script src="https://checkout.razorpay.com/v1/checkout.js" />
           <AppContent Component={Component} pageProps={pageProps} />
         </ToastProvider>
       </Provider>

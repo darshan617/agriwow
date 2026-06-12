@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/components/layout/Layout";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import CheckoutStepper from "@/components/checkout/checkout-stepper/CheckoutStepper";
 import DeliveryAddress from "@/components/checkout/delivery-address/DeliveryAddress";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
@@ -14,8 +14,16 @@ import {
 } from "@/redux/apis/addToCartApi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import {
+  clearBuyNowAddPending,
+  isBuyNowAddPending,
+  useBuyProductMutation,
+  useGetBuyNowDataQuery,
+} from "@/redux/apis/buyProductApi";
+import { useRouter } from "next/router";
 
 const Checkout = () => {
+  const router = useRouter();
   const { showToast } = useToast();
   const [canFetchCart, setCanFetchCart] = useState(false);
   const [quantities, setQuantities] = useState({});
@@ -24,6 +32,69 @@ const Checkout = () => {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
+  const [buyProduct, { isLoading: isBuyProductLoading }] =
+    useBuyProductMutation();
+  const buyNowAddedRef = useRef(false);
+  const [buyNowSynced, setBuyNowSynced] = useState(false);
+
+  const shouldAddBuyNowProduct = useMemo(
+    () =>
+      Boolean(
+        router?.isReady &&
+          router?.query?.productId &&
+          router?.query?.quantity &&
+          router?.query?.userId,
+      ),
+    [
+      router?.isReady,
+      router?.query?.productId,
+      router?.query?.quantity,
+      router?.query?.userId,
+    ],
+  );
+
+  const isBuyNowFlow = useMemo(
+    () =>
+      Boolean(
+        router?.isReady &&
+          (router?.query?.productId ||
+            router?.query?.quantity ||
+            router?.query?.userId),
+      ),
+    [
+      router?.isReady,
+      router?.query?.productId,
+      router?.query?.quantity,
+      router?.query?.userId,
+    ],
+  );
+
+  const {
+    data: cartData,
+    isLoading,
+    refetch: refetchCartData,
+  } = useGetCartDataQuery(undefined, {
+    skip: !router?.isReady || !canFetchCart || isBuyNowFlow,
+  });
+  const {
+    data: buyNowData,
+    isLoading: isBuyNowLoading,
+    refetch: refetchBuyNowData,
+  } = useGetBuyNowDataQuery(undefined, {
+    skip:
+      !router?.isReady ||
+      !canFetchCart ||
+      !isBuyNowFlow ||
+      (shouldAddBuyNowProduct && !buyNowSynced),
+  });
+
+  const activeCartData = isBuyNowFlow ? buyNowData : cartData;
+  const isCartLoading = isBuyNowFlow ? isBuyNowLoading : isLoading;
+
+  const [cartItems, setCartItems] = useState([]);
+
+  const getItemKey = (item) => item?.buy_now_id ?? item?.id;
+
   const handleUpdateCart = async (id, quantity, address_id = null) => {
     try {
       const res = await updateCart({
@@ -44,21 +115,29 @@ const Checkout = () => {
     }
   };
 
-  useEffect(() => {
-    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
-  }, []);
+  const handleBuyProduct = async () => {
+    try {
+      const res = await buyProduct({
+        body: {
+          user_id: router?.query?.userId,
+          product_id: router?.query?.productId,
+          quantity: router?.query?.quantity,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        clearBuyNowAddPending();
+        setBuyNowSynced(true);
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
 
-  const {
-    data: cartData,
-    isLoading,
-    refetch: refetchCartData,
-  } = useGetCartDataQuery(undefined, {
-    skip: !canFetchCart,
-  });
-
-  const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
-
-  const getQuantity = (item) => quantities[item.id] ?? item.quantity;
+  const getQuantity = (item) =>
+    quantities[getItemKey(item)] ?? item.quantity;
 
   const cartItemsWithQuantities = useMemo(
     () =>
@@ -77,13 +156,55 @@ const Checkout = () => {
   };
 
   const handleDecrease = (id, currentQty) => {
-    if (currentQty > 1) {
-      setQuantities((prev) => ({
-        ...prev,
-        [id]: currentQty - 1,
-      }));
-    }
+    setQuantities((prev) => {
+      const nextQty = (prev[id] ?? currentQty) - 1;
+      if (nextQty < 1) return prev;
+      return { ...prev, [id]: nextQty };
+    });
   };
+
+  useEffect(() => {
+    setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
+  }, []);
+
+  useEffect(() => {
+    if (router?.isReady && isBuyNowFlow && !shouldAddBuyNowProduct) {
+      setBuyNowSynced(true);
+    }
+  }, [router?.isReady, isBuyNowFlow, shouldAddBuyNowProduct]);
+
+  useEffect(() => {
+    if (isBuyNowFlow) {
+      if (buyNowData?.data) {
+        const items = Array.isArray(buyNowData.data)
+          ? buyNowData.data
+          : [buyNowData.data];
+        setCartItems(items);
+      }
+      return;
+    }
+    if (cartData?.data) {
+      setCartItems(Array.isArray(cartData?.data) ? cartData.data : []);
+    }
+  }, [cartData?.data, buyNowData?.data, isBuyNowFlow]);
+
+  useEffect(() => {
+    if (!router?.isReady || !canFetchCart || !shouldAddBuyNowProduct) {
+      return;
+    }
+
+    if (!isBuyNowAddPending(router.query)) {
+      setBuyNowSynced(true);
+      return;
+    }
+
+    if (buyNowAddedRef.current) {
+      return;
+    }
+
+    buyNowAddedRef.current = true;
+    handleBuyProduct();
+  }, [router?.isReady, canFetchCart, shouldAddBuyNowProduct, router.query]);
 
   return (
     <Layout>
@@ -93,20 +214,22 @@ const Checkout = () => {
           <div className="col-lg-8">
             <DeliveryAddress
               handleUpdateCart={handleUpdateCart}
-              cartData={cartData}
+              cartData={activeCartData}
               setShowAddressForm={setShowAddressForm}
               showAddressForm={showAddressForm}
-              refetchCartData={refetchCartData}
+              refetchCartData={isBuyNowFlow ? refetchBuyNowData : refetchCartData}
             />
             <div className="mt-4">
               <CartDetails
-                cartData={cartData}
+                cartData={activeCartData}
                 setShowAddressForm={setShowAddressForm}
                 // hideBreadcrumb
                 // hideCheckoutButton
                 cartItems={cartItems}
-                isLoading={isLoading}
+                isLoading={isCartLoading || isBuyProductLoading}
                 getQuantity={getQuantity}
+                getItemKey={getItemKey}
+                isBuyNowFlow={isBuyNowFlow}
                 onIncrease={handleIncrease}
                 onDecrease={handleDecrease}
                 appliedCoupon={appliedCoupon}
@@ -123,7 +246,7 @@ const Checkout = () => {
               couponCode={couponCode}
               setCouponCode={setCouponCode}
               handleUpdateCart={handleUpdateCart}
-              cartData={cartData}
+              cartData={activeCartData}
             />
           </div>
         </div>

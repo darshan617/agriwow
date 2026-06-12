@@ -11,9 +11,6 @@
   transition: padding-bottom 0.25s ease;
 }
 
-.productCard:hover {
-  padding-bottom: 58px;
-}
 
 .cardTags {
   position: absolute;
@@ -110,6 +107,7 @@
 
 .productImg {
   width: 100% !important;
+  height: 300px !important;
   /* object-fit: contain; */
 }
 
@@ -154,11 +152,11 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.35;
-  min-height: calc(1.35em * 2);
+  /* min-height: calc(1.35em * 2); */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
   word-break: break-word;
   /* position: absolute; */
@@ -180,6 +178,15 @@
   right: 0;
   margin: 0;
   z-index: 1;
+}
+
+.productCard:hover .priceRow {
+  /* opacity: 1; */
+  transform: translateY(-45px);
+}
+.productCard:hover .productName {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
 }
 
 .currentPrice,
@@ -206,12 +213,9 @@
 }
 
 .productCard:hover .productName {
-  transform: translateY(-20px);
+  /* transform: translateY(-20px); */
 }
 
-.productCard:hover .cardInfo {
-  height: 96px;
-}
 
 .cardActions {
   position: absolute;
@@ -307,8 +311,9 @@
 }
 .wishlistBtnnnnn {
   border: none;
-  border-radius: 3px;
+  border-radius: 50%;
   width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -346,13 +351,19 @@
 }
 .removeBtn {
   position: absolute;
-  top: 7px;
+  top: 0;
   right: 4px;
   background: #f2f2f2;
+  padding: 4px;
 }
 
 .removeBtn:hover {
   color: #1d1d1d;
+}
+
+.wishlistBtn.wishlistActive,
+.wishlistActive {
+  color: #e0334b !important;
 }
 @media (max-width: 1600px) {
   .addToCartBtn,
@@ -376,11 +387,16 @@
 @media (max-width: 1200px) {
   .productCard {
     padding: 8px 8px 10px;
+    height: 400px;
   }
   .addToCartBtn span,
   .buyNowBtn {
     font-size: 10px;
     gap: 0px !important;
+  }
+  .productImg {
+    object-fit: contain;
+    /* height: 200px !important;   */
   }
 }
 
@@ -393,6 +409,9 @@
     padding: 4px 0;
     font-size: 11px;
   }
+  .productCard {
+    height: 380px;
+  }
 }
 
 @media (max-width: 992px) {
@@ -401,17 +420,18 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .productImg {
-    object-fit: fill;
+    object-fit: contain;
+    height: 200px !important;
   }
+  .productCard {
+    height: 350px;
+  }
+
 }
 
 @media (max-width: 575px) {
-  .productCard:hover {
-    padding-bottom: 15px;
-  }
-
   .productCard:hover .cardInfo {
     height: auto;
   }

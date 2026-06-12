@@ -3,7 +3,12 @@ import styles from "./CustomPopup.module.css";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
 
-const CustomPopup = ({ onclose = () => {}, children, wide = false }) => {
+const CustomPopup = ({
+  onclose = () => {},
+  children,
+  wide = false,
+  closeIcon = true,
+}) => {
   useEffect(() => {
     const scrollY = window.scrollY;
     const prevOverflow = document.body.style.overflow;
@@ -33,15 +38,17 @@ const CustomPopup = ({ onclose = () => {}, children, wide = false }) => {
           onClick={(e) => e.stopPropagation()}
         >
           {children}
-          <button
-            onClick={() => {
-              console.log("Close clicked");
-              onclose();
-            }}
-            className={styles.closeBtn}
-          >
-            <IoClose size={20} color="#555" />
-          </button>
+          {closeIcon && (
+            <button
+              onClick={() => {
+                console.log("Close clicked");
+                onclose();
+              }}
+              className={styles.closeBtn}
+            >
+              <IoClose size={20} color="#555" />
+            </button>
+          )}
         </div>
       </div>
     </div>,

@@ -3,7 +3,14 @@ import Cookies from "js-cookie";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import AddressForm from "@/components/checkout/address-form/AddressForm";
 import styles from "@/components/checkout/delivery-address/DeliveryAddress.module.css";
-import { useGetAllDeliveryAddressesQuery } from "@/redux/apis/addToCartApi";
+import {
+  useDeleteDeliveryAddressMutation,
+  useGetAllDeliveryAddressesQuery,
+} from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { FaTrash } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
 
 const formatAddressLine = (form) => {
   const parts = [
@@ -43,12 +50,18 @@ const DeliveryAddress = ({
   const [showAllAddresses, setShowAllAddresses] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
-
+  const { showToast } = useToast();
+  const router = useRouter();
   const {
     data: allAddresses,
     isLoading: isAllAddressesLoading,
     refetch: refetchAllAddresses,
   } = useGetAllDeliveryAddressesQuery();
+
+  const [deleteDeliveryAddress, { isLoading: isDeleteDeliveryAddressLoading }] =
+    useDeleteDeliveryAddressMutation();
+  const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
+    useUpdateBuyNowMutation();
 
   const addressCount = allAddresses?.data?.length ?? 0;
 
@@ -59,8 +72,18 @@ const DeliveryAddress = ({
     }
   };
 
-  const handleDeliverHere = (addr) => {
-    handleUpdateCart(null, null, addr.id);
+  const handleDeliverHere = async (addr, type) => {
+    if (type === "buy_now") {
+      const res = await updateBuyNow({
+        body: {
+          buy_now_id: router.query.buy_now_id,
+          address_id: addr.id,
+        },
+      });
+    } else {
+      handleUpdateCart(null, null, addr.id);
+    }
+
     setAddress({
       name: addr.name,
       address: formatApiAddressLine(addr),
@@ -74,6 +97,21 @@ const DeliveryAddress = ({
     setEditingAddress(addr);
     setShowAllAddresses(false);
     setShowAddressForm(true);
+  };
+
+  const handleDeleteAddress = async (addr) => {
+    try {
+      const res = await deleteDeliveryAddress({ body: { id: addr?.id } });
+      console.log(res, "res");
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        refetchAllAddresses();
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   useEffect(() => {
@@ -238,7 +276,12 @@ const DeliveryAddress = ({
                           <button
                             type="button"
                             className={styles.deliverHereBtn}
-                            onClick={() => handleDeliverHere(addr)}
+                            onClick={() =>
+                              handleDeliverHere(
+                                addr,
+                                router.query.productId ? "buy_now" : "cart",
+                              )
+                            }
                           >
                             DELIVER HERE
                           </button>
@@ -248,6 +291,20 @@ const DeliveryAddress = ({
                             onClick={() => handleEditAddress(addr)}
                           >
                             EDIT
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.deleteAddressBtn}
+                            onClick={() => handleDeleteAddress(addr)}
+                            disabled={isDeleteDeliveryAddressLoading}
+                            style={{
+                              opacity: isDeleteDeliveryAddressLoading ? 0.5 : 1,
+                              cursor: isDeleteDeliveryAddressLoading
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                          >
+                            <FaTrash size={16} />
                           </button>
                         </div>
                       )}

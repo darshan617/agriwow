@@ -31,6 +31,7 @@ const ProductsItem = ({
   viewAllLink = "/product-category/agriculture-sprayers",
 
 }) => {
+
   const {
     className: bannerImageClassName,
     style: bannerImageStyle,
@@ -174,7 +175,9 @@ const ProductsItem = ({
                   }}
                   className={styles.cardsRow}
                 >
-                  {agricultureProductsData?.map((item) => (
+                  {agricultureProductsData?.map((item) => {
+                    // console.log(item, "itemfewwrewrge😊😊😊"),\
+                    return (
                     <SwiperSlide key={item.id}>
                       <ProductCard
                         type="home"
@@ -192,9 +195,11 @@ const ProductsItem = ({
                         isTopRated={item?.is_top_rated}
                         slug={item?.slug}
                         productId={item?.id}
+                        isWishlist={item?.is_wishlist}
                       />
                     </SwiperSlide>
-                  ))}
+                    )
+})}
                 </Swiper>
 
                 {!isEquipment && (

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
 import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import styles from "@/common-components/product-card/ProductCard.module.css";
 import { useRouter } from "next/router";
@@ -10,11 +11,17 @@ import Link from "next/link";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import Cookies from "js-cookie";
 import {
+  getWishlistItems,
   useAddToWishlistMutation,
+  useGetWishlistQuery,
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { useBuyProductMutation } from "@/redux/apis/buyProductApi";
+import {
+  markBuyNowAddPending,
+  useBuyProductMutation,
+} from "@/redux/apis/buyProductApi";
+
 const ProductCard = ({
   discount = "0",
   isBestSeller = true,
@@ -33,6 +40,7 @@ const ProductCard = ({
   productId = null,
   userId = null,
   path = null,
+  isWishlist = false,
 }) => {
   const router = useRouter();
   const isWishlistPage =
@@ -44,44 +52,28 @@ const ProductCard = ({
     ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : null;
 
-  console.log(userData, "userData");
+  const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
+    skip: !userData?.id,
+  });
 
-  const handleBuyProduct = async () => {
-    if (!userData?.id) {
-      showToast("Please log in to buy products", "warning");
-      return;
-    }
-
-    const res = await buyProduct({
-      body: {
-        user_id: userData.id,
-        product_id: productId,
-        quantity: 1,
-      },
-    });
-
-    if (res.error) {
-      showToast(
-        res.error?.data?.message || "Failed to process buy now",
-        "error",
-      );
-      return;
-    }
-
-    if (res?.data?.success || res?.data?.status) {
-      showToast(res?.data?.message || "Redirecting to checkout", "success");
-    } else {
-      showToast(res?.data?.message || "Failed to process buy now", "error");
-    }
-  };
+  const isInWishlist = useMemo(() => {
+    if (!productId) return isWishlist;
+    const items = getWishlistItems(wishlistData);
+    return items.some(
+      (item) =>
+        (item?.product?.id ?? item?.product_id ?? item?.id) === productId,
+    );
+  }, [wishlistData, productId, isWishlist]);
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [addToWishlist, { isLoading: isWishlistLoading }] =
     useAddToWishlistMutation();
   const [removeFromWishlist, { isLoading: isRemoveWishlistLoading }] =
     useRemoveFromWishlistMutation();
+  const [buyProduct, { isLoading: isBuyProductLoading }] =
+    useBuyProductMutation();
   const { showToast } = useToast();
-  const [buyProduct, { isLoading: isBuyProductLoading }] = useBuyProductMutation();
+
   const handleAddToCart = async () => {
     try {
       const res = await addToCart({
@@ -91,14 +83,30 @@ const ProductCard = ({
           quantity: 1,
         },
       });
-      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message || "Failed to add to cart", "error");
       }
     } catch (error) {
-      console.log(error, "error");
-      showToast(error?.data?.message, "error");
+      showToast(error?.data?.message || "Failed to add to cart", "error");
     }
+  };
+
+  const handleBuyProduct = async () => {
+    markBuyNowAddPending({
+      productId,
+      quantity: 1,
+      userId: userData?.id,
+    });
+    router?.push({
+      pathname: `/checkout`,
+      query: {
+        productId: productId,
+        quantity: 1,
+        userId: userData?.id,
+      },
+    });
   };
 
   const handleAddToWishlist = async () => {
@@ -140,7 +148,6 @@ const ProductCard = ({
         product_id: productId,
       },
     });
-    console.log(res, "res");
 
     if (res?.data?.success || res?.data?.status) {
       showToast(res?.data?.message || "Removed from wishlist", "success");
@@ -151,6 +158,7 @@ const ProductCard = ({
       );
     }
   };
+
   return (
     <div
       className={`${styles.productCard}`}
@@ -158,24 +166,36 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        {type === "productPage"
-          ? isBestSeller && (
-              <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
-            ) &&
-            isTrending && (
-              <span className={`${styles.bestsellerTag}`}>TRENDING</span>
-            ) &&
-            isFeatured && (
-              <span className={`${styles.bestsellerTag}`}>FEATURED</span>
-            ) &&
-            isTopRated && (
-              <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
-            )
-          : discount > 0 && (
-              <span className={`${styles.discountTag}`}>{discount}% OFF</span>
-            )}
-        {type === "productPage" ? (
-          isWishlistPage ? (
+        <div style={{ display: "flex", gap: 4, justifyContent: "space-between", width: "100%" }}>
+          {type === "productPage" ? (
+            <>
+              {isBestSeller && (
+                <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+              )}
+              {isTrending && (
+                <span className={`${styles.bestsellerTag}`}>TRENDING</span>
+              )}
+              {isFeatured && (
+                <span className={`${styles.bestsellerTag}`}>FEATURED</span>
+              )}
+              {isTopRated && (
+                <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
+              )}
+            </>
+          ) : (
+            <>
+              {discount > 0 && (
+                <span className={`${styles.discountTag}`}>{discount}% OFF</span>
+              )}
+              {isBestSeller && (
+                <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
+              )}
+            </>
+          )}
+        </div>
+
+        {type === "productPage" &&
+          (isWishlistPage ? (
             <button
               type="button"
               className={`${styles.wishlistBtn} ${styles.removeBtn}`}
@@ -188,19 +208,16 @@ const ProductCard = ({
           ) : (
             <button
               type="button"
-              className={`${styles.wishlistBtnnnnn}`}
-              aria-label="Add to wishlist"
+              className={`${styles.wishlistBtn} ${
+                isInWishlist ? styles.wishlistActive : ""
+              }`}
+              aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
               onClick={handleAddToWishlist}
               disabled={isWishlistLoading}
             >
-              <FiHeart />
+              {isInWishlist ? <FaHeart /> : <FiHeart />}
             </button>
-          )
-        ) : (
-          isBestSeller && (
-            <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
-          )
-        )}
+          ))}
       </div>
 
       <Link href={`/product-details/${slug}`} className={`${styles.imageWrap}`}>
@@ -227,13 +244,15 @@ const ProductCard = ({
       </Link>
 
       <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
-        <div className={`${styles.ratingLine}`}>
-          <span className={`${styles.ratingBadge}`}>
-            <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
-            {average_rating || 0}
-          </span>
-          <span className={`${styles.reviewText}`}>({reviews})</span>
-        </div>
+        {average_rating > 0 && (
+          <div className={`${styles.ratingLine}`}>
+            <span className={`${styles.ratingBadge}`}>
+              <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
+              {average_rating}
+            </span>
+            <span className={`${styles.reviewText}`}>({reviews})</span>
+          </div>
+        )}
 
         <h3 className={`${styles.productName}`}>{name}</h3>
 
@@ -241,16 +260,11 @@ const ProductCard = ({
           <span className={`${styles.currentPrice}`}>₹ {price}</span>
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
         </div>
-        {type === "productPage" && (
+
+        {type === "productPage" && discount > 0 && (
           <div className={`${styles.discountRow}`}>
-            {discount > 0 && (
-              <span className={`${styles.discountText}`}>
-                {discount || 0}% OFF
-              </span>
-            )}
-            {discount > 0 && (
-              <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
-            )}
+            <span className={`${styles.discountText}`}>{discount}% OFF</span>
+            <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
           </div>
         )}
       </Link>
@@ -260,12 +274,14 @@ const ProductCard = ({
           type="button"
           className={`${styles.addToCartBtn}`}
           onClick={handleAddToCart}
+          disabled={isLoading}
         >
           <span>
             <MdAddShoppingCart className={`${styles.btnIcon}`} />
             Add to Cart
           </span>
         </button>
+
         <button
           type="button"
           className={`${styles.buyNowBtn}`}
@@ -274,14 +290,18 @@ const ProductCard = ({
         >
           <span>Buy Now</span>
         </button>
+
         {type !== "productPage" && (
           <button
             type="button"
-            className={`${styles.wishlistBtn}`}
-            aria-label="Add to wishlist"
+            className={`${styles.wishlistBtn} ${
+              isInWishlist ? styles.wishlistActive : ""
+            }`}
+            aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
             onClick={handleAddToWishlist}
+            disabled={isWishlistLoading}
           >
-            <FiHeart />
+            {isInWishlist ? <FaHeart /> : <FiHeart />}
           </button>
         )}
       </div>

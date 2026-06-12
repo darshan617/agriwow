@@ -32,16 +32,23 @@ const LatestBlog = () => {
       const matchesCategory =
         activeCategory === "all" ||
         post?.category?.slug === activeCategory ||
-        post?.category?.name?.toLowerCase().replace(/\s+/g, "-") ===
-          activeCategory;
+        post?.category?.name?.toLowerCase().replace(/\s+/g, "-") === activeCategory;
       return matchesSearch && matchesCategory;
     });
   }, [blogListData, searchQuery, activeCategory]);
 
+  const featuredPost = filteredBlogs?.[0] ?? null;
+
+  const blogsExcludingFeatured = useMemo(
+    () => filteredBlogs.slice(1),
+    [filteredBlogs]
+  );
+
   const totalPages = Math.max(
     1,
-    Math.ceil((filteredBlogs?.length ?? 0) / BLOGS_PER_PAGE),
+    Math.ceil(blogsExcludingFeatured.length / BLOGS_PER_PAGE)
   );
+
   const isFirstPage = currentPage <= 1;
   const isLastPage = currentPage >= totalPages;
 
@@ -50,10 +57,9 @@ const LatestBlog = () => {
   }, [currentPage, totalPages]);
 
   const paginatedBlogs = useMemo(() => {
-    const allExceptFeatured = filteredBlogs?.slice(1) ?? [];
     const start = (currentPage - 1) * BLOGS_PER_PAGE;
-    return allExceptFeatured.slice(start, start + BLOGS_PER_PAGE);
-  }, [filteredBlogs, currentPage]);
+    return blogsExcludingFeatured.slice(start, start + BLOGS_PER_PAGE);
+  }, [blogsExcludingFeatured, currentPage]);
 
   const pageItems = useMemo(() => {
     const items = [];
@@ -83,7 +89,6 @@ const LatestBlog = () => {
           slug: router?.query?.category,
         },
       });
-      console.log("res", res);
       if (res?.data?.success || res?.data?.status) {
         setBlogListData(res?.data?.data);
       }
@@ -99,7 +104,7 @@ const LatestBlog = () => {
         const categoriesData = Array.isArray(res?.data?.data) ? res?.data?.data : [];
         setCategories([
           { id: "all", label: "All" },
-          ...categoriesData?.map((allCategory) => ({
+          ...categoriesData.map((allCategory) => ({
             id: allCategory?.slug,
             label: allCategory?.name,
           })),
@@ -122,13 +127,11 @@ const LatestBlog = () => {
     setCurrentPage(1);
   }, [activeCategory, searchQuery]);
 
-  const featuredPost = blogListData?.[0];
-
   return (
     <>
       <div className="container">
         <h2 className={`${styles.heading}`}>Blogs</h2>
-        <div className={`${styles.breadcrumb} `}>
+        <div className={`${styles.breadcrumb}`}>
           <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
@@ -141,12 +144,9 @@ const LatestBlog = () => {
             </ul>
           </div>
         </div>
+
         <div className="row">
           <div className={`${styles.heroContent} col-lg-12`}>
-            {/* <h1 className={styles.title}>Farming Tips &amp; Buying Guides</h1> */}
-            {/* <p className={styles.subtitle}>
-              Latest tips, buying guides &amp; farming knowledge.
-            </p> */}
             <form
               className={styles.searchForm}
               onSubmit={(e) => e.preventDefault()}
@@ -183,123 +183,126 @@ const LatestBlog = () => {
                       onClick={() => {
                         setActiveCategory(id);
                         router?.push({
-                          query: {
-                            category: id,
-                          },
+                          query: { category: id },
                         });
                       }}
                       aria-pressed={activeCategory === id}
                     >
                       {label}
                     </button>
-                  </li> 
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
 
           <div className="col-xl-9 col-lg-8 col-md-7">
-            {blogListData?.length === 0 ? (
+            {filteredBlogs.length === 0 ? (
               <p className={styles.emptyMessage}>
                 No blogs found. Try a different search or category.
               </p>
             ) : (
               <>
-                <div className={styles.featuredCard}>
-                  <div className={styles.featuredMedia}>
-                    {featuredPost && (
+                {featuredPost && (
+                  <div className={styles.featuredCard}>
+                    <div className={styles.featuredMedia}>
                       <Image
-                        src={featuredPost?.image}
-                        alt={featuredPost?.title}
+                        src={featuredPost.image}
+                        alt={featuredPost.title}
                         fill
                         className={styles.featuredImage}
                         sizes="(max-width: 768px) 100vw, 42vw"
                         priority
                       />
-                    )}
-                  </div>
-                  <div className={styles.featuredBody}>
-                    <span className={styles.featuredCategory}>
-                      {featuredPost?.category?.name}
-                    </span>
-                    <h2 className={styles.featuredTitle}>
-                      {featuredPost?.title}
-                    </h2>
-                    <p className={styles.featuredExcerpt}>
-                      {featuredPost?.short_description}
-                    </p>
-                    <div className={styles.featuredFooter}>
-                      <div className={styles.featuredMeta}>
-                        <span className={styles.metaItem}>
-                          <FaRegUser className={styles.metaIcon} aria-hidden />
-                          {featuredPost?.author}
-                        </span>
-                        <span className={styles.metaItem}>
-                          <LuCalendarDays
-                            className={styles.metaIcon}
-                            aria-hidden
-                          />
-                          {featuredPost?.blog_date}
-                        </span>
+                    </div>
+                    <div className={styles.featuredBody}>
+                      <span className={styles.featuredCategory}>
+                        {featuredPost.category?.name}
+                      </span>
+                      <h2 className={styles.featuredTitle}>
+                        {featuredPost.title}
+                      </h2>
+                      <p className={styles.featuredExcerpt}>
+                        {featuredPost.short_description}
+                      </p>
+                      <div className={styles.featuredFooter}>
+                        <div className={styles.featuredMeta}>
+                          <span className={styles.metaItem}>
+                            <FaRegUser className={styles.metaIcon} aria-hidden />
+                            {featuredPost.author}
+                          </span>
+                          <span className={styles.metaItem}>
+                            <LuCalendarDays className={styles.metaIcon} aria-hidden />
+                            {featuredPost.blog_date}
+                          </span>
+                        </div>
+                        <Link
+                          href={`/blog/${featuredPost.slug}`}
+                          className={styles.readMoreBtn}
+                        >
+                          Read more
+                        </Link>
                       </div>
-                      <Link href={`/blog/${featuredPost?.slug}`} className={styles.readMoreBtn}>
-                        Read more
-                      </Link>
                     </div>
                   </div>
-                </div>
-                <div className={styles.blogList}>
-                  <h2 className={styles.blogListTitle}>Latest Blogs</h2>
-                  <div className={styles.blogListGrid}>
-                    {paginatedBlogs?.map((post) => (
-                      <Link key={post.id} href={`/blog/${post?.slug}`} className={styles.blogCard}>
-                        <div className={styles.blogCardMedia}>
-                          <Image
-                            src={post?.image}
-                            alt={post?.title}
-                            fill
-                            className={styles.blogCardImage}
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                          />
-                        </div>
-                        <div className={styles.blogCardBody}>
-                          <span className={styles.blogCardCategory}>
-                            {post?.category?.name}
-                          </span>
-                          <h3 className={styles.blogCardTitle}>
-                            {post?.title}
-                          </h3>
-                          <p className={styles.blogCardExcerpt}>
-                            {post.short_description}
-                          </p>
-                          <div className={styles.blogCardMeta}>
-                            <span className={styles.blogCardMetaItem}>
-                              <FaRegUser
-                                className={styles.blogCardMetaIcon}
-                                aria-hidden
-                              />
-                              {post?.author}
+                )}
+
+                {blogsExcludingFeatured.length > 0 && (
+                  <div className={styles.blogList}>
+                    <h2 className={styles.blogListTitle}>Latest Blogs</h2>
+                    <div className={styles.blogListGrid}>
+                      {paginatedBlogs.map((post) => (
+                        <Link
+                          key={post.id}
+                          href={`/blog/${post?.slug}`}
+                          className={styles.blogCard}
+                        >
+                          <div className={styles.blogCardMedia}>
+                            <Image
+                              src={post.image}
+                              alt={post.title}
+                              fill
+                              className={styles.blogCardImage}
+                              sizes="(max-width: 768px) 100vw, 33vw"
+                            />
+                          </div>
+                          <div className={styles.blogCardBody}>
+                            <span className={styles.blogCardCategory}>
+                              {post.category?.name}
                             </span>
-                            <span className={styles.blogCardMetaItem}>
-                              <LuCalendarDays
-                                className={styles.blogCardMetaIcon}
-                                aria-hidden
-                              />
-                              {post?.blog_date}
+                            <h3 className={styles.blogCardTitle}>{post.title}</h3>
+                            <p className={styles.blogCardExcerpt}>
+                              {post.short_description}
+                            </p>
+                            <div className={styles.blogCardMeta}>
+                              <span className={styles.blogCardMetaItem}>
+                                <FaRegUser
+                                  className={styles.blogCardMetaIcon}
+                                  aria-hidden
+                                />
+                                {post.author}
+                              </span>
+                              <span className={styles.blogCardMetaItem}>
+                                <LuCalendarDays
+                                  className={styles.blogCardMetaIcon}
+                                  aria-hidden
+                                />
+                                {post.blog_date}
+                              </span>
+                            </div>
+                            <span className={styles.blogCardReadMore}>
+                              Read more
                             </span>
                           </div>
-                          <Link href={`/blog/${post?.slug}`} className={styles.blogCardReadMore}>
-                            Read more
-                          </Link>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
 
-            {totalPages > 1 && (
+            {totalPages >= 1 && (
               <nav
                 className={styles.paginationWrapper}
                 aria-label="Blog list pagination"
@@ -321,10 +324,7 @@ const LatestBlog = () => {
                     if (typeof item === "string") {
                       return (
                         <li key={`${item}-${index}`}>
-                          <span
-                            className={styles.pageEllipsis}
-                            aria-hidden="true"
-                          >
+                          <span className={styles.pageEllipsis} aria-hidden="true">
                             …
                           </span>
                         </li>
@@ -363,6 +363,7 @@ const LatestBlog = () => {
               </nav>
             )}
           </div>
+
           <div className="col-xl-3 col-lg-4 col-md-5">
             <TrandingBlog />
           </div>
