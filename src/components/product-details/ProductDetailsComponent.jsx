@@ -29,7 +29,12 @@ const ProductDetailsComponent = ({ productDetails }) => {
         similarProducts={similarProducts}
         categorySlug={categorySlug}
       />
-      <ReviewsRating ratingData={productDetails?.data?.rating_summary} />
+      <ReviewsRating
+        productId={productDetails?.data?.id}
+        productName={productDetails?.data?.name}
+        ratingData={productDetails?.data?.rating_summary}
+        reviews={productDetails?.data?.reviews}
+      />
       <Faqs productData={productDetails?.data} />
       <OrderInformation />
     </Layout>

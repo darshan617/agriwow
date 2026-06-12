@@ -85,14 +85,94 @@
   font-weight: 600;
 }
 
+.ratingRow {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--color-border);
+}
+
 .ratingSummary {
   display: flex;
   align-items: center;
   gap: 32px;
   padding: 40px 24px;
   background:#f5fceb;
-  border-bottom: 1px solid var(--color-border);
   width: 40%;
+  flex-shrink: 0;
+}
+
+.writeReviewForm {
+  flex: 1;
+  /* display: flex; */
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: var(--color-surface);
+}
+
+.reviewFormContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ratingPicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingPickerLabel {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.starBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.reviewInput {
+  flex: 1;
+  min-height: 120px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.reviewInput:focus {
+  outline: none;
+  border-color: var(--color-green);
+}
+
+.submitReviewBtn {
+  background: var(--color-green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  align-self: flex-end;
+}
+
+.submitReviewBtn:hover {
+  background: var(--color-green-dark);
 }
 
 .avgScore {
@@ -133,6 +213,7 @@
 
 .starEmpty {
   color: var(--color-star-empty);
+  font-size: 25px;
 }
 
 .avgLabel {
@@ -336,6 +417,11 @@
     width: 100px;
     height: auto;
 }
+.submitReviewBtnWrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 
 @media (max-width: 1024px) {
@@ -343,6 +429,11 @@
     width: 60%;
     gap: 24px;
     padding: 32px 20px;
+  }
+
+  .writeReviewForm {
+    padding: 20px;
+    gap: 12px;
   }
 
   .writeReviewBtn {
@@ -380,12 +471,27 @@
 }
 
 @media (max-width: 768px) {
+  .ratingRow {
+    flex-direction: column;
+  }
+
   .ratingSummary {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
     padding: 24px 16px;
+  }
+
+  .writeReviewForm {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .submitReviewBtn {
+    align-self: stretch;
+    width: 100%;
   }
 
   .avgScore {

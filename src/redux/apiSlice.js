@@ -26,6 +26,9 @@ export const apiSlice = createApi({
     "relatedBlogs",
     "reviews",
     "faqs",
+    'reviewApi',
+    'updateReview',
+    'deleteReview'
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),
