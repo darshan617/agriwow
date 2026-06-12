@@ -59,6 +59,31 @@ const NAV_LINKS = [
   { href: "/blog", label: "Blogs" },
   { href: "/contact-us", label: "Contact us" },
 ];
+
+const normalizePath = (path = "") => {
+  const clean = path.split("?")[0].split("#")[0];
+  if (clean === "/" || clean === "") return "/";
+  return clean.replace(/\/$/, "");
+};
+
+const isNavLinkActive = (item, asPath) => {
+  const pathname = normalizePath(asPath);
+
+  if (item.label === "Home") {
+    return pathname === "/";
+  }
+  if (item.label === "Products") {
+    return (
+      pathname.startsWith("/product-category") ||
+      pathname.startsWith("/product-details")
+    );
+  }
+  if (item.href && item.href !== "#") {
+    const href = normalizePath(item.href);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+  return false;
+};
 const renderMenuProductColumns = (
   menuProductData,
   { linkClassName, onLinkClick } = {},
@@ -473,17 +498,27 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           </Link>
 
           <nav className={`${styles.navLinksDesktop}`}>
-            {NAV_LINKS.map((item) =>
-              item?.label === "Products" ? (
+            {NAV_LINKS.map((item) => {
+              const isActive = isNavLinkActive(item, router.asPath);
+              return item?.label === "Products" ? (
                 <div key={item?.label} className={styles.navItemWithMegaMenu}>
-                  <Link href={item?.href || "#"}>{item?.label}</Link>
+                  <Link
+                    href={item?.href || "#"}
+                    className={isActive ? styles.navLinkActive : ""}
+                  >
+                    {item?.label}
+                  </Link>
                 </div>
               ) : (
-                <Link key={item?.label} href={item?.href || "#"}>
+                <Link
+                  key={item?.label}
+                  href={item?.href || "#"}
+                  className={isActive ? styles.navLinkActive : ""}
+                >
                   {item?.label}
                 </Link>
-              ),
-            )}
+              );
+            })}
           </nav>
 
           <div
@@ -849,12 +884,13 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           </button>
         </div>
         <div className={`${styles.drawerLinks}`}>
-          {NAV_LINKS?.map((item) =>
-            item?.label === "Products" ? (
+          {NAV_LINKS?.map((item) => {
+            const isActive = isNavLinkActive(item, router.asPath);
+            return item?.label === "Products" ? (
               <div key={item?.label} className={styles.drawerNavItem}>
                 <button
                   type="button"
-                  className={`${styles.drawerProductsToggle} ${productsExpanded ? `${styles.drawerProductsToggleOpen}` : ""}`}
+                  className={`${styles.drawerProductsToggle} ${productsExpanded ? styles.drawerProductsToggleOpen : ""} ${isActive ? styles.navLinkActive : ""}`}
                   onClick={() => setProductsExpanded((open) => !open)}
                   aria-expanded={productsExpanded}
                   aria-controls="drawer-mega-products"
@@ -882,11 +918,16 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 </div>
               </div>
             ) : (
-              <Link key={item.label} href={item.href} onClick={closeMenu}>
+              <Link
+                key={item.label}
+                href={item.href}
+                className={isActive ? styles.navLinkActive : ""}
+                onClick={closeMenu}
+              >
                 {item?.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </div>
         <div className={`${styles.drawerTopExtras}`}>
           <TopHeaderExtras variant="drawer" />

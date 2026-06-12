@@ -11,6 +11,7 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
+import Link from "next/link";
 
 const HomeBanner = () => {
     const slides = [
@@ -27,6 +28,7 @@ const HomeBanner = () => {
         //   </>
         // ),
         backgroundImage: bannerImage1,
+        link: "/product-category/farm-mechanization-equipments",
         // sideImage: bannerProducts,
         // btnLabel: "Explore Products",
 
@@ -44,6 +46,7 @@ const HomeBanner = () => {
         //   </>
         // ),
         backgroundImage: bannerImage2,
+        link: "/product-category/garden-lawn-care",
         // sideImage: bannerProducts,
         // btnLabel: "Explore Products",
       },
@@ -60,6 +63,7 @@ const HomeBanner = () => {
         //   </>
         // ),
         backgroundImage: bannerImage3,
+        link: "/product-category/agriculture-sprayers",
         // sideImage: bannerProducts,
         // btnLabel: "Explore Products",
       },
@@ -89,12 +93,14 @@ const HomeBanner = () => {
         >
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>
+            <Link href={slide.link}>
             <Image
               src={slide.backgroundImage}
               alt="Farm background banner"
               className={`${styles.bannerBackground}`}
               priority
             />
+            </Link>
             </SwiperSlide>
           ))}
         </Swiper>

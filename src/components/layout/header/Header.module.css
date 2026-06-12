@@ -83,7 +83,8 @@
   transition: color 0.2s ease;
 }
 
-.navLinksDesktop > a:first-child {
+.navLinksDesktop a.navLinkActive,
+.navItemWithMegaMenu a.navLinkActive {
   color: #7ac043;
 }
 
@@ -1053,7 +1054,8 @@
     background 0.2s ease;
 }
 
-.drawerLinks > a:first-child {
+.drawerLinks > a.navLinkActive,
+.drawerProductsToggle.navLinkActive {
   color: #7ac043;
 }
 
