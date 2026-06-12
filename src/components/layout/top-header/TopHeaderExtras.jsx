@@ -8,7 +8,7 @@ export const TopHeaderLeftLinks = () => (
     <ul className="d-flex gap-3">
       <li><Link href="#">About</Link></li>
       <li><Link href="#">Shipping & Returns</Link></li>
-      <li><Link href="#">My Account</Link></li>
+      <li><Link href="/my-profile">My Profile</Link></li>
     </ul>
   </div>
 );

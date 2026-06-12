@@ -151,7 +151,7 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 4, justifyContent: "space-between", width: "100%" }}>
           {type === "productPage" ? (
             <>
               {isBestSeller && (
