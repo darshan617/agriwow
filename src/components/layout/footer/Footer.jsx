@@ -71,17 +71,17 @@ const Footer = () => {
                                     <h3 className={styles.footerNavHeading}>Agriwow</h3>
                                     <ul className={styles.footerNavList}>
                                         <li><Link href="/">Home</Link></li>
-                                        <li><Link href="#">My Account</Link></li>
+                                        <li><Link href="/my-profile">My Profile</Link></li>
                                         <li><Link href="#">Videos</Link></li>
                                         <li><Link href="#">Testimonials</Link></li>
-                                        <li><Link href="#">Blog</Link></li>
+                                        <li><Link href="/blog">Blog</Link></li>
                                     </ul>
                                 </nav>
                                 <nav className={styles.footerNavCol} aria-label="Help">
                                     <h3 className={styles.footerNavHeading}>Help</h3>
                                     <ul className={styles.footerNavList}>
-                                        <li><Link href="#">Contact Us</Link></li>
-                                        <li><Link href="#">Track My Order</Link></li>
+                                        <li><Link href="/contact-us">Contact Us</Link></li>
+                                        <li><Link href="/my-order">Track My Order</Link></li>
                                         <li><Link href="#">Buying Guide</Link></li>
                                     </ul>
                                 </nav>

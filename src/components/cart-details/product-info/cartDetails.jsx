@@ -260,25 +260,7 @@ const CartDetails = ({
   }, [cartItems, router]);
   return (
     <>
-      {!hideBreadcrumb && (
-        <div className={`${styles.breadcrumb}`}>
-          <div style={{ margin: "16px 0" }}>
-            <ul>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li>
-                <Link href="/">Shop</Link>
-              </li>
-              <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-              <li className={styles.breadcrumbItem1}>
-                <Link href="/cart">Cart</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
+      
 
       <div className={styles.productInfo}>
         {appliedCoupon && (

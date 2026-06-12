@@ -472,8 +472,7 @@
   }
   
 
-  
-  
+
   @media (max-width: 768px) {
     .itemDetail {
       padding: 12px;
@@ -482,8 +481,8 @@
     .imageDetail,
     .productInfo {
       width: 100%;
-      max-width: 100%;
-      padding: 0;
+      /* max-width: 100%; */
+      padding: 10px;
     }
   
     .imageDetail {
@@ -509,6 +508,12 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+    }
+    .thumbImage {
+      object-fit: contain;
+      border-radius: 4px;
+      width: 60px;
+      height: 60px;
     }
   
     .quickActionBtn {
@@ -540,6 +545,7 @@
     .productDescription {
       flex-direction: column;
       gap: 8px;
+      padding-bottom: 0;
     }
   
     .priceRow {
