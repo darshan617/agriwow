@@ -17,12 +17,12 @@ const INITIAL_FILTERS = [];
 
 function ProductListingToolbar({
   resultCount,
-  products = [],  
+  products = [],
   sortBy: controlledSortBy,
   onSortChange,
   pageSize = 12,
   isLoading = false,
-  isError = false,  
+  isError = false,
 }) {
   const [internalSortBy, setInternalSortBy] = useState("default");
   const sortBy = controlledSortBy ?? internalSortBy;
@@ -48,19 +48,19 @@ function ProductListingToolbar({
     switch (sortBy) {
       case "price-low":
         return list.sort(
-          (a, b) => (a?.selling_price ?? 0) - (b?.selling_price ?? 0)
+          (a, b) => (a?.selling_price ?? 0) - (b?.selling_price ?? 0),
         );
       case "price-high":
         return list.sort(
-          (a, b) => (b?.selling_price ?? 0) - (a?.selling_price ?? 0)
+          (a, b) => (b?.selling_price ?? 0) - (a?.selling_price ?? 0),
         );
       case "name-asc":
         return list.sort((a, b) =>
-          (a?.name ?? "").localeCompare(b?.name ?? "")
+          (a?.name ?? "").localeCompare(b?.name ?? ""),
         );
       case "name-desc":
         return list.sort((a, b) =>
-          (b?.name ?? "").localeCompare(a?.name ?? "")
+          (b?.name ?? "").localeCompare(a?.name ?? ""),
         );
       default:
         return list;
@@ -107,7 +107,7 @@ function ProductListingToolbar({
 
   const pageItems = useMemo(() => {
     const items = [];
-    const maxVisible = 5  ;
+    const maxVisible = 5;
 
     if (totalPages <= maxVisible + 2) {
       for (let i = 1; i <= totalPages; i += 1) items.push(i);
@@ -130,7 +130,8 @@ function ProductListingToolbar({
     <div className={`${styles.toolbar} `}>
       <div className={`${styles.topRow}`}>
         <p className={`${styles.resultsText}`}>
-          Showing <span className={`${styles.resultsCount}`}>{displayCount}</span>{" "}
+          Showing{" "}
+          <span className={`${styles.resultsCount}`}>{displayCount}</span>{" "}
           results found
         </p>
 
@@ -189,9 +190,7 @@ function ProductListingToolbar({
         {isLoading && products.length === 0 ? (
           <p className={`${styles.emptyState}`}>Loading products...</p>
         ) : isError ? (
-          <p className={`${styles.emptyState}`}>
-            No products found.
-          </p>  
+          <p className={`${styles.emptyState}`}>No products found.</p>
         ) : (
           paginatedProducts.map((item) => (
             <ProductCard
@@ -276,7 +275,7 @@ function ProductListingToolbar({
           </div>
         </div>
       )}
-    </div>  
+    </div>
   );
 }
 

@@ -14,7 +14,7 @@ const MENU_ITEMS = [
     href: "/my-profile",
     label: "My Address",
     icon: HiOutlineMapPin,
-    matchPath: "/my-address",
+    matchPath: "/my-profile",
   },
   {
     href: "/my-order",
@@ -25,7 +25,7 @@ const MENU_ITEMS = [
   {
     href: "/wishlist",
     label: "My Wishlist",
-    icon: FaRegHeart ,
+    icon: FaRegHeart,
     matchPath: "/wishlist",
   },
 ];
@@ -35,9 +35,7 @@ const GUEST_USER_INITIAL = "G";
 const CustomerInfo = () => {
   const router = useRouter();
   const [displayName, setDisplayName] = useState(GUEST_DISPLAY_NAME);
-  const [userInitial, setUserInitial] = useState(
-    GUEST_USER_INITIAL,
-  );
+  const [userInitial, setUserInitial] = useState(GUEST_USER_INITIAL);
 
   useEffect(() => {
     const raw = Cookies.get("userData");
@@ -48,8 +46,7 @@ const CustomerInfo = () => {
       const name = userData?.name || GUEST_DISPLAY_NAME;
       setDisplayName(name);
       setUserInitial(name.charAt(0).toUpperCase() || GUEST_USER_INITIAL);
-    } catch {
-    }
+    } catch {}
   }, []);
 
   const isActive = (matchPath) =>
@@ -66,15 +63,20 @@ const CustomerInfo = () => {
             <li className={styles.breadcrumbSeparator} aria-hidden>
               /
             </li>
-            <li className={styles.breadcrumbActive} style={{textTransform: "capitalize"}}>{router.pathname.split("/")?.pop()?.replace("-", " ")}</li>
+            <li
+              className={styles.breadcrumbActive}
+              style={{ textTransform: "capitalize" }}
+            >
+              {router.pathname.split("/")?.pop()?.replace("-", " ")}
+            </li>
           </ul>
         </nav>
 
         <div className={styles.profileCard}>
-          <div className={styles.profileAvatar} aria-hidden>    
+          <div className={styles.profileAvatar} aria-hidden>
             {userInitial ? <span>{userInitial}</span> : <FaUserCircle />}
           </div>
-          
+
           <div className={styles.profileMeta}>
             <p className={styles.profileLabel}>Name</p>
             <p className={styles.profileName}>{displayName}</p>
