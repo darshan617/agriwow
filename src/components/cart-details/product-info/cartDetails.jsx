@@ -158,7 +158,7 @@ const CartDetails = ({
         },
       });
       if (res?.data?.success || res?.data?.status) {
-        showToast(res?.data?.message, "success");
+        // showToast(res?.data?.message, "success");
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -191,6 +191,7 @@ const CartDetails = ({
           order_id: razorpay.order_id,
           prefill: razorpay.prefill,
           handler: async function (response) {
+            setShowPopup("payment");
             console.log("Payment Success", response);
             const verifyPaymentRes = await verifyPayment({
               body: {
@@ -200,14 +201,21 @@ const CartDetails = ({
                 razorpay_signature: response.razorpay_signature,
               },
             });
+
             if (
               verifyPaymentRes?.data?.success ||
               verifyPaymentRes?.data?.status
             ) {
-              console.log(res, "res✅");
-              showToast(verifyPaymentRes?.data?.message, "success");
+              showToast(
+                "Payment Successful" || verifyPaymentRes?.data?.message,
+                "success",
+              );
+              router.push("/");
             } else {
-              showToast(verifyPaymentRes?.data?.message, "error");
+              showToast(
+                "Payment Failed" || verifyPaymentRes?.data?.message,
+                "error",
+              );
             }
           },
 
@@ -232,6 +240,24 @@ const CartDetails = ({
       showToast(error?.data?.message, "error");
     }
   };
+
+  useEffect(() => {
+    if (cartItems.length > 0 && !router.query.buy_now_id) {
+      const itemKey = getItemKey(cartItems[0]);
+
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            buy_now_id: itemKey,
+          },
+        },
+        undefined,
+        { shallow: true },
+      );
+    }
+  }, [cartItems, router]);
   return (
     <>
       {!hideBreadcrumb && (
@@ -446,8 +472,10 @@ const CartDetails = ({
                 </button>
               </Link>
             ) : (
-              <>
+              <div className="d-flex justify-content-end mt-3 gap-3">
                 <button
+                  type="button"
+                  className={styles.checkoutBtn}
                   onClick={() =>
                     handlePlaceOrder(
                       router?.query?.productId ? "buy_now" : "cart",
@@ -456,9 +484,20 @@ const CartDetails = ({
                     )
                   }
                 >
-                  Partial Checkout
+                  <div>
+                    <div>
+                      <span>Partial Payment (30%)</span>
+                      {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
                 </button>
+
                 <button
+                  type="button"
+                  className={styles.checkoutBtn}
                   onClick={() =>
                     handlePlaceOrder(
                       router?.query?.productId ? "buy_now" : "cart",
@@ -467,9 +506,17 @@ const CartDetails = ({
                     )
                   }
                 >
-                  Full Checkout
+                  <div>
+                    <div>
+                      <span> Full Payment</span>
+                      {/* <p>₹ {cartTotal}</p> */}
+                    </div>
+                  </div>
+                  <span className={styles.arrow}>
+                    <MdOutlineKeyboardArrowRight size={30} />
+                  </span>
                 </button>
-              </>
+              </div>
             )}
           </>
         )}
@@ -491,6 +538,23 @@ const CartDetails = ({
             phone={phone}
             isLoading={isVerifyOtpLoading}
           />
+        </CustomPopup>
+      )}
+      {showPopup === "payment" && (
+        <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
+          <div>
+            <div className="d-flex justify-content-center mb-3">
+              <div className="spinner-border text-success" role="status">
+                <span className="visually-hidden">
+                  Verifying Your Payment...
+                </span>
+              </div>
+            </div>
+            <p className="text-center m-0 fs-4">
+              {" "}
+              Verifying Your Payment. Please wait...{" "}
+            </p>
+          </div>
         </CustomPopup>
       )}
     </>
