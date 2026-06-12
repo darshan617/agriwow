@@ -90,7 +90,7 @@
   grid-template-columns: 5fr 1fr 1.5fr 1.5fr;
   align-items: center;
   padding: 20px 0;
-    border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
   gap: 5px
 }
 
@@ -247,6 +247,11 @@
   font-size: 13px;
   display: flex;
   justify-content: flex-start;
+}
+
+.checkoutBtn:hover {
+  background: #0f7726;
+  transition: background 0.2s ease;
 }
 
 .emptySection {

@@ -83,7 +83,7 @@ const buyProductApi = apiSlice.injectEndpoints({
     }),
     verifyPayment: builder.mutation({
       query: ({ body }) => ({
-        url: "/verify-payment",
+        url: "/checkout/verify-payment",
         method: "POST",
         headers: headers(),
         body,

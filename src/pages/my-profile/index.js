@@ -16,7 +16,7 @@ const MyProfile = () => {
     <Layout>
       <div className="container">
         <div className="row">
-            <CustomerInfo />
+          <CustomerInfo />
           <div className="col-xl-9 col-md-12">
             <MyProfileComponent />
             <DeliveryAddress
@@ -24,6 +24,7 @@ const MyProfile = () => {
               cartData={cartData}
               setShowAddressForm={setShowAddressForm}
               showAddressForm={showAddressForm}
+              type="my-profile"
             />
           </div>
         </div>

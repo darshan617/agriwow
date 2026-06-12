@@ -9,6 +9,8 @@ import {
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { FaTrash } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
 
 const formatAddressLine = (form) => {
   const parts = [
@@ -49,7 +51,7 @@ const DeliveryAddress = ({
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
   const { showToast } = useToast();
-
+  const router = useRouter();
   const {
     data: allAddresses,
     isLoading: isAllAddressesLoading,
@@ -58,6 +60,8 @@ const DeliveryAddress = ({
 
   const [deleteDeliveryAddress, { isLoading: isDeleteDeliveryAddressLoading }] =
     useDeleteDeliveryAddressMutation();
+  const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
+    useUpdateBuyNowMutation();
 
   const addressCount = allAddresses?.data?.length ?? 0;
 
@@ -68,8 +72,18 @@ const DeliveryAddress = ({
     }
   };
 
-  const handleDeliverHere = (addr) => {
-    handleUpdateCart(null, null, addr.id);
+  const handleDeliverHere = async (addr, type) => {
+    if (type === "buy_now") {
+      const res = await updateBuyNow({
+        body: {
+          buy_now_id: router.query.buy_now_id,
+          address_id: addr.id,
+        },
+      });
+    } else {
+      handleUpdateCart(null, null, addr.id);
+    }
+
     setAddress({
       name: addr.name,
       address: formatApiAddressLine(addr),
@@ -262,7 +276,12 @@ const DeliveryAddress = ({
                           <button
                             type="button"
                             className={styles.deliverHereBtn}
-                            onClick={() => handleDeliverHere(addr)}
+                            onClick={() =>
+                              handleDeliverHere(
+                                addr,
+                                router.query.productId ? "buy_now" : "cart",
+                              )
+                            }
                           >
                             DELIVER HERE
                           </button>

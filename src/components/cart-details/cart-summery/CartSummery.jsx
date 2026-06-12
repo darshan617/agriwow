@@ -12,6 +12,8 @@ import {
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { FaCopy } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -23,13 +25,15 @@ const CartSummery = ({
   cartData,
   hideCoupon = false,
 }) => {
+  const router = useRouter();
   const { showToast } = useToast();
-  console.log(cartData, "cartData");
   const [applyCoupon, { isLoading }] = useApplyCouponMutation();
   const { data: availableCoupons } = useGetAvailableCouponsQuery();
-  console.log(availableCoupons);
+
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
+  const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
+    useUpdateBuyNowMutation();
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
@@ -50,7 +54,8 @@ const CartSummery = ({
     0;
   const gstAmount =
     cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
-  const shippingAmount = cartSummary.shipping_charge ?? 0;
+  const shippingAmount =
+    cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
   const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
@@ -82,7 +87,16 @@ const CartSummery = ({
         grand_total: res.data.grand_total,
       });
       showToast(res?.data?.message || "Coupon applied", "success");
-      handleUpdateCart();
+      if (router?.pathname === "/checkout" && router?.query?.productId) {
+        const res = await updateBuyNow({
+          body: {
+            buy_now_id: router.query.buy_now_id,
+            coupon_code: couponCode.trim(),
+          },
+        });
+      } else {
+        handleUpdateCart();
+      }
     } else {
       showToast(res?.data?.message || "Failed to apply coupon", "error");
     }
