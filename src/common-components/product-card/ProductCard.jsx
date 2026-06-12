@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
@@ -11,7 +11,9 @@ import Link from "next/link";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import Cookies from "js-cookie";
 import {
+  getWishlistItems,
   useAddToWishlistMutation,
+  useGetWishlistQuery,
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
@@ -49,6 +51,19 @@ const ProductCard = ({
   const userData = Cookies?.get("userData")
     ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : null;
+
+  const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
+    skip: !userData?.id,
+  });
+
+  const isInWishlist = useMemo(() => {
+    if (!productId) return isWishlist;
+    const items = getWishlistItems(wishlistData);
+    return items.some(
+      (item) =>
+        (item?.product?.id ?? item?.product_id ?? item?.id) === productId,
+    );
+  }, [wishlistData, productId, isWishlist]);
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [addToWishlist, { isLoading: isWishlistLoading }] =
@@ -194,13 +209,13 @@ const ProductCard = ({
             <button
               type="button"
               className={`${styles.wishlistBtn} ${
-                isWishlist ? styles.wishlistActive : ""
+                isInWishlist ? styles.wishlistActive : ""
               }`}
-              aria-label={isWishlist ? "In wishlist" : "Add to wishlist"}
+              aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
               onClick={handleAddToWishlist}
               disabled={isWishlistLoading}
             >
-              {isWishlist ? <FaHeart /> : <FiHeart />}
+              {isInWishlist ? <FaHeart /> : <FiHeart />}
             </button>
           ))}
       </div>
@@ -280,13 +295,13 @@ const ProductCard = ({
           <button
             type="button"
             className={`${styles.wishlistBtn} ${
-              isWishlist ? styles.wishlistActive : ""
+              isInWishlist ? styles.wishlistActive : ""
             }`}
-            aria-label={isWishlist ? "In wishlist" : "Add to wishlist"}
+            aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
             onClick={handleAddToWishlist}
             disabled={isWishlistLoading}
           >
-            {isWishlist ? <FaHeart /> : <FiHeart />}
+            {isInWishlist ? <FaHeart /> : <FiHeart />}
           </button>
         )}
       </div>

@@ -27,7 +27,10 @@ import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { useGetWishlistQuery } from "@/redux/apis/addToWishlist";
+import {
+  getWishlistItems,
+  useGetWishlistQuery,
+} from "@/redux/apis/addToWishlist";
 import {
   getCartSessionId,
   useGetCartDataQuery,
@@ -56,7 +59,7 @@ const USER_MENU_ITEMS = [
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "#", label: "Products" },
-  { href: "/blog", label: "Blogs" },
+  { href: "/blog?category=all", label: "Blogs" },
   { href: "/contact-us", label: "Contact us" },
 ];
 const renderMenuProductColumns = (
@@ -152,6 +155,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
     skip: !userData?.id,
   });
+  const wishlistCount = useMemo(
+    () => getWishlistItems(wishlistData).length,
+    [wishlistData],
+  );
   const { data: cartData } = useGetCartDataQuery(undefined, {
     skip: !(Cookies.get("userToken") || getCartSessionId()),
   });
@@ -783,10 +790,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/wishlist">
                 <FaHeart size={21} />
               </Link>
-              {wishlistData?.data?.length >= 0 && (
-                <span className={styles.badge}>
-                  {wishlistData?.data?.length}
-                </span>
+              {wishlistCount > 0 && (
+                <span className={styles.badge}>{wishlistCount}</span>
               )}
             </button>
             <button

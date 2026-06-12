@@ -6,9 +6,15 @@ import styles from "@/components/layout/top-header/TopHeader.module.css";
 export const TopHeaderLeftLinks = () => (
   <div className={styles.topHeaderLeft}>
     <ul className="d-flex gap-3">
-      <li><Link href="#">About</Link></li>
-      <li><Link href="#">Shipping & Returns</Link></li>
-      <li><Link href="/my-profile">My Profile</Link></li>
+      <li>
+        <Link href="#">About</Link>
+      </li>
+      <li>
+        <Link href="#">Shipping & Returns</Link>
+      </li>
+      <li>
+        <Link href="/my-profile">My Profile</Link>
+      </li>
     </ul>
   </div>
 );
@@ -22,9 +28,19 @@ export const TopHeaderHelp = () => (
 
 export const TopHeaderSocial = () => (
   <div className={`${styles.socialIcons} d-flex flex-row gap-1`}>
-    <FaFacebookF className={styles.topHeaderRightIcon} />
-    <FaXTwitter className={styles.topHeaderRightIcon} />
-    <FaInstagram className={styles.topHeaderRightIcon} />
+    <Link
+      href="https://www.instagram.com/agriwow_"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaInstagram className={styles.topHeaderRightIcon} />
+    </Link>
+    <Link href="#">
+      <FaFacebookF className={styles.topHeaderRightIcon} />
+    </Link>
+    <Link href="#">
+      <FaXTwitter className={styles.topHeaderRightIcon} />
+    </Link>
   </div>
 );
 

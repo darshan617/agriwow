@@ -76,7 +76,9 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
             className={styles.track}
             style={{
               transform: `translateX(calc(-${translatePct}% - ${currentIndex * GAP}px))`,
-              transition: isAnimating ? "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)" : "none",
+              transition: isAnimating
+                ? "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)"
+                : "none",
             }}
           >
             {visibleItems.map((product) => (
@@ -98,7 +100,9 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                   name={product?.name}
                   price={product?.selling_price}
                   oldPrice={product?.price}
-                  reviews={product?.reviews?.length ?? product?.review_count ?? 0}
+                  reviews={
+                    product?.reviews?.length ?? product?.review_count ?? 0
+                  }
                   average_rating={product?.average_rating}
                   productId={product?.id}
                 />

@@ -20,7 +20,10 @@ import Footer from "@/components/layout/footer/Footer";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import ProductsItem from "@/common-components/products/ProductsItem";
 
-const HomeComponents = ({ homeData }) => {
+const HomeComponents = ({ homeData: ssrHomeData }) => {
+  const { data: cachedHomeData } = useGetHomeDataQuery();
+  const homeData = cachedHomeData ?? ssrHomeData;
+
   const categoriesData = homeData?.data?.categories;
   const agricultureProductsData =
     homeData?.data?.products?.agriculture_sprayers;
@@ -32,8 +35,7 @@ const HomeComponents = ({ homeData }) => {
   const insightsBlogData = homeData?.data?.blogs;
   const bestSellingData = homeData?.data?.products?.best_selling;
   const topRatedData = homeData?.data?.products?.top_rated;
-console.log(homeData, "homeDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
- 
+
   return (
     <>
       <TopHeader />
@@ -51,16 +53,38 @@ console.log(homeData, "homeDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         }
       />
       <Detail />
-      <FarmEquipments farmEquipmentsData={farmEquipmentsData} categoriesData={categoriesData} viewAllLink="/product-category/farm-mechanization-equipments"/>
+      <FarmEquipments
+        farmEquipmentsData={farmEquipmentsData}
+        categoriesData={categoriesData}
+        viewAllLink="/product-category/farm-mechanization-equipments"
+      />
       <Benefit />
-      <IndustrialProduct industrialProductsData={industrialProductsData} viewAllLink="/product-category/industrial-products"/>
+      <IndustrialProduct
+        industrialProductsData={industrialProductsData}
+        viewAllLink="/product-category/industrial-products"
+      />
       <Solution />
-      <GardenTool gardeningToolsData={gardeningToolsData} viewAllLink="/product-category/garden-tools"/>
-      <PostHarvest postHarvestData={postHarvestData} viewAllLink="/product-category/post-harvest"/>
-      <FoogingMachine foogingMachineData={foogingMachineData} viewAllLink="/product-category/fogging-machines"/>
-      <BestSelling bestSellingData={bestSellingData} viewAllLink="/product-category/best-selling"/>
+      <GardenTool
+        gardeningToolsData={gardeningToolsData}
+        viewAllLink="/product-category/garden-tools"
+      />
+      <PostHarvest
+        postHarvestData={postHarvestData}
+        viewAllLink="/product-category/post-harvest"
+      />
+      <FoogingMachine
+        foogingMachineData={foogingMachineData}
+        viewAllLink="/product-category/fogging-machines"
+      />
+      <BestSelling
+        bestSellingData={bestSellingData}
+        viewAllLink="/product-category/best-selling"
+      />
       <ExclusiveDeal />
-      <TopRating topRatedData={topRatedData} viewAllLink="/product-category/top-rating"/>
+      <TopRating
+        topRatedData={topRatedData}
+        viewAllLink="/product-category/top-rating"
+      />
       <VideoSection />
       <InsightsBlog insightsBlogData={insightsBlogData} />
       <Footer />
