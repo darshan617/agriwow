@@ -85,7 +85,9 @@ const Cart = () => {
       <div className="container">
         <div className="row">
           <div
-            className={`${cartItems.length > 0 ? "col-xl-8" : "col-xl-12"}  col-12`}
+            className={`${
+              cartItems.length > 0 ? "col-xl-8 col-md-8" : "col-xl-12 col-md-12"
+            } col-12`}
           >
             <CartDetails
               cartData={cartData}
@@ -103,7 +105,7 @@ const Cart = () => {
             />
           </div>
           {cartItems.length > 0 && (
-            <div className="col-xl-4 col-12">
+            <div className="col-xl-4 col-md-4 col-12">
               <CartSummery
                 cartItems={cartItemsWithQuantities}
                 appliedCoupon={appliedCoupon}

@@ -14,9 +14,8 @@
 }
 
 .delivery:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
-    cursor: pointer;
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out; 
 }
 
 @media (max-width: 768px) {

@@ -17,6 +17,7 @@ import {
   useRemoveFromWishlistMutation,
 } from "@/redux/apis/addToWishlist";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import {
   markBuyNowAddPending,
   useBuyProductMutation,
@@ -43,6 +44,9 @@ const ProductCard = ({
   isWishlist = false,
 }) => {
   const router = useRouter();
+  const isHomeOrProductPage = ["productPage", "homePage", "home"].includes(
+    type,
+  );
   const isWishlistPage =
     router.pathname === "/wishlist" || path === "/wishlist";
   const hoverImage = imageHover || image;
@@ -73,6 +77,7 @@ const ProductCard = ({
   const [buyProduct, { isLoading: isBuyProductLoading }] =
     useBuyProductMutation();
   const { showToast } = useToast();
+  const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
   const handleAddToCart = async () => {
     try {
@@ -93,31 +98,44 @@ const ProductCard = ({
     }
   };
 
-  const handleBuyProduct = async () => {
+  const handleBuyProduct = () => {
+    if (!getIsLoggedIn()) {
+      openLoginPopup();
+      return;
+    }
+
+    const currentUser = Cookies?.get("userData")
+      ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+      : null;
+
     markBuyNowAddPending({
       productId,
       quantity: 1,
-      userId: userData?.id,
+      userId: currentUser?.id,
     });
     router?.push({
       pathname: `/checkout`,
       query: {
-        productId: productId,
+        productId,
         quantity: 1,
-        userId: userData?.id,
+        userId: currentUser?.id,
       },
     });
   };
 
   const handleAddToWishlist = async () => {
-    if (!userData?.id) {
-      showToast("Please log in to add items to your wishlist", "warning");
+    if (!getIsLoggedIn()) {
+      openLoginPopup();
       return;
     }
 
+    const currentUser = Cookies?.get("userData")
+      ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
+      : null;
+
     const res = await addToWishlist({
       body: {
-        user_id: userData.id,
+        user_id: currentUser.id,
         product_id: productId,
       },
     });
@@ -137,9 +155,17 @@ const ProductCard = ({
     }
   };
 
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      handleRemoveFromWishlist();
+    } else {
+      handleAddToWishlist();
+    }
+  };
+
   const handleRemoveFromWishlist = async () => {
-    if (!userData?.id) {
-      showToast("Please log in to manage your wishlist", "warning");
+    if (!getIsLoggedIn()) {
+      openLoginPopup();
       return;
     }
 
@@ -167,7 +193,7 @@ const ProductCard = ({
     >
       <div className={`${styles.cardTags}`}>
         <div style={{ display: "flex", gap: 4, justifyContent: "space-between", width: "100%" }}>
-          {type === "productPage" ? (
+          {isHomeOrProductPage ? (
             <>
               {isBestSeller && (
                 <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
@@ -208,12 +234,14 @@ const ProductCard = ({
           ) : (
             <button
               type="button"
-              className={`${styles.wishlistBtn} ${
+              className={`${styles.wishlistBtnnnnn} ${
                 isInWishlist ? styles.wishlistActive : ""
               }`}
-              aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
-              onClick={handleAddToWishlist}
-              disabled={isWishlistLoading}
+              aria-label={
+                isInWishlist ? "Remove from wishlist" : "Add to wishlist"
+              }
+              onClick={handleWishlistToggle}
+              disabled={isWishlistLoading || isRemoveWishlistLoading}
             >
               {isInWishlist ? <FaHeart /> : <FiHeart />}
             </button>
@@ -261,13 +289,16 @@ const ProductCard = ({
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
         </div>
 
-        {type === "productPage" && discount > 0 && (
+        {isHomeOrProductPage && discount > 0 && (
           <div className={`${styles.discountRow}`}>
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
             <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
           </div>
         )}
+   
       </Link>
+      
+
 
       <div className={`${styles.cardActions}`}>
         <button
@@ -297,9 +328,11 @@ const ProductCard = ({
             className={`${styles.wishlistBtn} ${
               isInWishlist ? styles.wishlistActive : ""
             }`}
-            aria-label={isInWishlist ? "In wishlist" : "Add to wishlist"}
-            onClick={handleAddToWishlist}
-            disabled={isWishlistLoading}
+            aria-label={
+              isInWishlist ? "Remove from wishlist" : "Add to wishlist"
+            }
+            onClick={handleWishlistToggle}
+            disabled={isWishlistLoading || isRemoveWishlistLoading}
           >
             {isInWishlist ? <FaHeart /> : <FiHeart />}
           </button>

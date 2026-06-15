@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 10px 0;
   max-width: 100%;
 }
 
@@ -141,6 +141,18 @@
   100% {
     transform: translateY(-100%);
     opacity: 0;
+  }
+}
+@media (max-width: 1560px) {
+  .shopNowButton {
+    padding: 5px 8px;
+    /* font-size: 10px; */
+  }
+  .topHeaderTicker p {
+    font-size: 15px;
+  }
+  .TopHeader {
+    padding: 8px 0 !important;
   }
 }
 
