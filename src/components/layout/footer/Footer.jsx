@@ -177,6 +177,15 @@ const Footer = () => {
                 <div className={styles.footerSocialWrap}>
                   <div className={styles.footerSocial}>
                     <Link
+                      href="https://www.instagram.com/agriwow_"
+                      className={styles.footerSocialBtn}
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaInstagram />
+                    </Link>
+                    <Link
                       href="#"
                       className={styles.footerSocialBtn}
                       aria-label="Facebook"
@@ -189,13 +198,6 @@ const Footer = () => {
                       aria-label="X"
                     >
                       <FaXTwitter />
-                    </Link>
-                    <Link
-                      href="#"
-                      className={styles.footerSocialBtn}
-                      aria-label="Instagram"
-                    >
-                      <FaInstagram />
                     </Link>
                     <Link
                       href="#"
@@ -239,7 +241,9 @@ const Footer = () => {
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
                 <Link href="#">Privacy Policy</Link>
                 <Link href="#">Terms of Use</Link>
-                <Link href="#">Shipping &amp; Delivery Policy</Link>
+                <Link href="/shipping-return">
+                  Shipping &amp; Delivery Policy
+                </Link>
                 <Link href="#">Cancellation / Return Policy</Link>
               </nav>
             </div>

@@ -5,9 +5,10 @@ import Cookies from "js-cookie";
 import { FaHeart, FaOutlineHeart, FaUserCircle } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
-import { HiOutlineMapPin } from "react-icons/hi2";
+import { HiOutlineMapPin, HiOutlinePower } from "react-icons/hi2";
 import { PiPackageThin } from "react-icons/pi";
 import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
 const MENU_ITEMS = [
   {
@@ -33,6 +34,7 @@ const MENU_ITEMS = [
 const GUEST_DISPLAY_NAME = "Guest User";
 const GUEST_USER_INITIAL = "G";
 const CustomerInfo = () => {
+  const { showToast } = useToast();
   const router = useRouter();
   const [displayName, setDisplayName] = useState(GUEST_DISPLAY_NAME);
   const [userInitial, setUserInitial] = useState(GUEST_USER_INITIAL);
@@ -51,6 +53,18 @@ const CustomerInfo = () => {
 
   const isActive = (matchPath) =>
     router.pathname === matchPath || router.asPath === matchPath;
+
+  const handleLogout = async () => {
+    try {
+      Cookies.remove("userData");
+      Cookies.remove("userToken");
+      showToast("Logged out successfully", "success");
+      router.push("/");
+    } catch (error) {
+      console.error("Logout failed", error);
+      showToast(error?.data?.message || "Failed to logout", "error");
+    }
+  };
 
   return (
     <div className="col-xl-3 col-md-12">
@@ -103,6 +117,17 @@ const CustomerInfo = () => {
                 </li>
               );
             })}
+            <li className={styles.navItem}>
+              <button
+                className={`${styles.navLink} ${styles.navLinkLogout}`}
+                onClick={handleLogout}
+              >
+                <span className={styles.navIcon}>
+                  <HiOutlinePower size={20} color="#dc3545" />
+                </span>
+                <span>Logout</span>
+              </button>
+            </li>
           </ul>
         </nav>
       </aside>
