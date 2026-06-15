@@ -45,6 +45,7 @@ const DeliveryAddress = ({
   setShowAddressForm,
   showAddressForm,
   refetchCartData,
+  type = "cart",
 }) => {
   const [address, setAddress] = useState({});
   const [showAllAddresses, setShowAllAddresses] = useState(false);
@@ -147,36 +148,59 @@ const DeliveryAddress = ({
 
   return (
     <section className={styles.checkoutSection}>
-      <div className={styles.content}>
-        <p className={styles.sectionLabel}>
-          Delivery Address ({addressCount || 0})
-        </p>
-        <div className={styles.addressCard}>
-          {address?.address ? (
-            <>
-              <p className={styles.addressName}>{address?.name}</p>
-              <p className={styles.addressLine}>{address?.address}</p>
-              <p className={styles.addressMobile}>Mobile : {address?.mobile}</p>
-            </>
-          ) : (
-            <p className="m-0 small">
-              No Address Found. Please add a new address.
-            </p>
-          )}
+      {type === "cart" && (
+        <div className={styles.content}>
+          <p className={styles.sectionLabel}>
+            Delivery Address ({addressCount || 0})
+          </p>
+          <div className={styles.addressCard}>
+            {address?.address ? (
+              <>
+                <p className={styles.addressName}>{address?.name}</p>
+                <p className={styles.addressLine}>{address?.address}</p>
+                <p className={styles.addressMobile}>
+                  Mobile : {address?.mobile}
+                </p>
+              </>
+            ) : (
+              <p className="m-0 small">
+                No Address Found. Please add a new address.
+              </p>
+            )}
 
-          <div className={styles.addressActions}>
-            <button
-              type="button"
-              className={styles.changeBtn}
-              onClick={() => handleChangeDeliveryAddress()}
-              disabled={!address?.address}
-              style={{
-                opacity: !address?.address ? 0.5 : 1,
-                cursor: !address?.address ? "not-allowed" : "pointer",
-              }}
-            >
-              Change Delivery Address
-            </button>
+            <div className={styles.addressActions}>
+              <button
+                type="button"
+                className={styles.changeBtn}
+                onClick={() => handleChangeDeliveryAddress()}
+                disabled={!address?.address}
+                style={{
+                  opacity: !address?.address ? 0.5 : 1,
+                  cursor: !address?.address ? "not-allowed" : "pointer",
+                }}
+              >
+                Change Delivery Address
+              </button>
+              <button
+                type="button"
+                className={styles.addBtn}
+                onClick={() => {
+                  setEditingAddress(null);
+                  setShowAddressForm(true);
+                }}
+              >
+                + Add New Delivery Address
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {type === "my-profile" && (
+        <div className={styles.content}>
+          <div className="d-flex justify-content-between align-items-center">
+            <p className={styles.sectionLabel}>
+              Delivery Address ({addressCount || 0})
+            </p>
             <button
               type="button"
               className={styles.addBtn}
@@ -188,8 +212,75 @@ const DeliveryAddress = ({
               + Add New Delivery Address
             </button>
           </div>
+          <div className={styles.addressList}>
+            {allAddresses?.data?.map((addr) => {
+              const isSelected = selectedAddressId === addr.id;
+
+              return (
+                <div
+                  key={addr.id}
+                  className={`${styles.selectAddressCard} ${
+                    isSelected ? styles.selectAddressCardActive : ""
+                  }`}
+                  onClick={() => setSelectedAddressId(addr.id)}
+                >
+                  <label
+                    className={styles.selectAddressHeader}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <input
+                      type="radio"
+                      name="deliveryAddress"
+                      className={styles.selectAddressRadio}
+                      checked={isSelected}
+                      onChange={() => setSelectedAddressId(addr.id)}
+                    />
+                    <span className={styles.selectAddressName}>
+                      {addr.name}
+                    </span>
+                  </label>
+
+                  <p className={styles.selectAddressLine}>
+                    {formatApiAddressLine(addr)}
+                  </p>
+                  <p className={styles.selectAddressMobile}>
+                    Mobile : {addr.phone}
+                  </p>
+
+                  {isSelected && (
+                    <div
+                      className={styles.selectAddressActions}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        type="button"
+                        className={styles.editAddressBtn}
+                        onClick={() => handleEditAddress(addr)}
+                      >
+                        EDIT
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.deleteAddressBtn}
+                        onClick={() => handleDeleteAddress(addr)}
+                        disabled={isDeleteDeliveryAddressLoading}
+                        style={{
+                          opacity: isDeleteDeliveryAddressLoading ? 0.5 : 1,
+                          cursor: isDeleteDeliveryAddressLoading
+                            ? "not-allowed"
+                            : "pointer",
+                        }}
+                      >
+                        <FaTrash size={16} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {showAddressForm && (
         <CustomPopup

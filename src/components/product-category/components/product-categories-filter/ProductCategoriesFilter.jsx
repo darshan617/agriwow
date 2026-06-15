@@ -4,7 +4,10 @@ import Link from "next/link";
 import { FaAngleUp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import style from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter.module.css";
-import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
+import {
+  useGetMenuProductDataQuery,
+  useGetProductsByCategoryQuery,
+} from "@/redux/apis/categoryApi";
 
 const PRICE_MIN_BOUND = 1000;
 const PRICE_MAX_BOUND = 200000;
@@ -63,7 +66,6 @@ function PriceRangeSlider({ minValue, maxValue, onMinChange, onMaxChange }) {
 }
 
 function CategoryCheckbox({ slug, name, count, isChecked, href }) {
-  // ✅ displayCount is inside the component so `count` prop is in scope
   const displayCount = count ?? 0;
 
   return (
@@ -99,18 +101,30 @@ function CategoryCheckbox({ slug, name, count, isChecked, href }) {
   );
 }
 
-function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose, resultCount }) {
+function ProductCategoriesFilter({
+  drawerOpen = false,
+  onDrawerClose,
+  resultCount,
+}) {
   const router = useRouter();
   const {
     categorySlug: activeCategorySlug,
     subCategory: activeSubCategorySlug,
-  } = router.query;
+  } = router?.query;
 
   const { data: menuProductData, isFetching } = useGetMenuProductDataQuery();
 
+  const { data: activeCategoryProductsData } = useGetProductsByCategoryQuery(
+    activeCategorySlug,
+    { skip: !activeCategorySlug },
+  );
+
+  const activeCategoryTotalCount =
+    activeCategoryProductsData?.data?.length ?? undefined;
+
   const categories = useMemo(
     () => menuProductData?.data?.AllCategory ?? [],
-    [menuProductData]
+    [menuProductData],
   );
 
   const [isOpen, setIsOpen] = useState(true);
@@ -166,25 +180,26 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose, resultCoun
 
             {!isFetching && categories.length === 0 && (
               <li className={`${style.item}`}>
-                <span className={`${style.name}`}>No categories available.</span>
+                <span className={`${style.name}`}>
+                  No categories available.
+                </span>
               </li>
             )}
 
             {categories.map((category) => {
               const isCategoryActive = activeCategorySlug === category?.slug;
               const subcategories = category?.subcategories ?? [];
-              const hasSubcategories = subcategories.length > 0;
+              const hasSubcategories = subcategories?.length > 0;
 
-          
-              const categoryCount =
-                isCategoryActive && resultCount != null
-                  ? resultCount
-                  : hasSubcategories
-                    // ? subcategories.length
-                    // : undefined;
+              const categoryCount = isCategoryActive
+                ? activeCategoryTotalCount
+                : undefined;
 
               return (
-                <li key={category?.id ?? category?.slug} className={`${style.item}`}>
+                <li
+                  key={category?.id ?? category?.slug}
+                  className={`${style.item}`}
+                >
                   <CategoryCheckbox
                     slug={category?.slug}
                     name={category?.name}
@@ -202,7 +217,7 @@ function ProductCategoriesFilter({ drawerOpen = false, onDrawerClose, resultCoun
                           isSubActive && resultCount != null
                             ? resultCount
                             : typeof sub?.products_count === "number" &&
-                              sub.products_count > 0
+                                sub.products_count > 0
                               ? sub.products_count
                               : undefined;
 

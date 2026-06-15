@@ -30,7 +30,7 @@
 
 .footerFormIconWrapper {
     position: absolute;
-    left: 10px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
@@ -43,13 +43,23 @@
 
 .inputIconRight {
     border: none;
-    background: none;
+    background: #8dba3b;
     cursor: pointer;
     padding: 0;
     margin: 0;
     position: absolute;
     right: 10px;
-    top: 30%;
+    top: 15%;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.inputIconRight:hover {
+    background: #719a2f;
+    transition: all 0.3s ease;
 }
 
 .footerFormButtonIcon {
@@ -63,7 +73,7 @@
     padding-top: 20px;
 }
 
-.footerFormPara span {
+.footerFormPara a {
     color: #8dba3b;
 }
 
@@ -278,6 +288,16 @@
 
 .footerLegal a:hover {
     color: #8dba3b;
+}
+
+.footerFormInput {
+    border: 2px solid transparent;
+    outline: none;
+}
+
+.footerFormInput:focus {
+    border: 2px solid #8dba3b;
+    outline: none;
 }
 
 /* ── Tablet ── */
