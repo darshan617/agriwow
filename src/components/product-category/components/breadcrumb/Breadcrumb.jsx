@@ -22,29 +22,27 @@ const humanize = (slug = "") =>
 
 const ProductCategoryList = () => {
   const router = useRouter();
-  const { categorySlug, subCategory } = router.query;
+  const { categorySlug, subCategory } = router?.query;
 
   const categoryQuery = useGetProductsByCategoryQuery(categorySlug, {
-    skip: !categorySlug || !!subCategory,
+    skip: !categorySlug || !!subCategory || !router?.isReady,
   });
 
   const subCategoryQuery = useGetProductsBySubCategoryQuery(
     { categorySlug, subCategorySlug: subCategory },
-    { skip: !categorySlug || !subCategory }
+    { skip: !categorySlug || !subCategory || !router?.isReady },
   );
 
   const activeQuery = subCategory ? subCategoryQuery : categoryQuery;
   const { isFetching, isError } = activeQuery;
   const products = useMemo(
     () => activeQuery.data?.data ?? [],
-    [activeQuery.data]
+    [activeQuery.data],
   );
 
-  // ✅ resultCount: actual number of products for the active category/subcategory
-  const resultCount = products.length;
+  const resultCount = products?.length;
 
-  const categoryName =
-    products?.[0]?.category?.name || humanize(categorySlug);
+  const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
     products?.[0]?.subcategory?.name || humanize(subCategory);
 
