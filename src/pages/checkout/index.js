@@ -226,18 +226,23 @@ const Checkout = () => {
   return (
     <Layout>
       <div className="container">
-        <CheckoutStepper activeStep={1} />
+        
+        { cartItems.length > 0 && (
+          <CheckoutStepper activeStep={1} />
+        )}
         <div className="row">
           <div className="col-lg-8">
-            <DeliveryAddress
-              handleUpdateCart={handleUpdateCart}
-              cartData={activeCartData}
-              setShowAddressForm={setShowAddressForm}
-              showAddressForm={showAddressForm}
-              refetchCartData={
-                isBuyNowFlow ? refetchBuyNowData : refetchCartData
-              }
-            />
+            { cartItems.length > 0 && (
+              <DeliveryAddress
+                handleUpdateCart={handleUpdateCart}
+                cartData={activeCartData}
+                setShowAddressForm={setShowAddressForm}
+                showAddressForm={showAddressForm}
+                refetchCartData={
+                  isBuyNowFlow ? refetchBuyNowData : refetchCartData
+                }
+              />
+            )}
             <div className="mt-4">
               <CartDetails
                 cartData={activeCartData}
@@ -259,15 +264,17 @@ const Checkout = () => {
             </div>
           </div>
           <div className="col-lg-4">
-            <CartSummery
-              cartItems={cartItemsWithQuantities}
-              appliedCoupon={appliedCoupon}
-              setAppliedCoupon={setAppliedCoupon}
-              couponCode={couponCode}
-              setCouponCode={setCouponCode}
-              handleUpdateCart={handleUpdateCart}
-              cartData={activeCartData}
-            />
+            { cartItems.length > 0 && (
+              <CartSummery
+                cartItems={cartItemsWithQuantities}
+                appliedCoupon={appliedCoupon}
+                setAppliedCoupon={setAppliedCoupon}
+                couponCode={couponCode}
+                setCouponCode={setCouponCode}
+                handleUpdateCart={handleUpdateCart}
+                cartData={activeCartData}
+              />
+            )}
           </div>
         </div>
       </div>
