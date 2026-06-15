@@ -85,9 +85,11 @@ const Cart = () => {
       <div className="container">
         <div className="row">
           <div
-            className={`${
-              cartItems.length > 0 ? "col-xl-8 col-md-8" : "col-xl-12 col-md-12"
-            } col-12`}
+            className={
+              cartItems.length === 0
+                ? "col-lg-12"
+                : "col-xl-8 col-md-8 col-12"
+            }
           >
             <CartDetails
               cartData={cartData}
