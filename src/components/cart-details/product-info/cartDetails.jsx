@@ -210,7 +210,7 @@ const CartDetails = ({
                 "Payment Successful" || verifyPaymentRes?.data?.message,
                 "success",
               );
-              router.push("/");
+              router.push("/my-order");
             } else {
               showToast(
                 "Payment Failed" || verifyPaymentRes?.data?.message,
@@ -260,8 +260,6 @@ const CartDetails = ({
   }, [cartItems, router]);
   return (
     <>
-      
-
       <div className={styles.productInfo}>
         {appliedCoupon && (
           <div className={styles.coupon}>

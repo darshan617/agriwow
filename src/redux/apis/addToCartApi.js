@@ -105,7 +105,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
     getAllDeliveryAddresses: builder.query({
       query: () => ({
@@ -122,7 +122,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
     deleteDeliveryAddress: builder.mutation({
       query: ({ body }) => ({
@@ -131,7 +131,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
   }),
 });
