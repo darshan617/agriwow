@@ -177,6 +177,15 @@ const Footer = () => {
                 <div className={styles.footerSocialWrap}>
                   <div className={styles.footerSocial}>
                     <Link
+                      href="https://www.instagram.com/agriwow_"
+                      className={styles.footerSocialBtn}
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaInstagram />
+                    </Link>
+                    <Link
                       href="#"
                       className={styles.footerSocialBtn}
                       aria-label="Facebook"
@@ -189,13 +198,6 @@ const Footer = () => {
                       aria-label="X"
                     >
                       <FaXTwitter />
-                    </Link>
-                    <Link
-                      href="#"
-                      className={styles.footerSocialBtn}
-                      aria-label="Instagram"
-                    >
-                      <FaInstagram />
                     </Link>
                     <Link
                       href="#"

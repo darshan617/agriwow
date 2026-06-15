@@ -204,6 +204,18 @@
   color: #239c3d;
 }
 
+.navLinkLogout {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #dc3545;
+}
+
+.navLinkLogout:hover {
+  color: #dc3545;
+}
+
 @media (max-width: 1366px) {
   .breadcrumb ul {
     padding: 0;
