@@ -320,6 +320,7 @@ const CartDetails = ({
               />
             </div>
 
+          
             <div className={styles.emptyContent}>
               <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
               <p className={styles.emptyText}>Add product and proceed</p>
