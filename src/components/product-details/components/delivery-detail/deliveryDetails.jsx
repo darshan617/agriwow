@@ -13,6 +13,8 @@ import { markBuyNowAddPending } from "@/redux/apis/buyProductApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const deliveryIcons = {
   pincode: <Image src={noEntry} alt="no entry" width={20} height={20} />,
@@ -65,7 +67,7 @@ export default function DeliveryDetails({ productDetails }) {
   const [qty, setQty] = useState(1);
   const [addToCart] = useAddToCartMutation();
   const { showToast } = useToast();
-
+  const { openLoginPopup } = useLoginPopup();
   const handleAddToCart = async (productId) => {
     try {
       const res = await addToCart({
@@ -155,6 +157,10 @@ export default function DeliveryDetails({ productDetails }) {
         <button
           className={styles.ddBtnBuy}
           onClick={() => {
+            if (!getIsLoggedIn()) {
+              openLoginPopup();
+              return;
+            }
             markBuyNowAddPending({
               productId: productDetails?.data?.id,
               quantity: qty,
