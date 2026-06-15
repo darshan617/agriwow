@@ -1,24 +1,34 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
+import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
-export const TopHeaderLeftLinks = () => (
-  <div className={styles.topHeaderLeft}>
-    <ul className="d-flex gap-3">
-      <li>
-        <Link href="#">About</Link>
-      </li>
-      <li>
-        <Link href="#">Shipping & Returns</Link>
-      </li>
-      <li>
-        <Link href="/my-profile">My Profile</Link>
-      </li>
-    </ul>
-  </div>
-);
+export const TopHeaderLeftLinks = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    setIsLoggedIn(getIsLoggedIn());
+  }, []);
+  return (
+    <div className={styles.topHeaderLeft}>
+      <ul className="d-flex gap-3">
+        <li>
+          <Link href="#">About</Link>
+        </li>
+        <li>
+          <Link href="/shipping-return">Shipping & Returns</Link>
+        </li>
+        {isLoggedIn && (
+          <li>
+            <Link href="/my-profile">My Profile</Link>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+};
 export const TopHeaderHelp = () => (
   <div className={styles.topHeaderRight}>
     <h2>Need Help?</h2>

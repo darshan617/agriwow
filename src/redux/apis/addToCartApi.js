@@ -45,7 +45,7 @@ const addToCartApi = apiSlice.injectEndpoints({
           }
         } catch {}
       },
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "addToCart"],
     }),
     getCartData: builder.query({
       query: () => ({
@@ -62,7 +62,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "addToCart"],
     }),
     mergeCart: builder.mutation({
       query: ({ body }) => ({
@@ -105,7 +105,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
     getAllDeliveryAddresses: builder.query({
       query: () => ({
@@ -122,7 +122,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
     deleteDeliveryAddress: builder.mutation({
       query: ({ body }) => ({
@@ -131,7 +131,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData"],
+      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
   }),
 });

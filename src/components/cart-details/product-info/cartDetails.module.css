@@ -264,7 +264,7 @@
 
 .emptyVisual {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
   min-height: 200px;
 }

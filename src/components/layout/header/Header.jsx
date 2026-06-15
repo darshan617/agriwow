@@ -38,7 +38,7 @@ import {
 } from "@/redux/apis/addToCartApi";
 
 const TRENDING_SEARCHES = [
-  "Fooging Machines",
+  "Fogging Machines",
   "Garden Equipment",
   "Garden Machinery",
   "Garden Tools",
@@ -58,7 +58,7 @@ const USER_MENU_ITEMS = [
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "#", label: "Products" },
+  { href: "/product-category/agriculture-sprayers", label: "Products" },
   { href: "/blog?category=all", label: "Blogs" },
   { href: "/contact-us", label: "Contact us" },
 ];
@@ -364,7 +364,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     }
     const fromMenu = menuProductData?.data?.AllCategory;
     if (Array.isArray(fromMenu)) {
-      return fromMenu.slice(0, 6).map((cat) => ({
+      return fromMenu?.slice(0, 6)?.map((cat) => ({
         name: cat?.name,
         slug: cat?.slug,
         image: cat?.image ?? cat?.thumbnail,
@@ -634,7 +634,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                         <span>Trending Searches</span>
                       </h3>
                       <div className={`${styles.trendingChips}`}>
-                        {trendingToShow.map((term) => (
+                        {trendingToShow?.map((term) => (
                           <button
                             key={term}
                             type="button"

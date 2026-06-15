@@ -20,158 +20,6 @@ import {
 } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
-const CALIBRATION_STEPS = [
-  <>
-    <span>Measure Spray Width:</span>
-    <p>
-      Hold the nozzle at your normal working height and measure the width of the
-      spray pattern on the ground.
-      <br />
-      Example: 20 inches
-    </p>
-  </>,
-  <>
-    <span>Calculate Calibration Distance:</span>
-    <p>
-      Distance = 4090 ÷ Spray Width (inches)
-      <br />
-      Example: 20-inch width → 204 feet
-    </p>
-  </>,
-  <>
-    <span>Time Your Walk:</span>
-    <ul>
-      <li>Mark the distance</li>
-      <li>Fill sprayer with clean water</li>
-      <li>Walk at your normal pace while pumping consistently</li>
-      <li>Record the time (repeat 3 times and average)</li>
-    </ul>
-  </>,
-  <>
-    <span>Collect Nozzle Output:</span>
-    <ul>
-      <li>Stand still and maintain the same pressure</li>
-      <li>Collect spray for the same number of seconds</li>
-      <li>Use a measuring cup</li>
-    </ul>
-  </>,
-  <>
-    <span>Determine Application Rate:</span>
-    <p>
-      The ounces collected = Gallons Per Acre (GPA)
-      <br />
-      Example: 20 ounces collected = 20 GPA
-    </p>
-  </>,
-];
-
-const KEY_BENEFITS = [
-  <span>
-    <b>Cost savings:</b> Avoid overuse of expensive chemicals
-  </span>,
-  <span>
-    <b>Environmental protection:</b>Minimize runoff and groundwater
-    contamination
-  </span>,
-  <span>
-    <b>Crop safety:</b>Prevent phytotoxicity from over-application
-  </span>,
-];
-
-const PRE_CALIBRATION_ITEMS = [
-  <span>
-    <b>Inspect the nozzle:</b> Replace if the spray pattern is uneven or streaky
-  </span>,
-  <span>
-    <b>Clean filters:</b> Remove debris from suction and nozzle filters
-  </span>,
-  <span>
-    <b>Check for leaks:</b>Fill with water and inspect hoses, seals, and trigger
-  </span>,
-  <span>
-    <b>Uniformity test:</b>Spray on dry ground—look for even coverage without
-    gaps or heavy edges
-  </span>,
-];
-
-const ADJUSTMENT_ITEMS = [
-  <span>
-    <b>Walking speed:</b> Faster = lower application; slower = higher
-    application
-  </span>,
-  <span>
-    <b>Pressure:</b>More pumping = higher flow rate
-  </span>,
-  <span>
-    <b>Nozzle size:</b>The most reliable adjustment for major corrections
-  </span>,
-];
-
-const BEST_PRACTICES = [
-  <span>
-    <b>Maintain steady pumping:</b> Develop a rhythm (e.g., one pump every two
-    steps)
-  </span>,
-  <span>
-    <b>Avoid wind: </b>Do not spray above ~10 mph wind speed
-  </span>,
-  <span>
-    <b>Use a constant flow valve: </b>Keeps output steady despite pressure
-    variation
-  </span>,
-  <span>
-    <b>Mix only what you need: </b>Use your GPA to calculate exact spray volume
-    for your plotate application rates.
-  </span>,
-];
-
-const TAGS = [
-  "Sprayers",
-  "Brush Cutters",
-  "Garden Tools",
-  "Power Weeders",
-  "Fogging Machines",
-];
-
-const RELATED_ARTICLES = [
-  {
-    id: 1,
-    slug: "calibration-techniques-manual-spray-pump",
-    title:
-      "Calibration Techniques for Manual Spray Pump to Avoid Chemical Wastage",
-    excerpt:
-      "Learn how to calibrate your manual spray pump to reduce chemical wastage and protect your crops effectively.",
-    author: "Seo Person",
-    date: "June 10, 2023",
-    category: "Agriculture",
-    image: heroImage,
-  },
-  {
-    id: 2,
-    slug: "calibration-techniques-manual-spray-pump-2",
-    title:
-      "Calibration Techniques for Manual Spray Pump to Avoid Chemical Wastage",
-    excerpt:
-      "Learn how to calibrate your manual spray pump to reduce chemical wastage and protect your crops effectively.",
-    author: "Seo Person",
-    date: "June 10, 2023",
-    category: "Agriculture",
-    image: heroImage,
-  },
-  {
-    id: 3,
-    slug: "calibration-techniques-manual-spray-pump-3",
-    title:
-      "Calibration Techniques for Manual Spray Pump to Avoid Chemical Wastage",
-    excerpt:
-      "Learn how to calibrate your manual spray pump to reduce chemical wastage and protect your crops effectively.",
-    author: "Seo Person",
-    date: "June 10, 2023",
-    category: "Agriculture",
-    image: heroImage,
-  },
-];
-
 const BlogDetailsComponent = () => {
   const router = useRouter();
   const { data: blogDetailsData } = useGetBlogDetailsQuery(
@@ -189,6 +37,7 @@ const BlogDetailsComponent = () => {
   );
   const stripHtml = (html) => html?.replace(/<[^>]*>/g, "") ?? "";
   const relatedBlogs = relatedBlogsData?.data;
+  const tags = blogDetailsData?.data?.tags;
   return (
     <div className={styles.page}>
       <div className={styles.breadcrumb}>
@@ -442,55 +291,65 @@ const BlogDetailsComponent = () => {
         ></div>
         <div className={styles.tags}>
           <p className={styles.tagsTitle}>Tags:</p>
-          {TAGS.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              {tag}
-            </span>
-          ))}
+          {tags?.length > 0 ? (
+            <>
+              {tags?.map((tag) => (
+                <span key={tag} className={styles.tag}>
+                  {tag}
+                </span>
+              ))}
+            </>
+          ) : (
+            <p className={styles.noTags}>No tags found</p>
+          )}
         </div>
       </article>
 
       <section className={styles.relatedSection}>
         <h2 className={styles.relatedTitle}>Related Articles</h2>
         <div className={styles.relatedGrid}>
-          {relatedBlogs?.map((post) => (
-            <article key={post?.id} className={styles.relatedCard}>
-              <div className={styles.relatedMedia}>
-                <Image
-                  src={post?.image}
-                  alt={post?.title}
-                  fill
-                  className={styles.relatedImage}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className={styles.relatedBody}>
-                <span className={styles.relatedCategory}>
-                  {post?.category?.name}
-                </span>
-                <h3 className={styles.relatedCardTitle}>{post?.title}</h3>
-                <p className={styles.relatedExcerpt}>
-                  {stripHtml(post?.short_description)}
-                </p>
-                <div className={styles.relatedMeta}>
-                  <span className={styles.metaItem}>
-                    <FaRegUser className={styles.metaIcon} aria-hidden />
-                    {post?.author}
-                  </span>
-                  <span className={styles.metaItem}>
-                    <LuCalendarDays className={styles.metaIcon} aria-hidden />
-                    {post?.blog_date}
-                  </span>
+          {relatedBlogs?.length > 0 ? (
+            relatedBlogs?.map((post) => (
+              <article key={post?.id} className={styles.relatedCard}>
+                <div className={styles.relatedMedia}>
+                  <Image
+                    src={post?.image}
+                    alt={post?.title}
+                    fill
+                    className={styles.relatedImage}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-                <Link
-                  href={`/blog/${post?.slug}`}
-                  className={styles.readMoreLink}
-                >
-                  Read more
-                </Link>
-              </div>
-            </article>
-          ))}
+                <div className={styles.relatedBody}>
+                  <span className={styles.relatedCategory}>
+                    {post?.category?.name}
+                  </span>
+                  <h3 className={styles.relatedCardTitle}>{post?.title}</h3>
+                  <p className={styles.relatedExcerpt}>
+                    {stripHtml(post?.short_description)}
+                  </p>
+                  <div className={styles.relatedMeta}>
+                    <span className={styles.metaItem}>
+                      <FaRegUser className={styles.metaIcon} aria-hidden />
+                      {post?.author}
+                    </span>
+                    <span className={styles.metaItem}>
+                      <LuCalendarDays className={styles.metaIcon} aria-hidden />
+                      {post?.blog_date}
+                    </span>
+                  </div>
+                  <Link
+                    href={`/blog/${post?.slug}`}
+                    className={styles.readMoreLink}
+                  >
+                    Read more
+                  </Link>
+                </div>
+              </article>
+            ))
+          ) : (
+            <p className={styles.noRelatedBlogs}>No related articles found</p>
+          )}
         </div>
       </section>
     </div>
