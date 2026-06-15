@@ -21,6 +21,7 @@ import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
 import {
   usePlaceOrderMutation,
+  useRemoveBuyNowMutation,
   useUpdateBuyNowMutation,
   useVerifyPaymentMutation,
 } from "@/redux/apis/buyProductApi";
@@ -38,6 +39,7 @@ const CartDetails = ({
   hideBreadcrumb = false,
   hideCheckoutButton = false,
   handleUpdateCart = () => {},
+  onBuyNowRemoved = () => {},
   cartData = {},
   setShowAddressForm = () => {},
 }) => {
@@ -55,7 +57,8 @@ const CartDetails = ({
     usePlaceOrderMutation();
   const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
     useVerifyPaymentMutation();
-  console.log(cartItems, "cartItems");
+  const [removeBuyNow, { isLoading: isRemoveBuyNowLoading }] =
+    useRemoveBuyNowMutation();
 
   const getIsLoggedIn = () => {
     const cookie = Cookies?.get("userData");
@@ -159,6 +162,25 @@ const CartDetails = ({
       });
       if (res?.data?.success || res?.data?.status) {
         // showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
+  const handleRemoveBuyNow = async (buyNowId) => {
+    try {
+      const res = await removeBuyNow({
+        body: {
+          buy_now_id: buyNowId,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        onBuyNowRemoved(buyNowId);
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -350,7 +372,11 @@ const CartDetails = ({
                   {qty === 1 ? (
                     <button
                       className={styles.productCartDelete}
-                      onClick={() => handleRemoveFromCart(item.id)}
+                      onClick={() =>
+                        isBuyNowFlow
+                          ? handleRemoveBuyNow(itemKey)
+                          : handleRemoveFromCart(item.id)
+                      }
                     >
                       <ImBin />
                     </button>

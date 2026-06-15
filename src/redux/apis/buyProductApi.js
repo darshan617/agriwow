@@ -72,6 +72,15 @@ const buyProductApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["getBuyNowData"],
     }),
+    removeBuyNow: builder.mutation({
+      query: ({ body }) => ({
+        url: "/buy-now/remove",
+        method: "POST",
+        headers: headers(),
+        body,
+      }),
+      invalidatesTags: ["getBuyNowData"],
+    }),
     placeOrder: builder.mutation({
       query: ({ body }) => ({
         url: "/checkout/place-order",
@@ -97,6 +106,7 @@ export const {
   useBuyProductMutation,
   useUpdateBuyNowMutation,
   useGetBuyNowDataQuery,
+  useRemoveBuyNowMutation,
   usePlaceOrderMutation,
   useVerifyPaymentMutation,
 } = buyProductApi;

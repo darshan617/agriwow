@@ -41,9 +41,9 @@ const Checkout = () => {
     () =>
       Boolean(
         router?.isReady &&
-          router?.query?.productId &&
-          router?.query?.quantity &&
-          router?.query?.userId,
+        router?.query?.productId &&
+        router?.query?.quantity &&
+        router?.query?.userId,
       ),
     [
       router?.isReady,
@@ -57,9 +57,9 @@ const Checkout = () => {
     () =>
       Boolean(
         router?.isReady &&
-          (router?.query?.productId ||
-            router?.query?.quantity ||
-            router?.query?.userId),
+        (router?.query?.productId ||
+          router?.query?.quantity ||
+          router?.query?.userId),
       ),
     [
       router?.isReady,
@@ -94,6 +94,23 @@ const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
 
   const getItemKey = (item) => item?.buy_now_id ?? item?.id;
+
+  const normalizeBuyNowItems = (raw) => {
+    if (!raw) return [];
+    const items = Array.isArray(raw) ? raw : [raw];
+    return items.filter((item) => item?.buy_now_id ?? item?.id);
+  };
+
+  const handleBuyNowRemoved = (buyNowId) => {
+    setCartItems((prev) =>
+      prev.filter((item) => getItemKey(item) !== buyNowId),
+    );
+    setQuantities((prev) => {
+      const next = { ...prev };
+      delete next[buyNowId];
+      return next;
+    });
+  };
 
   const handleUpdateCart = async (id, quantity, address_id = null) => {
     try {
@@ -136,8 +153,7 @@ const Checkout = () => {
     }
   };
 
-  const getQuantity = (item) =>
-    quantities[getItemKey(item)] ?? item.quantity;
+  const getQuantity = (item) => quantities[getItemKey(item)] ?? item.quantity;
 
   const cartItemsWithQuantities = useMemo(
     () =>
@@ -175,18 +191,19 @@ const Checkout = () => {
 
   useEffect(() => {
     if (isBuyNowFlow) {
-      if (buyNowData?.data) {
-        const items = Array.isArray(buyNowData.data)
-          ? buyNowData.data
-          : [buyNowData.data];
-        setCartItems(items);
-      }
+      if (!buyNowData) return;
+      setCartItems(normalizeBuyNowItems(buyNowData?.data));
       return;
     }
-    if (cartData?.data) {
-      setCartItems(Array.isArray(cartData?.data) ? cartData.data : []);
-    }
-  }, [cartData?.data, buyNowData?.data, isBuyNowFlow]);
+    if (!cartData) return;
+    setCartItems(
+      cartData?.data
+        ? Array.isArray(cartData.data)
+          ? cartData.data
+          : []
+        : [],
+    );
+  }, [cartData, buyNowData, isBuyNowFlow]);
 
   useEffect(() => {
     if (!router?.isReady || !canFetchCart || !shouldAddBuyNowProduct) {
@@ -211,20 +228,16 @@ const Checkout = () => {
       <div className="container">
         <CheckoutStepper activeStep={1} />
         <div className="row">
-          <div
-            className={`${
-              cartItems.length > 0 ? "col-lg-8 col-md-8" : "col-lg-12 col-md-12"
-            } col-12`}
-          >
-            {cartItemsWithQuantities?.length > 0 && (
+          <div className="col-lg-8">
             <DeliveryAddress
               handleUpdateCart={handleUpdateCart}
               cartData={activeCartData}
               setShowAddressForm={setShowAddressForm}
-                showAddressForm={showAddressForm}
-                refetchCartData={isBuyNowFlow ? refetchBuyNowData : refetchCartData}
-              />
-            )}
+              showAddressForm={showAddressForm}
+              refetchCartData={
+                isBuyNowFlow ? refetchBuyNowData : refetchCartData
+              }
+            />
             <div className="mt-4">
               <CartDetails
                 cartData={activeCartData}
@@ -241,12 +254,11 @@ const Checkout = () => {
                 appliedCoupon={appliedCoupon}
                 onRemoveCoupon={() => setAppliedCoupon(null)}
                 handleUpdateCart={handleUpdateCart}
+                onBuyNowRemoved={handleBuyNowRemoved}
               />
             </div>
           </div>
-          {cartItems.length > 0 && (
-          <div className="col-lg-4 col-md-4 col-12">
-            {cartItemsWithQuantities?.length > 0 && (
+          <div className="col-lg-4">
             <CartSummery
               cartItems={cartItemsWithQuantities}
               appliedCoupon={appliedCoupon}
@@ -256,9 +268,7 @@ const Checkout = () => {
               handleUpdateCart={handleUpdateCart}
               cartData={activeCartData}
             />
-            )}
           </div>
-          )}
         </div>
       </div>
     </Layout>
