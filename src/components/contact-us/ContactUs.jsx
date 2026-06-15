@@ -5,6 +5,12 @@ import Image from "next/image";
 import { BsChatDotsFill } from "react-icons/bs";
 import chatUsGif from "@/assets/images/contact.png";
 import { BsQuestionCircleFill } from "react-icons/bs";
+import { CiLocationOn } from "react-icons/ci";
+import { IoCallOutline } from "react-icons/io5";
+import { LuAlarmClockCheck } from "react-icons/lu";
+
+
+
 
 const ContactUs = () => {
   return (
@@ -89,35 +95,40 @@ const ContactUs = () => {
             </div>
             <div className={`${styles.officeAddressSection}`}>
               <h2 className={`${styles.officeAddressTitle}`}>
-                Our Office Addresses
+                Contact Us
               </h2>
               <div className="row g-3">
                 <div className="col-lg-4">
                   <div className={`${styles.officeCard}`}>
-                    <span className={`${styles.officeBadge}`}>Headquarter</span>
-                    <h5 className={`${styles.officeCountry}`}>India</h5>
+                    <span className={`${styles.officeBadge}`}><CiLocationOn size={25} /></span>
+                    <h5 className={`${styles.officeCountry}`}>OUR STORE</h5>
                     <p className={`${styles.officeAddress}`}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, est.
+                    8, Mohan Nagar Indore 452001 Madhya Pradesh
                     </p>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className={`${styles.officeCard}`}>
                     <span className={`${styles.officeBadge}`}>
-                      India Office
+                    <IoCallOutline size={25} />
+
                     </span>
-                    <h5 className={`${styles.officeCountry}`}>India</h5>
+                    <h5 className={`${styles.officeCountry}`}>CONTACT INFO</h5>
                     <p className={`${styles.officeAddress}`}>
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, qui?
+                    Telephone: +91 9229297668 
+                    <br />
+                    Email: info@agriwow.com
                     </p>
                   </div>
                 </div>
                 <div className="col-lg-4">
                   <div className={`${styles.officeCard}`}>
-                    <span className={`${styles.officeBadge}`}>India Office</span>
-                    <h5 className={`${styles.officeCountry}`}>India</h5>
+                    <span className={`${styles.officeBadge}`}><LuAlarmClockCheck size={25} /></span>
+                    <h5 className={`${styles.officeCountry}`}>BUSNESS HOURS</h5>
                     <p className={`${styles.officeAddress}`}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, minima?
+                    Monday - Saturday:
+                    <br />
+                    10:30 AM - 7:00 PM
                     </p>
                   </div>
                 </div>

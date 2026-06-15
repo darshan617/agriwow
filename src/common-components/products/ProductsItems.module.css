@@ -8,7 +8,7 @@
 .productsTitle {
   color: #111;
   letter-spacing: 0.2px;
-  font-size: 40px;
+  font-size: 38px;
   font-weight: 700;
   padding-bottom: 30px;
   margin: 0;
@@ -444,6 +444,12 @@
   justify-content: center;
 }
 
+@media (max-width: 1560px) {
+  .productsTitle {
+    font-size: 35px;
+  }
+}
+
 @media (max-width: 1400px) {
     .overlayTitle {
     font-size: 24px;
@@ -476,6 +482,11 @@
     flex: 0 0 100%;
     max-width: 100%;
     width: 100%;
+  }
+  .viewAllBtn {
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
   }
 }
 

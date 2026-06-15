@@ -58,7 +58,7 @@ const USER_MENU_ITEMS = [
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "#", label: "Products" },
+  { href: "/product-category/agriculture-sprayers", label: "Products" },
   { href: "/blog?category=all", label: "Blogs" },
   { href: "/contact-us", label: "Contact us" },
 ];

@@ -163,11 +163,11 @@ const ProductsItem = ({
                     768: {
                       slidesPerView: isEquipment ? 3 : 3,
                     },
-                    991: {
-                      slidesPerView: isEquipment ? 4 : 3,
-                    },
+                    // 991: {
+                    //   slidesPerView: isEquipment ? 4 : 3,
+                    // },
                     1024: {
-                      slidesPerView: isEquipment ? 4 : 4,
+                      slidesPerView: isEquipment ? 3 : 3,
                     },
                     1200: {
                       slidesPerView: isEquipment ? 4 : 4,

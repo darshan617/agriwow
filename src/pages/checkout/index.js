@@ -211,14 +211,20 @@ const Checkout = () => {
       <div className="container">
         <CheckoutStepper activeStep={1} />
         <div className="row">
-          <div className="col-lg-8">
+          <div
+            className={`${
+              cartItems.length > 0 ? "col-lg-8 col-md-8" : "col-lg-12 col-md-12"
+            } col-12`}
+          >
+            {cartItemsWithQuantities?.length > 0 && (
             <DeliveryAddress
               handleUpdateCart={handleUpdateCart}
               cartData={activeCartData}
               setShowAddressForm={setShowAddressForm}
-              showAddressForm={showAddressForm}
-              refetchCartData={isBuyNowFlow ? refetchBuyNowData : refetchCartData}
-            />
+                showAddressForm={showAddressForm}
+                refetchCartData={isBuyNowFlow ? refetchBuyNowData : refetchCartData}
+              />
+            )}
             <div className="mt-4">
               <CartDetails
                 cartData={activeCartData}
@@ -238,7 +244,9 @@ const Checkout = () => {
               />
             </div>
           </div>
-          <div className="col-lg-4">
+          {cartItems.length > 0 && (
+          <div className="col-lg-4 col-md-4 col-12">
+            {cartItemsWithQuantities?.length > 0 && (
             <CartSummery
               cartItems={cartItemsWithQuantities}
               appliedCoupon={appliedCoupon}
@@ -248,7 +256,9 @@ const Checkout = () => {
               handleUpdateCart={handleUpdateCart}
               cartData={activeCartData}
             />
+            )}
           </div>
+          )}
         </div>
       </div>
     </Layout>

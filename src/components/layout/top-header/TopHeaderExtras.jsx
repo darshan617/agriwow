@@ -10,7 +10,7 @@ export const TopHeaderLeftLinks = () => (
         <Link href="#">About</Link>
       </li>
       <li>
-        <Link href="#">Shipping & Returns</Link>
+        <Link href="/shipping-return">Shipping & Returns</Link>
       </li>
       <li>
         <Link href="/my-profile">My Profile</Link>

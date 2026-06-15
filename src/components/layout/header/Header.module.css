@@ -76,7 +76,7 @@
 }
 
 .navLinksDesktop a {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #545454;
   text-transform: capitalize;
@@ -1182,6 +1182,9 @@
 
   .megaDropdown {
     width: 100vw;
+  }
+  .logoWrap img {
+    width: 200px !important;
   }
 }
 
