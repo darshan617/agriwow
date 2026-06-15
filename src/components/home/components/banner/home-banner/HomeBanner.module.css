@@ -1,37 +1,25 @@
-.bannerCard {
+/* .bannerCard {
   position: relative;
   overflow: hidden;
-}
+} */
 
-.bannerImageWrapper {
+/* .bannerImageWrapper {
   position: relative;
   width: 100%;
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   overflow: hidden;
-}
+} */
 
-.bannerBackground {
+ .bannerBackground {
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  height: auto;
 }
 
-.bannerSwiper {
-  width: 100%;
-  height: 100%;
-}
 
-.bannerContent {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
+/*
 .leftContent {
   color: #fff;
   transform: translateX(400px);
@@ -86,9 +74,9 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 1.05;
-}
+} */
 
-.offerPercentSub {
+/* .offerPercentSub {
   font-size: 20px;
   font-weight: 700 !important;
   line-height: 1.05;
@@ -115,21 +103,21 @@
   display: flex;
   justify-content: flex-end;
   align-self: flex-end;
-}
+} */
 
-.productImage {
+/* .productImage {
   object-fit: contain;
   z-index: 1;
   max-width: 650px;
   height: 100%;
   position: relative;
-}
+} */
 
-.productImageWrapper {
+/* .productImageWrapper {
   position: relative;
-}
+} */
 
-.productImageWrapper::before {
+/* .productImageWrapper::before {
   content: '';
   position: absolute;
   left: 0;
@@ -141,7 +129,7 @@
   z-index: 1;
   border-radius: 50px 0 0 0;
   margin-left: -100px;
-}
+} */
 
 .dot {
   width: 8px;
@@ -359,13 +347,11 @@
 }
 
 @media (max-width: 575px) {
-  .bannerCard {
-    min-height: 0;
-  }
+
 
   .bannerBackground {
-    min-height: 180px;
-    object-fit: fill !important;
+    /* min-height: 180px; */
+    /* object-fit: contain !important; */
   }
 
   .bannerContent {

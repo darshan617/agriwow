@@ -23,20 +23,29 @@ export const homeApi = apiSlice.injectEndpoints({
       query: (query) => {
         const userToken = Cookies.get("userToken");
         return {
-        url: `/search`,
-        method: "GET",
-        params: { query },
-        headers: {
-          ...(userToken && {
-            Authorization: `Bearer ${userToken}`,
-            "Content-Type": "application/json",
-          }),
-        },
-      };
-    },
+          url: `/search`,
+          method: "GET",
+          params: { query },
+          headers: {
+            ...(userToken && {
+              Authorization: `Bearer ${userToken}`,
+              "Content-Type": "application/json",
+            }),
+          },
+        };
+      },
       providesTags: (result, error, query) => [
         { type: "SearchProducts", id: query || "ALL" },
       ],
+    }),
+    getBannerData: builder.query({
+      query: () => {
+        return {
+          url: "/sliders",
+          method: "GET",
+        };
+      },
+      providesTags: ["getBannerData"],
     }),
   }),
 });
@@ -45,4 +54,5 @@ export const {
   useGetHomeDataQuery,
   useSearchProductsQuery,
   useLazySearchProductsQuery,
+  useGetBannerDataQuery,
 } = homeApi;

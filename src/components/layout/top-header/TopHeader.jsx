@@ -7,6 +7,7 @@ import {
 } from "@/components/layout/top-header/TopHeaderExtras";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const SCROLL_THRESHOLD = 20;
 
@@ -48,7 +49,7 @@ const TopHeader = () => {
                     Sale Up to <span>60% Off</span> on Everything*
                   </p>
                 </div>
-                <button onClick={() => router.push("/product-category/agriculture-sprayers")} className={styles.shopNowButton}>Shop Now</button>
+                <Link href="/product-category/agriculture-sprayers" className={styles.shopNowButton}>Shop Now</Link>
               </div>
             </div>
             <div
