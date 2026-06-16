@@ -13,3 +13,24 @@
     line-height: 1.8;
     font-size: 18px;
   }
+
+  @media (max-width: 1024px) {
+    .privacyPolicyContent{
+      padding: 10px 50px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .privacyPolicyContent{
+      padding: 10px;
+    }
+    .privacyPolicyHeading h1{
+      font-size: 28px;
+    }
+    .breadcrumb ul{
+      font-size: 12px;
+    }
+    .breadcrumb ul li{
+      font-size: 12px;
+    }
+  }
