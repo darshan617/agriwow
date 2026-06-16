@@ -171,7 +171,7 @@ const Footer = () => {
                       <Link href="#">Order Tracking</Link>
                     </li>
                     <li>
-                      <Link href="#">Cancellation and Return</Link>
+                      <Link href="/cancellation-return-policy">Cancellation and Return</Link>
                     </li>
                     <li>
                       <Link href="#">Refund</Link>
@@ -253,7 +253,7 @@ const Footer = () => {
                 <Link href="/shipping-return">
                   Shipping &amp; Delivery Policy
                 </Link>
-                <Link href="#">Cancellation / Return Policy</Link>
+                <Link href="/cancellation-return-policy">Cancellation / Return Policy</Link>
               </nav>
             </div>
           </div>
