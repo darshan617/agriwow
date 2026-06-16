@@ -202,7 +202,7 @@
 
 .oldPrice {
   color: #7d7d7d;
-  font-size: 16px;
+  font-size: 13px;
   text-decoration: line-through;
 }
 
@@ -451,10 +451,16 @@
     transform: none;
     pointer-events: auto;
   }
+  .productCard:hover .priceRow {
+    /* opacity: 1; */
+    transform: translateY(0);
+  }
 
   .productCard:hover .productName,
   .productName {
     /* transform: translateY(-20px); */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .productCard:hover .priceRow,
