@@ -222,7 +222,7 @@ const ReviewsRating = ({
       formData.append("review", reviewText);
       formData.append("id", editingReview.id);
       selectedMedia.forEach((file) => {
-        formData.append("image", file);
+        formData.append("image[]", file);
       });
       const res = await updateReview({
         body: formData,
@@ -270,7 +270,7 @@ const ReviewsRating = ({
     formData.append("rating", rating);
     formData.append("review", reviewText);
     selectedMedia.forEach((file) => {
-      formData.append("image", file); // binary file
+      formData.append("image[]", file); // binary file
     });
     const res = await addReview({
       body: formData,
