@@ -1,54 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronRight } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
-import trendingIcon1 from "@/assets/icon/trend1.jpg";
-import trendingIcon2 from "@/assets/icon/trend2.jpg";
-import trendingIcon3 from "@/assets/icon/trend3.jpg";
-import trendingIcon4 from "@/assets/icon/trend4.jpg";
 import fireIcon from "@/assets/icon/fire.png";
 import mailIllustration from "@/assets/icon/big-mail.png";
 import styles from "@/components/blog-listing/trending-blog/trendingBlog.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
+import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
-const TRENDING_TOPICS = [
-  {
-    id: 1,
-    title: "Sugarcane Juice Machine",
-    articleCount: 12,
-    image: trendingIcon1,
-    href: "#",
-  },
-  {
-    id: 2,
-    title: "Sugarcane Juice Machine",
-    articleCount: 12,
-    image: trendingIcon2,
-    href: "#",
-  },
-  {
-    id: 3,
-    title: "Sugarcane Juice Machine",
-    articleCount: 12,
-    image: trendingIcon3,
-    href: "#",
-  },
-  {
-    id: 4,
-    title: "Sugarcane Juice Machine",
-    articleCount: 12,
-    image: trendingIcon4,
-    href: "#",
-  },
-];
 
 const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
   const { data: homeData, isLoading: isHomeDataLoading } =
     useGetHomeDataQuery();
   const categoriesData = homeData?.data?.categories;
-  const handleSubscribe = (event) => {
-    event.preventDefault();
+  const [email, setEmail] = useState("");
+  const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
+    useSubscribeEmailMutation();
+  const { showToast } = useToast();
+  const handleSubscribe = async () => {
+    if (isSubscribeEmailLoading) return;
+    if (!email) return showToast("Please enter your email", "error");
+    try {
+      const res = await subscribeEmail({ body: { email } });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        setEmail("");
+      } else {
+        showToast(res?.error?.data?.message || "Something went wrong", "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.message || "Something went wrong", "error");
+    }
   };
 
   return (
@@ -147,19 +132,21 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
               className={styles.input}
               autoComplete="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit" className={styles.subscribeBtn}>
-              Subscribe
+            <button type="submit" className={styles.subscribeBtn} onClick={handleSubscribe} disabled={isSubscribeEmailLoading}>
+              {isSubscribeEmailLoading ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
 
           <p className={styles.disclaimer}>
             By subscribing, you agree to our{" "}
-            <Link href="#" className={styles.disclaimerLink}>
+            <Link href="/terms-of-use" className={styles.disclaimerLink}>
               Terms of Use
             </Link>{" "}
             &amp;{" "}
-            <Link href="#" className={styles.disclaimerLink}>
+            <Link href="/privacy-policy" className={styles.disclaimerLink}>
               Privacy Policy
             </Link>
           </p>

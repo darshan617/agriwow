@@ -95,7 +95,7 @@ const Footer = () => {
                 <p className={`${styles.footerFormPara}`}>
                   By subscribing you agree to the{" "}
                   <Link href="/privacy-policy">Privacy Policy</Link> and{" "}
-                  <Link href="/terms-use">
+                  <Link href="/terms-of-use">
                     Terms and Conditions.
                   </Link>
                 </p>
