@@ -16,7 +16,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      if (w <= 575) setVisibleCount(1);
+      if (w <= 575) setVisibleCount(2);
       else if (w <= 768) setVisibleCount(2);
       else if (w <= 1199) setVisibleCount(3);
       else if (w <= 1800) setVisibleCount(5);
@@ -41,9 +41,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   };
 
   const handleNext = () => {
-    if (!isAtEnd) {
-      slide(currentIndex + 1);
-    }
+    if (!isAtEnd) slide(currentIndex + 1);
   };
 
   const handlePrev = () => {
@@ -54,14 +52,15 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   const translatePct = (currentIndex / visibleCount) * 100;
 
   return (
-    <div className="container ">
-      <div className={styles.header}>
+    <div className="container">
+      <div className={styles.title}>
         <h2 className={styles.title}>Similar Products</h2>
       </div>
 
       <div className={styles.sliderRoot}>
+
         <button
-          className={`${styles.navBtn} ${isAtStart ? styles.hidden : ""}`}
+          className={`${styles.navBtn} ${styles.sideBtn} ${isAtStart ? styles.hidden : ""}`}
           onClick={handlePrev}
           aria-label="Previous"
         >
@@ -81,8 +80,12 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
           >
             {visibleItems.map((product) => {
               const computedDiscount =
-                product?.price && product?.selling_price && product.price > product.selling_price
-                  ? Math.round(((product.price - product.selling_price) / product.price) * 100)
+                product?.price &&
+                product?.selling_price &&
+                product.price > product.selling_price
+                  ? Math.round(
+                      ((product.price - product.selling_price) / product.price) * 100
+                    )
                   : product?.discount ?? 0;
 
               return (
@@ -117,11 +120,30 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
         </div>
 
         <button
-          className={styles.navBtn}
+          className={`${styles.navBtn} ${styles.sideBtn} ${isAtEnd ? styles.hidden : ""}`}
           onClick={handleNext}
+          aria-label="Next"
         >
           <FaChevronRight />
         </button>
+
+        <div className={styles.mobileControls}>
+          <button
+            className={`${styles.navBtn} ${isAtStart ? styles.hidden : ""}`}
+            onClick={handlePrev}
+            aria-label="Previous"
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            className={`${styles.navBtn} ${isAtEnd ? styles.hidden : ""}`}
+            onClick={handleNext}
+            aria-label="Next"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+
       </div>
     </div>
   );

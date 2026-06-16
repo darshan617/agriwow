@@ -317,7 +317,7 @@ const ProductCard = ({
           disabled={isLoading}
         >
           <span>
-            <MdAddShoppingCart className={`${styles.btnIcon}`} />
+            {/* <MdAddShoppingCart className={`${styles.btnIcon}`} /> */}
             Add to Cart
           </span>
         </button>

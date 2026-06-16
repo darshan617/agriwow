@@ -4,6 +4,9 @@ import styles from "@/components/privacy-policy/PrivacyPolicy.module.css";
 const PrivacyPolicy = () => {
   return (
     <div className="container">
+      <div className={`${styles.breadcrumbHead} `}>
+        <h1>Privacy Policy</h1>
+      </div>
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>

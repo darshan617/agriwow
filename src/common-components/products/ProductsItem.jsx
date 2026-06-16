@@ -152,10 +152,10 @@ const ProductsItem = ({
                   spaceBetween={16}
                   breakpoints={{
                     0: {
-                      slidesPerView: isEquipment ? 1 : 1,
+                      slidesPerView: isEquipment ? 2 : 2,
                     },
                     425: {
-                      slidesPerView: isEquipment ? 2 : 1,
+                      slidesPerView: isEquipment ? 2 : 2,
                     },
                     575: {
                       slidesPerView: isEquipment ? 2 : 2,
