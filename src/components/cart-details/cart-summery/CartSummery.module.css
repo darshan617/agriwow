@@ -1,3 +1,9 @@
+.cartSummaryWrapper {
+  position: sticky;
+  top: 60px;
+  z-index: 10;
+}
+
 .summaryCard {
   background: #f5f5f5;
   border-radius: 12px;
@@ -180,6 +186,63 @@
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+}
+
+.checkoutBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2d8d2f;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 20px;
+
+}
+
+.checkoutBtn span {
+  font-size: 15px;
+  color: #fff;
+}
+
+.checkoutBtn p {
+  font-size: 15px;
+  color: #222;
+}
+
+.checkoutBtn:hover {
+  background: #2d8d2f;
+  color: #fff;
+}
+
+.paymentWrapper {
+  background: #c8edc7;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.paymentWrapperTransparent {
+  background: transparent;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.paymentWrapper input[type="radio"] {
+  accent-color: #2d8d2f;
+}
+
+.paymentWrapper span {
+  color: #7e997e;
+}
+
+.paymentWrapperText {
+  font-size: 14px;
+  color: #7e997e;
+  padding-left: 20px;
 }
 
 @media (max-width: 768px) {

@@ -13,8 +13,14 @@ import {
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { FaCopy } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
+import {
+  usePlaceOrderMutation,
+  useUpdateBuyNowMutation,
+  useVerifyPaymentMutation,
+} from "@/redux/apis/buyProductApi";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import CustomPopup from "@/components/custom-popup/CustomPopup";
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -28,26 +34,29 @@ const CartSummery = ({
 }) => {
   const router = useRouter();
   const { showToast } = useToast();
+  const [showPopup, setShowPopup] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("full");
+
   const [applyCoupon, { isLoading }] = useApplyCouponMutation();
   const { data: availableCoupons } = useGetAvailableCouponsQuery();
-
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
   const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
     useUpdateBuyNowMutation();
   const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
+  const [placeOrder, { isLoading: isPlaceOrderLoading }] =
+    usePlaceOrderMutation();
+  const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
+    useVerifyPaymentMutation();
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
-
   const cartSummary = cartData?.cart_summary ?? {};
-
   const calculatedSubtotal = cartItems.reduce(
     (acc, item) =>
       acc + (item?.product?.selling_price ?? 0) * (item?.quantity ?? 0),
     0,
   );
-
   const subtotal = cartSummary.subtotal ?? calculatedSubtotal;
   const discountAmount =
     cartSummary.discount_amount ??
@@ -119,6 +128,78 @@ const CartSummery = ({
     }
   };
 
+  const handlePlaceOrder = async (source, type, address_id = null) => {
+    try {
+      const res = await placeOrder({
+        body: {
+          source: source,
+          payment_type: type,
+          address_id: address_id,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        const razorpay = res?.data?.razorpay;
+
+        const options = {
+          key: razorpay.key,
+          amount: razorpay.amount,
+          currency: razorpay.currency,
+          name: razorpay.name,
+          description: razorpay.description,
+          order_id: razorpay.order_id,
+          prefill: razorpay.prefill,
+          handler: async function (response) {
+            setShowPopup("payment");
+            console.log("Payment Success", response);
+            const verifyPaymentRes = await verifyPayment({
+              body: {
+                razorpay_payment_id: response.razorpay_payment_id,
+                order_id: res?.data?.order_id,
+                razorpay_order_id: razorpay.order_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            });
+
+            if (
+              verifyPaymentRes?.data?.success ||
+              verifyPaymentRes?.data?.status
+            ) {
+              showToast(
+                "Payment Successful" || verifyPaymentRes?.data?.message,
+                "success",
+              );
+              router.push("/my-order");
+            } else {
+              showToast(
+                "Payment Failed" || verifyPaymentRes?.data?.message,
+                "error",
+              );
+            }
+          },
+
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+
+        rzp.on("payment.failed", function (response) {
+          console.log("Payment Failed", response.error);
+          showToast(response.error.description, "error");
+        });
+
+        rzp.open();
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message, "error");
+    }
+  };
+
   useEffect(() => {
     if (cartData?.coupon?.code) {
       setCouponCode(cartData?.coupon?.code);
@@ -126,7 +207,7 @@ const CartSummery = ({
   }, [cartData]);
 
   return (
-    <div className={`${styles.cartSummaryWrapper} py-5`}>
+    <div className={`${styles.cartSummaryWrapper} pt-3 pb-5`}>
       <div className={`${styles.summaryCard}`}>
         <div className={`${styles.summaryHeader}`}>
           <h3>Cart Summary</h3>
@@ -137,12 +218,10 @@ const CartSummery = ({
             <span>Subtotal</span>
             <span>₹ {subtotal.toFixed(2)}</span>
           </div>
-
           <div className={`${styles.summaryRow}`}>
             <span>GST(18%)</span>
             <span>₹ {gstAmount.toFixed(2)}</span>
           </div>
-
           {(discountAmount || cartData?.coupon?.discount_amount) > 0 && (
             <div className={`${styles.summaryRow}`}>
               <span>Discount</span>
@@ -165,7 +244,6 @@ const CartSummery = ({
               </span>
             </div>
           )}
-
           <div className={`${styles.summaryRow}`}>
             <span>Shipping</span>
             <span>₹ {shippingAmount.toFixed(2)}</span>
@@ -173,9 +251,7 @@ const CartSummery = ({
           {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
-
           <hr className={`${styles.divider}`} />
-
           <div className={`${styles.totalRow}`}>
             <div>
               <h4>Total Amount</h4>
@@ -183,7 +259,6 @@ const CartSummery = ({
             </div>
             <h4>₹ {totalAmount.toFixed(2)}</h4>
           </div>
-
           <div className={`${styles.saveText}`}>
             {productSavings + discountAmount > 0 && (
               <span>
@@ -191,6 +266,129 @@ const CartSummery = ({
               </span>
             )}
           </div>
+
+          {router?.pathname === "/checkout" && (
+            <>
+              <hr className={`${styles.divider}`} />
+              <div>
+                <p className="mb-0 fw-semibold fs-14 mb-2">Payment Method</p>
+                <div
+                  className={
+                    selectedPaymentMethod === "partial"
+                      ? styles.paymentWrapper
+                      : styles.paymentWrapperTransparent
+                  }
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      id="partial-payment"
+                      checked={selectedPaymentMethod === "partial"}
+                      onChange={() => setSelectedPaymentMethod("partial")}
+                    />
+                    <label
+                      htmlFor="partial-payment"
+                      className="w-100"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Partial Payment (30%)
+                    </label>
+                  </div>
+                  {selectedPaymentMethod === "partial" && (
+                    <>
+                      <span className={`${styles.paymentWrapperText}`}>
+                        Partial Payment of ₹ {(totalAmount * 0.3).toFixed(2)}
+                      </span>
+                    </>
+                  )}
+                </div>
+                <div
+                  className={
+                    selectedPaymentMethod === "full"
+                      ? styles.paymentWrapper
+                      : styles.paymentWrapperTransparent
+                  }
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      id="full-payment"
+                      checked={selectedPaymentMethod === "full"}
+                      onChange={() => setSelectedPaymentMethod("full")}
+                    />
+                    <label
+                      htmlFor="full-payment"
+                      className="w-100"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Full Payment (5% OFF)
+                    </label>
+                  </div>
+                  {selectedPaymentMethod === "full" && (
+                    <>
+                      <span className={`${styles.paymentWrapperText}`}>
+                        Full Payment of ₹{" "}
+                        {(totalAmount - totalAmount * 0.05).toFixed(2)}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="d-flex justify-content-between mt-3 gap-3 align-items-center">
+                {selectedPaymentMethod === "partial" && (
+                  <button
+                    type="button"
+                    className={styles.checkoutBtn}
+                    onClick={() =>
+                      handlePlaceOrder(
+                        router?.query?.productId ? "buy_now" : "cart",
+                        "partial",
+                        cartData?.selected_address?.id,
+                      )
+                    }
+                  >
+                    <div>
+                      <div>
+                        <p className="mb-0 fs-6 fw-semibold text-start text-white">
+                          Proceed to Payment
+                        </p>
+                      </div>
+                    </div>
+                    {/* <span className={styles.arrow}>
+                      <MdOutlineKeyboardArrowRight size={30} />
+                    </span> */}
+                  </button>
+                )}
+                {selectedPaymentMethod === "full" && (
+                  <button
+                    type="button"
+                    className={`${styles.checkoutBtn} text-white`}
+                    onClick={() =>
+                      handlePlaceOrder(
+                        router?.query?.productId ? "buy_now" : "cart",
+                        "full",
+                        cartData?.selected_address?.id,
+                      )
+                    }
+                  >
+                    <div>
+                      <div>
+                        <p className="mb-0 fs-6 fw-semibold text-start text-white">
+                          Proceed to Payment
+                        </p>
+                        {/* <p>₹ {cartTotal}</p> */}
+                      </div>
+                    </div>
+                    {/* <span className={styles.arrow}>
+                      <MdOutlineKeyboardArrowRight size={30} />
+                    </span> */}
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
       {!hideCoupon && (
@@ -253,6 +451,23 @@ const CartSummery = ({
           View All Coupons & Offers
         </button> */}
         </div>
+      )}
+      {showPopup === "payment" && (
+        <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
+          <div>
+            <div className="d-flex justify-content-center mb-3">
+              <div className="spinner-border text-success" role="status">
+                <span className="visually-hidden">
+                  Verifying Your Payment...
+                </span>
+              </div>
+            </div>
+            <p className="text-center m-0 fs-4">
+              {" "}
+              Verifying Your Payment. Please wait...{" "}
+            </p>
+          </div>
+        </CustomPopup>
       )}
     </div>
   );

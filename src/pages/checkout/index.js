@@ -197,11 +197,7 @@ const Checkout = () => {
     }
     if (!cartData) return;
     setCartItems(
-      cartData?.data
-        ? Array.isArray(cartData.data)
-          ? cartData.data
-          : []
-        : [],
+      cartData?.data ? (Array.isArray(cartData.data) ? cartData.data : []) : [],
     );
   }, [cartData, buyNowData, isBuyNowFlow]);
 
@@ -226,13 +222,12 @@ const Checkout = () => {
   return (
     <Layout>
       <div className="container">
-        
-        { cartItems.length > 0 && (
+        {/* { cartItems.length > 0 && (
           <CheckoutStepper activeStep={1} />
-        )}
+        )} */}
         <div className="row">
-          <div className="col-lg-8">
-            { cartItems.length > 0 && (
+          <div className="col-lg-8 mt-3">
+            {cartItems.length > 0 && (
               <DeliveryAddress
                 handleUpdateCart={handleUpdateCart}
                 cartData={activeCartData}
@@ -264,7 +259,7 @@ const Checkout = () => {
             </div>
           </div>
           <div className="col-lg-4">
-            { cartItems.length > 0 && (
+            {cartItems.length > 0 && (
               <CartSummery
                 cartItems={cartItemsWithQuantities}
                 appliedCoupon={appliedCoupon}
