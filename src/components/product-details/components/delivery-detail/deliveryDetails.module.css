@@ -59,7 +59,7 @@
 
 .discountRow .discountText {
   color: #8dba3b;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -70,19 +70,36 @@
 }
 .priceRow {
   display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
+  /* align-items: center; */
+  flex-direction: column;
+  /* flex-wrap: nowrap; */
   gap: 8px;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0;
+  margin: 0;  
   z-index: 1;
+}
+.gsttPriceSmall{
+  margin-left: 5px;
+  font-size: 16px;
+  color: #7d7d7d;
+  font-weight: 500;
 }
 .oldPrice {
   color: #7d7d7d;
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: line-through;
+  margin-left: 5px;
+}
+.mrpText {
+  display: flex;
+  align-items: center;
+  color: #7d7d7d;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 5px;
+  gap: 5px;
 }
 
 .currentPrice,
@@ -381,16 +398,49 @@
 
 @media (max-width: 991px) {
   .ddCard {
-  display: flex;
-  max-width: 100%;
-  justify-content: center;
+    position: static;
+    margin-left: 0;
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .ddPriceSection {
+    padding: 0;
+    background: transparent;
+  }
+
+  .ddPriceInfo,
+  .ddMobileHidden {
+    display: none;
+  }
+
+  .ddStickyActions {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-top: 1px solid #e8e8e8;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .ddStickyActions .ddBtnCart,
+  .ddStickyActions .ddBtnBuy {
+    flex: 1;
+    margin-bottom: 0;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
   }
 }
 
 @media (max-width: 767px){
-  .ddPriceSection {
-    padding: 10px;
-  }
   .currentPrice {
     font-size: 18px;
     font-weight: 600;

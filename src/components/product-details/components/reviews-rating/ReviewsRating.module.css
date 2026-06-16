@@ -376,6 +376,12 @@
   align-items: center;
   justify-content: center;
   color: #7ec87e;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.15s ease;
 }
 
 .reviewImg:hover {
@@ -414,12 +420,77 @@
 }
 
 .reviewImg img{
-    width: 100px;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .submitReviewBtnWrapper{
   display: flex;
   justify-content: flex-end;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  user-select: none;
+}
+
+.lightboxClose,
+.lightboxPrev,
+.lightboxNext {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxClose {
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+}
+
+.lightboxPrev,
+.lightboxNext {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  font-size: 28px;
+}
+
+.lightboxPrev {
+  left: 16px;
+}
+
+.lightboxNext {
+  right: 16px;
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: 20px;
+  color: #fff;
+  font-size: 13px;
 }
 
 
@@ -580,10 +651,6 @@
   .reviewImg {
     width: 56px;
     height: 56px;
-  }
-
-  .reviewImg img {
-    width: 80px;
   }
 
   .ratingSummary {

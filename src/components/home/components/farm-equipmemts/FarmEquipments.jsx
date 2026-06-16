@@ -63,8 +63,8 @@ const FarmEquipments = ({
               }}
               spaceBetween={20}
               breakpoints={{
-                0: { slidesPerView: 1 },
-                375: { slidesPerView: 1 },
+                0: { slidesPerView: 2 }, 
+                375: { slidesPerView: 2 },
                 575: { slidesPerView: 2 },
                 768: { slidesPerView: 3 },
                 1024: { slidesPerView: 4 },

@@ -1,15 +1,12 @@
-/* ── Header ── */
-.header {
+.title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.title {
+  margin-bottom: 20px;
+  margin-top: 50px;
   font-size: 30px;
   font-weight: 700;
-  margin: 0;
+  /* margin: 0; */
 }
 
 .viewAllLink {
@@ -30,27 +27,25 @@
   color: #111;
 }
 
-/* ── Slider root: nav buttons + viewport in a row ── */
 .sliderRoot {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 50px;
+  margin-left: -50px;
 }
 
-/* ── Viewport: clips the sliding track ── */
 .viewport {
   flex: 1;
   overflow: hidden;
 }
 
-/* ── Track: all cards laid out in a single row ── */
 .track {
   display: flex;
   gap: 16px;
   will-change: transform;
 }
 
-/* ── Each slide: width driven by --visible-count CSS variable ── */
 .slide {
   flex: 0 0 calc(
     (100% - (var(--visible-count, 4) - 1) * 16px) / var(--visible-count, 4)
@@ -58,7 +53,6 @@
   min-width: 0;
 }
 
-/* ── Nav buttons ── */
 .navBtn {
   flex-shrink: 0;
   width: 40px;
@@ -87,7 +81,6 @@
   pointer-events: none;
 }
 
-/* ── Dots ── */
 .dots {
   display: flex;
   justify-content: center;
@@ -113,7 +106,10 @@
   transform: scale(1.25);
 }
 
-/* ── Responsive: only title size changes; card count via JS → --visible-count ── */
+.mobileControls {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 24px;
@@ -123,6 +119,23 @@
 @media (max-width: 575px) {
   .title {
     font-size: 22px;
+  }
+
+  .sliderRoot {
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 0;
+  }
+
+  .sideBtn {
+    display: none;
+  }
+
+  .mobileControls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
   }
 
   .navBtn {

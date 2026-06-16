@@ -1188,9 +1188,9 @@
   }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1500px) {
   .headerOuter {
-    top: 60px;
+    top: 52px;
   }
 
   .scrolled {
@@ -1215,6 +1215,15 @@
 
   .navLinksDesktop {
     gap: 20px;
+  }
+  .megaDropdown{
+    top: 115px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .megaDropdown{
+    top: 110px;
   }
 }
 
@@ -1286,7 +1295,7 @@
   }
 
   .megaDropdown {
-    top: 110px;
+    top: 105px;
   }
 
   .scrolled .megaDropdown {

@@ -16,8 +16,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      // if (w <= 425) setVisibleCount(1);
-      if (w <= 575) setVisibleCount(1);
+      if (w <= 575) setVisibleCount(2);
       else if (w <= 768) setVisibleCount(2);
       else if (w <= 1199) setVisibleCount(3);
       else if (w <= 1800) setVisibleCount(5);
@@ -42,9 +41,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   };
 
   const handleNext = () => {
-    if (!isAtEnd) {
-      slide(currentIndex + 1);
-    }
+    if (!isAtEnd) slide(currentIndex + 1);
   };
 
   const handlePrev = () => {
@@ -55,21 +52,21 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
   const translatePct = (currentIndex / visibleCount) * 100;
 
   return (
-    <div className="container mt-4">
-      <div className={styles.header}>
+    <div className="container">
+      <div className={styles.title}>
         <h2 className={styles.title}>Similar Products</h2>
       </div>
 
       <div className={styles.sliderRoot}>
+
         <button
-          className={`${styles.navBtn} ${isAtStart ? styles.hidden : ""}`}
+          className={`${styles.navBtn} ${styles.sideBtn} ${isAtStart ? styles.hidden : ""}`}
           onClick={handlePrev}
           aria-label="Previous"
         >
           <FaChevronLeft />
         </button>
 
-        {/* Track viewport */}
         <div className={styles.viewport}>
           <div
             ref={trackRef}
@@ -81,59 +78,73 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                 : "none",
             }}
           >
-            {visibleItems.map((product) => (
-              <div
-                className={styles.slide}
-                key={product?.id ?? product?.slug ?? product?.name}
-                style={{ "--visible-count": visibleCount }}
-              >
-                <ProductCard
-                  type="productPage"
-                  slug={product?.slug}
-                  image={product?.gallery?.[0]}
-                  imageHover={product?.gallery?.[1]}
-                  discount={product?.discount}
-                  isBestSeller={product?.is_best_selling}
-                  isTrending={product?.is_trending}
-                  isFeatured={product?.is_featured}
-                  isTopRated={product?.is_top_rated}
-                  name={product?.name}
-                  price={product?.selling_price}
-                  oldPrice={product?.price}
-                  reviews={
-                    product?.reviews?.length ?? product?.review_count ?? 0
-                  }
-                  average_rating={product?.average_rating}
-                  productId={product?.id}
-                />
-              </div>
-            ))}
+            {visibleItems.map((product) => {
+              const computedDiscount =
+                product?.price &&
+                product?.selling_price &&
+                product.price > product.selling_price
+                  ? Math.round(
+                      ((product.price - product.selling_price) / product.price) * 100
+                    )
+                  : product?.discount ?? 0;
+
+              return (
+                <div
+                  className={styles.slide}
+                  key={product?.id ?? product?.slug ?? product?.name}
+                  style={{ "--visible-count": visibleCount }}
+                >
+                  <ProductCard
+                    type="productPage"
+                    slug={product?.slug}
+                    image={product?.gallery?.[0]}
+                    imageHover={product?.gallery?.[1]}
+                    discount={computedDiscount}
+                    isBestSeller={product?.is_best_selling}
+                    isTrending={product?.is_trending}
+                    isFeatured={product?.is_featured}
+                    isTopRated={product?.is_top_rated}
+                    name={product?.name}
+                    price={product?.selling_price}
+                    oldPrice={product?.price}
+                    reviews={
+                      product?.reviews?.length ?? product?.review_count ?? 0
+                    }
+                    average_rating={product?.average_rating}
+                    productId={product?.id}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
 
         <button
-          className={styles.navBtn}
+          className={`${styles.navBtn} ${styles.sideBtn} ${isAtEnd ? styles.hidden : ""}`}
           onClick={handleNext}
-          aria-label={isAtEnd ? "View All" : "Next"}
-          title={isAtEnd ? "View All" : "Next"}
+          aria-label="Next"
         >
           <FaChevronRight />
         </button>
-      </div>
 
-      {maxIndex > 0 && (
-        <div className={styles.dots}>
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-            <span
-              key={i}
-              className={`${styles.dot} ${i === currentIndex ? styles.activeDot : ""}`}
-              onClick={() => slide(i)}
-              role="button"
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
+        <div className={styles.mobileControls}>
+          <button
+            className={`${styles.navBtn} ${isAtStart ? styles.hidden : ""}`}
+            onClick={handlePrev}
+            aria-label="Previous"
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            className={`${styles.navBtn} ${isAtEnd ? styles.hidden : ""}`}
+            onClick={handleNext}
+            aria-label="Next"
+          >
+            <FaChevronRight />
+          </button>
         </div>
-      )}
+
+      </div>
     </div>
   );
 };

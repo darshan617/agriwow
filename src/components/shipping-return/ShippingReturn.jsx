@@ -54,16 +54,16 @@ const ShippingReturn = () => {
             4) Delivery time mentioned on the product, cart page or website is
             estimated. Actual delivery time is based on the availability of a
             product, weather condition and address where the product is to be
-            delivered and courier company’s rules.{" "}
-            <ul>
-              <li>
-                Note: If your address is ODA location then, you have to self
-                collect the parcel from the courier office. We will provide a
-                courier office address and number. Also, our customer care
-                executive will keep in touch with you.
-              </li>
-            </ul>
+            delivered and courier company's rules.
           </p>
+          <ul>
+            <li>
+              Note: If your address is ODA location then, you have to self
+              collect the parcel from the courier office. We will provide a
+              courier office address and number. Also, our customer care
+              executive will keep in touch with you.
+            </li>
+          </ul>
           <p>
             5) For any issues in utilizing our services you may contact our
             helpdesk on +91 8640035758

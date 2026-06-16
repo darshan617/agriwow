@@ -92,10 +92,11 @@ export default function DeliveryDetails({ productDetails }) {
   const totalPrice = unitPrice * qty;
   const totalSellingPrice = unitSellingPrice * qty;
   const totalSaving = (unitSellingPrice - unitPrice) * qty;
-
+  const gstAmount = (totalSellingPrice * 0.18).toFixed(2);
   return (
     <div className={styles.ddCard}>
       <div className={styles.ddPriceSection}>
+        <div className={styles.ddPriceInfo}>
         {productDetails?.data?.discount > 0 && (
           <div className={styles.ddBadge}>
             {productDetails?.data?.discount > 0 && (
@@ -104,15 +105,35 @@ export default function DeliveryDetails({ productDetails }) {
           </div>
         )}
 
-        <p className={styles.priceRow}>
+        <div className={styles.priceRow}>
           <span className={styles.currentPrice}>
             ₹ {totalSellingPrice.toLocaleString()}
+            <span className={styles.gsttPriceSmall}>
+              {" "}
+              +₹{gstAmount.toLocaleString()} GST
+            </span>
           </span>
 
-          <span className={styles.oldPrice}>
-            ₹ {totalPrice.toLocaleString()}
+          <span className={styles.mrpText}>
+            MRP
+            <span className={styles.oldPrice}>
+              {" "}
+              ₹ {totalPrice.toLocaleString()}
+            </span>
+            <div className={`${styles.discountRow}`}>
+              {unitPrice > 0 && unitSellingPrice < unitPrice && (
+                <>
+                  <span className={`${styles.discountText}`}>
+                    {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                  </span>
+                  {/* <span>
+                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
+                </span> */}
+                </>
+              )}
+            </div>
           </span>
-        </p>
+        </div>
 
         <div className={styles.discountRow}>
           {productDetails?.data?.discount > 0 && (
@@ -122,7 +143,18 @@ export default function DeliveryDetails({ productDetails }) {
             <span>Save ₹ {totalSaving.toLocaleString()}</span>
           )}
         </div>
-
+        <div className={`${styles.discountRow}`}>
+          {unitPrice > 0 && unitSellingPrice < unitPrice && (
+            <>
+              {/* <span className={`${styles.discountText}`}>
+                  {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                </span> */}
+              {/* <span>
+                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
+                </span> */}
+            </>
+          )}
+        </div>
         <div className={styles.ddQtyRow}>
           <span className={styles.ddQtyLabel}>Update Qty</span>
 
@@ -146,41 +178,44 @@ export default function DeliveryDetails({ productDetails }) {
             </button>
           </div>
         </div>
+        </div>
 
-        <button
-          className={styles.ddBtnCart}
-          onClick={() => handleAddToCart(productDetails?.data?.id)}
-        >
-          Add to Cart
-        </button>
+        <div className={styles.ddStickyActions}>
+          <button
+            className={styles.ddBtnCart}
+            onClick={() => handleAddToCart(productDetails?.data?.id)}
+          >
+            Add to Cart
+          </button>
 
-        <button
-          className={styles.ddBtnBuy}
-          onClick={() => {
-            if (!getIsLoggedIn()) {
-              openLoginPopup();
-              return;
-            }
-            markBuyNowAddPending({
-              productId: productDetails?.data?.id,
-              quantity: qty,
-              userId: userData?.id,
-            });
-            router?.push({
-              pathname: `/checkout`,
-              query: {
+          <button
+            className={styles.ddBtnBuy}
+            onClick={() => {
+              if (!getIsLoggedIn()) {
+                openLoginPopup();
+                return;
+              }
+              markBuyNowAddPending({
                 productId: productDetails?.data?.id,
                 quantity: qty,
                 userId: userData?.id,
-              },
-            });
-          }}
-        >
-          Buy Now
-        </button>
+              });
+              router?.push({
+                pathname: `/checkout`,
+                query: {
+                  productId: productDetails?.data?.id,
+                  quantity: qty,
+                  userId: userData?.id,
+                },
+              });
+            }}
+          >
+            Buy Now
+          </button>
+        </div>
 
         <button
-          className={styles.ddBtnWhatsapp}
+          className={`${styles.ddBtnWhatsapp} ${styles.ddMobileHidden}`}
           onClick={() => {
             const phoneNumber = "919082681149";
             const productName = productDetails?.data?.name || "Product";
@@ -196,7 +231,7 @@ export default function DeliveryDetails({ productDetails }) {
           Order on WhatsApp
         </button>
 
-        <div className={`${styles.ddSecureIcon} d-flex gap-2`}>
+        <div className={`${styles.ddSecureIcon} ${styles.ddMobileHidden} d-flex gap-2`}>
           <Image
             src={secureIcon}
             alt="secure"

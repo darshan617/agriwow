@@ -283,7 +283,7 @@ const CartDetails = ({
   return (
     <>
       <div className={styles.productInfo}>
-        {appliedCoupon && (
+        {/* {appliedCoupon && (
           <div className={styles.coupon}>
             <FaCircleCheck size={30} color="#239c3d" />
 
@@ -305,9 +305,9 @@ const CartDetails = ({
               <RxCross2 size={20} />
             </button>
           </div>
-        )}
+        )} */}
 
-        {cartItems.length === 0 && (
+        {cartItems?.length === 0 && (
           <div className={styles.emptySection}>
             <div className={styles.emptyVisual}>
               <Image
@@ -320,7 +320,6 @@ const CartDetails = ({
               />
             </div>
 
-          
             <div className={styles.emptyContent}>
               <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
               <p className={styles.emptyText}>Add product and proceed</p>
@@ -334,7 +333,7 @@ const CartDetails = ({
           </div>
         )}
 
-        {cartItems.length > 0 && (
+        {cartItems?.length > 0 && (
           <div className={styles.productCartHeader}>
             <div>PRODUCT</div>
             <div>Price</div>
@@ -343,7 +342,7 @@ const CartDetails = ({
           </div>
         )}
 
-        {cartItems.map((item) => {
+        {cartItems?.map((item) => {
           const itemKey = getItemKey(item);
           const qty = getQuantity ? getQuantity(item) : item.quantity;
 
@@ -360,7 +359,11 @@ const CartDetails = ({
                   />
 
                   <div className={styles.productCartContent}>
-                    <h4>{item?.product?.name}</h4>
+                    <h4 className={styles.productCartName}>
+                      <Link href={`/product-details/${item?.product?.slug}`}>
+                        {item?.product?.name}
+                      </Link>{" "}
+                    </h4>
                     <span>SKU: {item?.product?.sku}</span>
                   </div>
                 </div>
@@ -479,51 +482,52 @@ const CartDetails = ({
                 </button>
               </Link>
             ) : (
-              <div className="d-flex justify-content-end mt-3 gap-3">
-                <button
-                  type="button"
-                  className={styles.checkoutBtn}
-                  onClick={() =>
-                    handlePlaceOrder(
-                      router?.query?.productId ? "buy_now" : "cart",
-                      "partial",
-                      cartData?.selected_address?.id,
-                    )
-                  }
-                >
-                  <div>
-                    <div>
-                      <span>Partial Payment (30%)</span>
-                      {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
-                    </div>
-                  </div>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={30} />
-                  </span>
-                </button>
+              ""
+              // <div className="d-flex justify-content-end mt-3 gap-3">
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn}
+              //     onClick={() =>
+              //       handlePlaceOrder(
+              //         router?.query?.productId ? "buy_now" : "cart",
+              //         "partial",
+              //         cartData?.selected_address?.id,
+              //       )
+              //     }
+              //   >
+              //     <div>
+              //       <div>
+              //         <span>Partial Payment (30%)</span>
+              //         {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
+              //       </div>
+              //     </div>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={30} />
+              //     </span>
+              //   </button>
 
-                <button
-                  type="button"
-                  className={styles.checkoutBtn}
-                  onClick={() =>
-                    handlePlaceOrder(
-                      router?.query?.productId ? "buy_now" : "cart",
-                      "full",
-                      cartData?.selected_address?.id,
-                    )
-                  }
-                >
-                  <div>
-                    <div>
-                      <span> Full Payment</span>
-                      {/* <p>₹ {cartTotal}</p> */}
-                    </div>
-                  </div>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={30} />
-                  </span>
-                </button>
-              </div>
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn}
+              //     onClick={() =>
+              //       handlePlaceOrder(
+              //         router?.query?.productId ? "buy_now" : "cart",
+              //         "full",
+              //         cartData?.selected_address?.id,
+              //       )
+              //     }
+              //   >
+              //     <div>
+              //       <div>
+              //         <span> Full Payment</span>
+              //         {/* <p>₹ {cartTotal}</p> */}
+              //       </div>
+              //     </div>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={30} />
+              //     </span>
+              //   </button>
+              // </div>
             )}
           </>
         )}
@@ -547,7 +551,7 @@ const CartDetails = ({
           />
         </CustomPopup>
       )}
-      {showPopup === "payment" && (
+      {/* {showPopup === "payment" && (
         <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
           <div>
             <div className="d-flex justify-content-center mb-3">
@@ -563,7 +567,7 @@ const CartDetails = ({
             </p>
           </div>
         </CustomPopup>
-      )}
+      )} */}
     </>
   );
 };

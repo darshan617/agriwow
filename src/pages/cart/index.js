@@ -56,13 +56,18 @@ const Cart = () => {
     }
   };
 
-  const handleUpdateCart = async (id, quantity, address_id = null) => {
+  const handleUpdateCart = async (
+    id,
+    quantity,
+    address_id = null,
+    coupon_code,
+  ) => {
     try {
       const res = await updateCart({
         body: {
           cart_id: id,
           quantity: quantity,
-          coupon_code: couponCode,
+          coupon_code: coupon_code !== undefined ? coupon_code : couponCode,
           address_id: address_id,
         },
       });
@@ -86,9 +91,7 @@ const Cart = () => {
         <div className="row">
           <div
             className={
-              cartItems.length === 0
-                ? "col-lg-12"
-                : "col-xl-8 col-md-8 col-12"
+              cartItems.length === 0 ? "col-lg-12" : "col-xl-8 col-md-8 col-12"
             }
           >
             <CartDetails

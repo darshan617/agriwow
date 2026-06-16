@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/images/logo.png";
@@ -13,6 +13,7 @@ import paypal from "@/assets/icon/paypal.png";
 import mastercard from "@/assets/icon/smartcard.png";
 import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,12 @@ const Footer = () => {
       showToast(error?.message || "Something went wrong", "error");
     }
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(getIsLoggedIn());
+  }, []);
+
   return (
     <footer className={`${styles.footer}`}>
       <div className="container">
@@ -88,7 +95,7 @@ const Footer = () => {
                 <p className={`${styles.footerFormPara}`}>
                   By subscribing you agree to the{" "}
                   <Link href="/privacy-policy">Privacy Policy</Link> and{" "}
-                  <Link href="/terms-and-conditions">
+                  <Link href="/terms-of-use">
                     Terms and Conditions.
                   </Link>
                 </p>
@@ -127,9 +134,11 @@ const Footer = () => {
                     <li>
                       <Link href="/">Home</Link>
                     </li>
-                    <li>
-                      <Link href="/my-profile">My Profile</Link>
-                    </li>
+                    {isLoggedIn && (
+                      <li>
+                        <Link href="/my-profile">My Profile</Link>
+                      </li>
+                    )}
                     <li>
                       <Link href="#">Videos</Link>
                     </li>
@@ -162,7 +171,7 @@ const Footer = () => {
                       <Link href="#">Order Tracking</Link>
                     </li>
                     <li>
-                      <Link href="#">Cancellation and Return</Link>
+                      <Link href="/cancellation-return-policy">Cancellation and Return</Link>
                     </li>
                     <li>
                       <Link href="#">Refund</Link>
@@ -239,12 +248,12 @@ const Footer = () => {
             </div>
             <div className="col-lg-6">
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
-                <Link href="#">Privacy Policy</Link>
-                <Link href="#">Terms of Use</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/terms-of-use">Terms of Use</Link>
                 <Link href="/shipping-return">
                   Shipping &amp; Delivery Policy
                 </Link>
-                <Link href="#">Cancellation / Return Policy</Link>
+                <Link href="/cancellation-return-policy">Cancellation / Return Policy</Link>
               </nav>
             </div>
           </div>

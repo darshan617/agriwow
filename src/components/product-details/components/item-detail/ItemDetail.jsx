@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import rise from "@/assets/icon/rise.png";
@@ -19,11 +19,11 @@ import "swiper/css";
 import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
 import Cookies from "js-cookie";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import Link from "next/link";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
 const ItemDetail = ({ productDetails }) => {
-  console.log("productDetails", productDetails);
   const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showProductPopup, setShowProductPopup] = useState(false);
@@ -97,6 +97,14 @@ const ItemDetail = ({ productDetails }) => {
     }
   };
 
+  const handleShare = () => {
+    navigator.share({
+      title: productDetails?.data?.name,
+      text: productDetails?.data?.description,
+      url: `${window?.location?.origin}${window?.location?.pathname}`,
+    });
+  };
+
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -114,6 +122,7 @@ const ItemDetail = ({ productDetails }) => {
                 type="button"
                 className={`${styles.quickActionBtn1}`}
                 aria-label="Share product"
+                onClick={handleShare}
               >
                 <FaShareAlt />
               </button>
@@ -124,7 +133,11 @@ const ItemDetail = ({ productDetails }) => {
                 aria-label="Wishlist"
                 disabled={isAddToWishlistLoading}
               >
-                <FaHeart />
+                {productDetails?.data?.is_wishlist ? (
+                  <FaHeart color="#e0334b " />
+                ) : (
+                  <FiHeart />
+                )}
               </button>
             </div>
           </div>
@@ -190,32 +203,111 @@ const ItemDetail = ({ productDetails }) => {
             <div className={`${styles.productPrice}`}>
               <div className={`${styles.productReviewCount}`}>
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
-                <span className={`${styles.productReviewCountStar} d-inline-flex gap-1`}>
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 1 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 2 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 3 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 4 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 5 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                </span>
+                  <span
+                    className={`${styles.productReviewCountStar} d-inline-flex gap-1`}
+                  >
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 1
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 2
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 3
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 4
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 5
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                  </span>
                 )}
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
-                <span className={`${styles.productReviewCountValue}`}>{productDetails?.data?.rating_summary?.average_rating}</span>
+                  <span className={`${styles.productReviewCountValue}`}>
+                    {productDetails?.data?.rating_summary?.average_rating}
+                  </span>
                 )}
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
-                <span className={`${styles.productReviewCountText}`}>
-                  <span className={`${styles.productReviewCountValue}`}>
-                    ({productDetails?.data?.rating_summary?.total_reviews} reviews)
+                  <span className={`${styles.productReviewCountText}`}>
+                    <Link
+                      href={`#review-card`}
+                      className={`${styles.productReviewCountValue}`}
+                    >
+                      ({productDetails?.data?.rating_summary?.total_reviews}{" "}
+                      reviews)
+                    </Link>
                   </span>
-                </span>
                 )}
-                <p className={`${styles.priceRow}`}>
-                  <span className={`${styles.currentPrice}`}>
-                    ₹ {productDetails?.data?.selling_price}
+                <div className={styles.priceRow}>
+                  <span className={styles.currentPrice}>
+                    ₹ {productDetails?.data?.selling_price.toLocaleString()}
+                    <span className={styles.gsttPriceSmall}>
+                      +₹
+                      {(productDetails?.data?.selling_price * 0.18)
+                        .toFixed(2)
+                        .toLocaleString()}{" "}
+                      GST
+                    </span>
                   </span>
-                  <span className={`${styles.oldPrice}`}>
-                    ₹ {productDetails?.data?.price}
+
+                  <span className={styles.mrpText}>
+                    MRP
+                    <span className={styles.oldPrice}>
+                      {" "}
+                      ₹ {productDetails?.data?.price.toLocaleString()}
+                    </span>
+                    <div className={`${styles.discountRow}`}>
+                      {productDetails?.data?.price > 0 &&
+                        productDetails?.data?.selling_price <
+                          productDetails?.data?.price && (
+                          <>
+                            <span className={`${styles.discountText}`}>
+                              {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                            </span>
+                            {/* <span>
+                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
+                </span> */}
+                          </>
+                        )}
+                    </div>
                   </span>
-                </p>
+                </div>
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
                 >
@@ -277,9 +369,7 @@ const ItemDetail = ({ productDetails }) => {
           >
             <Image src={coupon} alt="coupon" width={30} height={30} />
             <span className={`${styles.couponText}`}>All coupons & offers</span>
-            <span
-              className={`${styles.couponArrow} d-inline-flex `}
-            >
+            <span className={`${styles.couponArrow} d-inline-flex `}>
               <FiChevronRight />
             </span>
           </div>

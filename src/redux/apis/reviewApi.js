@@ -13,8 +13,8 @@ const reviewApi = apiSlice.injectEndpoints({
           headers: {
             ...(userToken && {
               Authorization: `Bearer ${userToken}`,
+              // "Content-Type": "application/json",
             }),
-            "Content-Type": "application/json",
           },
           body,
         };

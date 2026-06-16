@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import review1 from "@/assets/images/review1.png";
-import coin from "@/assets/icon/coin.png";
+
 import Image from "next/image";
-import { FaThumbsUp, FaThumbsDown, FaChevronRight } from "react-icons/fa6";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa6";
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
-import Link from "next/link";
 import {
   useAddReviewMutation,
   useUpdateReviewMutation,
@@ -80,8 +78,10 @@ const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
   </div>
 );
 
-const ReviewCard = ({ review, onEdit, onDelete }) => {
-  const userData = Cookies.get("userData") ? JSON.parse(decodeURIComponent(Cookies.get("userData"))) : null;
+const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
+  const userData = Cookies.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+    : null;
   const { date, helpful = { up: 0, down: 0 }, rating } = review;
 
   return (
@@ -94,10 +94,10 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
-          {/* <span className={styles.reviewerName}>{review?.image}</span> */}
-          {review?.image && review?.image?.length > 0 && (
-            <Image src={review?.image} alt="review" width={25} height={25} />
-          )}
+          {/* <span className={styles.reviewerName}>{review?.image_urls}</span> */}
+          {/* {review?.image_urls && review?.image_urls?.length > 0 && (
+            <Image src={review?.image_urls} alt="review" width={25} height={25} />
+          )} */}
         </div>
 
         <div className={styles.helpfulBtns}>
@@ -115,10 +115,16 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
           </button>
           {review?.user_id === userData?.id && (
             <>
-              <button className={styles.helpfulBtn} onClick={() => onEdit(review)}>
+              <button
+                className={styles.helpfulBtn}
+                onClick={() => onEdit(review)}
+              >
                 Edit
               </button>
-              <button className={styles.helpfulBtn} onClick={() => onDelete(review.id)}>
+              <button
+                className={styles.helpfulBtn}
+                onClick={() => onDelete(review.id)}
+              >
                 Delete
               </button>
             </>
@@ -128,9 +134,18 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
 
       <div className={styles.reviewTitle}>{review?.review}</div>
       {/* <div className={styles.reviewBody}>{review?.review}</div> */}
-      {review?.review_images?.length > 0 && (
-        <div className={styles.reviewImg}>
-          <Image src={review1} alt="review" width={10} height={10} />
+      {review?.image_urls?.length > 0 && (
+        <div className={styles.reviewImages}>
+          {review.image_urls.map((img, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={styles.reviewImg}
+              onClick={() => onImageClick(review.image_urls, idx)}
+            >
+              <Image src={img} alt="review" width={100} height={100} />
+            </button>
+          ))}
         </div>
       )}
     </div>
@@ -153,7 +168,8 @@ const ReviewsRating = ({
   const [selectedMedia, setSelectedMedia] = useState([]);
   const [editingReview, setEditingReview] = useState(null);
   const [reviewsList, setReviewsList] = useState(reviews);
-  console.log(selectedMedia, "selectedMedia");
+  const [lightbox, setLightbox] = useState(null);
+  const touchStart = useRef(0);
 
   const [addReview, { isLoading: isAddReviewLoading }] = useAddReviewMutation();
   const [updateReview, { isLoading: isUpdateReviewLoading }] =
@@ -206,15 +222,14 @@ const ReviewsRating = ({
       formData.append("review", reviewText);
       formData.append("id", editingReview.id);
       selectedMedia.forEach((file) => {
-        formData.append("images", file);
+        formData.append("image[]", file);
       });
       const res = await updateReview({
-        
         body: formData,
       });
 
       if (res.error) {
-        showToast(  
+        showToast(
           res.error?.data?.message || "Failed to update review",
           "error",
         );
@@ -255,7 +270,7 @@ const ReviewsRating = ({
     formData.append("rating", rating);
     formData.append("review", reviewText);
     selectedMedia.forEach((file) => {
-      formData.append("images", file); // binary file
+      formData.append("image[]", file); // binary file
     });
     const res = await addReview({
       body: formData,
@@ -286,6 +301,12 @@ const ReviewsRating = ({
     }
   };
 
+  const goLightbox = (dir) =>
+    setLightbox((l) => ({
+      ...l,
+      index: (l.index + dir + l.images.length) % l.images.length,
+    }));
+
   const handleDeleteReview = async (reviewId) => {
     const res = await deleteReview({
       reviewId,
@@ -299,10 +320,8 @@ const ReviewsRating = ({
     }
   };
 
- 
-
   return (
-    <div className={`${styles.reviewsWrapper} container`}>
+    <div className={`${styles.reviewsWrapper} container`} id="review-card">
       <div className={styles.reviewsHeader}>
         <h2>Reviews &amp; Ratings</h2>
       </div>
@@ -321,11 +340,11 @@ const ReviewsRating = ({
         )}
       </div>
 
-      <div className={`${styles.earnCoins} gap-1`}>
+      {/* <div className={`${styles.earnCoins} gap-1`}>
         Review with Images{" "}
         <Image src={coin} alt="coin" width={15} height={15} />
         <span>Earn Coins!</span>
-      </div>
+      </div> */}
 
       <div className={styles.ratingRow}>
         <RatingSummary
@@ -397,8 +416,8 @@ const ReviewsRating = ({
                     }}
                   >
                     {selectedMedia.map((file, idx) => {
-                      const isImage = file.type.startsWith("image/");
-                      const isVideo = file.type.startsWith("video/");
+                      const isImage = file.type.startsWith("image");
+                      const isVideo = file.type.startsWith("video");
                       const url = URL.createObjectURL(file);
                       return (
                         <div
@@ -523,11 +542,66 @@ const ReviewsRating = ({
             review={review}
             onEdit={handleEditReview}
             onDelete={handleDeleteReview}
+            onImageClick={(images, index) => setLightbox({ images, index })}
           />
         ))}
       </div>
 
-      <Link
+      {lightbox && (
+        <div className={styles.lightbox} onClick={() => setLightbox(null)}>
+          <button
+            type="button"
+            className={styles.lightboxClose}
+            onClick={() => setLightbox(null)}
+          >
+            ×
+          </button>
+          {lightbox.images.length > 1 && (
+            <>
+              <button
+                type="button"
+                className={styles.lightboxPrev}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goLightbox(-1);
+                }}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                className={styles.lightboxNext}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goLightbox(1);
+                }}
+              >
+                ›
+              </button>
+            </>
+          )}
+          <img
+            src={lightbox.images[lightbox.index]}
+            alt="Review"
+            className={styles.lightboxImg}
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => {
+              touchStart.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const diff = touchStart.current - e.changedTouches[0].clientX;
+              if (Math.abs(diff) > 50) goLightbox(diff > 0 ? 1 : -1);
+            }}
+          />
+          {lightbox.images.length > 1 && (
+            <span className={styles.lightboxCounter}>
+              {lightbox.index + 1} / {lightbox.images.length}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* <Link
         className={styles.viewMore}
         href="#"
         onClick={(e) => {
@@ -539,7 +613,7 @@ const ReviewsRating = ({
         <span className={styles.arrowCircle}>
           <FaChevronRight />
         </span>
-      </Link>
+      </Link> */}
     </div>
   );
 };
