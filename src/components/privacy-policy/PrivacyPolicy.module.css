@@ -1,0 +1,36 @@
+.breadcrumb ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+    margin-top: 50px;
+    font-size: 14px;
+  }
+
+  .privacyPolicyContent{
+    padding: 20px 100px;
+    text-align: justify;
+    line-height: 1.8;
+    font-size: 18px;
+  }
+
+  @media (max-width: 1024px) {
+    .privacyPolicyContent{
+      padding: 10px 50px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .privacyPolicyContent{
+      padding: 10px;
+    }
+    .privacyPolicyHeading h1{
+      font-size: 28px;
+    }
+    .breadcrumb ul{
+      font-size: 12px;
+    }
+    .breadcrumb ul li{
+      font-size: 12px;
+    }
+  }

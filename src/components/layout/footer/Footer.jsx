@@ -248,8 +248,8 @@ const Footer = () => {
             </div>
             <div className="col-lg-6">
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
-                <Link href="#">Privacy Policy</Link>
-                <Link href="/terms-use">Terms of Use</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/terms-of-use">Terms of Use</Link>
                 <Link href="/shipping-return">
                   Shipping &amp; Delivery Policy
                 </Link>
