@@ -24,7 +24,7 @@ const Stars = ({ count }) => (
 );
 
 const RatingPicker = ({ rating, onChange }) => (
-  <div className={styles.ratingPicker}>
+  <div className={styles.ratingPicker} >
     <span className={styles.ratingPickerLabel}>Your Rating</span>
     <div className={styles.starRow}>
       {Array.from({ length: 5 }, (_, i) => {
@@ -50,7 +50,7 @@ const RatingPicker = ({ rating, onChange }) => (
 );
 
 const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
-  <div className={styles.ratingSummary}>
+  <div className={styles.ratingSummary} >
     <div className={styles.avgScore}>
       <div className={styles.avgNumber}>
         {ratingData?.average_rating}{" "}
@@ -85,7 +85,7 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
   const { date, helpful = { up: 0, down: 0 }, rating } = review;
 
   return (
-    <div className={styles.reviewItem}>
+    <div className={styles.reviewItem} >
       <div className={styles.reviewTop}>
         <div className={styles.reviewerInfo}>
           <Stars count={rating} />
@@ -94,10 +94,10 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
-          {/* <span className={styles.reviewerName}>{review?.image}</span> */}
-          {review?.image && review?.image?.length > 0 && (
-            <Image src={review?.image} alt="review" width={25} height={25} />
-          )}
+          {/* <span className={styles.reviewerName}>{review?.image_urls}</span> */}
+          {/* {review?.image_urls && review?.image_urls?.length > 0 && (
+            <Image src={review?.image_urls} alt="review" width={25} height={25} />
+          )} */}
         </div>
 
         <div className={styles.helpfulBtns}>
@@ -128,9 +128,11 @@ const ReviewCard = ({ review, onEdit, onDelete }) => {
 
       <div className={styles.reviewTitle}>{review?.review}</div>
       {/* <div className={styles.reviewBody}>{review?.review}</div> */}
-      {review?.review_images?.length > 0 && (
+      {(
         <div className={styles.reviewImg}>
-          <Image src={review1} alt="review" width={10} height={10} />
+          {review?.image_urls?.map((img, idx) => (
+            <Image key={idx} src={img} alt="review" width={10} height={10} />
+          ))}
         </div>
       )}
     </div>
@@ -206,7 +208,7 @@ const ReviewsRating = ({
       formData.append("review", reviewText);
       formData.append("id", editingReview.id);
       selectedMedia.forEach((file) => {
-        formData.append("images", file);
+        formData.append("image", file);
       });
       const res = await updateReview({
         
@@ -255,7 +257,7 @@ const ReviewsRating = ({
     formData.append("rating", rating);
     formData.append("review", reviewText);
     selectedMedia.forEach((file) => {
-      formData.append("images", file); // binary file
+      formData.append("image", file); // binary file
     });
     const res = await addReview({
       body: formData,
@@ -302,7 +304,7 @@ const ReviewsRating = ({
  
 
   return (
-    <div className={`${styles.reviewsWrapper} container`}>
+    <div className={`${styles.reviewsWrapper} container` } id="review-card">
       <div className={styles.reviewsHeader}>
         <h2>Reviews &amp; Ratings</h2>
       </div>
@@ -321,11 +323,11 @@ const ReviewsRating = ({
         )}
       </div>
 
-      <div className={`${styles.earnCoins} gap-1`}>
+      {/* <div className={`${styles.earnCoins} gap-1`}>
         Review with Images{" "}
         <Image src={coin} alt="coin" width={15} height={15} />
         <span>Earn Coins!</span>
-      </div>
+      </div> */}
 
       <div className={styles.ratingRow}>
         <RatingSummary
@@ -397,8 +399,8 @@ const ReviewsRating = ({
                     }}
                   >
                     {selectedMedia.map((file, idx) => {
-                      const isImage = file.type.startsWith("image/");
-                      const isVideo = file.type.startsWith("video/");
+                      const isImage = file.type.startsWith("image");
+                      const isVideo = file.type.startsWith("video");
                       const url = URL.createObjectURL(file);
                       return (
                         <div

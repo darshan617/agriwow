@@ -1188,9 +1188,9 @@
   }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1500px) {
   .headerOuter {
-    top: 60px;
+    top: 50px;
   }
 
   .scrolled {

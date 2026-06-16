@@ -7,11 +7,11 @@
     font-size: 14px;
   }
 
-  .shippingReturnHeading h1{
+  .termUseHeading h1{
     font-size: 38px;
   }
 
-  .shippingReturnContent{
+  .termUseContentItem{
     padding: 20px 100px;
     text-align: justify;
     line-height: 1.8;
@@ -19,16 +19,17 @@
   }
 
   @media (max-width: 1024px) {
-    .shippingReturnContent{
+    .termUseContentItem{
       padding: 10px 50px;
     }
   }
+
   @media (max-width: 768px) {
-    .shippingReturnContent{
+    .termUseContentItem{
       padding: 10px;
       line-height: 1.3;
     }
-    .shippingReturnHeading h1{
+    .termUseHeading h1{
       font-size: 28px;
     }
     .breadcrumb ul{
