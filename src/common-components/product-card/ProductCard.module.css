@@ -196,13 +196,13 @@
 
 .currentPrice {
   color: #101010;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }
 
 .oldPrice {
   color: #7d7d7d;
-  font-size: 12px;
+  font-size: 16px;
   text-decoration: line-through;
 }
 
@@ -215,8 +215,6 @@
 .productCard:hover .productName {
   /* transform: translateY(-20px); */
 }
-
-
 .cardActions {
   position: absolute;
   bottom: 0;
@@ -377,7 +375,7 @@
   }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1500px) {
   .addToCartBtn,
   .buyNowBtn {
     padding: 5px 0;
@@ -385,6 +383,9 @@
   }
   .productImg {
     object-fit: fill;
+  }
+  .productCard {
+    height: 420px;
   }
 }
 

@@ -19,6 +19,7 @@ import "swiper/css";
 import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
 import Cookies from "js-cookie";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import Link from "next/link";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
@@ -265,20 +266,43 @@ const ItemDetail = ({ productDetails }) => {
                 )}
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
                   <span className={`${styles.productReviewCountText}`}>
-                    <span className={`${styles.productReviewCountValue}`}>
+                    <Link
+                      href={`#review-card`}
+                      className={`${styles.productReviewCountValue}`}
+                    >
                       ({productDetails?.data?.rating_summary?.total_reviews}{" "}
                       reviews)
-                    </span>
+                    </Link>
                   </span>
                 )}
-                <p className={`${styles.priceRow}`}>
-                  <span className={`${styles.currentPrice}`}>
-                    ₹ {productDetails?.data?.selling_price}
+                <div className={styles.priceRow}>
+                  <span className={styles.currentPrice}>
+                    ₹ {productDetails?.data?.selling_price.toLocaleString()}
+                    <span className={styles.gsttPriceSmall} > 
+                      +₹{(productDetails?.data?.selling_price * 0.18).toFixed(2).toLocaleString()} GST
+                    </span>
                   </span>
-                  <span className={`${styles.oldPrice}`}>
-                    ₹ {productDetails?.data?.price}
+
+                  <span className={styles.mrpText}>
+                    MRP
+                    <span className={styles.oldPrice}>
+                      {" "}
+                      ₹ {productDetails?.data?.price.toLocaleString()}
+                    </span>
+                    <div className={`${styles.discountRow}`}>
+                      {productDetails?.data?.price > 0 && productDetails?.data?.selling_price < productDetails?.data?.price && (
+                        <>
+                          <span className={`${styles.discountText}`}>
+                            {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                          </span>
+                          {/* <span>
+                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
+                </span> */}
+                        </>
+                      )}
+                    </div>
                   </span>
-                </p>
+                </div>
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
                 >

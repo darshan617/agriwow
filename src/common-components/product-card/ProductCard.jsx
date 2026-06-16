@@ -42,6 +42,7 @@ const ProductCard = ({
   userId = null,
   path = null,
   isWishlist = false,
+  isSimilarProduct = false,
 }) => {
   const router = useRouter();
   const isHomeOrProductPage = ["productPage", "homePage", "home"].includes(
@@ -299,12 +300,13 @@ const ProductCard = ({
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
         </div>
 
-        {isHomeOrProductPage && discount > 0 && (
+        
           <div className={`${styles.discountRow}`}>
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
             <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
           </div>
-        )}
+     
+   
       </Link>
 
       <div className={`${styles.cardActions}`}>

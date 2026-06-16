@@ -17,9 +17,9 @@ const OrderInformation = () => {
                 <div className={`${styles.orderInformationContent}`}>
                   <Image src={shipping} alt="Shipping" width={60} height={60} />
                   <div className={`${styles.orderInformationContentText}`}>
-                    <h2>Free Shipping on Orders Over Rs.00</h2>
+                    <h2>Free Shipping on Orders Over Rs.1000</h2>
                     <p>
-                      Enjoy free standard shipping when you spend Rs.00 or{" "}
+                      Enjoy free standard shipping when you spend Rs.1000 or{" "}
                       <br />
                       more. No hidden fees — just more value with every order.
                     </p>

@@ -38,13 +38,13 @@ import {
 } from "@/redux/apis/addToCartApi";
 
 const TRENDING_SEARCHES = [
-  "Fogging Machines",
-  "Garden Equipment",
-  "Garden Machinery",
-  "Garden Tools",
-  "Gardening Tools",
-  "Gardening Equipment",
-  "Gardening Machinery",
+  {label: "Fogging Machines", href: "/product-category/fogging-machines"},
+  // {label: "Garden Equipment", href: "/product-category/garden-tools"},
+  {label: "Agriculture Sprayers", href: "/product-category/agriculture-sprayers"},
+  {label: "Garden Tools", href: "/product-category/garden-tools"},
+  {label: "Garden & Lawn Care", href: "/product-category/garden-lawn-care"},
+  {label: "Industrial Products", href: "/product-category/industrial-products"},
+  {label: "Post Harvest", href: "/product-category/post-harvest"},
 ];
 
 const TRENDING_VISIBLE_COUNT = 9;
@@ -376,7 +376,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const trendingToShow = trendingExpanded
     ? TRENDING_SEARCHES
     : TRENDING_SEARCHES.slice(0, TRENDING_VISIBLE_COUNT);
-  const hiddenTrendingCount = TRENDING_SEARCHES.length - TRENDING_VISIBLE_COUNT;
+  const hiddenTrendingCount =
+    TRENDING_SEARCHES.length - TRENDING_VISIBLE_COUNT;
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -634,15 +635,15 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                         <span>Trending Searches</span>
                       </h3>
                       <div className={`${styles.trendingChips}`}>
-                        {trendingToShow?.map((term) => (
-                          <button
-                            key={term}
-                            type="button"
+                        {trendingToShow?.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
                             className={`${styles.trendingChip}`}
-                            onClick={() => handleSuggestionClick(term)}
+                            onClick={closeSearch}
                           >
-                            {term}
-                          </button>
+                            {item.label}
+                          </Link>
                         ))}
                         {hiddenTrendingCount > 0 && !trendingExpanded && (
                           <button

@@ -159,8 +159,8 @@
 @media (max-width: 1399px) {
   .shopNowButton {
     padding: 7px 3px;
-    font-size: 10px;
-    width: 100px;
+    /* font-size: 10px; */
+    width: auto;
   }
   .topHeaderTicker p {
     font-size: 15px;
@@ -171,6 +171,13 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .shopNowButton {
+    width: auto;
+    padding: 7px 3px;
+    font-size: 10px;
+  }
+}
 @media (max-width: 1024px) {
   .topHeaderLeft ul {
     font-size: 10px;
@@ -200,11 +207,11 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .shopNowButton {
-    padding: 7px 3px;
-    font-size: 10px;
-    width: 100px;
+    padding: 6px 10px;
+    font-size: 9px;
+    width: 80px;
   }
 }
 
@@ -251,12 +258,13 @@
   .socialIcons {
     justify-content: center;
   }
-
   .shopNowButton {
-    padding: 7px 3px;
+    padding: 5px 8px;
     font-size: 9px;
-    width: 100px;
+    width: 80px;
+
   }
+
 }
 
 @media (max-width: 767px) {

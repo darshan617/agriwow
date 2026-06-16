@@ -118,13 +118,28 @@
 }
 
 .priceRow {
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 8px;
-  display: flex;
-  margin: 8px 0 0;
-}
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    /* flex-wrap: nowrap; */
+    gap: 4px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;  
+    z-index: 1;
+  }
 
+  .gsttPriceSmall{
+    margin-left: 5px;
+    font-size: 16px;
+    color: #7d7d7d;
+    font-weight: 500;
+  }
+
+.priceRow .currentPrice {
+  font-size: 25px;
+}
 .currentPrice,
 .oldPrice {
   white-space: nowrap;
@@ -169,7 +184,7 @@
   border-radius: 4px;
 }
 .productDescription {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   border-bottom: 1.5px solid #eaebeb;
 }
 .coupon {
