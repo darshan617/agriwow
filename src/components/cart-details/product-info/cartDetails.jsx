@@ -482,51 +482,52 @@ const CartDetails = ({
                 </button>
               </Link>
             ) : (
-              <div className="d-flex justify-content-end mt-3 gap-3">
-                <button
-                  type="button"
-                  className={styles.checkoutBtn}
-                  onClick={() =>
-                    handlePlaceOrder(
-                      router?.query?.productId ? "buy_now" : "cart",
-                      "partial",
-                      cartData?.selected_address?.id,
-                    )
-                  }
-                >
-                  <div>
-                    <div>
-                      <span>Partial Payment (30%)</span>
-                      {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
-                    </div>
-                  </div>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={30} />
-                  </span>
-                </button>
+              ""
+              // <div className="d-flex justify-content-end mt-3 gap-3">
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn}
+              //     onClick={() =>
+              //       handlePlaceOrder(
+              //         router?.query?.productId ? "buy_now" : "cart",
+              //         "partial",
+              //         cartData?.selected_address?.id,
+              //       )
+              //     }
+              //   >
+              //     <div>
+              //       <div>
+              //         <span>Partial Payment (30%)</span>
+              //         {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
+              //       </div>
+              //     </div>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={30} />
+              //     </span>
+              //   </button>
 
-                <button
-                  type="button"
-                  className={styles.checkoutBtn}
-                  onClick={() =>
-                    handlePlaceOrder(
-                      router?.query?.productId ? "buy_now" : "cart",
-                      "full",
-                      cartData?.selected_address?.id,
-                    )
-                  }
-                >
-                  <div>
-                    <div>
-                      <span> Full Payment</span>
-                      {/* <p>₹ {cartTotal}</p> */}
-                    </div>
-                  </div>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={30} />
-                  </span>
-                </button>
-              </div>
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn}
+              //     onClick={() =>
+              //       handlePlaceOrder(
+              //         router?.query?.productId ? "buy_now" : "cart",
+              //         "full",
+              //         cartData?.selected_address?.id,
+              //       )
+              //     }
+              //   >
+              //     <div>
+              //       <div>
+              //         <span> Full Payment</span>
+              //         {/* <p>₹ {cartTotal}</p> */}
+              //       </div>
+              //     </div>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={30} />
+              //     </span>
+              //   </button>
+              // </div>
             )}
           </>
         )}
@@ -550,7 +551,7 @@ const CartDetails = ({
           />
         </CustomPopup>
       )}
-      {showPopup === "payment" && (
+      {/* {showPopup === "payment" && (
         <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
           <div>
             <div className="d-flex justify-content-center mb-3">
@@ -566,7 +567,7 @@ const CartDetails = ({
             </p>
           </div>
         </CustomPopup>
-      )}
+      )} */}
     </>
   );
 };

@@ -24,7 +24,6 @@ import Link from "next/link";
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
 const ItemDetail = ({ productDetails }) => {
-  console.log("productDetails", productDetails);
   const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showProductPopup, setShowProductPopup] = useState(false);
@@ -278,8 +277,12 @@ const ItemDetail = ({ productDetails }) => {
                 <div className={styles.priceRow}>
                   <span className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
-                    <span className={styles.gsttPriceSmall} > 
-                      +₹{(productDetails?.data?.selling_price * 0.18).toFixed(2).toLocaleString()} GST
+                    <span className={styles.gsttPriceSmall}>
+                      +₹
+                      {(productDetails?.data?.selling_price * 0.18)
+                        .toFixed(2)
+                        .toLocaleString()}{" "}
+                      GST
                     </span>
                   </span>
 
@@ -290,16 +293,18 @@ const ItemDetail = ({ productDetails }) => {
                       ₹ {productDetails?.data?.price.toLocaleString()}
                     </span>
                     <div className={`${styles.discountRow}`}>
-                      {productDetails?.data?.price > 0 && productDetails?.data?.selling_price < productDetails?.data?.price && (
-                        <>
-                          <span className={`${styles.discountText}`}>
-                            {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
-                          </span>
-                          {/* <span>
+                      {productDetails?.data?.price > 0 &&
+                        productDetails?.data?.selling_price <
+                          productDetails?.data?.price && (
+                          <>
+                            <span className={`${styles.discountText}`}>
+                              {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                            </span>
+                            {/* <span>
                   Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
                 </span> */}
-                        </>
-                      )}
+                          </>
+                        )}
                     </div>
                   </span>
                 </div>

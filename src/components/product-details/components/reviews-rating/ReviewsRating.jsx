@@ -22,7 +22,7 @@ const Stars = ({ count }) => (
 );
 
 const RatingPicker = ({ rating, onChange }) => (
-  <div className={styles.ratingPicker} >
+  <div className={styles.ratingPicker}>
     <span className={styles.ratingPickerLabel}>Your Rating</span>
     <div className={styles.starRow}>
       {Array.from({ length: 5 }, (_, i) => {
@@ -48,7 +48,7 @@ const RatingPicker = ({ rating, onChange }) => (
 );
 
 const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
-  <div className={styles.ratingSummary} >
+  <div className={styles.ratingSummary}>
     <div className={styles.avgScore}>
       <div className={styles.avgNumber}>
         {ratingData?.average_rating}{" "}
@@ -79,11 +79,13 @@ const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
 );
 
 const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
-  const userData = Cookies.get("userData") ? JSON.parse(decodeURIComponent(Cookies.get("userData"))) : null;
+  const userData = Cookies.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+    : null;
   const { date, helpful = { up: 0, down: 0 }, rating } = review;
 
   return (
-    <div className={styles.reviewItem} >
+    <div className={styles.reviewItem}>
       <div className={styles.reviewTop}>
         <div className={styles.reviewerInfo}>
           <Stars count={rating} />
@@ -113,10 +115,16 @@ const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
           </button>
           {review?.user_id === userData?.id && (
             <>
-              <button className={styles.helpfulBtn} onClick={() => onEdit(review)}>
+              <button
+                className={styles.helpfulBtn}
+                onClick={() => onEdit(review)}
+              >
                 Edit
               </button>
-              <button className={styles.helpfulBtn} onClick={() => onDelete(review.id)}>
+              <button
+                className={styles.helpfulBtn}
+                onClick={() => onDelete(review.id)}
+              >
                 Delete
               </button>
             </>
@@ -217,12 +225,11 @@ const ReviewsRating = ({
         formData.append("image", file);
       });
       const res = await updateReview({
-        
         body: formData,
       });
 
       if (res.error) {
-        showToast(  
+        showToast(
           res.error?.data?.message || "Failed to update review",
           "error",
         );
@@ -313,10 +320,8 @@ const ReviewsRating = ({
     }
   };
 
- 
-
   return (
-    <div className={`${styles.reviewsWrapper} container` } id="review-card">
+    <div className={`${styles.reviewsWrapper} container`} id="review-card">
       <div className={styles.reviewsHeader}>
         <h2>Reviews &amp; Ratings</h2>
       </div>

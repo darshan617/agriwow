@@ -97,6 +97,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         method: "GET",
         headers: getCartRequestHeaders(),
       }),
+      providesTags: ["getAvailableCoupons"],
     }),
     addDeliveryAddress: builder.mutation({
       query: ({ body }) => ({
@@ -133,6 +134,15 @@ const addToCartApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
     }),
+    removeCoupon: builder.mutation({
+      query: ({ body }) => ({
+        url: "/remove-coupon-from-cart",
+        method: "POST",
+        headers: getCartRequestHeaders(),
+        body,
+      }),
+      invalidatesTags: ["getCartData", "getAvailableCoupons"],
+    }),
   }),
 });
 
@@ -148,4 +158,5 @@ export const {
   useGetAllDeliveryAddressesQuery,
   useUpdateDeliveryAddressMutation,
   useDeleteDeliveryAddressMutation,
+  useRemoveCouponMutation,
 } = addToCartApi;
