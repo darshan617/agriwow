@@ -43,12 +43,10 @@ const TRENDING_TOPICS = [
   },
 ];
 
-
-
-const TrandingBlog = ({ type = "blog" }) => {
-  
-const { data: homeData, isLoading: isHomeDataLoading } = useGetHomeDataQuery();
-const categoriesData = homeData?.data?.categories;
+const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
+  const { data: homeData, isLoading: isHomeDataLoading } =
+    useGetHomeDataQuery();
+  const categoriesData = homeData?.data?.categories;
   const handleSubscribe = (event) => {
     event.preventDefault();
   };
@@ -85,14 +83,14 @@ const categoriesData = homeData?.data?.categories;
               <span className={styles.fireIcon} aria-hidden>
                 <Image src={fireIcon} alt="fire icon" width={20} height={20} />
               </span>
-              Trending / Popular Tag Section
+              Trending Blogs
             </h2>
           </div>
 
           <ul className={styles.list}>
-            {TRENDING_TOPICS.map((topic) => (
+            {trendingBlogs?.map((topic) => (
               <li key={topic?.id}>
-                <Link href={topic?.href} className={styles.listItem}>
+                <Link href={`/blog/${topic?.slug}`} className={styles.listItem}>
                   <span className={styles.thumb}>
                     <Image
                       src={topic?.image}
@@ -104,19 +102,16 @@ const categoriesData = homeData?.data?.categories;
                   </span>
                   <span className={styles.itemBody}>
                     <span className={styles.itemTitle}>{topic?.title}</span>
-                    <span className={styles.itemMeta}>
-                      {topic?.articleCount} Articles
+                    <span className={styles.itemDescription}>
+                      {topic?.short_description}
                     </span>
+                    <span className={styles.itemDate}>{topic?.created_at}</span>
                   </span>
                   <FaChevronRight className={styles.chevron} aria-hidden />
                 </Link>
               </li>
             ))}
           </ul>
-
-          <Link href="#" className={styles.viewAllLink}>
-            View All Topics
-          </Link>
         </div>
 
         <div
@@ -190,4 +185,4 @@ const categoriesData = homeData?.data?.categories;
   );
 };
 
-export default TrandingBlog;
+export default TrendingBlog;

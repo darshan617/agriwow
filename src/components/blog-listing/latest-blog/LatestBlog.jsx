@@ -5,8 +5,11 @@ import { FaSearch } from "react-icons/fa";
 import { FaChevronLeft, FaChevronRight, FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
 import styles from "@/components/blog-listing/latest-blog/LatestBlog.module.css";
-import TrandingBlog from "../trending-blog/TrandingBlog";
-import { useGetAllBlogCategoriesMutation, useGetBlogListingMutation } from "@/redux/apis/blogApi";
+import TrendingBlog from "../trending-blog/TrendingBlog";
+import {
+  useGetAllBlogCategoriesMutation,
+  useGetBlogListingMutation,
+} from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
 const BLOGS_PER_PAGE = 6;
@@ -20,6 +23,7 @@ const LatestBlog = () => {
   const [categories, setCategories] = useState([{ id: "all", label: "All" }]);
   const [getAllBlogs, { isLoading }] = useGetBlogListingMutation();
   const [getAllBlogCategories] = useGetAllBlogCategoriesMutation();
+  const [trendingBlogs, setTrendingBlogs] = useState([]);
 
   const filteredBlogs = useMemo(() => {
     const posts = Array.isArray(blogListData)
@@ -32,7 +36,8 @@ const LatestBlog = () => {
       const matchesCategory =
         activeCategory === "all" ||
         post?.category?.slug === activeCategory ||
-        post?.category?.name?.toLowerCase().replace(/\s+/g, "-") === activeCategory;
+        post?.category?.name?.toLowerCase().replace(/\s+/g, "-") ===
+          activeCategory;
       return matchesSearch && matchesCategory;
     });
   }, [blogListData, searchQuery, activeCategory]);
@@ -41,12 +46,12 @@ const LatestBlog = () => {
 
   const blogsExcludingFeatured = useMemo(
     () => filteredBlogs.slice(1),
-    [filteredBlogs]
+    [filteredBlogs],
   );
 
   const totalPages = Math.max(
     1,
-    Math.ceil(blogsExcludingFeatured.length / BLOGS_PER_PAGE)
+    Math.ceil(blogsExcludingFeatured.length / BLOGS_PER_PAGE),
   );
 
   const isFirstPage = currentPage <= 1;
@@ -90,7 +95,8 @@ const LatestBlog = () => {
         },
       });
       if (res?.data?.success || res?.data?.status) {
-        setBlogListData(res?.data?.data);
+        setBlogListData(res?.data?.data?.blogs ?? []);
+        setTrendingBlogs(res?.data?.data?.trending ?? []);
       }
     } catch (error) {
       console.log(error);
@@ -101,7 +107,9 @@ const LatestBlog = () => {
     try {
       const res = await getAllBlogCategories();
       if (res?.data?.success || res?.data?.status) {
-        const categoriesData = Array.isArray(res?.data?.data) ? res?.data?.data : [];
+        const categoriesData = Array.isArray(res?.data?.data)
+          ? res?.data?.data
+          : [];
         setCategories([
           { id: "all", label: "All" },
           ...categoriesData.map((allCategory) => ({
@@ -228,11 +236,17 @@ const LatestBlog = () => {
                       <div className={styles.featuredFooter}>
                         <div className={styles.featuredMeta}>
                           <span className={styles.metaItem}>
-                            <FaRegUser className={styles.metaIcon} aria-hidden />
+                            <FaRegUser
+                              className={styles.metaIcon}
+                              aria-hidden
+                            />
                             {featuredPost.author}
                           </span>
                           <span className={styles.metaItem}>
-                            <LuCalendarDays className={styles.metaIcon} aria-hidden />
+                            <LuCalendarDays
+                              className={styles.metaIcon}
+                              aria-hidden
+                            />
                             {featuredPost.blog_date}
                           </span>
                         </div>
@@ -270,7 +284,9 @@ const LatestBlog = () => {
                             <span className={styles.blogCardCategory}>
                               {post.category?.name}
                             </span>
-                            <h3 className={styles.blogCardTitle}>{post.title}</h3>
+                            <h3 className={styles.blogCardTitle}>
+                              {post.title}
+                            </h3>
                             <p className={styles.blogCardExcerpt}>
                               {post.short_description}
                             </p>
@@ -324,7 +340,10 @@ const LatestBlog = () => {
                     if (typeof item === "string") {
                       return (
                         <li key={`${item}-${index}`}>
-                          <span className={styles.pageEllipsis} aria-hidden="true">
+                          <span
+                            className={styles.pageEllipsis}
+                            aria-hidden="true"
+                          >
                             …
                           </span>
                         </li>
@@ -365,7 +384,7 @@ const LatestBlog = () => {
           </div>
 
           <div className="col-xl-3 col-lg-4 col-md-5">
-            <TrandingBlog />
+            <TrendingBlog trendingBlogs={trendingBlogs} />
           </div>
         </div>
       </div>

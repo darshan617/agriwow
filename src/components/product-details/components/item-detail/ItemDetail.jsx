@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import rise from "@/assets/icon/rise.png";
@@ -97,6 +97,14 @@ const ItemDetail = ({ productDetails }) => {
     }
   };
 
+  const handleShare = () => {
+    navigator.share({
+      title: productDetails?.data?.name,
+      text: productDetails?.data?.description,
+      url: `${window?.location?.origin}${window?.location?.pathname}`,
+    });
+  };
+
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -114,6 +122,7 @@ const ItemDetail = ({ productDetails }) => {
                 type="button"
                 className={`${styles.quickActionBtn1}`}
                 aria-label="Share product"
+                onClick={handleShare}
               >
                 <FaShareAlt />
               </button>
@@ -124,7 +133,11 @@ const ItemDetail = ({ productDetails }) => {
                 aria-label="Wishlist"
                 disabled={isAddToWishlistLoading}
               >
-                <FaHeart />
+                {productDetails?.data?.is_wishlist ? (
+                  <FaHeart color="#e0334b " />
+                ) : (
+                  <FiHeart />
+                )}
               </button>
             </div>
           </div>
@@ -190,23 +203,73 @@ const ItemDetail = ({ productDetails }) => {
             <div className={`${styles.productPrice}`}>
               <div className={`${styles.productReviewCount}`}>
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
-                <span className={`${styles.productReviewCountStar} d-inline-flex gap-1`}>
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 1 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 2 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 3 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 4 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                  <FaStar style={{ color: productDetails?.data?.rating_summary?.average_rating >= 5 ? "#ffc107" : "#ccc" }} className={`${styles.productReviewCountStarIcon}`} />
-                </span>
+                  <span
+                    className={`${styles.productReviewCountStar} d-inline-flex gap-1`}
+                  >
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 1
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 2
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 3
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 4
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                    <FaStar
+                      style={{
+                        color:
+                          productDetails?.data?.rating_summary
+                            ?.average_rating >= 5
+                            ? "#ffc107"
+                            : "#ccc",
+                      }}
+                      className={`${styles.productReviewCountStarIcon}`}
+                    />
+                  </span>
                 )}
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
-                <span className={`${styles.productReviewCountValue}`}>{productDetails?.data?.rating_summary?.average_rating}</span>
+                  <span className={`${styles.productReviewCountValue}`}>
+                    {productDetails?.data?.rating_summary?.average_rating}
+                  </span>
                 )}
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
-                <span className={`${styles.productReviewCountText}`}>
-                  <span className={`${styles.productReviewCountValue}`}>
-                    ({productDetails?.data?.rating_summary?.total_reviews} reviews)
+                  <span className={`${styles.productReviewCountText}`}>
+                    <span className={`${styles.productReviewCountValue}`}>
+                      ({productDetails?.data?.rating_summary?.total_reviews}{" "}
+                      reviews)
+                    </span>
                   </span>
-                </span>
                 )}
                 <p className={`${styles.priceRow}`}>
                   <span className={`${styles.currentPrice}`}>
@@ -277,9 +340,7 @@ const ItemDetail = ({ productDetails }) => {
           >
             <Image src={coupon} alt="coupon" width={30} height={30} />
             <span className={`${styles.couponText}`}>All coupons & offers</span>
-            <span
-              className={`${styles.couponArrow} d-inline-flex `}
-            >
+            <span className={`${styles.couponArrow} d-inline-flex `}>
               <FiChevronRight />
             </span>
           </div>
