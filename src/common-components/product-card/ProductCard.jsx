@@ -90,6 +90,9 @@ const ProductCard = ({
       });
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
+        if (router?.pathname === "/wishlist") {
+          handleRemoveFromWishlist();
+        }
       } else {
         showToast(res?.data?.message || "Failed to add to cart", "error");
       }
@@ -192,7 +195,14 @@ const ProductCard = ({
       data-aos-delay="100"
     >
       <div className={`${styles.cardTags}`}>
-        <div style={{ display: "flex", gap: 4, justifyContent: "space-between", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 4,
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           {isHomeOrProductPage ? (
             <>
               {isBestSeller && (
@@ -295,10 +305,7 @@ const ProductCard = ({
             <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
           </div>
         )}
-   
       </Link>
-      
-
 
       <div className={`${styles.cardActions}`}>
         <button

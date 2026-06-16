@@ -320,6 +320,17 @@
   color: #ffffff;
 }
 
+.productCartName {
+  text-decoration: none;
+}
+
+.productCartName:hover {
+  text-decoration: underline;
+
+  text-underline-offset: 3px;
+  text-decoration-color: #c9c9c9;
+}
+
 @media (max-width: 1366px) {
 
   .productCartHeader,
