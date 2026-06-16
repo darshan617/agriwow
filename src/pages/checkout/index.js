@@ -112,13 +112,18 @@ const Checkout = () => {
     });
   };
 
-  const handleUpdateCart = async (id, quantity, address_id = null) => {
+  const handleUpdateCart = async (
+    id,
+    quantity,
+    address_id = null,
+    coupon_code,
+  ) => {
     try {
       const res = await updateCart({
         body: {
           cart_id: id,
           quantity: quantity,
-          coupon_code: couponCode,
+          coupon_code: coupon_code !== undefined ? coupon_code : couponCode,
           address_id: address_id,
         },
       });
@@ -252,7 +257,10 @@ const Checkout = () => {
                 onIncrease={handleIncrease}
                 onDecrease={handleDecrease}
                 appliedCoupon={appliedCoupon}
-                onRemoveCoupon={() => setAppliedCoupon(null)}
+                onRemoveCoupon={() => {
+                  setAppliedCoupon(null);
+                  setCouponCode("");
+                }}
                 handleUpdateCart={handleUpdateCart}
                 onBuyNowRemoved={handleBuyNowRemoved}
               />

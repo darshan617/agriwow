@@ -8,6 +8,7 @@ import {
   useApplyCouponMutation,
   useGetAvailableCouponsQuery,
   useGetCartDataQuery,
+  useRemoveCouponMutation,
   useUpdateCartMutation,
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
@@ -48,6 +49,8 @@ const CartSummery = ({
     usePlaceOrderMutation();
   const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
     useVerifyPaymentMutation();
+  const [removeCoupon, { isLoading: isRemoveCouponLoading }] =
+    useRemoveCouponMutation();
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
@@ -114,17 +117,32 @@ const CartSummery = ({
   };
 
   const handleRemoveCoupon = async () => {
-    const res = await updateCart({
-      body: {
-        coupon_code: "",
-      },
-    });
-    if (res?.data?.success || res?.data?.status) {
+    try {
+      setCouponCode("");
       setAppliedCoupon(null);
-      showToast(res?.data?.message || "Coupon removed", "success");
-      handleUpdateCart();
-    } else {
-      showToast(res?.data?.message || "Failed to remove coupon", "error");
+      const res = await removeCoupon({
+        body: {
+          source: router?.query?.productId ? "buy_now" : "cart",
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message || "Coupon removed", "success");
+        if (router?.pathname === "/checkout" && router?.query?.productId) {
+          await updateBuyNow({
+            body: {
+              buy_now_id: router.query.buy_now_id,
+              coupon_code: "",
+            },
+          });
+        } else {
+          handleUpdateCart(null, null, null, "");
+        }
+      } else {
+        showToast(res?.data?.message || "Failed to remove coupon", "error");
+      }
+    } catch (error) {
+      console.log(error, "error");
+      showToast(error?.data?.message || "Failed to remove coupon", "error");
     }
   };
 
@@ -151,7 +169,6 @@ const CartSummery = ({
           prefill: razorpay.prefill,
           handler: async function (response) {
             setShowPopup("payment");
-            console.log("Payment Success", response);
             const verifyPaymentRes = await verifyPayment({
               body: {
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -186,7 +203,6 @@ const CartSummery = ({
         const rzp = new window.Razorpay(options);
 
         rzp.on("payment.failed", function (response) {
-          console.log("Payment Failed", response.error);
           showToast(response.error.description, "error");
         });
 
@@ -200,11 +216,19 @@ const CartSummery = ({
     }
   };
 
+  // useEffect(() => {
+  //   if (cartData?.coupon?.code) {
+  //     setCouponCode(cartData?.coupon?.code);
+  //   }
+  // }, []);
   useEffect(() => {
-    if (cartData?.coupon?.code) {
-      setCouponCode(cartData?.coupon?.code);
+    if (!cartData) return;
+    if (cartData.coupon?.code) {
+      setCouponCode(cartData.coupon.code);
+    } else {
+      setCouponCode("");
     }
-  }, [cartData]);
+  }, [cartData?.coupon?.code, cartData]);
 
   return (
     <div className={`${styles.cartSummaryWrapper} pt-3 pb-5`}>
@@ -393,14 +417,23 @@ const CartSummery = ({
       </div>
       {!hideCoupon && (
         <div className={`${styles.couponCard}`}>
-          <h3 className={`${styles.couponTitle} `}>Apply Coupon</h3>
-
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h3 className={`${styles.couponTitle} `}>Apply Coupon</h3>
+            {appliedCoupon && (
+              <button
+                onClick={() => handleRemoveCoupon()}
+                className={`${styles.removeCouponBtn}`}
+              >
+                Remove Coupon
+              </button>
+            )}
+          </div>
           <div className={`${styles.couponForm}`}>
             <input
               type="text"
               placeholder="Enter Coupon Code"
               className={`${styles.couponInput}`}
-              value={couponCode || cartData?.coupon?.code}
+              value={couponCode}
               onChange={(e) => setCouponCode(e?.target?.value)}
             />
 

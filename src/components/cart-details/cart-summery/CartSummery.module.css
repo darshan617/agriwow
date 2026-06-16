@@ -96,7 +96,7 @@
 .couponTitle {
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
   color: #222;
 }
 
@@ -243,6 +243,16 @@
   font-size: 14px;
   color: #7e997e;
   padding-left: 20px;
+}
+
+.removeCouponBtn {
+  background: transparent;
+  border: none;
+  color: #b91919;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
