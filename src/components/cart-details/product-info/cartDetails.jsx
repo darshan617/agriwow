@@ -283,7 +283,7 @@ const CartDetails = ({
   return (
     <>
       <div className={styles.productInfo}>
-        {appliedCoupon && (
+        {/* {appliedCoupon && (
           <div className={styles.coupon}>
             <FaCircleCheck size={30} color="#239c3d" />
 
@@ -305,7 +305,7 @@ const CartDetails = ({
               <RxCross2 size={20} />
             </button>
           </div>
-        )}
+        )} */}
 
         {cartItems.length === 0 && (
           <div className={styles.emptySection}>

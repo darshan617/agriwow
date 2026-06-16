@@ -14,6 +14,7 @@ import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { FaCopy } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useUpdateBuyNowMutation } from "@/redux/apis/buyProductApi";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -34,6 +35,7 @@ const CartSummery = ({
     useUpdateCartMutation();
   const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
     useUpdateBuyNowMutation();
+  const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
@@ -206,7 +208,13 @@ const CartSummery = ({
 
             <button
               className={`${styles.applyBtn}`}
-              onClick={handleApplyCoupon}
+              onClick={() => {
+                if (!getIsLoggedIn()) {
+                  openLoginPopup();
+                  return;
+                }
+                handleApplyCoupon();
+              }}
               disabled={isLoading}
             >
               {isLoading ? "Applying..." : "Apply"}
