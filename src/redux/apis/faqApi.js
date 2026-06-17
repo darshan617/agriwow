@@ -10,8 +10,16 @@
                 }),
                 providesTags: ['faqs'],
             }),
+            askQuestion: builder.mutation({
+                query: ({body}) => ({
+                    url: '/product-question',
+                    method: 'POST',
+                    body: body,
+                }),
+                invalidatesTags: ['askQuestion'],
+            }),
         }),
     })
 
 
-    export const { useGetFaqsQuery } = faqApi
+    export const { useGetFaqsQuery, useAskQuestionMutation } = faqApi

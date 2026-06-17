@@ -33,6 +33,7 @@ export const apiSlice = createApi({
     "deleteReview",
     "myProfile",
     "subscribeEmail",
+    "askQuestion",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),
