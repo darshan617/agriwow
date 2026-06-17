@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import Login from "@/components/auth/login/Login";
@@ -26,10 +26,15 @@ export const getIsLoggedIn = () => {
 export const LoginPopupProvider = ({ children }) => {
   const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
+
+  useEffect(() => {
+    setIsLoggedIn(getIsLoggedIn());
+  }, []);
 
   const openLoginPopup = () => setShowPopup("login");
 
@@ -78,6 +83,7 @@ export const LoginPopupProvider = ({ children }) => {
           }
 
           showToast(res?.data?.message, "success");
+          setIsLoggedIn(true);
           closeLoginPopup();
         } else {
           console.error("OTP verification failed", res?.error);
@@ -89,7 +95,9 @@ export const LoginPopupProvider = ({ children }) => {
   };
 
   return (
-    <LoginPopupContext.Provider value={{ openLoginPopup, getIsLoggedIn }}>
+    <LoginPopupContext.Provider
+      value={{ openLoginPopup, getIsLoggedIn, isLoggedIn }}
+    >
       {children}
       {showPopup === "login" && (
         <CustomPopup onclose={closeLoginPopup}>

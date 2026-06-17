@@ -20,11 +20,9 @@ export const TopHeaderLeftLinks = () => {
         <li>
           <Link href="/shipping-return">Shipping & Returns</Link>
         </li>
-        {isLoggedIn && (
-          <li>
-            <Link href="/my-profile">My Profile</Link>
-          </li>
-        )}
+        <li>
+          <Link href="/my-profile">My Profile</Link>
+        </li>
       </ul>
     </div>
   );
