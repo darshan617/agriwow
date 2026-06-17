@@ -111,3 +111,136 @@
   margin-bottom: 14px;
   text-align: center;
 }
+.askQuestionPopupContent {
+  width: 460px;
+  max-width: 100%;
+}
+
+/* Header */
+.popupHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 24px 16px;
+}
+.popupHeaderIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #e8f0fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #185fa5;
+  flex-shrink: 0;
+}
+.popupHeader h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+.popupSubtitle {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+.closeBtn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  padding: 4px 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.closeBtn:hover {
+  background: #f3f3f3;
+  color: #333;
+}
+
+.popupDivider {
+  height: 1px;
+  background: #ebebeb;
+}
+
+/* Body */
+.popupBody {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.formGroup label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.15s;
+  font-family: inherit;
+  resize: vertical;
+}
+.formGroup input:focus,
+.formGroup textarea:focus {
+  border-color: #185fa5;
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+}
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: #bbb;
+}
+
+/* Actions */
+.popupActions {
+  display: flex;
+  gap: 10px;
+  padding-top: 4px;
+}
+.cancelBtn {
+  flex: 1;
+  padding: 9px 0;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #f7f7f7;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+.cancelBtn:hover {
+  background: #efefef;
+}
+.submitBtn {
+  flex: 2;
+  padding: 9px 0;
+  border-radius: 8px;
+  border: none;
+  background: #239c3d;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.submitBtn:hover {
+  background: #8dba3b;
+}

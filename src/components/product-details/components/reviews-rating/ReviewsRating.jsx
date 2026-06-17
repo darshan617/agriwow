@@ -78,7 +78,49 @@ const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
   </div>
 );
 
-const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
+const normalizeReviewMedia = (attachmentUrls = [], imageUrls = []) =>
+  attachmentUrls
+    .map((attachment, idx) => ({
+      type: attachment?.type || "image",
+      url: attachment?.url || imageUrls?.[idx] || "",
+    }))
+    .filter((item) => item.url);
+
+const getAttachmentFilename = (item) =>
+  item?.file || item?.url?.split("/").pop()?.split("?")[0] || "attachment";
+
+const attachmentToFile = async (item) => {
+  if (item instanceof File) return item;
+  if (!item?.url) return null;
+
+  const filename = getAttachmentFilename(item);
+  const proxyUrl = `/api/review-attachment?url=${encodeURIComponent(item.url)}`;
+  const response = await fetch(proxyUrl);
+
+  if (!response.ok) return null;
+
+  const blob = await response.blob();
+  const type =
+    blob.type ||
+    (item.type === "video" ? "video/mp4" : "image/jpeg");
+
+  return new File([blob], filename, { type });
+};
+
+const resolveAttachmentFiles = async (media = []) => {
+  const files = await Promise.all(media.map(attachmentToFile));
+  return files.filter(Boolean);
+};
+
+const appendAttachmentsToFormData = async (formData, media = []) => {
+  const files = await resolveAttachmentFiles(media);
+  files.forEach((file) => {
+    formData.append("attachments[]", file);
+  });
+  return files.length;
+};
+
+const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   const userData = Cookies.get("userData")
     ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
     : null;
@@ -134,7 +176,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
 
       <div className={styles.reviewTitle}>{review?.review}</div>
       {/* <div className={styles.reviewBody}>{review?.review}</div> */}
-      {review?.image_urls?.length > 0 && (
+      {/* {review?.image_urls?.length > 0 && (
         <div className={styles.reviewImages}>
           {review.image_urls.map((img, idx) => (
             <button
@@ -144,6 +186,43 @@ const ReviewCard = ({ review, onEdit, onDelete, onImageClick }) => {
               onClick={() => onImageClick(review.image_urls, idx)}
             >
               <Image src={img} alt="review" width={100} height={100} />
+            </button>
+          ))}
+        </div>
+      )} */}
+      {review?.attachment_urls?.length > 0 && (
+        <div className={styles.reviewImages}>
+          {review?.attachment_urls?.map((attachment, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={styles.reviewImg}
+              onClick={() =>
+                onMediaClick(
+                  normalizeReviewMedia(
+                    review.attachment_urls,
+                    review.image_urls,
+                  ),
+                  idx,
+                )
+              }
+              style={{ border: "1px solid #000" }}
+            >
+              {attachment?.type === "image" ? (
+                <Image
+                  src={attachment?.url}
+                  alt="review"
+                  width={100}
+                  height={100}
+                />
+              ) : (
+                <video
+                  src={attachment?.url}
+                  alt="review"
+                  width={100}
+                  height={100}
+                />
+              )}
             </button>
           ))}
         </div>
@@ -194,7 +273,15 @@ const ReviewsRating = ({
     setEditingReview(review);
     setRating(review.rating || 0);
     setReviewText(review.review || "");
-    setSelectedMedia([]);
+    setSelectedMedia(
+      (review.attachment_urls || [])
+        .map((attachment, idx) => ({
+          type: attachment?.type || "image",
+          file: attachment?.file,
+          url: attachment?.url || review.image_urls?.[idx] || "",
+        }))
+        .filter((item) => item.url),
+    );
     setShowReviewForm(true);
   };
 
@@ -221,9 +308,16 @@ const ReviewsRating = ({
       formData.append("rating", rating);
       formData.append("review", reviewText);
       formData.append("id", editingReview.id);
-      selectedMedia.forEach((file) => {
-        formData.append("image[]", file);
-      });
+
+      const uploadedCount = await appendAttachmentsToFormData(
+        formData,
+        selectedMedia,
+      );
+      if (selectedMedia.length > 0 && uploadedCount === 0) {
+        showToast("Failed to prepare attachments for upload", "error");
+        return;
+      }
+
       const res = await updateReview({
         body: formData,
       });
@@ -269,9 +363,7 @@ const ReviewsRating = ({
     formData.append("product_id", productId);
     formData.append("rating", rating);
     formData.append("review", reviewText);
-    selectedMedia.forEach((file) => {
-      formData.append("image[]", file); // binary file
-    });
+    await appendAttachmentsToFormData(formData, selectedMedia);
     const res = await addReview({
       body: formData,
     });
@@ -304,8 +396,16 @@ const ReviewsRating = ({
   const goLightbox = (dir) =>
     setLightbox((l) => ({
       ...l,
-      index: (l.index + dir + l.images.length) % l.images.length,
+      index: (l.index + dir + l.media.length) % l.media.length,
     }));
+
+  const openLightbox = (media, index) => {
+    if (!media?.length) return;
+    setLightbox({
+      media,
+      index: Math.min(index, media.length - 1),
+    });
+  };
 
   const handleDeleteReview = async (reviewId) => {
     const res = await deleteReview({
@@ -400,7 +500,8 @@ const ReviewsRating = ({
                     style={{ display: "none" }}
                     onChange={(e) => {
                       const files = Array.from(e.target.files);
-                      setSelectedMedia(files);
+                      setSelectedMedia((prev) => [...prev, ...files]);
+                      e.target.value = "";
                     }}
                   />
                 </label>
@@ -416,9 +517,23 @@ const ReviewsRating = ({
                     }}
                   >
                     {selectedMedia.map((file, idx) => {
-                      const isImage = file.type.startsWith("image");
-                      const isVideo = file.type.startsWith("video");
-                      const url = URL.createObjectURL(file);
+                      // const isImage = file?.type?.startsWith("image");
+                      // const isVideo = file?.type?.startsWith("video");
+                      // const url = URL.createObjectURL(file);
+                      const isFile = file instanceof File;
+
+                      const isImage = isFile
+                        ? file.type.startsWith("image")
+                        : file?.type === "image" ||
+                          /\.(jpg|jpeg|png|gif|webp)$/i.test(file?.url || "");
+
+                      const isVideo = isFile
+                        ? file.type.startsWith("video")
+                        : file?.type === "video" ||
+                          /\.(mp4|mov|avi|webm)$/i.test(file?.url || "");
+                      const url = isFile
+                        ? URL.createObjectURL(file)
+                        : file?.url || file;
                       return (
                         <div
                           key={idx}
@@ -542,7 +657,7 @@ const ReviewsRating = ({
             review={review}
             onEdit={handleEditReview}
             onDelete={handleDeleteReview}
-            onImageClick={(images, index) => setLightbox({ images, index })}
+            onMediaClick={openLightbox}
           />
         ))}
       </div>
@@ -556,7 +671,7 @@ const ReviewsRating = ({
           >
             ×
           </button>
-          {lightbox.images.length > 1 && (
+          {lightbox.media.length > 1 && (
             <>
               <button
                 type="button"
@@ -580,22 +695,34 @@ const ReviewsRating = ({
               </button>
             </>
           )}
-          <img
-            src={lightbox.images[lightbox.index]}
-            alt="Review"
-            className={styles.lightboxImg}
-            onClick={(e) => e.stopPropagation()}
-            onTouchStart={(e) => {
-              touchStart.current = e.touches[0].clientX;
-            }}
-            onTouchEnd={(e) => {
-              const diff = touchStart.current - e.changedTouches[0].clientX;
-              if (Math.abs(diff) > 50) goLightbox(diff > 0 ? 1 : -1);
-            }}
-          />
-          {lightbox.images.length > 1 && (
+          {lightbox.media[lightbox.index]?.type === "video" ? (
+            <video
+              key={lightbox.media[lightbox.index].url}
+              src={lightbox.media[lightbox.index].url}
+              className={styles.lightboxImg}
+              controls
+              autoPlay
+              playsInline
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <img
+              src={lightbox.media[lightbox.index]?.url}
+              alt="Review"
+              className={styles.lightboxImg}
+              onClick={(e) => e.stopPropagation()}
+              onTouchStart={(e) => {
+                touchStart.current = e.touches[0].clientX;
+              }}
+              onTouchEnd={(e) => {
+                const diff = touchStart.current - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) goLightbox(diff > 0 ? 1 : -1);
+              }}
+            />
+          )}
+          {lightbox.media.length > 1 && (
             <span className={styles.lightboxCounter}>
-              {lightbox.index + 1} / {lightbox.images.length}
+              {lightbox.index + 1} / {lightbox.media.length}
             </span>
           )}
         </div>

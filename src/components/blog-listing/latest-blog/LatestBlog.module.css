@@ -438,6 +438,12 @@
   user-select: none;
 }
 
+@media (max-width: 1500px) {
+  .heading{
+    margin-top: 20px;
+  }
+}
+
 
 @media (max-width: 1366px) {
   .featuredTitle {

@@ -9,6 +9,7 @@ import { HiOutlineMapPin, HiOutlinePower } from "react-icons/hi2";
 import { PiPackageThin } from "react-icons/pi";
 import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const MENU_ITEMS = [
   {
@@ -38,6 +39,14 @@ const CustomerInfo = () => {
   const router = useRouter();
   const [displayName, setDisplayName] = useState(GUEST_DISPLAY_NAME);
   const [userInitial, setUserInitial] = useState(GUEST_USER_INITIAL);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setIsLoggedIn(getIsLoggedIn());
+  }, [getIsLoggedIn]);
 
   useEffect(() => {
     const raw = Cookies.get("userData");
@@ -117,17 +126,19 @@ const CustomerInfo = () => {
                 </li>
               );
             })}
-            <li className={styles.navItem}>
-              <button
-                className={`${styles.navLink} ${styles.navLinkLogout}`}
-                onClick={handleLogout}
-              >
-                <span className={styles.navIcon}>
-                  <HiOutlinePower size={20} color="#dc3545" />
-                </span>
-                <span>Logout</span>
-              </button>
-            </li>
+            {isLoggedIn && (
+              <li className={styles.navItem}>
+                <button
+                  className={`${styles.navLink} ${styles.navLinkLogout}`}
+                  onClick={handleLogout}
+                >
+                  <span className={styles.navIcon}>
+                    <HiOutlinePower size={20} color="#dc3545" />
+                  </span>
+                  <span>Logout</span>
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </aside>

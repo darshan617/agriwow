@@ -231,7 +231,7 @@ const Checkout = () => {
           <CheckoutStepper activeStep={1} />
         )} */}
         <div className="row">
-          <div className="col-lg-8 mt-3">
+          <div className={cartItems.length > 0 ? "col-lg-8 mt-3" : "col-12 mt-3"}>
             {cartItems.length > 0 && (
               <DeliveryAddress
                 handleUpdateCart={handleUpdateCart}

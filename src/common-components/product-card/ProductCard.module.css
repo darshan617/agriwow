@@ -106,7 +106,6 @@
 }
 
 .productImg {
-  width: 100% !important;
   height: 300px !important;
   /* object-fit: fill; */
 }
@@ -182,7 +181,7 @@
 
 .productCard:hover .priceRow {
   /* opacity: 1; */
-  transform: translateY(-38px);
+  transform: translateY(-30px);
 }
 .productCard:hover .productName {
   -webkit-line-clamp: 1;
@@ -305,6 +304,7 @@
 }
 
 .btnIcon {
+  display: none;
   font-size: 14px;
 }
 .wishlistBtnnnnn {
@@ -363,6 +363,10 @@
   color: #1d1d1d;
 }
 
+.addToCartText {
+  display: inline;
+}
+
 .wishlistBtn.wishlistActive,
 .wishlistActive {
   color: #e0334b !important;
@@ -382,10 +386,11 @@
     font-size: 9 px;
   }
   .productImg {
-    object-fit: fill;
+    object-fit: contain;
+    object-position: top;
   }
   .productCard {
-    height: 420px;
+    height: 380px;
   }
 }
 
@@ -409,10 +414,13 @@
   .imageWrap {
     min-height: 70px !important;
   }
-  .addToCartBtn,
+
   .buyNowBtn {
-    padding: 4px 0;
-    font-size: 11px;
+    padding: 10px 0;
+    font-size: 12px;
+  }
+  .addToCartBtn .addToCartText {
+    font-size: 12px;
   }
   .productCard {
     height: 380px;
@@ -476,6 +484,12 @@
     overflow: visible;
   }
 
+  .wishlistBtnnnnn{
+    font-size: 16px;
+  }
+  .wishlistBtn{
+    font-size: 16px;
+  }
   .ratingLine,
   .productName,
   .priceRow {
@@ -501,15 +515,31 @@
     padding: 7px 0;
     font-size: 13px;
   }
-  
-.productImg {
-  object-fit: contain;
-}
+
+  .addToCartBtn .addToCartText {
+    display: none;
+  }
+
+   .btnIcon {
+    display: block;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    font-size: 18px;
+  }
+
+  .productImg {
+    object-fit: contain;
+    object-position: top  ;
+  }
+  .buyNowBtn{
+    width: 120px;
+  }
 }
 
 @media (max-width: 768px) {
   .productCard {
-    min-height: 320px;
+    /* min-height: 320px; */
   }
 
   .addToCartBtn span,
@@ -532,5 +562,25 @@
   .buyNowBtn span {
     gap: 0px !important;
     font-size: 10px;
+  }
+  .buyNowBtn{
+    width: 100px;
+  }
+}
+
+@media (max-width: 390px) {
+  .buyNowBtn{
+    width: 75px;
+  }
+  .productCard {
+    min-height: 300px;
+    height: 280px;
+  }
+}
+
+
+@media (max-width: 320px) {
+  .buyNowBtn{
+    width: 60px;
   }
 }

@@ -258,6 +258,7 @@
       align-items: flex-start;
       gap: 12px;
       margin-top: 15px;
+      min-height: 150px;
     }
   
     .chatUsTitle {
@@ -275,6 +276,7 @@
   
     .faqs {
       margin-top: 15px;
+      min-height: 150px;
     }
   
     .officeAddressSection {

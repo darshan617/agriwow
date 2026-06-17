@@ -6,9 +6,15 @@
     margin-top: 50px;
     font-size: 14px;
   }
+  .shippingReturnContainer{
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
 
   .shippingReturnHeading h1{
-    font-size: 38px;
+    font-size: 35px;
   }
 
   .shippingReturnContent{
@@ -29,12 +35,18 @@
       line-height: 1.3;
     }
     .shippingReturnHeading h1{
-      font-size: 28px;
+      font-size: 20px;
     }
     .breadcrumb ul{
       font-size: 12px;
     }
     .breadcrumb ul li{
       font-size: 12px;
+    }
+    .shippingReturnContentItem p {
+      font-size: 16px;
+    }
+    .shippingReturnContainer{
+      padding: 10px;
     }
   }
