@@ -29,9 +29,8 @@ const reviewApi = apiSlice.injectEndpoints({
           method: "POST",
           headers: {
             ...(userToken && { Authorization: `Bearer ${userToken}` }),
-            "Content-Type": "application/json",
           },
-          body: body,
+          body,
         };
       },
       invalidatesTags: ["reviews", "product"],
@@ -55,4 +54,8 @@ const reviewApi = apiSlice.injectEndpoints({
   // overrideExisting: true,
 });
 
-export const { useAddReviewMutation, useUpdateReviewMutation, useDeleteReviewMutation } = reviewApi;
+export const {
+  useAddReviewMutation,
+  useUpdateReviewMutation,
+  useDeleteReviewMutation,
+} = reviewApi;
