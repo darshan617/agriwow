@@ -17,9 +17,11 @@ import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
     useSubscribeEmailMutation();
   const { showToast } = useToast();
+
   const handleSubscribe = async () => {
     if (isSubscribeEmailLoading) return;
     if (!email) return showToast("Please enter your email", "error");
@@ -36,7 +38,6 @@ const Footer = () => {
       showToast(error?.message || "Something went wrong", "error");
     }
   };
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     setIsLoggedIn(getIsLoggedIn());
@@ -95,9 +96,7 @@ const Footer = () => {
                 <p className={`${styles.footerFormPara}`}>
                   By subscribing you agree to the{" "}
                   <Link href="/privacy-policy">Privacy Policy</Link> and{" "}
-                  <Link href="/terms-of-use">
-                    Terms and Conditions.
-                  </Link>
+                  <Link href="/terms-of-use">Terms and Conditions.</Link>
                 </p>
               </div>
             </div>
@@ -171,7 +170,9 @@ const Footer = () => {
                       <Link href="#">Order Tracking</Link>
                     </li>
                     <li>
-                      <Link href="/cancellation-return-policy">Cancellation and Return</Link>
+                      <Link href="/cancellation-return-policy">
+                        Cancellation and Return
+                      </Link>
                     </li>
                     <li>
                       {/* <Link href="#">Refund</Link> */}
@@ -253,7 +254,9 @@ const Footer = () => {
                 <Link href="/shipping-return">
                   Shipping &amp; Delivery Policy
                 </Link>
-                <Link href="/cancellation-return-policy">Cancellation / Return Policy</Link>
+                <Link href="/cancellation-return-policy">
+                  Cancellation / Return Policy
+                </Link>
               </nav>
             </div>
           </div>

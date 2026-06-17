@@ -105,6 +105,10 @@ function ProductCategoriesFilter({
   drawerOpen = false,
   onDrawerClose,
   resultCount,
+  minPrice,
+  maxPrice,
+  setMinPrice,
+  setMaxPrice,
 }) {
   const router = useRouter();
   const {
@@ -129,8 +133,6 @@ function ProductCategoriesFilter({
 
   const [isOpen, setIsOpen] = useState(true);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
-  const [minPrice, setMinPrice] = useState(10000);
-  const [maxPrice, setMaxPrice] = useState(100000);
 
   return (
     <>

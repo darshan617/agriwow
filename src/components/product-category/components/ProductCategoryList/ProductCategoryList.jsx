@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoClose } from "react-icons/io5";
-import styles from "@/components/product-category/components/breadcrumb/Breadcrumb.module.css";
+import styles from "@/components/product-category/components/ProductCategoryList/ProductCategoryList.module.css";
 import ProductCategoriesFilter from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter";
 import ProductListingToolbar, {
   SORT_OPTIONS,
@@ -23,6 +23,11 @@ const humanize = (slug = "") =>
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router?.query;
+  const [sortBy, setSortBy] = useState("default");
+  const [sortOpen, setSortOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [minPrice, setMinPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(50000);
 
   const categoryQuery = useGetProductsByCategoryQuery(categorySlug, {
     skip: !categorySlug || !!subCategory || !router?.isReady,
@@ -34,6 +39,7 @@ const ProductCategoryList = () => {
   );
 
   const activeQuery = subCategory ? subCategoryQuery : categoryQuery;
+  console.log("activeQuery🤦‍♂️", activeQuery);
   const { isFetching, isError } = activeQuery;
   const products = useMemo(
     () => activeQuery.data?.data ?? [],
@@ -45,10 +51,6 @@ const ProductCategoryList = () => {
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
     products?.[0]?.subcategory?.name || humanize(subCategory);
-
-  const [sortBy, setSortBy] = useState("default");
-  const [sortOpen, setSortOpen] = useState(false);
-  const [filterOpen, setFilterOpen] = useState(false);
 
   function openSort() {
     setFilterOpen(false);
@@ -105,6 +107,10 @@ const ProductCategoryList = () => {
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
             resultCount={resultCount}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            setMinPrice={setMinPrice}
+            setMaxPrice={setMaxPrice}
           />
           <div className={`${styles.mainContent}`}>
             <ProductListingToolbar
@@ -114,6 +120,8 @@ const ProductCategoryList = () => {
               onSortChange={setSortBy}
               isLoading={isFetching}
               isError={isError}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
             />
           </div>
         </div>

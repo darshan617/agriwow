@@ -16,6 +16,8 @@ export const SORT_OPTIONS = [
 const INITIAL_FILTERS = [];
 
 function ProductListingToolbar({
+  minPrice,
+  maxPrice,
   resultCount,
   products = [],
   sortBy: controlledSortBy,
@@ -42,9 +44,16 @@ function ProductListingToolbar({
   function clearAllFilters() {
     setActiveFilters([]);
   }
+  const filteredProducts = useMemo(() => {
+    return products?.filter((item) => {
+      const price = item?.selling_price ?? 0;
+
+      return price >= minPrice && price <= maxPrice;
+    });
+  }, [products, minPrice, maxPrice]);
 
   const sortedProducts = useMemo(() => {
-    const list = [...products];
+    const list = [...filteredProducts];
     switch (sortBy) {
       case "price-low":
         return list.sort(
@@ -65,7 +74,7 @@ function ProductListingToolbar({
       default:
         return list;
     }
-  }, [products, sortBy]);
+  }, [filteredProducts, sortBy]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.max(1, Math.ceil(sortedProducts.length / pageSize));
@@ -83,6 +92,7 @@ function ProductListingToolbar({
 
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
+
     return sortedProducts.slice(start, start + pageSize);
   }, [sortedProducts, currentPage, pageSize]);
 
@@ -192,7 +202,7 @@ function ProductListingToolbar({
         ) : isError ? (
           <p className={`${styles.emptyState}`}>No products found.</p>
         ) : (
-          paginatedProducts.map((item) => (
+          paginatedProducts?.map((item) => (
             <ProductCard
               key={item?.id ?? item?.slug ?? item?.name}
               type="productPage"
