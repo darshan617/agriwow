@@ -133,11 +133,11 @@ const Footer = () => {
                     <li>
                       <Link href="/">Home</Link>
                     </li>
-                    {isLoggedIn && (
-                      <li>
-                        <Link href="/my-profile">My Profile</Link>
-                      </li>
-                    )}
+
+                    <li>
+                      <Link href="/my-profile">My Profile</Link>
+                    </li>
+
                     <li>
                       <Link href="#">Videos</Link>
                     </li>
@@ -155,6 +155,7 @@ const Footer = () => {
                     <li>
                       <Link href="/contact-us">Contact Us</Link>
                     </li>
+
                     <li>
                       <Link href="/my-order">Track My Order</Link>
                     </li>
