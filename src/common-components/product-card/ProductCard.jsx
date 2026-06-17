@@ -316,9 +316,11 @@ const ProductCard = ({
           onClick={handleAddToCart}
           disabled={isLoading}
         >
-          <span>
-            {/* <MdAddShoppingCart className={`${styles.btnIcon}`} /> */}
-            Add to Cart
+          <span className={styles.addToCartContent}>
+            <span className={styles.addToCartText}>Add to Cart</span>
+            <span className={styles.addToCartIcon}>
+              <MdAddShoppingCart className={styles.btnIcon} />
+            </span>
           </span>
         </button>
 

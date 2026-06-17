@@ -403,6 +403,7 @@
     overflow: visible;
     box-shadow: none;
     background: transparent;
+    /* padding: 0 10px; */
   }
 
   .ddPriceSection {

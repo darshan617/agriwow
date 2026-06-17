@@ -1233,6 +1233,10 @@
     padding: 10px 0;
     min-height: 56px;
   }
+  .headerOuter .scrolled {
+    top: 48px;
+  }
+  
 
   .logoWrap img {
     width: 150px !important;
@@ -1487,7 +1491,10 @@
 
 @media (max-width: 425px) {
   .logoWrap img {
-    width: 100px !important;
+    width: 150px !important;
+  }
+  .scrolled .logoWrap img {
+    width: 130px !important;
   }
 
   .searchInput {
@@ -1504,19 +1511,12 @@
   }
   .userAvatarTrigger {
     width: 24px;
-    height: 24px;
+    height: 22px;
     font-size: 12px;
   }
 }
 
 @media (max-width: 375px) {
-  .logoWrap img {
-    width: 80px !important;
-  }
-  .scrolled .logoWrap img {
-    width: 80px !important;
-  }
-
   .searchInput {
     display: none;
   }
@@ -1536,14 +1536,6 @@
   .headerContainer {
     gap: 6px;
   }
-
-  .logoWrap img {
-    width: 75px !important;
-  }
-  .scrolled .logoWrap img {
-    width: 75px !important;
-  }
-
   .actions {
     gap: 4px;
   }

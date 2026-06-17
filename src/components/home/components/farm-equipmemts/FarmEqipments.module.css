@@ -242,4 +242,7 @@
     .productsWrapper {
         padding: 60px 5px 10px;
     }
+    .viewAllBtn{
+        font-size: 13px;
+    }
 }

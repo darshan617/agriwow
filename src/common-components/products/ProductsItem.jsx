@@ -167,7 +167,7 @@ const ProductsItem = ({
                     //   slidesPerView: isEquipment ? 4 : 3,
                     // },
                     1024: {
-                      slidesPerView: isEquipment ? 3 : 3,
+                      slidesPerView: isEquipment ? 4 : 4,
                     },
                     1200: {
                       slidesPerView: isEquipment ? 4 : 4,

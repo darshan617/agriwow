@@ -159,8 +159,8 @@
 @media (max-width: 1399px) {
   .shopNowButton {
     padding: 7px 3px;
-    /* font-size: 10px; */
-    width: auto;
+    font-size: 10px;
+    /* width: auto; */
   }
   .topHeaderTicker p {
     font-size: 15px;
@@ -174,7 +174,7 @@
 @media (max-width: 1200px) {
   .shopNowButton {
     width: auto;
-    padding: 7px 3px;
+    /* padding: 7px 3px; */
     font-size: 10px;
   }
 }
@@ -190,7 +190,7 @@
   }
 
   .shopNowButton {
-    padding: 8px 10px;
+    /* padding: 8px 10px; */
     font-size: 10px;
   }
 
@@ -209,9 +209,9 @@
 
 @media (max-width: 991px) {
   .shopNowButton {
-    padding: 6px 10px;
+    padding:  9px;
     font-size: 9px;
-    width: 80px;
+    width: 90px;
   }
 }
 
@@ -259,10 +259,9 @@
     justify-content: center;
   }
   .shopNowButton {
-    padding: 5px 8px;
+    padding:  9px;
     font-size: 9px;
     width: 80px;
-
   }
 
 }
@@ -299,6 +298,12 @@
   .topHeaderBar .topHeaderBarExtras {
     display: none !important;
   }
+
+  .shopNowButton {
+    padding:  6px;
+    font-size: 9px;
+    width: auto;
+  }
 }
 
 /* @media (max-width: 575px) {
@@ -309,6 +314,10 @@
   .drawerExtras .topHeaderLeft a {
     font-size: 13px !important;
     font-weight: 600;
+  }
+  
+  .topHeaderCenter {
+    gap: 20px !important;
   }
 }
 

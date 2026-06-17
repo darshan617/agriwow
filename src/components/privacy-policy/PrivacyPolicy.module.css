@@ -1,9 +1,19 @@
+.privacyPolicyHeading h1{
+  font-size: 35px;
+}
 .breadcrumbHead {
   margin-top: 50px;
   /* margin-bottom: 20px; */
   font-size: 35px;
   font-weight: 700;
   color: #333;
+}
+
+.privacyPolicyContainer{
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .breadcrumb ul {
@@ -33,12 +43,18 @@
       padding: 10px;
     }
     .privacyPolicyHeading h1{
-      font-size: 28px;
+      font-size: 20px;
     }
     .breadcrumb ul{
       font-size: 12px;
     }
     .breadcrumb ul li{
       font-size: 12px;
+    }
+    .privacyPolicyContentItem p {
+      font-size: 16px;
+    }
+    .privacyPolicyContainer{
+      padding: 10px;
     }
   }

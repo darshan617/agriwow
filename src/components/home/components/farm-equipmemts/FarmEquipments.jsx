@@ -63,7 +63,7 @@ const FarmEquipments = ({
               }}
               spaceBetween={20}
               breakpoints={{
-                0: { slidesPerView: 2 }, 
+                0: { slidesPerView: 2 },
                 375: { slidesPerView: 2 },
                 575: { slidesPerView: 2 },
                 768: { slidesPerView: 3 },
@@ -92,23 +92,6 @@ const FarmEquipments = ({
                 </SwiperSlide>
               ))}
             </Swiper>
-
-            {/* <div className={styles.swiperNav}>
-                            <button
-                                type="button"
-                                className={`farm-equipments-btn-prev ${styles.swiperNavBtn}`}
-                                aria-label="Previous products"
-                            >
-                                <FiChevronLeft />
-                            </button>
-                            <button
-                                type="button"
-                                className={`farm-equipments-btn-next ${styles.swiperNavBtn}`}
-                                aria-label="Next products"
-                            >
-                                <FiChevronRight />
-                            </button>
-                        </div> */}
           </div>
 
           <div className={styles.viewAllBtnWrapper}>

@@ -175,7 +175,6 @@
 .promoImage {
   object-fit: cover !important;
   object-position: bottom;
-  height: auto;
 }
 
 .cardsCol {
@@ -444,10 +443,20 @@
   justify-content: center;
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 1500px) {
   .productsTitle {
     font-size: 35px;
   }
+  .promoImage {
+    height: 400px !important;
+  }
+  .promoCard{
+    min-height: 400px !important;
+  }
+  .productCard {
+    min-height: 450px !important;
+  }
+
 }
 
 @media (max-width: 1400px) {
