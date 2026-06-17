@@ -165,7 +165,7 @@ const Footer = () => {
                   </ul>
                 </nav>
                 <nav className={styles.footerNavCol} aria-label="FAQs">
-                  <h3 className={styles.footerNavHeading}>FAQs</h3>
+                  <h3 className={styles.footerNavHeading}>Customer Service</h3>
                   <ul className={styles.footerNavList}>
                     <li>
                       <Link href="#">Order Tracking</Link>
@@ -174,10 +174,10 @@ const Footer = () => {
                       <Link href="/cancellation-return-policy">Cancellation and Return</Link>
                     </li>
                     <li>
-                      <Link href="#">Refund</Link>
+                      {/* <Link href="#">Refund</Link> */}
                     </li>
                     <li>
-                      <Link href="#">Payment Option</Link>
+                      {/* <Link href="#">Payment Option</Link> */}
                     </li>
                   </ul>
                 </nav>

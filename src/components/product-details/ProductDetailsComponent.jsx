@@ -20,7 +20,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
           <div className="col-lg-9 col-md-12 p-0">
             <ItemDetail productDetails={productDetails} />
           </div>
-          <div className="col-lg-3  p-0">
+          <div className="col-lg-3  ">
             <DeliveryDetail productDetails={productDetails} />
           </div>
         </div>

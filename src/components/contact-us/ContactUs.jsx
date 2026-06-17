@@ -43,7 +43,7 @@ const ContactUs = () => {
 
         <div className={`${styles.contactUsSection}`}>
           <div className="row">
-            <div className={`${styles.chatUsContent} col-lg-6`}>
+            <div className={`${styles.chatUsContent} col-lg-6 col-md-6`}>
               <div
                 className={`${styles.chatUs} d-flex justify-content-between`}
               >
@@ -75,7 +75,7 @@ const ContactUs = () => {
                 </div>
               </div>
             </div>
-            <div className={`${styles.faqsContent} col-lg-6`}>
+            <div className={`${styles.faqsContent} col-lg-6 col-md-6`}>
               <div className={`${styles.faqs}`}>
                 <div className={`${styles.chatUsWrapper} d-flex gap-3`}>
                   <div className={`${styles.chatUsIcon}`}>

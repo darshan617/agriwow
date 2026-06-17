@@ -322,7 +322,7 @@
 
 @media (max-width: 992px) {
   .productListWrapper {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .sortSelect {
     min-width: 180px;
@@ -351,7 +351,7 @@
   }
 
   .productListWrapper {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .activeFiltersRow {
@@ -382,7 +382,7 @@
 }
 
 @media (max-width: 375px) {
-  .productListWrapper {
+  /* .productListWrapper {
     grid-template-columns: repeat(1, 1fr);
-  }
+  } */
 }

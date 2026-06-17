@@ -119,6 +119,8 @@
 @media (max-width: 575px) {
   .title {
     font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   .sliderRoot {

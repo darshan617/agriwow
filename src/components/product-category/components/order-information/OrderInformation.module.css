@@ -22,16 +22,14 @@
 
 .orderInformationContent {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 16px;
   color: #ffffff;
-  width: 100%;
-  min-width: 0;
+  /* width: 100%; */
 }
 
 .orderInformationContentText {
   flex: 1;
-  min-width: 0;
 }
 
 .orderInformationContentText h2 {
@@ -43,7 +41,7 @@
 }
 
 .orderInformationContentText p {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #ffffff;
   margin: 0;
