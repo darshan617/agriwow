@@ -360,7 +360,7 @@ const CartSummery = ({
                   )}
                 </div>
               </div>
-              <div className="d-flex justify-content-between mt-3 gap-3 align-items-center">
+              <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
                 {selectedPaymentMethod === "partial" && (
                   <button
                     type="button"

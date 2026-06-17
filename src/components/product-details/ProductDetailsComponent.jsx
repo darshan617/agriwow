@@ -35,7 +35,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
         ratingData={productDetails?.data?.rating_summary}
         reviews={productDetails?.data?.reviews}
       />
-      <Faqs productData={productDetails?.data} />
+      <Faqs productData={productDetails?.data} productId={productDetails?.data?.id} />
       <OrderInformation />
     </Layout>
   );

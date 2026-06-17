@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import styles from "./CustomPopup.module.css";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
@@ -9,7 +11,15 @@ const CustomPopup = ({
   wide = false,
   closeIcon = true,
 }) => {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return undefined;
+
     const scrollY = window.scrollY;
     const prevOverflow = document.body.style.overflow;
     const prevPosition = document.body.style.position;
@@ -28,7 +38,9 @@ const CustomPopup = ({
       document.body.style.width = prevWidth;
       window.scrollTo(0, scrollY);
     };
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) return null;
 
   return createPortal(
     <div className={styles.root}>
