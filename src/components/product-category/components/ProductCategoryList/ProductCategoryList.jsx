@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoClose } from "react-icons/io5";
@@ -28,10 +28,30 @@ const ProductCategoryList = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [minPrice, setMinPrice] = useState(1000);
   const [maxPrice, setMaxPrice] = useState(50000);
+  const [debouncedPriceFilter, setDebouncedPriceFilter] = useState(null);
 
-  const categoryQuery = useGetProductsByCategoryQuery(categorySlug, {
-    skip: !categorySlug || !!subCategory || !router?.isReady,
-  });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedPriceFilter({ minPrice, maxPrice });
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [minPrice, maxPrice]);
+
+  const categoryQuery = useGetProductsByCategoryQuery(
+    {
+      slug: categorySlug,
+      minPrice: debouncedPriceFilter?.minPrice,
+      maxPrice: debouncedPriceFilter?.maxPrice,
+    },
+    {
+      skip:
+        !categorySlug ||
+        !!subCategory ||
+        !router?.isReady ||
+        !debouncedPriceFilter,
+    },
+  );
 
   const subCategoryQuery = useGetProductsBySubCategoryQuery(
     { categorySlug, subCategorySlug: subCategory },
@@ -39,7 +59,6 @@ const ProductCategoryList = () => {
   );
 
   const activeQuery = subCategory ? subCategoryQuery : categoryQuery;
-  console.log("activeQuery🤦‍♂️", activeQuery);
   const { isFetching, isError } = activeQuery;
   const products = useMemo(
     () => activeQuery.data?.data ?? [],

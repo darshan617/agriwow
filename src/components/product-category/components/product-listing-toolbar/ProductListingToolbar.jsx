@@ -199,7 +199,7 @@ function ProductListingToolbar({
       <div className={`${styles.productListWrapper}`}>
         {isLoading && products.length === 0 ? (
           <p className={`${styles.emptyState}`}>Loading products...</p>
-        ) : isError ? (
+        ) : isError || paginatedProducts?.length === 0 ? (
           <p className={`${styles.emptyState}`}>No products found.</p>
         ) : (
           paginatedProducts?.map((item) => (

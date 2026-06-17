@@ -4,10 +4,7 @@ import Link from "next/link";
 import { FaAngleUp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import style from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter.module.css";
-import {
-  useGetMenuProductDataQuery,
-  useGetProductsByCategoryQuery,
-} from "@/redux/apis/categoryApi";
+import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 
 const PRICE_MIN_BOUND = 1000;
 const PRICE_MAX_BOUND = 200000;
@@ -118,14 +115,6 @@ function ProductCategoriesFilter({
 
   const { data: menuProductData, isFetching } = useGetMenuProductDataQuery();
 
-  const { data: activeCategoryProductsData } = useGetProductsByCategoryQuery(
-    activeCategorySlug,
-    { skip: !activeCategorySlug },
-  );
-
-  const activeCategoryTotalCount =
-    activeCategoryProductsData?.data?.length ?? undefined;
-
   const categories = useMemo(
     () => menuProductData?.data?.AllCategory ?? [],
     [menuProductData],
@@ -193,9 +182,7 @@ function ProductCategoriesFilter({
               const subcategories = category?.subcategories ?? [];
               const hasSubcategories = subcategories?.length > 0;
 
-              const categoryCount = isCategoryActive
-                ? activeCategoryTotalCount
-                : undefined;
+              const categoryCount = isCategoryActive ? resultCount : undefined;
 
               return (
                 <li

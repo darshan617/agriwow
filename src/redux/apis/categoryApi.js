@@ -20,12 +20,19 @@ const CategoryApi = apiSlice.injectEndpoints({
       providesTags: ["products"],
     }),
     getProductsByCategory: builder.query({
-      query: (slug) => ({
-        url: `/${slug}`,
-        method: "GET",
-      }),
-      providesTags: (result, error, slug) => [
-        { type: "ProductsByCategory", id: slug },
+      query: ({ slug, minPrice, maxPrice }) => {
+        const params = new URLSearchParams();
+
+        if (minPrice) params.append("min_price", minPrice);
+        if (maxPrice) params.append("max_price", maxPrice);
+
+        return {
+          url: `/${slug}?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result, error, { slug, minPrice, maxPrice } = {}) => [
+        { type: "ProductsByCategory", id: slug, minPrice, maxPrice },
       ],
     }),
     getProductsBySubCategory: builder.query({
