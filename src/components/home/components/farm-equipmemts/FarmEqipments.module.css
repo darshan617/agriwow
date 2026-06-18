@@ -171,12 +171,15 @@
     .swiperWrapper {
         padding: 0;
     }
+    .productsWrapper {
+        padding: 60px 10px 0;
+    }
 }
 
 @media (max-width: 1024px) {
-    .productsWrapper {
+    /* .productsWrapper {
         padding: 60px 10px 30px;
-    }
+    } */
 
 }
 
