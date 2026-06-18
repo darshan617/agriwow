@@ -11,6 +11,7 @@ import {
   useGetProductsByCategoryQuery,
   useGetProductsBySubCategoryQuery,
 } from "@/redux/apis/categoryApi";
+import Cookies from "js-cookie";
 
 const humanize = (slug = "") =>
   slug
@@ -26,9 +27,12 @@ const ProductCategoryList = () => {
   const [sortBy, setSortBy] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [minPrice, setMinPrice] = useState(1000);
-  const [maxPrice, setMaxPrice] = useState(50000);
+  const [minPrice, setMinPrice] = useState(
+    Number(Cookies.get("minPrice")) || 1000,
+  );
+  const [maxPrice, setMaxPrice] = useState(Number(Cookies.get("maxPrice")));
   const [debouncedPriceFilter, setDebouncedPriceFilter] = useState(null);
+  const [priceMaxBound, setPriceMaxBound] = useState(50000);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,7 +42,11 @@ const ProductCategoryList = () => {
     return () => clearTimeout(timer);
   }, [minPrice, maxPrice]);
 
-  const categoryQuery = useGetProductsByCategoryQuery(
+  const {
+    data: categoryData,
+    isFetching: categoryIsFetching,
+    isError: categoryIsError,
+  } = useGetProductsByCategoryQuery(
     {
       slug: categorySlug,
       minPrice: debouncedPriceFilter?.minPrice,
@@ -53,17 +61,31 @@ const ProductCategoryList = () => {
     },
   );
 
-  const subCategoryQuery = useGetProductsBySubCategoryQuery(
-    { categorySlug, subCategorySlug: subCategory },
-    { skip: !categorySlug || !subCategory || !router?.isReady },
+  const {
+    data: subCategoryData,
+    isFetching: subCategoryIsFetching,
+    isError: subCategoryIsError,
+  } = useGetProductsBySubCategoryQuery(
+    {
+      categorySlug,
+      subCategorySlug: subCategory,
+      minPrice: debouncedPriceFilter?.minPrice,
+      maxPrice: debouncedPriceFilter?.maxPrice,
+    },
+    {
+      skip:
+        !categorySlug ||
+        !subCategory ||
+        !router?.isReady ||
+        !debouncedPriceFilter,
+    },
   );
 
-  const activeQuery = subCategory ? subCategoryQuery : categoryQuery;
-  const { isFetching, isError } = activeQuery;
-  const products = useMemo(
-    () => activeQuery.data?.data ?? [],
-    [activeQuery.data],
-  );
+  const activeQuery = subCategory ? subCategoryData : categoryData;
+
+  const isFetching = subCategory ? subCategoryIsFetching : categoryIsFetching;
+  const isError = subCategory ? subCategoryIsError : categoryIsError;
+  const products = useMemo(() => activeQuery?.data ?? [], [activeQuery?.data]);
 
   const resultCount = products?.length;
 
@@ -81,6 +103,26 @@ const ProductCategoryList = () => {
     setFilterOpen(true);
   }
 
+  useEffect(() => {
+    if (Cookies.get("maxPrice")) {
+      setMaxPrice(Cookies.get("maxPrice"));
+    } else {
+      setMaxPrice(
+        categoryData?.price_range?.max_price ||
+          subCategoryData?.price_range?.max_price,
+      );
+    }
+  }, [categoryData, subCategoryData]);
+
+  useEffect(() => {
+    const apiMax =
+      categoryData?.price_range?.max_price ||
+      subCategoryData?.price_range?.max_price;
+
+    if (apiMax && priceMaxBound === 50000) {
+      setPriceMaxBound(apiMax);
+    }
+  }, [categoryData, subCategoryData]);
   return (
     <div>
       <div className={`${styles.productSection} container`}>
@@ -130,6 +172,7 @@ const ProductCategoryList = () => {
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
+            PRICE_MAX_BOUND={priceMaxBound}
           />
           <div className={`${styles.mainContent}`}>
             <ProductListingToolbar
