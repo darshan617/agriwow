@@ -5,16 +5,23 @@ import { FaAngleUp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import style from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter.module.css";
 import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
+import Cookies from "js-cookie";
 
 const PRICE_MIN_BOUND = 1000;
-const PRICE_MAX_BOUND = 200000;
+// const PRICE_MAX_BOUND = 200000;
 const PRICE_STEP = 1000;
 
 function formatPrice(value) {
   return new Intl.NumberFormat("en-IN").format(value);
 }
 
-function PriceRangeSlider({ minValue, maxValue, onMinChange, onMaxChange }) {
+function PriceRangeSlider({
+  minValue,
+  maxValue,
+  onMinChange,
+  onMaxChange,
+  PRICE_MAX_BOUND,
+}) {
   const minPercent =
     ((minValue - PRICE_MIN_BOUND) / (PRICE_MAX_BOUND - PRICE_MIN_BOUND)) * 100;
   const maxPercent =
@@ -23,11 +30,13 @@ function PriceRangeSlider({ minValue, maxValue, onMinChange, onMaxChange }) {
   function handleMinChange(e) {
     const value = Math.min(Number(e.target.value), maxValue - PRICE_STEP);
     onMinChange(value);
+    Cookies.set("minPrice", value);
   }
 
   function handleMaxChange(e) {
     const value = Math.max(Number(e.target.value), minValue + PRICE_STEP);
     onMaxChange(value);
+    Cookies.set("maxPrice", value);
   }
 
   return (
@@ -106,6 +115,7 @@ function ProductCategoriesFilter({
   maxPrice,
   setMinPrice,
   setMaxPrice,
+  PRICE_MAX_BOUND,
 }) {
   const router = useRouter();
   const {
@@ -269,6 +279,7 @@ function ProductCategoriesFilter({
                 maxValue={maxPrice}
                 onMinChange={setMinPrice}
                 onMaxChange={setMaxPrice}
+                PRICE_MAX_BOUND={PRICE_MAX_BOUND}
               />
             </div>
           )}

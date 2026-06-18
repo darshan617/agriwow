@@ -67,6 +67,9 @@ const CustomerInfo = () => {
     try {
       Cookies.remove("userData");
       Cookies.remove("userToken");
+      Cookies.remove("cartSessionId");
+      Cookies.remove("minPrice");
+      Cookies.remove("maxPrice");
       showToast("Logged out successfully", "success");
       router.push("/");
     } catch (error) {
