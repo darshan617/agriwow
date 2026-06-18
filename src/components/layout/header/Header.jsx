@@ -38,13 +38,19 @@ import {
 } from "@/redux/apis/addToCartApi";
 
 const TRENDING_SEARCHES = [
-  {label: "Fogging Machines", href: "/product-category/fogging-machines"},
+  { label: "Fogging Machines", href: "/product-category/fogging-machines" },
   // {label: "Garden Equipment", href: "/product-category/garden-tools"},
-  {label: "Agriculture Sprayers", href: "/product-category/agriculture-sprayers"},
-  {label: "Garden Tools", href: "/product-category/garden-tools"},
-  {label: "Garden & Lawn Care", href: "/product-category/garden-lawn-care"},
-  {label: "Industrial Products", href: "/product-category/industrial-products"},
-  {label: "Post Harvest", href: "/product-category/post-harvest"},
+  {
+    label: "Agriculture Sprayers",
+    href: "/product-category/agriculture-sprayers",
+  },
+  { label: "Garden Tools", href: "/product-category/garden-tools" },
+  { label: "Garden & Lawn Care", href: "/product-category/garden-lawn-care" },
+  {
+    label: "Industrial Products",
+    href: "/product-category/industrial-products",
+  },
+  { label: "Post Harvest", href: "/product-category/post-harvest" },
 ];
 
 const TRENDING_VISIBLE_COUNT = 9;
@@ -298,6 +304,8 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       Cookies.remove("userData");
       Cookies.remove("userToken");
       Cookies.remove("cartSessionId");
+      Cookies.remove("minPrice");
+      Cookies.remove("maxPrice");
       showToast("Logged out successfully", "success");
       router?.reload();
     } catch (error) {
@@ -376,8 +384,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const trendingToShow = trendingExpanded
     ? TRENDING_SEARCHES
     : TRENDING_SEARCHES.slice(0, TRENDING_VISIBLE_COUNT);
-  const hiddenTrendingCount =
-    TRENDING_SEARCHES.length - TRENDING_VISIBLE_COUNT;
+  const hiddenTrendingCount = TRENDING_SEARCHES.length - TRENDING_VISIBLE_COUNT;
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
