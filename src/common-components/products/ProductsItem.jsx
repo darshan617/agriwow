@@ -158,9 +158,9 @@ const ProductsItem = ({
                       slidesPerView: isEquipment ? 2 : 2,
                     },
                     575: {
-                      slidesPerView: isEquipment ? 2 : 2,
+                      slidesPerView: isEquipment ? 3 : 3,
                     },
-                    768: {
+                    767: {
                       slidesPerView: isEquipment ? 3 : 3,
                     },
                     // 991: {

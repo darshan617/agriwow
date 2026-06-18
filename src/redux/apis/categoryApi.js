@@ -36,14 +36,25 @@ const CategoryApi = apiSlice.injectEndpoints({
       ],
     }),
     getProductsBySubCategory: builder.query({
-      query: ({ categorySlug, subCategorySlug }) => ({
-        url: `/${categorySlug}/${subCategorySlug}`,
-        method: "GET",
-      }),
-      providesTags: (result, error, { categorySlug, subCategorySlug } = {}) => [
+      query: ({ categorySlug, subCategorySlug, minPrice, maxPrice }) => {
+        const params = new URLSearchParams();
+        if (minPrice) params.append("min_price", minPrice);
+        if (maxPrice) params.append("max_price", maxPrice);
+        return {
+          url: `/${categorySlug}/${subCategorySlug}?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: (
+        result,
+        error,
+        { categorySlug, subCategorySlug, minPrice, maxPrice } = {},
+      ) => [
         {
           type: "ProductsBySubCategory",
           id: `${categorySlug}/${subCategorySlug}`,
+          minPrice,
+          maxPrice,
         },
       ],
     }),

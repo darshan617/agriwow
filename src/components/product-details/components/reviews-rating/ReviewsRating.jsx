@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import Image from "next/image";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa6";
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
@@ -48,34 +49,38 @@ const RatingPicker = ({ rating, onChange }) => (
 );
 
 const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
-  <div className={styles.ratingSummary}>
-    <div className={styles.avgScore}>
-      <div className={styles.avgNumber}>
-        {ratingData?.average_rating}{" "}
-        <span className={styles.avgNumberStar}>★</span>
-      </div>
-      <div className={styles.avgLabel}>
-        Average Rating based on {totalRatings}
-        <br />
-        ratings and {totalReviews} reviews
-      </div>
-    </div>
-
-    <div className={styles.ratingBars}>
-      {ratingData?.rating_breakdown?.map((rating, idx) => (
-        <div className={styles.barRow} key={idx}>
-          <span className={styles.barLabel}>{rating?.star}</span>
-          <div className={styles.barTrack}>
-            <div
-              className={styles.barFill}
-              style={{ width: `${rating?.percentage}%` }}
-            />
+  <>
+    {ratingData?.total_reviews > 0 && (
+      <div className={styles.ratingSummary}>
+        <div className={styles.avgScore}>
+          <div className={styles.avgNumber}>
+            {ratingData?.average_rating}{" "}
+            <span className={styles.avgNumberStar}>★</span>
           </div>
-          <span className={styles.barPct}>{rating?.percentage}%</span>
+          <div className={styles.avgLabel}>
+            Average Rating based on {totalRatings}
+            <br />
+            ratings and {totalReviews} reviews
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
+
+        <div className={styles.ratingBars}>
+          {ratingData?.rating_breakdown?.map((rating, idx) => (
+            <div className={styles.barRow} key={idx}>
+              <span className={styles.barLabel}>{rating?.star}</span>
+              <div className={styles.barTrack}>
+                <div
+                  className={styles.barFill}
+                  style={{ width: `${rating?.percentage}%` }}
+                />
+              </div>
+              <span className={styles.barPct}>{rating?.percentage}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </>
 );
 
 const normalizeReviewMedia = (attachmentUrls = [], imageUrls = []) =>
@@ -101,8 +106,7 @@ const attachmentToFile = async (item) => {
 
   const blob = await response.blob();
   const type =
-    blob.type ||
-    (item.type === "video" ? "video/mp4" : "image/jpeg");
+    blob.type || (item.type === "video" ? "video/mp4" : "image/jpeg");
 
   return new File([blob], filename, { type });
 };
@@ -231,6 +235,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   );
 };
 
+const INITIAL_REVIEWS_COUNT = 3;
+
 const ReviewsRating = ({
   productId = null,
   productName = "Neptune Mini Hose Reel",
@@ -247,6 +253,7 @@ const ReviewsRating = ({
   const [selectedMedia, setSelectedMedia] = useState([]);
   const [editingReview, setEditingReview] = useState(null);
   const [reviewsList, setReviewsList] = useState(reviews);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const touchStart = useRef(0);
 
@@ -259,7 +266,13 @@ const ReviewsRating = ({
 
   useEffect(() => {
     setReviewsList(reviews);
+    setShowAllReviews(false);
   }, [reviews]);
+
+  const visibleReviews = showAllReviews
+    ? reviewsList
+    : reviewsList.slice(0, INITIAL_REVIEWS_COUNT);
+  const hasMoreReviews = reviewsList.length > INITIAL_REVIEWS_COUNT;
 
   const handleWriteReviewClick = () => {
     setEditingReview(null);
@@ -631,6 +644,26 @@ const ReviewsRating = ({
                     CANCEL
                   </button>
                 )}
+
+                <button
+                  type="button"
+                  className={styles.submitReviewBtn}
+                  style={{
+                    marginRight: "10px",
+                    background: "#ddd",
+                    color: "#222",
+                  }}
+                  onClick={() => {
+                    setShowReviewForm(false);
+                    setEditingReview(null);
+                    setReviewText("");
+                    setRating(0);
+                    setSelectedMedia([]);
+                  }}
+                  disabled={isAddReviewLoading || isUpdateReviewLoading}
+                >
+                  CANCEL
+                </button>
                 <button
                   type="submit"
                   className={styles.submitReviewBtn}
@@ -651,7 +684,7 @@ const ReviewsRating = ({
       </div>
 
       <div className={styles.reviewsList}>
-        {reviewsList.map((review) => (
+        {visibleReviews.map((review) => (
           <ReviewCard
             key={review.id}
             review={review}
@@ -728,19 +761,34 @@ const ReviewsRating = ({
         </div>
       )}
 
-      {/* <Link
-        className={styles.viewMore}
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          onViewMore();
-        }}
-      >
-        View More Reviews
-        <span className={styles.arrowCircle}>
-          <FaChevronRight />
-        </span>
-      </Link> */}
+      {hasMoreReviews && !showAllReviews && (
+        <button
+          type="button"
+          className={styles.viewMore}
+          onClick={() => {
+            setShowAllReviews(true);
+            onViewMore();
+          }}
+        >
+          View More Reviews
+          <span className={styles.arrowCircle}>
+            <FaChevronRight />
+          </span>
+        </button>
+      )}
+
+      {hasMoreReviews && showAllReviews && (
+        <button
+          type="button"
+          className={styles.viewMore}
+          onClick={() => setShowAllReviews(false)}
+        >
+          View Less Reviews
+          <span className={styles.arrowCircle}>
+            <FaChevronLeft />
+          </span>
+        </button>
+      )}
     </div>
   );
 };
