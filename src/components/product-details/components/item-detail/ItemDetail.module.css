@@ -396,7 +396,7 @@
 
    @media (max-width: 1024px) {
     .itemDetail {
-      padding: 16px;
+      padding: 0 16px;
     }
   
     .imageDetail {
@@ -489,9 +489,9 @@
 
 
   @media (max-width: 768px) {
-    .itemDetail {
+    /* .itemDetail {
       padding: 12px;
-    }
+    } */
   
     .imageDetail,
     .productInfo {
@@ -661,9 +661,9 @@
   
   
   @media (max-width: 575px) {
-    .itemDetail {
+    /* .itemDetail {
       padding: 10px;
-    }
+    } */
   .imageDetail {
     position: relative;
     top: 0;
@@ -672,7 +672,8 @@
     border: none;
   }
     .mainImage {
-      max-height: 300px;
+      max-height: 400px;
+      object-fit: cover;
     }
   
     .thumbSwiper {
@@ -753,12 +754,12 @@
   
   
   @media (max-width: 425px) {
-    .itemDetail {
+    /* .itemDetail {
       padding: 8px;
-    }
+    } */
   
     .mainImage {
-      max-height: 260px;
+      height: 450px;
     }
   
     .quickActionBtn {
@@ -880,12 +881,12 @@
   
  
   @media (max-width: 375px) {
-    .itemDetail {
+    /* .itemDetail {
       padding: 6px;
-    }
+    } */
   
     .mainImage {
-      max-height: 230px;
+      height: 300px;
     }
   
     .quickActionBtn {

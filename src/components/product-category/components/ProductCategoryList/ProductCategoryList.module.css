@@ -12,7 +12,7 @@
   display: flex;
   list-style: none;
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   margin-top: 50px;
   font-size: 14px;
 }
@@ -62,7 +62,7 @@
   .breadcrumb ul {
     font-size: 11px;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .title {
     font-size: 20px;

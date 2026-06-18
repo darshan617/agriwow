@@ -280,10 +280,8 @@ const ProductCard = ({
             />
           </div>
         )}
-      </Link>
 
-      <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
-        {average_rating > 0 && (
+        {average_rating > 0 &&  (
           <div className={`${styles.ratingLine}`}>
             <span className={`${styles.ratingBadge}`}>
               <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
@@ -292,7 +290,9 @@ const ProductCard = ({
             <span className={`${styles.reviewText}`}>({reviews})</span>
           </div>
         )}
+      </Link>
 
+      <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
         <h3 className={`${styles.productName}`}>{name}</h3>
 
         <div className={`${styles.priceRow}`}>
@@ -300,13 +300,14 @@ const ProductCard = ({
           <span className={`${styles.oldPrice}`}>₹ {oldPrice}</span>
         </div>
 
-        
-          <div className={`${styles.discountRow}`}>
+        <div className={`${styles.discountRow}`}>
+          {discount > 0 && (
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
+          )}
+          {oldPrice > 0 && (
             <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
-          </div>
-     
-   
+          )}
+        </div>
       </Link>
 
       <div className={`${styles.cardActions}`}>

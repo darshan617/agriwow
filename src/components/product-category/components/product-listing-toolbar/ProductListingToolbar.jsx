@@ -216,7 +216,7 @@ function ProductListingToolbar({
               name={item?.name}
               price={item?.selling_price}
               oldPrice={item?.price}
-              reviews={item?.reviews?.length ?? item?.total_reviews ?? 0}
+              reviews={item?.total_reviews}
               average_rating={item?.average_rating}
               slug={item?.slug}
               productId={item?.id}
@@ -224,7 +224,7 @@ function ProductListingToolbar({
           ))
         )}
       </div>
-      {products.length > 0 && (
+      {products.length > 0 && totalPages > 1 && (
         <div className={`${styles.paginationWrapper}`}>
           <div className={`${styles.pagination}`}>
             <button
