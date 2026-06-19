@@ -29,9 +29,8 @@ const ProductsItem = ({
   bannerImageProps = {},
   categorySlug,
   viewAllLink = "/product-category/agriculture-sprayers",
-
+  bannersLink,
 }) => {
-
   const {
     className: bannerImageClassName,
     style: bannerImageStyle,
@@ -65,13 +64,15 @@ const ProductsItem = ({
 
             {!isEquipment && (
               <div className={`col-lg-3 col-md-4 col-12 ${styles.promoCol}`}>
-                <Link href={viewAllLink}>
+                <Link
+                  href={`/product-category/${bannersLink?.slug}` || viewAllLink}
+                >
                   <div
                     className={`${styles.promoCard} ${isIndustrialOverlay ? styles.promoCardIndustrial : ""}`}
                   >
                     <Image
-                      src={bannerImage}
-                      alt={title}
+                      src={bannersLink?.image || bannerImage}
+                      alt={bannersLink?.name || bannerTitle || title}
                       fill
                       sizes="(max-width: 767px) 100vw, 25vw"
                       className={[styles.promoImage, bannerImageClassName]
@@ -178,28 +179,28 @@ const ProductsItem = ({
                   {agricultureProductsData?.map((item) => {
                     // console.log(item, "itemfewwrewrge😊😊😊"),\
                     return (
-                    <SwiperSlide key={item.id}>
-                      <ProductCard
-                        type="home"
-                        image={item?.gallery[0]}
-                        imageHover={item?.gallery[1]}
-                        discount={item?.discount}
-                        isBestSeller={item?.is_best_selling}
-                        name={item?.name}
-                        price={item?.selling_price}
-                        oldPrice={item?.price}
-                        reviews={item?.total_reviews}
-                        average_rating={item?.average_rating}
-                        isTrending={item?.is_trending}
-                        isFeatured={item?.is_featured}
-                        isTopRated={item?.is_top_rated}
-                        slug={item?.slug}
-                        productId={item?.id}
-                        isWishlist={item?.is_wishlist}
-                      />
-                    </SwiperSlide>
-                    )
-})}
+                      <SwiperSlide key={item.id}>
+                        <ProductCard
+                          type="home"
+                          image={item?.gallery[0]}
+                          imageHover={item?.gallery[1]}
+                          discount={item?.discount}
+                          isBestSeller={item?.is_best_selling}
+                          name={item?.name}
+                          price={item?.selling_price}
+                          oldPrice={item?.price}
+                          reviews={item?.total_reviews}
+                          average_rating={item?.average_rating}
+                          isTrending={item?.is_trending}
+                          isFeatured={item?.is_featured}
+                          isTopRated={item?.is_top_rated}
+                          slug={item?.slug}
+                          productId={item?.id}
+                          isWishlist={item?.is_wishlist}
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
                 </Swiper>
 
                 {!isEquipment && (
@@ -228,8 +229,8 @@ const ProductsItem = ({
                     : styles.viewAllWrapper
                 }
               >
-                <Link href={viewAllLink} className={`${styles.viewAllBtn} `} >
-                 View All
+                <Link href={viewAllLink} className={`${styles.viewAllBtn} `}>
+                  View All
                 </Link>
               </div>
             </div>
