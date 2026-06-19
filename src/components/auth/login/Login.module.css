@@ -47,6 +47,7 @@
   padding: 40px 32px 24px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .formTitle {
@@ -108,6 +109,7 @@
   margin-bottom: 16px;
   box-shadow: 0 4px 14px rgba(46, 125, 50, 0.25);
   transition: opacity 0.2s ease;
+  margin-top: auto;
 }
 
 .continueBtn:hover {
@@ -153,7 +155,7 @@
 }
 
 .terms {
-  margin-top: auto;
+  /* margin-top: auto; */
   padding-top: 16px;
   font-size: 9px;
   color: #888;

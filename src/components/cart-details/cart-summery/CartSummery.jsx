@@ -70,7 +70,8 @@ const CartSummery = ({
     cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
   const shippingAmount =
     cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
-  const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
+  // const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
+  const totalAmount = subtotal - discountAmount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
@@ -242,10 +243,10 @@ const CartSummery = ({
             <span>Subtotal</span>
             <span>₹ {subtotal.toFixed(2)}</span>
           </div>
-          <div className={`${styles.summaryRow}`}>
+          {/* <div className={`${styles.summaryRow}`}>
             <span>GST(18%)</span>
             <span>₹ {gstAmount.toFixed(2)}</span>
-          </div>
+          </div> */}
           {(discountAmount || cartData?.coupon?.discount_amount) > 0 && (
             <div className={`${styles.summaryRow}`}>
               <span>Discount</span>
@@ -268,10 +269,10 @@ const CartSummery = ({
               </span>
             </div>
           )}
-          <div className={`${styles.summaryRow}`}>
+          {/* <div className={`${styles.summaryRow}`}>
             <span>Shipping</span>
             <span>₹ {shippingAmount.toFixed(2)}</span>
-          </div>
+          </div> */}
           {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}

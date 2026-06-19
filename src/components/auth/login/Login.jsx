@@ -47,28 +47,30 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
           <div className={`${styles.illustrationWrapper}`}></div>
         </div>
         <div className={`${styles.rightPanel}`}>
-          <h3 className={`${styles.formTitle}`}>Login / Sign Up</h3>
-          <label className={`${styles.label}`}>Enter mobile number</label>
-          <div className={`${styles.phoneRow}`}>
-            <select
-              className={`${styles.countrySelect}`}
-              value={countryCode}
-              onChange={(e) => setCountryCode(e.target.value)}
-            >
-              <option value="+91">+91</option>
-              <option value="+1">+1</option>
-              <option value="+44">+44</option>
-              <option value="+61">+61</option>
-            </select>
-            <div className={`${styles.divider}`} />
-            <input
-              className={`${styles.phoneInput}`}
-              type="tel"
-              placeholder=""
-              value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/\D/, ""))}
-              maxLength={10}
-            />
+          <div>
+            <h3 className={`${styles.formTitle}`}>Login / Sign Up</h3>
+            <label className={`${styles.label}`}>Enter mobile number</label>
+            <div className={`${styles.phoneRow}`}>
+              <select
+                className={`${styles.countrySelect}`}
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+              >
+                <option value="+91">+91</option>
+                <option value="+1">+1</option>
+                <option value="+44">+44</option>
+                <option value="+61">+61</option>
+              </select>
+              <div className={`${styles.divider}`} />
+              <input
+                className={`${styles.phoneInput}`}
+                type="tel"
+                placeholder=""
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/, ""))}
+                maxLength={10}
+              />
+            </div>
           </div>
           <button
             className={`${styles.continueBtn}`}
@@ -78,19 +80,19 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
             {isAuthLoading ? "LOADING..." : "CONTINUE"}
           </button>
 
-          <div className={`${styles.orRow}`}>
+          {/* <div className={`${styles.orRow}`}>
             <div className={`${styles.orLine}`} />
             <span className={`${styles.orText}`}>or</span>
             <div className={`${styles.orLine}`} />
-          </div>
+          </div> */}
 
           {/* <button className={`${styles.socialBtn}`} style={{ marginTop: 12 }}>
             <FcGoogle size={18} style={{ marginRight: 8 }} />
             Continue with Google
           </button> */}
-          <h1>
+          {/* <h1>
             <GoogleLoginBtn />
-          </h1>
+          </h1> */}
 
           <p className={`${styles.terms}`}>
             By continuing, you agree to our{" "}

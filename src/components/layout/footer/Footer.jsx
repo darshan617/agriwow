@@ -111,7 +111,7 @@ const Footer = () => {
                 </Link>
                 <p className={`${styles.footerBrandText}`}>
                   Get top-quality agricultural machinery at <br /> unbeatable
-                  prices. Shop smart, farm better <br /> with Agriwow.
+                  prices. Shop smart, farm better with Agriwow.
                 </p>
                 <p className={`${styles.footerPhone}`}>
                   <IoCallOutline
@@ -119,10 +119,10 @@ const Footer = () => {
                     aria-hidden
                   />
                   <Link
-                    href="tel:0000000000"
+                    href="tel:+919229297668"
                     className={styles.footerPhoneLink}
                   >
-                    000-000-0000
+                    +91 9229297668
                   </Link>
                 </p>
               </div>
@@ -141,9 +141,9 @@ const Footer = () => {
                     <li>
                       <Link href="#">Videos</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="#">Testimonials</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link href="/blog">Blog</Link>
                     </li>
@@ -175,12 +175,8 @@ const Footer = () => {
                         Cancellation and Return
                       </Link>
                     </li>
-                    <li>
-                      {/* <Link href="#">Refund</Link> */}
-                    </li>
-                    <li>
-                      {/* <Link href="#">Payment Option</Link> */}
-                    </li>
+                    <li>{/* <Link href="#">Refund</Link> */}</li>
+                    <li>{/* <Link href="#">Payment Option</Link> */}</li>
                   </ul>
                 </nav>
               </div>

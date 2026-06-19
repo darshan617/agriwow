@@ -46,15 +46,11 @@
 }
 
 .discountRow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
+  margin-left: 10px;
   /* position: absolute; */
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  margin: 0;
-  z-index: 1;
 }
 
 .discountRow .discountText {
@@ -68,6 +64,7 @@
   font-size: 12px;
   font-weight: 500;
 }
+
 .priceRow {
   display: flex;
   /* align-items: center; */
@@ -77,21 +74,24 @@
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0;  
+  margin: 0;
   z-index: 1;
 }
-.gsttPriceSmall{
+
+.gsttPriceSmall {
   margin-left: 5px;
   font-size: 16px;
   color: #7d7d7d;
   font-weight: 500;
 }
+
 .oldPrice {
   color: #7d7d7d;
   font-size: 18px;
   text-decoration: line-through;
   margin-left: 5px;
 }
+
 .mrpText {
   display: flex;
   align-items: center;
@@ -323,9 +323,11 @@
 .ddInfoTitle--red {
   color: #e53e3e;
 }
+
 .ddInfoTitle--green {
   color: #276749;
 }
+
 .ddInfoTitle--dark {
   color: #2d3748;
 }
@@ -340,14 +342,17 @@
   .ddPriceSection {
     padding: 15px;
   }
+
   .currentPrice {
     color: #101010;
     font-size: 20px;
     font-weight: 700;
   }
-  .oldPrice { 
+
+  .oldPrice {
     font-size: 18px;
   }
+
   .ddBtnCart {
     padding: 10px 0;
     border-radius: 3px;
@@ -355,6 +360,7 @@
     font-size: 13px;
     margin-bottom: 6px;
   }
+
   .ddBtnBuy {
     padding: 10px 0;
     border-radius: 3px;
@@ -362,6 +368,7 @@
     font-size: 13px;
     margin-bottom: 6px;
   }
+
   .ddBtnWhatsapp {
     padding: 9px;
     border-radius: 3px;
@@ -370,14 +377,17 @@
     margin-bottom: 6px;
     gap: 4px;
   }
+
   .ddSecure {
     font-size: 10px;
     margin-bottom: 6px;
   }
+
   .ddSecureIconImg {
     width: 10px;
     height: 10px;
   }
+
   .ddDeliveryPanel {
     padding: 10px;
   }
@@ -385,9 +395,11 @@
   .ddPincodeRow {
     margin-bottom: 4px;
   }
+
   .ddPincodeInputWrap {
     padding: 8px;
   }
+
   .ddUpdateBtn {
     padding: 0 8px;
     font-size: 12px;
@@ -441,14 +453,16 @@
   }
 }
 
-@media (max-width: 767px){
+@media (max-width: 767px) {
   .currentPrice {
     font-size: 18px;
     font-weight: 600;
   }
-  .oldPrice { 
+
+  .oldPrice {
     font-size: 16px;
   }
+
   .ddBtnCart {
     padding: 10px 0;
     border-radius: 3px;
@@ -456,6 +470,7 @@
     font-size: 13px;
     margin-bottom: 6px;
   }
+
   .ddBtnBuy {
     padding: 10x 0;
     border-radius: 3px;
@@ -463,6 +478,7 @@
     font-size: 13px;
     margin-bottom: 6px;
   }
+
   .ddBtnWhatsapp {
     padding: 9px;
     border-radius: 3px;
@@ -471,29 +487,33 @@
     margin-bottom: 6px;
     gap: 4px;
   }
+
   .ddDeliveryPanel {
     border-radius: 8px;
     padding: 10px;
   }
 }
 
-@media (max-width: 574px){
+@media (max-width: 574px) {
   .ddDeliveryPanel h2 {
     margin: 0 0 6px;
     font-size: 13px;
   }
+
   .ddPincodeInputWrap {
     gap: 3px;
     border-radius: 8px 0 0 8px;
     padding: 5px;
   }
+
   .ddUpdateBtn {
     border-radius: 8px;
     padding: 0 8px;
     font-weight: 600;
     font-size: 13px;
-   
+
   }
+
   .ddInfoTitle {
     font-weight: 600;
     font-size: 11px;
@@ -501,12 +521,12 @@
 
 }
 
-@media(max-width: 425px){
+@media(max-width: 425px) {
   .ddCard {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     justify-content: center;
-    }
+  }
 
 }
