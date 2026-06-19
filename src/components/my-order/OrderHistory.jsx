@@ -104,7 +104,7 @@ const OrderHistory = () => {
                     <div className={styles.orderCardHeader}>
                       <div className={styles.orderMeta}>
                         <p className={styles.orderId}>
-                          Order #{order?.order_id}
+                          Order #{order?.invoice_no}
                         </p>
                         <p className={styles.orderDate}>
                           Placed on <span>{order?.order_date}</span>
