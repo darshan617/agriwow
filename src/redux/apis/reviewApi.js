@@ -50,6 +50,34 @@ const reviewApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["reviews", "product"],
     }),
+    reviewLike: builder.mutation({
+      query: ({ body }) => {
+        const userToken = Cookies.get("userToken");
+        return {
+          url: `/review-like`,
+          method: "POST",
+          headers: {
+            ...(userToken && { Authorization: `Bearer ${userToken}` }),
+          },
+          body: body,
+        };
+      },
+      invalidatesTags: ["reviews", "product"],
+    }),
+    reviewDislike: builder.mutation({
+      query: ({ body }) => {
+        const userToken = Cookies.get("userToken");
+        return {
+          url: `/review-dislike`,
+          method: "POST",
+          headers: {
+            ...(userToken && { Authorization: `Bearer ${userToken}` }),
+          },
+          body: body,
+        };
+      },
+      invalidatesTags: ["reviews", "product"],
+    }),
   }),
   // overrideExisting: true,
 });
@@ -58,4 +86,6 @@ export const {
   useAddReviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
+  useReviewLikeMutation,
+  useReviewDislikeMutation,
 } = reviewApi;
