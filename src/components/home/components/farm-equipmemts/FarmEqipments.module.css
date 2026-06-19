@@ -226,7 +226,7 @@
 
     .bannerImage {
         object-fit: cover;
-        height: 200px;
+        height: 160px;
         object-position: left;
     }
     .farmProductsSection {

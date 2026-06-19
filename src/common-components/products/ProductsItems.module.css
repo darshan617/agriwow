@@ -637,7 +637,7 @@
 @media (max-width: 480px) {
   .cardsRow {
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 5px !important;
   }
 
   .productsTitle {
@@ -652,6 +652,9 @@
     display: none;
   }
   .promoCard {
+    display: none;
+  }
+  .swiperNav{
     display: none;
   }
 }

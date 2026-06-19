@@ -246,6 +246,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   // login ====================
   const handleLogin = async () => {
+    if (!phone || !/^[0-9]+$/.test(phone)) {
+      showToast("Please enter a valid phone number", "error");
+      return;
+    }
     try {
       const res = await auth({
         body: {
@@ -269,6 +273,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           phone: phone,
         },
       });
+      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
@@ -291,9 +296,12 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         } else {
           console.error("OTP verification failed", res?.error);
         }
+      } else {
+        showToast(res?.error?.data?.message, "error");
       }
     } catch (error) {
       console.log(error, "error");
+      showToast(error?.data?.message || "Failed to verify OTP", "error");
     }
   };
 

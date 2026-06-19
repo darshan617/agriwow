@@ -25,6 +25,7 @@ import {
   useUpdateBuyNowMutation,
   useVerifyPaymentMutation,
 } from "@/redux/apis/buyProductApi";
+import ProductCard from "@/common-components/product-card/ProductCard";
 
 const CartDetails = ({
   cartItems = [],
@@ -568,7 +569,9 @@ const CartDetails = ({
           </div>
         </CustomPopup>
       )} */}
-    </>
+
+     
+    </> 
   );
 };
 

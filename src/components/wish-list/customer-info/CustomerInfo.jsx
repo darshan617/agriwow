@@ -112,7 +112,9 @@ const CustomerInfo = () => {
           <ul className={styles.navList}>
             {MENU_ITEMS.map((item) => {
               const Icon = item.icon;
-              const active = isActive(item.matchPath);
+              const orderDetails =
+                item?.label === "My Orders" && router?.query?.slug;
+              const active = isActive(item.matchPath) || orderDetails;
 
               return (
                 <li key={item.label} className={styles.navItem}>

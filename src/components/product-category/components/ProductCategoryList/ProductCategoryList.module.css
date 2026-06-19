@@ -1,4 +1,4 @@
-.productSection{
+.productSection {
   padding: 0 30px;
 }
 
@@ -8,6 +8,7 @@
   font-size: 28px;
   font-weight: 700;
 }
+
 .breadcrumb ul {
   display: flex;
   list-style: none;
@@ -23,7 +24,7 @@
   padding: 24px 20px 40px;
   display: flex;
   background: #ffffff;
-  border-radius: 50px 50px 0 0;
+  border-radius: 30px 30px 0 0;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -36,6 +37,7 @@
   .pageLayout {
     border-radius: 20px 20px 0 0;
   }
+
   .breadcrumb ul {
     margin-top: 0;
   }
@@ -45,6 +47,7 @@
   .breadcrumb ul {
     font-size: 12px;
   }
+
   .title {
     font-size: 25px;
   }
@@ -59,11 +62,13 @@
     border-radius: 20px 20px 0 0;
     padding: 24px 20px 20px;
   }
+
   .breadcrumb ul {
     font-size: 11px;
-    margin-top: 0;
+    margin-top: -10px;
     margin-bottom: 10px;
   }
+
   .title {
     font-size: 20px;
     margin-top: 10px;
@@ -205,7 +210,8 @@
     color: #239c3d;
     background: #f0faf2;
   }
-  .productSection{
+
+  .productSection {
     padding: 0 10px;
   }
 }

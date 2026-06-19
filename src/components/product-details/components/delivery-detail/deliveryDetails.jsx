@@ -97,87 +97,93 @@ export default function DeliveryDetails({ productDetails }) {
     <div className={styles.ddCard}>
       <div className={styles.ddPriceSection}>
         <div className={styles.ddPriceInfo}>
-        {productDetails?.data?.discount > 0 && (
-          <div className={styles.ddBadge}>
-            {productDetails?.data?.discount > 0 && (
-              <span>{productDetails?.data?.discount || 0}% OFF</span>
-            )}
-          </div>
-        )}
-
-        <div className={styles.priceRow}>
-          <span className={styles.currentPrice}>
-            ₹ {totalSellingPrice.toLocaleString()}
-            <span className={styles.gsttPriceSmall}>
-              {" "}
-              +₹{gstAmount.toLocaleString()} GST
-            </span>
-          </span>
-
-          <span className={styles.mrpText}>
-            MRP
-            <span className={styles.oldPrice}>
-              {" "}
-              ₹ {totalPrice.toLocaleString()}
-            </span>
-            <div className={`${styles.discountRow}`}>
-              {unitPrice > 0 && unitSellingPrice < unitPrice && (
-                <>
-                  <span className={`${styles.discountText}`}>
-                    {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
-                  </span>
-                  {/* <span>
-                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
-                </span> */}
-                </>
+          {productDetails?.data?.discount > 0 && (
+            <div className={styles.ddBadge}>
+              {productDetails?.data?.discount > 0 && (
+                <span>{productDetails?.data?.discount || 0}% OFF</span>
               )}
             </div>
-          </span>
-        </div>
+          )}
 
-        <div className={styles.discountRow}>
-          {productDetails?.data?.discount > 0 && (
-            <Image src={discountIcon} alt="discount" width={16} height={16} />
-          )}
-          {productDetails?.data?.discount > 0 && (
-            <span>Save ₹ {totalSaving.toLocaleString()}</span>
-          )}
-        </div>
-        <div className={`${styles.discountRow}`}>
-          {unitPrice > 0 && unitSellingPrice < unitPrice && (
-            <>
-              {/* <span className={`${styles.discountText}`}>
-                  {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
-                </span> */}
-              {/* <span>
+          <div className={styles.priceRow}>
+            <span className={styles.currentPrice}>
+              ₹ {totalSellingPrice.toLocaleString()}
+              {/* <span className={styles.gsttPriceSmall}>
+                {" "}
+                +₹{gstAmount.toLocaleString()} GST
+              </span> */}
+              <span className={styles.oldPrice}>
+                {" "}
+                ₹ {totalPrice.toLocaleString()}
+              </span>
+              <div className={`${styles.discountRow}`}>
+                {unitPrice > 0 && unitSellingPrice < unitPrice && (
+                  <>
+                    <span className={`${styles.discountText}`}>
+                      {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                    </span>
+                    {/* <span>
                   Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
                 </span> */}
-            </>
-          )}
-        </div>
-        <div className={styles.ddQtyRow}>
-          <span className={styles.ddQtyLabel}>Update Qty</span>
+                  </>
+                )}
+              </div>
+            </span>
 
-          <div className={styles.ddQtyControl}>
-            <button
-              type="button"
-              className={styles.ddQtyBtn}
-              onClick={() => setQty((prev) => Math.max(1, prev - 1))}
-            >
-              −
-            </button>
-
-            <span className={styles.ddQtyValue}>{qty}</span>
-
-            <button
-              type="button"
-              className={styles.ddQtyBtn}
-              onClick={() => setQty((prev) => prev + 1)}
-            >
-              +
-            </button>
+            {/* <span className={styles.mrpText}>
+              <div className={`${styles.discountRow}`}>
+                {unitPrice > 0 && unitSellingPrice < unitPrice && (
+                  <>
+                    <span className={`${styles.discountText}`}>
+                      {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                    </span>
+                  </>
+                )}
+              </div>
+            </span> */}
           </div>
-        </div>
+          {productDetails?.data?.discount > 0 && (
+            <div className={styles.discountRow}>
+              <Image src={discountIcon} alt="discount" width={16} height={16} />
+              <span>Save ₹ {totalSaving.toLocaleString()}</span>
+            </div>
+          )}
+
+          {/* <div className={`${styles.discountRow}`}>
+            {unitPrice > 0 && unitSellingPrice < unitPrice && (
+              <>
+                <span className={`${styles.discountText}`}>
+                  {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                </span>
+                <span>
+                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
+                </span>
+              </>
+            )}
+          </div> */}
+          <div className={styles.ddQtyRow} style={{ marginTop: "20px" }}>
+            <span className={styles.ddQtyLabel}>Update Qty</span>
+
+            <div className={styles.ddQtyControl}>
+              <button
+                type="button"
+                className={styles.ddQtyBtn}
+                onClick={() => setQty((prev) => Math.max(1, prev - 1))}
+              >
+                −
+              </button>
+
+              <span className={styles.ddQtyValue}>{qty}</span>
+
+              <button
+                type="button"
+                className={styles.ddQtyBtn}
+                onClick={() => setQty((prev) => prev + 1)}
+              >
+                +
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className={styles.ddStickyActions}>
@@ -231,7 +237,9 @@ export default function DeliveryDetails({ productDetails }) {
           Order on WhatsApp
         </button>
 
-        <div className={`${styles.ddSecureIcon} ${styles.ddMobileHidden} d-flex gap-2`}>
+        <div
+          className={`${styles.ddSecureIcon} ${styles.ddMobileHidden} d-flex gap-2`}
+        >
           <Image
             src={secureIcon}
             alt="secure"

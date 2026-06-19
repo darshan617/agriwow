@@ -19,29 +19,27 @@ const FarmEquipments = ({
   subCategorySlug,
   categoriesData,
   viewAllLink = "/product-category/farm-mechanization-equipments",
+  bannersLink,
 }) => {
-  console.log(categoriesData, "categoriesData");
-  const router = useRouter();
-  const resolvedCategorySlug =
-    categorySlug || farmEquipmentsData?.[0]?.category?.slug;
-  const resolvedSubCategorySlug =
-    subCategorySlug || farmEquipmentsData?.[0]?.subcategory?.slug;
-
   return (
     <section className="sectionSpace" data-aos="zoom-in">
       <div className="container">
         <div className={`${styles.card}`}>
           <Image
-            src={bannerImage}
-            alt={bannerAlt}
+            src={bannersLink?.image || bannerImage}
+            alt={bannersLink?.name || bannerAlt}
             className={`${styles.bannerImage}`}
             priority
+            width={100}
+            height={100}
           />
 
           <div className={`${styles.content}`}>
             <h2 className={`${styles.title}`}>{title}</h2>
 
-            <Link href={viewAllLink}>
+            <Link
+              href={`/product-category/${bannersLink?.slug}` || viewAllLink}
+            >
               <button type="button" className={`${styles.bannerBtn}`}>
                 Explore Products
               </button>
@@ -61,13 +59,12 @@ const FarmEquipments = ({
                 delay: 3000,
                 disableOnInteraction: false,
               }}
-              spaceBetween={20}
               breakpoints={{
-                0: { slidesPerView: 2 },
+                0: { slidesPerView: 2, spaceBetween: 5 },
                 375: { slidesPerView: 2 },
-                575: { slidesPerView: 3 },
-                767: { slidesPerView: 3 },
-                1024: { slidesPerView: 4 },
+                575: { slidesPerView: 3, spaceBetween: 14 },
+                767: { slidesPerView: 3, spaceBetween: 16 },
+                1024: { slidesPerView: 4, spaceBetween: 18 },
                 1200: { slidesPerView: 4 },
                 1366: { slidesPerView: 5 },
               }}
@@ -95,7 +92,9 @@ const FarmEquipments = ({
           </div>
 
           <div className={styles.viewAllBtnWrapper}>
-            <Link href={viewAllLink}>
+            <Link
+              href={`/product-category/${bannersLink?.slug}` || viewAllLink}
+            >
               <button type="button" className={styles.viewAllBtn}>
                 View All
               </button>

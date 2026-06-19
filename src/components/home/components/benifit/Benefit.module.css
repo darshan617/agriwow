@@ -201,11 +201,11 @@
     align-items: center;
     text-align: center;
     padding: 2rem 1.5rem;
-    gap: 1.5rem;
+    gap: 8px;
   }
 
   .heading {
-    font-size: 15px;
+    font-size: 20px;
     line-height: 1.3;
   }
   .heading br{
@@ -213,7 +213,7 @@
   }
 
   .subheading {
-    font-size: 0.95rem;
+    font-size: 10px;
   }
 
   .pillToggle {
@@ -225,9 +225,6 @@
 }
 
 @media (max-width: 375px) {
-  .heading {
-    font-size: 15px;
-  }
 
   .subheading {
     font-size: 10px;

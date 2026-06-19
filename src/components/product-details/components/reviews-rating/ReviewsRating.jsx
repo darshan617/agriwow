@@ -9,6 +9,8 @@ import {
   useAddReviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
+  useReviewLikeMutation,
+  useReviewDislikeMutation,
 } from "@/redux/apis/reviewApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
@@ -125,10 +127,45 @@ const appendAttachmentsToFormData = async (formData, media = []) => {
 };
 
 const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
+  const { showToast } = useToast();
   const userData = Cookies.get("userData")
     ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
     : null;
   const { date, helpful = { up: 0, down: 0 }, rating } = review;
+  const [reviewLike, { isLoading: isReviewLikeLoading }] =
+    useReviewLikeMutation();
+  const [reviewDislike, { isLoading: isReviewDislikeLoading }] =
+    useReviewDislikeMutation();
+
+  const handleReviewLike = async (reviewId) => {
+    try {
+      const res = await reviewLike({ body: { review_id: reviewId } });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message || "Review liked successfully", "success");
+      } else {
+        showToast(res?.data?.message || "Failed to like review", "error");
+      }
+    } catch (error) {
+      console.log(error, "review like error");
+      showToast(error?.data?.message || "Failed to like review", "error");
+    }
+  };
+
+  const handleReviewDislike = async (reviewId) => {
+    try {
+      const res = await reviewDislike({ body: { review_id: reviewId } });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(
+          res?.data?.message || "Review disliked successfully",
+          "success",
+        );
+      } else {
+        showToast(res?.data?.message || "Failed to dislike review", "error");
+      }
+    } catch (error) {
+      console.log(error, "review dislike error");
+    }
+  };
 
   return (
     <div className={styles.reviewItem}>
@@ -145,19 +182,24 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
             <Image src={review?.image_urls} alt="review" width={25} height={25} />
           )} */}
         </div>
-
         <div className={styles.helpfulBtns}>
-          <button className={styles.helpfulBtn}>
+          <button
+            className={styles.helpfulBtn}
+            onClick={() => handleReviewLike(review?.id)}
+          >
             <span className={styles.icon}>
               <FaThumbsUp />
             </span>{" "}
-            {helpful.up}
+            {review?.like_count}
           </button>
-          <button className={styles.helpfulBtn}>
+          <button
+            className={styles.helpfulBtn}
+            onClick={() => handleReviewDislike(review?.id)}
+          >
             <span className={styles.icon}>
               <FaThumbsDown />
             </span>{" "}
-            {helpful.down}
+            {review?.dislike_count}
           </button>
           {review?.user_id === userData?.id && (
             <>
