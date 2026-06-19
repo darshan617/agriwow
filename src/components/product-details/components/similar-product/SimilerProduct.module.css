@@ -42,13 +42,14 @@
 
 .track {
   display: flex;
-  gap: 16px;
+  gap: var(--slide-gap, 16px);
   will-change: transform;
 }
 
 .slide {
   flex: 0 0 calc(
-    (100% - (var(--visible-count, 4) - 1) * 16px) / var(--visible-count, 4)
+    (100% - (var(--visible-count, 4) - 1) * var(--slide-gap, 16px)) /
+      var(--visible-count, 4)
   );
   min-width: 0;
 }
@@ -156,6 +157,9 @@
     width: 30px;
     height: 30px;
     font-size: 12px;
+  }
+  .mobileControls{
+    display: none;
   }
 }
 

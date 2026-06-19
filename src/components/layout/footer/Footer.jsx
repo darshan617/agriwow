@@ -64,7 +64,7 @@ const Footer = () => {
                 <form style={{ position: "relative", width: "100%" }}>
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder="Enter Your Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     style={{

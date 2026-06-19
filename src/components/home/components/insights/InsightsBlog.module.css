@@ -137,6 +137,10 @@
 .swiper {
     padding-bottom: 36px !important; 
 }
+.swiperBulletActive {
+    background: #239c3d !important;
+    opacity: 1 !important;
+}
 
 @media (max-width: 1500px) {
     .section {
@@ -220,8 +224,7 @@
 
     .heading {
         font-size: 20px;
-        margin-top: 20px;
-
+        margin-top: 0;
     }
     .section {
         padding: 0 0 60px;
@@ -230,5 +233,9 @@
 @media (max-width: 480px) {
     .section {
         padding: 0 0 30px;
+    }
+    .heading {
+        font-size: 20px;
+        margin: 0px 0 16px;
     }
 }

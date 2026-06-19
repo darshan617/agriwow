@@ -13,7 +13,7 @@
   border: 1px solid #f1f1f1;
   border-radius: 8px;
   background: #f2f2f2;
-  padding: 14px;
+  /* padding: 14px; */
 }
 
 .mainImage {
@@ -800,6 +800,40 @@
   }
 }
 
+
+  @media (max-width: 480px) {
+    
+    .imageDetail,
+    .productInfo {
+      width: 100%;
+      padding: 0 10px;
+    }
+    .mrpText{
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .productReviewCountValue,
+    .productReviewCountText {
+      font-size: 12px;
+    }
+    .discountText,
+    .peopleBought {
+      font-size: 12px;
+    }
+    .aboutProductList li {
+      font-size: 12px;
+    }
+    .aboutProductList {
+      padding-left: 14px;
+      margin: 0;
+    }
+    .showAllButton {
+      font-size: 12px;
+      padding: 0;
+      margin: 6px 0;
+    }
+}
 
 
 @media (max-width: 425px) {

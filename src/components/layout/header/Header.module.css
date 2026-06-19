@@ -826,6 +826,7 @@
   font-weight: 700;
   margin-bottom: 10px;
   box-shadow: 0 0 0 3px rgba(24, 182, 196, 0.18);
+  font-size: 12px !important;
 }
 
 .userAvatarTrigger {
@@ -1489,9 +1490,27 @@
   }
 }
 
+@media (max-width: 480px) {
+  .searchBtn {
+    width: 15px;
+    height: 15px;
+  }
+  .iconBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+  .actions {
+    gap: 1px;
+  }
+  
+.menuToggle {
+  padding: 0 10px;
+}
+}
+
 @media (max-width: 425px) {
   .logoWrap img {
-    width: 150px !important;
+    width: 130px !important;
   }
   .scrolled .logoWrap img {
     width: 130px !important;
@@ -1501,18 +1520,14 @@
     display: none;
   }
 
-  .actions {
-    gap: 8px;
-  }
-
-  .iconBtn {
+  /* .iconBtn {
     width: 24px;
     height: 24px;
-  }
+  } */
   .userAvatarTrigger {
-    width: 24px;
-    height: 22px;
-    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px !important;
   }
 }
 
@@ -1521,14 +1536,10 @@
     display: none;
   }
 
-  .actions {
-    gap: 8px;
-  }
-
-  .iconBtn {
+  /* .iconBtn {
     width: 20px;
     height: 20px;
-  }
+  } */
 
 }
 
