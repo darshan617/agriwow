@@ -36,6 +36,9 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
   const bestSellingData = homeData?.data?.products?.best_selling;
   const topRatedData = homeData?.data?.products?.top_rated;
 
+  const banners = homeData?.data?.banners;
+  console.log(banners);
+
   return (
     <>
       <TopHeader />
@@ -51,39 +54,47 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
             Performance <br /> That Grows With You
           </>
         }
+        bannersLink={banners?.agriculture_sprayers}
       />
       <Detail />
       <FarmEquipments
         farmEquipmentsData={farmEquipmentsData}
         categoriesData={categoriesData}
         viewAllLink="/product-category/farm-mechanization-equipments"
+        bannersLink={banners?.farm_equipments}
       />
       <Benefit />
       <IndustrialProduct
         industrialProductsData={industrialProductsData}
         viewAllLink="/product-category/industrial-products"
+        bannersLink={banners?.industrial_products}
       />
-      <Solution />
+      <Solution bannersLink={banners?.pay_online_save_more} />
       <GardenTool
         gardeningToolsData={gardeningToolsData}
         viewAllLink="/product-category/garden-tools"
+        bannersLink={banners?.garden_tools}
       />
       <PostHarvest
         postHarvestData={postHarvestData}
         viewAllLink="/product-category/post-harvest"
+        bannersLink={banners?.post_harvest}
       />
       <FoogingMachine
         foogingMachineData={foogingMachineData}
         viewAllLink="/product-category/fogging-machines"
+        bannersLink={banners?.fogging_machines}
       />
       <BestSelling
         bestSellingData={bestSellingData}
         viewAllLink="/product-category/best-selling"
+        bannersLink={banners?.best_selling}
       />
-      <ExclusiveDeal />
+      <ExclusiveDeal bannersLink={banners?.exclusive_deals} />
       <TopRating
         topRatedData={topRatedData}
         viewAllLink="/product-category/top-rating"
+        bannersLink={banners?.top_rating}
       />
       <VideoSection />
       <InsightsBlog insightsBlogData={insightsBlogData} />

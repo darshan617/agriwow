@@ -3,7 +3,11 @@ import ProductsItem from "@/common-components/products/ProductsItem";
 import industrialBanner from "@/assets/images/industrial-bd.png";
 import styles from "@/components/home/components/industrial-product/IndustrialProduct.module.css";
 
-const IndustrialProduct = ({ industrialProductsData, viewAllLink = "/product-category/industrial-products" }) => {
+const IndustrialProduct = ({
+  industrialProductsData,
+  bannersLink,
+  viewAllLink = "/product-category/industrial-products",
+}) => {
   return (
     <ProductsItem
       title="Industrial Products"
@@ -20,6 +24,7 @@ const IndustrialProduct = ({ industrialProductsData, viewAllLink = "/product-cat
           <span className={`${styles.overlayAccent}`}>for Performance</span>
         </>
       }
+      bannersLink={bannersLink}
     />
   );
 };

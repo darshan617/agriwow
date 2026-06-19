@@ -3,7 +3,11 @@ import postHarvestBanner from "@/assets/images/post-harvest.png";
 import ProductsItem from "@/common-components/products/ProductsItem";
 import styles from "@/components/home/components/post-harvast/PostHarvest.module.css";
 
-const PostHarvest = ({ postHarvestData, viewAllLink = "/product-category/post-harvest" }) => {
+const PostHarvest = ({
+  postHarvestData,
+  viewAllLink = "/product-category/post-harvest",
+  bannersLink,
+}) => {
   return (
     <div>
       <ProductsItem
@@ -12,8 +16,8 @@ const PostHarvest = ({ postHarvestData, viewAllLink = "/product-category/post-ha
         bannerImage={postHarvestBanner}
         viewAllLink={viewAllLink}
         agricultureProductsData={postHarvestData}
-        overlayVariant="postHarvest"  
-        viewAllLink="/product-category/post-harvest"
+        overlayVariant="postHarvest"
+        bannersLink={bannersLink}
         overlayHeading={
           <>
             <p className={styles.overlayAccent}>
@@ -22,9 +26,8 @@ const PostHarvest = ({ postHarvestData, viewAllLink = "/product-category/post-ha
               <br />
             </p>
             <p className={styles.overlayAccent}>Post Harvest Process</p>
-       
           </>
-        } 
+        }
       />
     </div>
   );
