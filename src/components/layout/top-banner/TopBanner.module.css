@@ -94,3 +94,12 @@
         margin-top: 100px;
     }
 }
+
+@media (max-width: 375px) {
+    .categoryLabel {
+        font-size: 8px;
+    }
+    .topBannerWrapper {
+        margin-top: 80px;
+    }
+}

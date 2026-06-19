@@ -35,6 +35,7 @@ export const apiSlice = createApi({
     "subscribeEmail",
     "getBannerData",
     "askQuestion",
+    "getContactDetails",
     "orderHistory",
   ],
   overrideExisting: true,

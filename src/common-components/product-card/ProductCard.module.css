@@ -11,7 +11,6 @@
   transition: padding-bottom 0.25s ease;
 }
 
-
 .cardTags {
   position: absolute;
   top: 11px;
@@ -336,7 +335,7 @@
   right: 10px;
 }
 
-.wishlistBtn{
+.wishlistBtn {
   background: #f2f2f2;
   padding: 5px;
   border: none;
@@ -352,7 +351,6 @@
   transition:
     color 0.15s ease,
     border-color 0.15s ease;
-
 }
 
 .wishlistBtn:hover,
@@ -360,7 +358,7 @@
   color: #e0334b;
 }
 .removeBtn {
-  position: absolute; 
+  position: absolute;
   top: 0;
   right: 4px;
   background: #f2f2f2;
@@ -417,7 +415,7 @@
   }
   .productImg {
     object-fit: contain;
-    height: 250px !important;  
+    height: 250px !important;
   }
   /* .ratingLine {
     bottom: 18px;
@@ -442,7 +440,7 @@
   }
   .productImg {
     object-fit: contain;
-    height: 250px !important;  
+    height: 250px !important;
   }
   /* .ratingLine {
     bottom: 28px;
@@ -464,10 +462,7 @@
   .productCard {
     height: 350px;
   }
-
 }
-
-
 
 @media (max-width: 768px) {
   .productCard {
@@ -481,25 +476,6 @@
   }
 }
 
-@media (max-width: 480px) {
-  .productName {
-    font-size: 13px;
-  }
-
-  .currentPrice {
-    font-size: 13px;
-  }
-
-  .addToCartBtn span,
-  .buyNowBtn span {
-    gap: 0px !important;
-    font-size: 10px;
-  }
-  .buyNowBtn{
-    width: 100px;
-  }
-}
-
 @media (max-width: 575px) {
   .productCard:hover .cardInfo {
     height: auto;
@@ -510,7 +486,7 @@
     opacity: 1;
     transform: none;
     pointer-events: auto;
-    position: absolute;  
+    position: absolute;
   }
   .productCard:hover .priceRow {
     /* opacity: 1; */
@@ -520,7 +496,7 @@
   .productCard:hover .productName,
   .productName {
     /* transform: translateY(-20px); */
-      -webkit-line-clamp: 1;
+    -webkit-line-clamp: 1;
     line-clamp: 1;
   }
 
@@ -537,10 +513,10 @@
     overflow: visible;
   }
 
-  .wishlistBtnnnnn{
+  .wishlistBtnnnnn {
     font-size: 16px;
   }
-  .wishlistBtn{
+  .wishlistBtn {
     font-size: 16px;
   }
   .productName,
@@ -572,7 +548,7 @@
     display: none;
   }
 
-   .btnIcon {
+  .btnIcon {
     display: block;
     /* display: flex; */
     /* align-items: center; */
@@ -582,26 +558,81 @@
 
   .productImg {
     object-fit: cover;
-    object-position: top ;
+    object-position: top;
+  }
+  .buyNowBtn {
+    width: 90px;
+  }
+}
+@media (max-width: 480px) {
+  .productName {
+    font-size: 13px;
+  }
+
+  .currentPrice {
+    font-size: 13px;
+  }
+
+  .addToCartBtn span,
+  .buyNowBtn span {
+    gap: 0px !important;
+    font-size: 10px;
+  }
+  .addToCartBtn {
+    width: 40px;
   }
   .buyNowBtn{
-    width: 90px;
+    width: 100%;
+  }
+  .currentPrice {
+    font-size: 14px;
+  }
+  .oldPrice {
+    font-size: 10px;
+  }
+  .discountRow span {
+    font-size: 10px;
+  }
+  .discountRow .discountText {
+    font-size: 10px;
+  }
+  .ratingLine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 2px ;
+    font-size: 8px;
+    font-weight: 400;
+    gap: 3px;
+    bottom: 2px;
+    left: 2px;
+  }
+  .reviewText {
+    font-size: 8px;
+  }
+  .ratingBadge {
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+  }
+  .cardTags .bestsellerTag {
+    font-size: 8px;
+  }
+  .cardActions{
+    display: flex;
   }
 }
 
 @media (max-width: 390px) {
-  .buyNowBtn{
-    width: 75px;
-  }
   .productCard {
     min-height: 300px;
     height: 280px;
+    padding: 6px;
   }
 }
 
-
 @media (max-width: 320px) {
-  .buyNowBtn{
+  .buyNowBtn {
     width: 60px;
   }
 }

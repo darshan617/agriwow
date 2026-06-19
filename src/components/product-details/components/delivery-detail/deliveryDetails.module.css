@@ -302,7 +302,7 @@
 .ddInfoItem {
   display: flex;
   gap: 12px;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 12px;
 }
 
@@ -521,12 +521,13 @@
 
 }
 
-@media(max-width: 425px) {
+@media(max-width: 480px){
   .ddCard {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     justify-content: center;
-  }
+    margin-top: 10px;
+    }
 
 }

@@ -150,30 +150,33 @@ const ProductsItem = ({
                     delay: 9000,
                     disableOnInteraction: false,
                   }}
-                  spaceBetween={16}
                   breakpoints={{
                     0: {
                       slidesPerView: isEquipment ? 2 : 2,
+                      spaceBetween: 5,
                     },
                     425: {
                       slidesPerView: isEquipment ? 2 : 2,
-                    },
+                      spaceBetween: 5,
+                    },  
                     575: {
                       slidesPerView: isEquipment ? 3 : 3,
+                      spaceBetween: 14,
                     },
                     767: {
                       slidesPerView: isEquipment ? 3 : 3,
+                      spaceBetween: 16,
                     },
-                    // 991: {
-                    //   slidesPerView: isEquipment ? 4 : 3,
-                    // },
                     1024: {
                       slidesPerView: isEquipment ? 4 : 4,
+                      spaceBetween: 18,
                     },
                     1200: {
                       slidesPerView: isEquipment ? 4 : 4,
+                      spaceBetween: 20,
                     },
                   }}
+             
                   className={styles.cardsRow}
                 >
                   {agricultureProductsData?.map((item) => {

@@ -85,7 +85,7 @@ const InsightsBlog = ({ insightsBlogData }) => {
         {isMobile ? (
           <Swiper
             modules={[Pagination]}
-            pagination={{ clickable: true }}
+            pagination={{ clickable: true, bulletActiveClass: styles.swiperBulletActive }}
             spaceBetween={20}
             breakpoints={{
               576: { slidesPerView: 2 },

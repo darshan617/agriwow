@@ -286,11 +286,23 @@
   .drawer {
     width: 80%;
   }
+  .drawerTitle {
+    font-size: 15px;
+  }
+  .couponTitleText,
+  .offerTitleText{
+    font-size: 13px;
+  }
+  .couponTitle,
+  .offerTitle{
+    margin: 5px;
+  }
   .copyButton{
     padding: 5px;
+    font-size: 12px;
   }
   .couponCode{
-    font-size: 14px;
+    font-size: 12px;
   }
   .couponDiscount{
     font-size: 12px;
