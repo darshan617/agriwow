@@ -20,13 +20,14 @@ import { useAddToWishlistMutation } from "@/redux/apis/addToWishlist";
 import Cookies from "js-cookie";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Link from "next/link";
+import { IoPlay } from "react-icons/io5";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
 const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [showProductPopup, setShowProductPopup] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState("");
   const [showCouponsDrawer, setShowCouponsDrawer] = useState(false);
   const [activePopupTab, setActivePopupTab] = useState("specifications");
 
@@ -38,11 +39,11 @@ const ItemDetail = ({ productDetails }) => {
 
   const openProductPopup = (tab = "specifications") => {
     setActivePopupTab(tab);
-    setShowProductPopup(true);
+    setIsPopupVisible("prdInfo");
   };
 
   const closeProductPopup = () => {
-    setShowProductPopup(false);
+    setIsPopupVisible("");
     setActivePopupTab("specifications");
   };
 
@@ -140,6 +141,15 @@ const ItemDetail = ({ productDetails }) => {
                 )}
               </button>
             </div>
+            {productDetails?.data?.video_url && (
+              <button
+                className={`${styles.watchVideoBtn}`}
+                onClick={() => setIsPopupVisible("video")}
+              >
+                <IoPlay />
+                <span>Watch Video</span>
+              </button>
+            )}
           </div>
 
           <div className={`${styles.thumbRow}`}>
@@ -462,7 +472,7 @@ const ItemDetail = ({ productDetails }) => {
         productName={productData?.name}
       />
 
-      {showProductPopup && (
+      {isPopupVisible === "prdInfo" && (
         <CustomPopup onclose={closeProductPopup} wide>
           <div className={`${styles.productInfoPopup}`}>
             <div className={`${styles.productInfoPopupTabs}`}>
@@ -532,6 +542,23 @@ const ItemDetail = ({ productDetails }) => {
             >
               SHOW LESS
             </button> */}
+          </div>
+        </CustomPopup>
+      )}
+      {isPopupVisible === "video" && (
+        <CustomPopup
+          onclose={() => setIsPopupVisible("")}
+          wide
+          maxWidth="800px"
+        >
+          <div className={`${styles.videoPopup}`}>
+            <video
+              src={productDetails?.data?.video_url}
+              controls
+              autoPlay
+              playsInline
+              className={`${styles.videoPopupVideo}`}
+            />
           </div>
         </CustomPopup>
       )}

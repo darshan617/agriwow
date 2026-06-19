@@ -37,7 +37,6 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
   const topRatedData = homeData?.data?.products?.top_rated;
 
   const banners = homeData?.data?.banners;
-  console.log(banners);
 
   return (
     <>
