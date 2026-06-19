@@ -17,8 +17,18 @@ const orderHistoryApi = apiSlice.injectEndpoints({
         method: "GET",
         headers: authHeaders(),
       }),
+      providesTags: ["orderHistory"],
+    }),
+    viewOrderDetails: builder.query({
+      query: ({ orderId }) => ({
+        url: `/order/view/${orderId}`,
+        method: "GET",
+        headers: authHeaders(),
+      }),
+      providesTags: ["orderHistory"],
     }),
   }),
 });
 
-export const { useGetOrderHistoryQuery } = orderHistoryApi;
+export const { useGetOrderHistoryQuery, useViewOrderDetailsQuery } =
+  orderHistoryApi;

@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import CustomerInfo from "../wish-list/customer-info/CustomerInfo";
 import { useGetOrderHistoryQuery } from "@/redux/apis/orderHistory";
 import styles from "@/components/my-order/OrderHistory.module.css";
+import { MdOutlineFileDownload } from "react-icons/md";
+import { useRouter } from "next/router";
+import { FaEye } from "react-icons/fa";
 
 const formatPrice = (price) => {
   const num = Number(price);
@@ -14,16 +16,53 @@ const formatPrice = (price) => {
   });
 };
 
+const formatStatus = (status) => {
+  if (!status) return "—";
+  return String(status)
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+const getOrderStatusClass = (status) => {
+  const key = String(status ?? "").toLowerCase();
+  const map = {
+    processing: styles.statusProcessing,
+    pending: styles.statusPending,
+    shipped: styles.statusShipped,
+    delivered: styles.statusDelivered,
+    completed: styles.statusDelivered,
+    cancelled: styles.statusCancelled,
+    canceled: styles.statusCancelled,
+  };
+  return `${styles.statusBadge} ${map[key] ?? styles.statusDefault}`;
+};
+
+const getPaymentStatusClass = (status) => {
+  const key = String(status ?? "").toLowerCase();
+  const map = {
+    paid: styles.paymentPaid,
+    partial: styles.paymentPartial,
+    pending: styles.paymentPending,
+    failed: styles.paymentFailed,
+    refunded: styles.paymentRefunded,
+  };
+  return `${styles.statusBadge} ${map[key] ?? styles.paymentDefault}`;
+};
+
 const OrderHistory = () => {
-  const { data: orderHistory, isLoading, isFetching } =
-    useGetOrderHistoryQuery();
+  const router = useRouter();
+  const {
+    data: orderHistory,
+    isLoading,
+    isFetching,
+  } = useGetOrderHistoryQuery();
 
   const orders = useMemo(
-    () => (Array.isArray(orderHistory?.data) ? orderHistory.data : []),
-    [orderHistory]
+    () => (Array.isArray(orderHistory?.data) ? orderHistory?.data : []),
+    [orderHistory],
   );
 
-  const orderCount = orders.length;
+  const orderCount = orders?.length;
   const orderLabel = orderCount === 1 ? "Order" : "Orders";
   const showEmpty = !isLoading && !isFetching && orderCount === 0;
 
@@ -61,49 +100,81 @@ const OrderHistory = () => {
             {orderCount > 0 && (
               <div className={styles.ordersSection}>
                 {orders.map((order) => (
-                  <article
-                    key={`${order?.order_id}-${order?.product_id}`}
-                    className={styles.orderCard}
-                  >
+                  <article key={order?.order_id} className={styles.orderCard}>
                     <div className={styles.orderCardHeader}>
                       <div className={styles.orderMeta}>
                         <p className={styles.orderId}>
-                          Order ID: #{order?.order_id}
+                          Order #{order?.order_id}
                         </p>
                         <p className={styles.orderDate}>
-                          Placed on{" "}
-                          <span>{order?.order_date}</span>
+                          Placed on <span>{order?.order_date}</span>
                         </p>
+                      </div>
+                      <div className={styles.statusGroup}>
+                        <span
+                          className={getOrderStatusClass(order?.order_status)}
+                        >
+                          Order Status: {formatStatus(order?.order_status)}
+                        </span>
+                        <span
+                          className={getPaymentStatusClass(
+                            order?.payment_status,
+                          )}
+                        >
+                          Payment Status: {formatStatus(order?.payment_status)}
+                        </span>
+                        {/* <div className={styles.summaryRow}>
+                          <Link
+                            href={order?.invoice_url}
+                            target="_blank"
+                            className={styles.invoiceDownload}
+                            download
+                          >
+                            <MdOutlineFileDownload size={20} />
+                          </Link>
+                        </div> */}
                       </div>
                     </div>
 
                     <div className={styles.orderCardBody}>
-                      <div className={styles.productImageWrap}>
-                        {order?.image ? (
-                          <Image
-                            src={order.image}
-                            alt={order?.name ?? "Product"}
-                            width={88}
-                            height={88}
-                            className={styles.productImage}
-                          />
-                        ) : null}
+                      <div className={styles.orderSummary}>
+                        <div className={styles.summaryRow}>
+                          <span className={styles.summaryLabel}>
+                            Grand Total
+                          </span>
+                          <span className={styles.orderTotal}>
+                            ₹ {formatPrice(order?.grand_total)}
+                          </span>
+                        </div>
+                        <div className="d-flex gap-2 justify-content-end">
+                          <button
+                            onClick={() =>
+                              router.push(`/my-order/${order?.order_id}`)
+                            }
+                            className={styles.invoiceDownload}
+                          >
+                            View Order
+                            <FaEye size={18} className="ms-2" />
+                          </button>
+                          {order?.invoice_url ? (
+                            <div className={styles.summaryRow}>
+                              <Link
+                                href={order?.invoice_url}
+                                target="_blank"
+                                className={styles.invoiceDownload}
+                                download
+                              >
+                                Download Invoice
+                                <MdOutlineFileDownload size={20} />
+                              </Link>
+                            </div>
+                          ) : (
+                            <p className={styles.invoicePending}>
+                              Invoice will be available once generated
+                            </p>
+                          )}
+                        </div>
                       </div>
-
-                      <div className={styles.productDetails}>
-                        <h2 className={styles.productName}>
-                          {order?.name}
-                        </h2>
-                        {order?.product_id ? (
-                          <p className={styles.productId}>
-                            Product ID: {order.product_id}
-                          </p>
-                        ) : null}
-                      </div>
-
-                      <p className={styles.orderPrice}>
-                        ₹ {formatPrice(order?.price)}
-                      </p>
                     </div>
                   </article>
                 ))}
