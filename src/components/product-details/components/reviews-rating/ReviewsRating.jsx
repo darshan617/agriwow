@@ -476,196 +476,218 @@ const ReviewsRating = ({
   };
 
   return (
-    <div className={`${styles.reviewsWrapper} container`} id="review-card">
-      <div className={styles.reviewsHeader}>
-        <h2>Reviews &amp; Ratings</h2>
-      </div>
+    <div className="container">
+      <div className={`${styles.reviewsWrapper}`} id="review-card">
+        <div className={styles.reviewsHeader}>
+          <h2>Reviews &amp; Ratings</h2>
+        </div>
 
-      <div
-        className={`${styles.reviewBtn} d-flex justify-content-between py-2`}
-      >
-        <div className={styles.productName}>{productName}</div>
-        {!showReviewForm && (
-          <button
-            className={styles.writeReviewBtn}
-            onClick={handleWriteReviewClick}
-          >
-            WRITE A REVIEW
-          </button>
-        )}
-      </div>
+        <div
+          className={`${styles.reviewBtn} d-flex justify-content-between py-2`}
+        >
+          <div className={styles.productName}>{productName}</div>
+          {!showReviewForm && (
+            <button
+              className={styles.writeReviewBtn}
+              onClick={handleWriteReviewClick}
+            >
+              WRITE A REVIEW
+            </button>
+          )}
+        </div>
 
-      {/* <div className={`${styles.earnCoins} gap-1`}>
+        {/* <div className={`${styles.earnCoins} gap-1`}>
         Review with Images{" "}
         <Image src={coin} alt="coin" width={15} height={15} />
         <span>Earn Coins!</span>
       </div> */}
 
-      <div className={styles.ratingRow}>
-        <RatingSummary
-          average={averageRating}
-          totalRatings={totalRatings}
-          totalReviews={totalReviews}
-          ratingData={ratingData}
-        />
+        <div className={styles.ratingRow}>
+          <RatingSummary
+            average={averageRating}
+            totalRatings={totalRatings}
+            totalReviews={totalReviews}
+            ratingData={ratingData}
+          />
 
-        {showReviewForm && (
-          <>
-            <form
-              className={styles.writeReviewForm}
-              onSubmit={handleSubmitReview}
-            >
-              <div className={styles.reviewFormContent}>
-                <RatingPicker rating={rating} onChange={setRating} />
-                <textarea
-                  className={styles.reviewInput}
-                  placeholder="Write your review here..."
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                  rows={5}
-                />
-              </div>
-
-              <div
-                className={styles.uploadMediaWrapper}
-                style={{ marginTop: "16px", marginBottom: "10px" }}
+          {showReviewForm && (
+            <>
+              <form
+                className={styles.writeReviewForm}
+                onSubmit={handleSubmitReview}
               >
-                <label
-                  htmlFor="review-media-upload"
-                  className={styles.uploadMediaBtn}
-                  style={{
-                    display: "inline-block",
-                    padding: "8px 18px",
-                    background: "#e8f5e9",
-                    color: "#157104",
-                    border: "1px solid #157104",
-                    borderRadius: "5px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    marginBottom: "7px",
-                  }}
-                >
-                  Upload Media
-                  <input
-                    type="file"
-                    id="review-media-upload"
-                    multiple
-                    accept="image/*,video/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      const files = Array.from(e.target.files);
-                      setSelectedMedia((prev) => [...prev, ...files]);
-                      e.target.value = "";
-                    }}
+                <div className={styles.reviewFormContent}>
+                  <RatingPicker rating={rating} onChange={setRating} />
+                  <textarea
+                    className={styles.reviewInput}
+                    placeholder="Write your review here..."
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    rows={5}
                   />
-                </label>
+                </div>
 
-                {selectedMedia && selectedMedia.length > 0 && (
-                  <div
+                <div
+                  className={styles.uploadMediaWrapper}
+                  style={{ marginTop: "16px", marginBottom: "10px" }}
+                >
+                  <label
+                    htmlFor="review-media-upload"
+                    className={styles.uploadMediaBtn}
                     style={{
-                      display: "inline-flex",
-                      flexWrap: "wrap",
-                      marginLeft: 24,
-                      verticalAlign: "top",
-                      alignItems: "center",
+                      display: "inline-block",
+                      padding: "8px 18px",
+                      background: "#e8f5e9",
+                      color: "#157104",
+                      border: "1px solid #157104",
+                      borderRadius: "5px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      marginBottom: "7px",
                     }}
                   >
-                    {selectedMedia.map((file, idx) => {
-                      // const isImage = file?.type?.startsWith("image");
-                      // const isVideo = file?.type?.startsWith("video");
-                      // const url = URL.createObjectURL(file);
-                      const isFile = file instanceof File;
+                    Upload Media
+                    <input
+                      type="file"
+                      id="review-media-upload"
+                      multiple
+                      accept="image/*,video/*"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files);
+                        setSelectedMedia((prev) => [...prev, ...files]);
+                        e.target.value = "";
+                      }}
+                    />
+                  </label>
 
-                      const isImage = isFile
-                        ? file.type.startsWith("image")
-                        : file?.type === "image" ||
-                          /\.(jpg|jpeg|png|gif|webp)$/i.test(file?.url || "");
+                  {selectedMedia && selectedMedia.length > 0 && (
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        flexWrap: "wrap",
+                        marginLeft: 24,
+                        verticalAlign: "top",
+                        alignItems: "center",
+                      }}
+                    >
+                      {selectedMedia.map((file, idx) => {
+                        // const isImage = file?.type?.startsWith("image");
+                        // const isVideo = file?.type?.startsWith("video");
+                        // const url = URL.createObjectURL(file);
+                        const isFile = file instanceof File;
 
-                      const isVideo = isFile
-                        ? file.type.startsWith("video")
-                        : file?.type === "video" ||
-                          /\.(mp4|mov|avi|webm)$/i.test(file?.url || "");
-                      const url = isFile
-                        ? URL.createObjectURL(file)
-                        : file?.url || file;
-                      return (
-                        <div
-                          key={idx}
-                          style={{
-                            margin: "0 8px 8px 0",
-                            position: "relative",
-                          }}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelectedMedia(
-                                selectedMedia.filter((_, i) => i !== idx),
-                              );
-                            }}
+                        const isImage = isFile
+                          ? file.type.startsWith("image")
+                          : file?.type === "image" ||
+                            /\.(jpg|jpeg|png|gif|webp)$/i.test(file?.url || "");
+
+                        const isVideo = isFile
+                          ? file.type.startsWith("video")
+                          : file?.type === "video" ||
+                            /\.(mp4|mov|avi|webm)$/i.test(file?.url || "");
+                        const url = isFile
+                          ? URL.createObjectURL(file)
+                          : file?.url || file;
+                        return (
+                          <div
+                            key={idx}
                             style={{
-                              position: "absolute",
-                              top: 2,
-                              right: 2,
-                              background: "rgba(255,255,255,0.85)",
-                              border: "none",
-                              borderRadius: "50%",
-                              width: 22,
-                              height: 22,
-                              cursor: "pointer",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                              margin: "0 8px 8px 0",
+                              position: "relative",
                             }}
-                            aria-label="Remove media"
                           >
-                            <span
-                              style={{
-                                fontSize: 16,
-                                color: "#d32f2f",
-                                lineHeight: 1,
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedMedia(
+                                  selectedMedia.filter((_, i) => i !== idx),
+                                );
                               }}
+                              style={{
+                                position: "absolute",
+                                top: 2,
+                                right: 2,
+                                background: "rgba(255,255,255,0.85)",
+                                border: "none",
+                                borderRadius: "50%",
+                                width: 22,
+                                height: 22,
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                              }}
+                              aria-label="Remove media"
                             >
-                              ×
-                            </span>
-                          </button>
-                          {isImage && (
-                            <img
-                              src={url}
-                              alt={file.name}
-                              style={{
-                                width: 80,
-                                height: 80,
-                                objectFit: "cover",
-                                borderRadius: 4,
-                                border: "1px solid #eee",
-                              }}
-                            />
-                          )}
-                          {isVideo && (
-                            <video
-                              src={url}
-                              style={{
-                                width: 80,
-                                height: 80,
-                                objectFit: "cover",
-                                borderRadius: 4,
-                                border: "1px solid #eee",
-                              }}
-                              controls={false}
-                              muted
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-              <div className={styles.submitReviewBtnWrapper}>
-                {editingReview && (
+                              <span
+                                style={{
+                                  fontSize: 16,
+                                  color: "#d32f2f",
+                                  lineHeight: 1,
+                                }}
+                              >
+                                ×
+                              </span>
+                            </button>
+                            {isImage && (
+                              <img
+                                src={url}
+                                alt={file.name}
+                                style={{
+                                  width: 80,
+                                  height: 80,
+                                  objectFit: "cover",
+                                  borderRadius: 4,
+                                  border: "1px solid #eee",
+                                }}
+                              />
+                            )}
+                            {isVideo && (
+                              <video
+                                src={url}
+                                style={{
+                                  width: 80,
+                                  height: 80,
+                                  objectFit: "cover",
+                                  borderRadius: 4,
+                                  border: "1px solid #eee",
+                                }}
+                                controls={false}
+                                muted
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+                <div className={styles.submitReviewBtnWrapper}>
+                  {editingReview && (
+                    <button
+                      type="button"
+                      className={styles.submitReviewBtn}
+                      style={{
+                        marginRight: "10px",
+                        background: "#ddd",
+                        color: "#222",
+                      }}
+                      onClick={() => {
+                        setShowReviewForm(false);
+                        setEditingReview(null);
+                        setReviewText("");
+                        setRating(0);
+                        setSelectedMedia([]);
+                      }}
+                      disabled={isAddReviewLoading || isUpdateReviewLoading}
+                    >
+                      CANCEL
+                    </button>
+                  )}
+
                   <button
                     type="button"
                     className={styles.submitReviewBtn}
@@ -685,152 +707,132 @@ const ReviewsRating = ({
                   >
                     CANCEL
                   </button>
-                )}
-
-                <button
-                  type="button"
-                  className={styles.submitReviewBtn}
-                  style={{
-                    marginRight: "10px",
-                    background: "#ddd",
-                    color: "#222",
-                  }}
-                  onClick={() => {
-                    setShowReviewForm(false);
-                    setEditingReview(null);
-                    setReviewText("");
-                    setRating(0);
-                    setSelectedMedia([]);
-                  }}
-                  disabled={isAddReviewLoading || isUpdateReviewLoading}
-                >
-                  CANCEL
-                </button>
-                <button
-                  type="submit"
-                  className={styles.submitReviewBtn}
-                  disabled={isAddReviewLoading || isUpdateReviewLoading}
-                >
-                  {isAddReviewLoading || isUpdateReviewLoading
-                    ? editingReview
-                      ? "UPDATING..."
-                      : "SUBMITTING..."
-                    : editingReview
-                      ? "UPDATE"
-                      : "SUBMIT"}
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-
-      <div className={styles.reviewsList}>
-        {visibleReviews.map((review) => (
-          <ReviewCard
-            key={review.id}
-            review={review}
-            onEdit={handleEditReview}
-            onDelete={handleDeleteReview}
-            onMediaClick={openLightbox}
-          />
-        ))}
-      </div>
-
-      {lightbox && (
-        <div className={styles.lightbox} onClick={() => setLightbox(null)}>
-          <button
-            type="button"
-            className={styles.lightboxClose}
-            onClick={() => setLightbox(null)}
-          >
-            ×
-          </button>
-          {lightbox.media.length > 1 && (
-            <>
-              <button
-                type="button"
-                className={styles.lightboxPrev}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goLightbox(-1);
-                }}
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                className={styles.lightboxNext}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goLightbox(1);
-                }}
-              >
-                ›
-              </button>
+                  <button
+                    type="submit"
+                    className={styles.submitReviewBtn}
+                    disabled={isAddReviewLoading || isUpdateReviewLoading}
+                  >
+                    {isAddReviewLoading || isUpdateReviewLoading
+                      ? editingReview
+                        ? "UPDATING..."
+                        : "SUBMITTING..."
+                      : editingReview
+                        ? "UPDATE"
+                        : "SUBMIT"}
+                  </button>
+                </div>
+              </form>
             </>
           )}
-          {lightbox.media[lightbox.index]?.type === "video" ? (
-            <video
-              key={lightbox.media[lightbox.index].url}
-              src={lightbox.media[lightbox.index].url}
-              className={styles.lightboxImg}
-              controls
-              autoPlay
-              playsInline
-              onClick={(e) => e.stopPropagation()}
-            />
-          ) : (
-            <img
-              src={lightbox.media[lightbox.index]?.url}
-              alt="Review"
-              className={styles.lightboxImg}
-              onClick={(e) => e.stopPropagation()}
-              onTouchStart={(e) => {
-                touchStart.current = e.touches[0].clientX;
-              }}
-              onTouchEnd={(e) => {
-                const diff = touchStart.current - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 50) goLightbox(diff > 0 ? 1 : -1);
-              }}
-            />
-          )}
-          {lightbox.media.length > 1 && (
-            <span className={styles.lightboxCounter}>
-              {lightbox.index + 1} / {lightbox.media.length}
-            </span>
-          )}
         </div>
-      )}
 
-      {hasMoreReviews && !showAllReviews && (
-        <button
-          type="button"
-          className={styles.viewMore}
-          onClick={() => {
-            setShowAllReviews(true);
-            onViewMore();
-          }}
-        >
-          View More Reviews
-          <span className={styles.arrowCircle}>
-            <FaChevronRight />
-          </span>
-        </button>
-      )}
+        <div className={styles.reviewsList}>
+          {visibleReviews.map((review) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              onEdit={handleEditReview}
+              onDelete={handleDeleteReview}
+              onMediaClick={openLightbox}
+            />
+          ))}
+        </div>
 
-      {hasMoreReviews && showAllReviews && (
-        <button
-          type="button"
-          className={styles.viewMore}
-          onClick={() => setShowAllReviews(false)}
-        >
-          View Less Reviews
-          <span className={styles.arrowCircle}>
-            <FaChevronLeft />
-          </span>
-        </button>
-      )}
+        {lightbox && (
+          <div className={styles.lightbox} onClick={() => setLightbox(null)}>
+            <button
+              type="button"
+              className={styles.lightboxClose}
+              onClick={() => setLightbox(null)}
+            >
+              ×
+            </button>
+            {lightbox.media.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  className={styles.lightboxPrev}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goLightbox(-1);
+                  }}
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  className={styles.lightboxNext}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goLightbox(1);
+                  }}
+                >
+                  ›
+                </button>
+              </>
+            )}
+            {lightbox.media[lightbox.index]?.type === "video" ? (
+              <video
+                key={lightbox.media[lightbox.index].url}
+                src={lightbox.media[lightbox.index].url}
+                className={styles.lightboxImg}
+                controls
+                autoPlay
+                playsInline
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <img
+                src={lightbox.media[lightbox.index]?.url}
+                alt="Review"
+                className={styles.lightboxImg}
+                onClick={(e) => e.stopPropagation()}
+                onTouchStart={(e) => {
+                  touchStart.current = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diff = touchStart.current - e.changedTouches[0].clientX;
+                  if (Math.abs(diff) > 50) goLightbox(diff > 0 ? 1 : -1);
+                }}
+              />
+            )}
+            {lightbox.media.length > 1 && (
+              <span className={styles.lightboxCounter}>
+                {lightbox.index + 1} / {lightbox.media.length}
+              </span>
+            )}
+          </div>
+        )}
+
+        {hasMoreReviews && !showAllReviews && (
+          <button
+            type="button"
+            className={styles.viewMore}
+            onClick={() => {
+              setShowAllReviews(true);
+              onViewMore();
+            }}
+          >
+            View More Reviews
+            <span className={styles.arrowCircle}>
+              <FaChevronRight />
+            </span>
+          </button>
+        )}
+
+        {hasMoreReviews && showAllReviews && (
+          <button
+            type="button"
+            className={styles.viewMore}
+            onClick={() => setShowAllReviews(false)}
+          >
+            View Less Reviews
+            <span className={styles.arrowCircle}>
+              <FaChevronLeft />
+            </span>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
