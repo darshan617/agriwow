@@ -54,10 +54,7 @@ const CartDetails = ({
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [updateBuyNow, { isLoading: isUpdateBuyNowLoading }] =
     useUpdateBuyNowMutation();
-  const [placeOrder, { isLoading: isPlaceOrderLoading }] =
-    usePlaceOrderMutation();
-  const [verifyPayment, { isLoading: isVerifyPaymentLoading }] =
-    useVerifyPaymentMutation();
+
   const [removeBuyNow, { isLoading: isRemoveBuyNowLoading }] =
     useRemoveBuyNowMutation();
 
@@ -191,79 +188,6 @@ const CartDetails = ({
     }
   };
 
-  //place order
-  const handlePlaceOrder = async (source, type, address_id = null) => {
-    try {
-      const res = await placeOrder({
-        body: {
-          source: source,
-          payment_type: type,
-          address_id: address_id,
-        },
-      });
-      if (res?.data?.success || res?.data?.status) {
-        showToast(res?.data?.message, "success");
-        const razorpay = res?.data?.razorpay;
-
-        const options = {
-          key: razorpay.key,
-          amount: razorpay.amount,
-          currency: razorpay.currency,
-          name: razorpay.name,
-          description: razorpay.description,
-          order_id: razorpay.order_id,
-          prefill: razorpay.prefill,
-          handler: async function (response) {
-            setShowPopup("payment");
-            console.log("Payment Success", response);
-            const verifyPaymentRes = await verifyPayment({
-              body: {
-                razorpay_payment_id: response.razorpay_payment_id,
-                order_id: res?.data?.order_id,
-                razorpay_order_id: razorpay.order_id,
-                razorpay_signature: response.razorpay_signature,
-              },
-            });
-
-            if (
-              verifyPaymentRes?.data?.success ||
-              verifyPaymentRes?.data?.status
-            ) {
-              showToast(
-                "Payment Successful" || verifyPaymentRes?.data?.message,
-                "success",
-              );
-              router.push("/my-order");
-            } else {
-              showToast(
-                "Payment Failed" || verifyPaymentRes?.data?.message,
-                "error",
-              );
-            }
-          },
-
-          theme: {
-            color: "#3399cc",
-          },
-        };
-
-        const rzp = new window.Razorpay(options);
-
-        rzp.on("payment.failed", function (response) {
-          console.log("Payment Failed", response.error);
-          showToast(response.error.description, "error");
-        });
-
-        rzp.open();
-      } else {
-        showToast(res?.data?.message, "error");
-      }
-    } catch (error) {
-      console.log(error, "error");
-      showToast(error?.data?.message, "error");
-    }
-  };
-
   useEffect(() => {
     if (cartItems.length > 0 && !router.query.buy_now_id) {
       const itemKey = getItemKey(cartItems[0]);
@@ -366,6 +290,19 @@ const CartDetails = ({
                       </Link>{" "}
                     </h4>
                     <span>SKU: {item?.product?.sku}</span>
+                    {item?.coupon_applicable && (
+                      <p
+                        className="fs-12 small"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "#2d8d2f",
+                        }}
+                      >
+                        {item?.coupon_code} (You save ₹ {item?.coupon_discount}{" "}
+                        on this product)
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -569,9 +506,7 @@ const CartDetails = ({
           </div>
         </CustomPopup>
       )} */}
-
-     
-    </> 
+    </>
   );
 };
 

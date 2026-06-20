@@ -90,6 +90,10 @@
   gap: 5px
 }
 
+.productCartRow> :first-child {
+  justify-self: start;
+}
+
 .productCartInfo {
   display: flex;
   align-items: flex-start;
@@ -161,9 +165,7 @@
   display: block;
 }
 
-@media (max-width: 768px) {
- 
-}
+@media (max-width: 768px) {}
 
 .coupon2 {
   margin-top: 20px;
@@ -365,7 +367,8 @@
   .productCartWrapper {
     margin-top: 10px;
   }
-  .productCartHeader{
+
+  .productCartHeader {
     display: none;
   }
 
@@ -458,6 +461,7 @@
     display: none;
 
   }
+
   .emptyVisual {
     justify-content: center;
   }
