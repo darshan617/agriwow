@@ -71,7 +71,7 @@ const Faqs = ({ productData, productId }) => {
                   {isOpen && (
                     <div
                       className={styles.faqAnswer}
-                      dangerouslySetInnerHTML={{ __html: faq?.answer }}
+                      dangerouslySetInnerHTML={{ __html: faq?.answer || "-" }}
                     />
                   )}
                 </div>
