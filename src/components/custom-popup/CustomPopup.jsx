@@ -10,7 +10,7 @@ const CustomPopup = ({
   children,
   wide = false,
   closeIcon = true,
-  maxWidth = "500px",
+  maxWidth = "fit-content",
 }) => {
   const [mounted, setMounted] = useState(false);
 
