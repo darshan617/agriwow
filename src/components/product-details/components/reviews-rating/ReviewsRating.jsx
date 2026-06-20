@@ -504,10 +504,11 @@ const ReviewsRating = ({
         </div>
 
         <div
-          className={`${styles.reviewBtn} d-flex justify-content-between py-2`}
+          className={`${styles.reviewBtn} py-2 ${reviewsList.length > 0 ? styles.reviewBtnHasReviews : ""}`}
         >
-          <div className={styles.productName}>{productName}</div>
-
+          {reviewsList.length === 0 && (
+            <div className={styles.reviewBtnText}>Be the first to review this product</div>
+          )}
           {!showReviewForm && (
             <button
               className={styles.writeReviewBtn}

@@ -578,9 +578,9 @@
   }
 
   .quickActionBtn {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 
   .thumbRow {
@@ -857,7 +857,6 @@
   .quickActionBtn {
     width: 32px;
     height: 32px;
-    font-size: 12px;
   }
 
   .thumbRow {
@@ -983,7 +982,6 @@
   .quickActionBtn {
     width: 28px;
     height: 28px;
-    font-size: 11px;
   }
 
   .thumbNavBtn {

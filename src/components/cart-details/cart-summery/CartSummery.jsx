@@ -232,7 +232,7 @@ const CartSummery = ({
   }, [cartData?.coupon?.code, cartData]);
 
   return (
-    <div className={`${styles.cartSummaryWrapper} pt-3 pb-5`}>
+    <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
       <div className={`${styles.summaryCard}`}>
         <div className={`${styles.summaryHeader}`}>
           <h3>Cart Summary</h3>

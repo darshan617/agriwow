@@ -100,7 +100,7 @@ export const LoginPopupProvider = ({ children }) => {
     >
       {children}
       {showPopup === "login" && (
-        <CustomPopup onclose={closeLoginPopup}>
+        <CustomPopup onclose={closeLoginPopup} maxWidth="740px">
           <Login
             handleLogin={handleLogin}
             phone={phone}

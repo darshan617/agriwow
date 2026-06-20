@@ -494,6 +494,12 @@
     .footerNavList a {
         font-size: 12px;
     }
+    .footerCopyright{
+        font-size: 12px;
+    }
+    .footerLegal a{
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 375px) {
@@ -520,10 +526,10 @@
         width: 32px !important;
     }
 
-    .footerCopyright,
+    /* .footerCopyright,
     .footerLegal a {
         font-size: 0.72rem;
-    }
+    } */
     /* .inputIconRight {
         top: 25%;
         right: 15px;

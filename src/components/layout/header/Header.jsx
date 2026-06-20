@@ -544,10 +544,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             })}
           </nav>
 
-          <div
-            className={`${styles.searchWrap} ${mobileSearchOpen ? styles.searchWrapMobileOpen : ""}`}
-            ref={searchRef}
-          >
+          <div className={styles.searchWrapSlot}>
+            <div
+              className={`${styles.searchWrap} ${mobileSearchOpen ? styles.searchWrapMobileOpen : ""}`}
+              ref={searchRef}
+            >
             {mobileSearchOpen && (
               <button
                 type="button"
@@ -762,6 +763,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 )}
               </div>
             )}
+            </div>
           </div>
 
           <div className={`${styles.actions}`}>

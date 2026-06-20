@@ -1,48 +1,31 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebookF, FaPinterestP } from "react-icons/fa";
 import { MdWatchLater } from "react-icons/md";
-import { CiCircleCheck } from "react-icons/ci";
-import { FaCircleCheck, FaRegUser } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
+import { FaFacebook, FaWhatsappSquare  } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 import styles from "@/components/blog-details/BlogDetailsComponemt.module.css";
-import heroImage from "@/assets/blog/main-blog.png";
-import contentImage from "@/assets/blog/content-blog.png";
-import facebookIcon from "@/assets/icon/facebook.png";
-import twitterIcon from "@/assets/icon/twitter.png";
-import instagramIcon from "@/assets/icon/insta.png";
-import youtubeIcon from "@/assets/icon/youtube.png";
 import whatsappIcon from "@/assets/icon/whatsapp.png";
 import {
-  useGetBlogDetailsQuery,
   useGetRelatedBlogsQuery,
 } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
 const SOCIAL_SHARE_LINKS = [
   {
-    icon: facebookIcon,
+    icon: <FaFacebook className={styles.socialShareIcon} />,
     alt: "facebook",
     url: "https://www.facebook.com/sharer/sharer.php?u=",
   },
   {
-    icon: twitterIcon,
+    icon: <FaSquareXTwitter className={styles.socialShareIcon} />,
     alt: "twitter",
     url: "https://twitter.com/intent/tweet?url=",
   },
-  // {
-  //   icon: instagramIcon,
-  //   alt: "instagram",
-  //   url: "https://www.instagram.com/sharer/sharer.php?u=",
-  // },
-  // {
-  //   icon: youtubeIcon,
-  //   alt: "youtube",
-  //   url: "https://www.youtube.com/sharer/sharer.php?u=",
-  // },
   {
-    icon: whatsappIcon,
+    icon: <FaWhatsappSquare className={styles.socialShareIcon} />,
     alt: "whatsapp",
     url: "https://wa.me/?text=",
   },
@@ -107,13 +90,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
             <h2 className={styles.socialShareTitle}>Share:</h2>
             {SOCIAL_SHARE_LINKS?.map((item) => (
               <Link href={`${item?.url}/${fullUrl}`} target="_blank">
-                <Image
-                  src={item?.icon}
-                  alt={item?.alt}
-                  width={20}
-                  height={20}
-                  className={styles.socialShareIcon}
-                />
+                {item?.icon}
               </Link>
             ))}
           </div>
@@ -153,6 +130,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
       </article>
 
       <section className={styles.relatedSection}>
+
         <h2 className={styles.relatedTitle}>Related Articles</h2>
         <div className={styles.relatedGrid}>
           {relatedBlogs?.length > 0 ? (
@@ -168,9 +146,11 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
                   />
                 </div>
                 <div className={styles.relatedBody}>
-                  <span className={styles.relatedCategory}>
-                    {post?.category?.name}
-                  </span>
+                  {post?.category?.name && (
+                    <span className={styles.relatedCategory}>
+                      {post?.category?.name}
+                    </span>
+                  )}
                   <h3 className={styles.relatedCardTitle}>{post?.title}</h3>
                   <p className={styles.relatedExcerpt}>
                     {stripHtml(post?.short_description)}

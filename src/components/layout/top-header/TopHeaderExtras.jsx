@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
 import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
@@ -43,11 +43,22 @@ export const TopHeaderSocial = () => (
     >
       <FaInstagram className={styles.topHeaderRightIcon} />
     </Link>
-    <Link href="#">
+    <Link
+      href="https://www.facebook.com/share/1D562vca71/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <FaFacebookF className={styles.topHeaderRightIcon} />
     </Link>
     <Link href="#">
       <FaXTwitter className={styles.topHeaderRightIcon} />
+    </Link>
+    <Link
+      href=" https://www.youtube.com/@agriwow"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaYoutube className={styles.topHeaderRightIcon} />
     </Link>
   </div>
 );

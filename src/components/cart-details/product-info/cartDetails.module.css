@@ -5,6 +5,7 @@
   z-index: 10;
   margin-bottom: 20px;
   margin-top: 50px;
+  
 }
 
 .breadcrumb ul {
@@ -360,8 +361,9 @@
 
 @media (max-width: 768px) {
   .productInfo {
-    position: static;
+    /* position: static; */
     top: auto;
+    margin-top: 0;
   }
 
   .productCartWrapper {
@@ -534,6 +536,21 @@
   .emptyImage {
     max-width: 300px;
   }
+}
+
+@media (max-width: 480px) {
+  .checkoutBtn span {
+    font-size: 11px;
+  }
+  
+.checkoutBtn p {
+  font-size: 11px;
+}
+
+.checkoutBtn {
+  gap: 10px;
+}
+
 }
 
 @media (max-width: 425px) {
