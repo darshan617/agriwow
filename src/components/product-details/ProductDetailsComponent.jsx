@@ -11,6 +11,7 @@ import OrderInformation from "../product-category/components/order-information/O
 const ProductDetailsComponent = ({ productDetails }) => {
   const similarProducts = productDetails?.data?.similar_products ?? [];
   const categorySlug = productDetails?.data?.category?.slug;
+  console.log(productDetails, "productDetails");
 
   return (
     <Layout>
@@ -34,8 +35,13 @@ const ProductDetailsComponent = ({ productDetails }) => {
         productName={productDetails?.data?.name}
         ratingData={productDetails?.data?.rating_summary}
         reviews={productDetails?.data?.reviews}
+        can_review={productDetails?.data?.can_review}
+        has_purchased={productDetails?.data?.has_purchased}
       />
-      <Faqs productData={productDetails?.data} productId={productDetails?.data?.id} />
+      <Faqs
+        productData={productDetails?.data}
+        productId={productDetails?.data?.id}
+      />
       <OrderInformation />
     </Layout>
   );
