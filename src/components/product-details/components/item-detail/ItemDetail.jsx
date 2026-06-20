@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Link from "next/link";
 import { IoPlay } from "react-icons/io5";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 
@@ -30,7 +31,7 @@ const ItemDetail = ({ productDetails }) => {
   const [isPopupVisible, setIsPopupVisible] = useState("");
   const [showCouponsDrawer, setShowCouponsDrawer] = useState(false);
   const [activePopupTab, setActivePopupTab] = useState("specifications");
-
+  const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
   const specifications = productDetails?.data?.specification ?? [];
   const visibleSpecifications = specifications.slice(
     0,
@@ -128,7 +129,13 @@ const ItemDetail = ({ productDetails }) => {
                 <FaShareAlt />
               </button>
               <button
-                onClick={() => handleWishlist(productDetails?.data?.id)}
+                onClick={() => {
+                  if (getIsLoggedIn()) {
+                    handleWishlist(productDetails?.data?.id);
+                  } else {
+                    openLoginPopup();
+                  }
+                }}
                 type="button"
                 className={`${styles.quickActionBtn}`}
                 aria-label="Wishlist"

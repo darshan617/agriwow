@@ -287,11 +287,11 @@
     width: 80%;
   }
   .drawerTitle {
-    font-size: 15px;
+    font-size: 14px;
   }
   .couponTitleText,
   .offerTitleText{
-    font-size: 13px;
+    font-size: 12px;
   }
   .couponTitle,
   .offerTitle{
@@ -311,6 +311,13 @@
     font-size: 12px;
   }
   .couponMeta{
+    font-size: 12px;
+  }
+  
+  .drawerHeader {
+    padding: 10px;
+  }
+  .faqQuestionText{
     font-size: 12px;
   }
 }

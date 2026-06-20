@@ -833,6 +833,15 @@
       padding: 0;
       margin: 6px 0;
     }
+    .productInfoPopup{
+      padding: 25px;
+      max-height: 250px;
+      min-height: 300px;
+    }
+    .productInfoPopupTab {
+      padding:10px;
+      font-size: 9px;
+    }
 }
 
 
@@ -910,7 +919,7 @@
   }
 
   .aboutProductContent {
-    margin-bottom: 14px;
+    margin-bottom: 0;
   }
 
   .productSpecificationsTable {
@@ -956,10 +965,8 @@
     height: 18px;
   }
 
-  .productInfoPopupTab {
-    padding: 0 10px;
-    font-size: 12px;
-  }
+
+
 }
 
 
@@ -1053,9 +1060,9 @@
     margin-bottom: 2px;
   }
 
-  .aboutProductContent {
+  /* .aboutProductContent {
     margin-bottom: 12px;
-  }
+  } */
 
   .productSpecificationsTable {
     font-size: 11px;
