@@ -111,6 +111,7 @@ function ProductCategoriesFilter({
   drawerOpen = false,
   onDrawerClose,
   resultCount,
+  categoryTotalCount,
   minPrice,
   maxPrice,
   setMinPrice,
@@ -183,7 +184,7 @@ function ProductCategoriesFilter({
               <li className={`${style.item}`}>
                 <span className={`${style.name}`}>
                   No categories available.
-                </span>
+                </span> 
               </li>
             )}
 
@@ -192,7 +193,9 @@ function ProductCategoriesFilter({
               const subcategories = category?.subcategories ?? [];
               const hasSubcategories = subcategories?.length > 0;
 
-              const categoryCount = isCategoryActive ? resultCount : undefined;
+              const categoryCount = isCategoryActive
+                ? categoryTotalCount ?? (!activeSubCategorySlug ? resultCount : undefined)
+                : undefined;
 
               return (
                 <li
