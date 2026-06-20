@@ -1,6 +1,6 @@
 .headerOuter {
   position: fixed;
-  top: 60px;
+  top: 55px;
   left: 0;
   right: 0;
   width: 100%;
@@ -286,6 +286,10 @@
   color: #1a7a30;
 }
 
+.searchWrapSlot {
+  display: contents;
+}
+
 .searchWrap {
   flex: 0 1 480px;
   width: 100%;
@@ -368,7 +372,7 @@
 
 .searchResultsPanel {
   position: absolute;
-  top:100%;
+  top: 100%;
   left: 0;
   right: 0;
   background: #ffffff;
@@ -1217,13 +1221,13 @@
   .navLinksDesktop {
     gap: 20px;
   }
-  .megaDropdown{
+  .megaDropdown {
     top: 115px;
   }
 }
 
 @media (max-width: 1200px) {
-  .megaDropdown{
+  .megaDropdown {
     top: 110px;
   }
 }
@@ -1237,7 +1241,6 @@
   .headerOuter .scrolled {
     top: 48px;
   }
-  
 
   .logoWrap img {
     width: 150px !important;
@@ -1321,12 +1324,19 @@
     display: none;
   }
 
-  .searchWrap {
-    flex: 0 0 auto;
+  .searchWrapSlot {
+    display: block;
+    flex: 0 0 32px;
     width: 32px;
-    min-width: 0;
+    min-width: 32px;
     max-width: 32px;
     margin-left: auto;
+  }
+
+  .searchWrap {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
   }
 
   .searchInput {
@@ -1375,7 +1385,6 @@
   .searchWrapMobileOpen .searchClearBtn {
     right: 40px;
   }
-
 
   /* .searchWrapMobileOpen .searchResultsPanel {
     top: calc(100% + 4px);
@@ -1502,10 +1511,23 @@
   .actions {
     gap: 1px;
   }
-  
-.menuToggle {
-  padding: 0 10px;
-}
+
+  .menuToggle {
+    padding: 0 10px;
+  }
+  .userAvatarTrigger {
+    width: 20px;
+    height: 20px;
+    font-size: 10px !important;
+  }
+  .badge {
+    min-width: 4px;
+    height: 11px;
+    padding: 4px;
+    font-size: 7px;
+    top: -1px;
+    right: -2px;
+  }
 }
 
 @media (max-width: 425px) {
@@ -1514,7 +1536,7 @@
   }
   .scrolled .logoWrap img {
     width: 130px !important;
-  }
+  } 
 
   .searchInput {
     display: none;
@@ -1524,11 +1546,12 @@
     width: 24px;
     height: 24px;
   } */
-  .userAvatarTrigger {
-    width: 16px;
-    height: 16px;
+  /* .userAvatarTrigger {
+    width: 18px;
+    height: 18px;
     font-size: 10px !important;
-  }
+  } */
+
 }
 
 @media (max-width: 375px) {
@@ -1540,7 +1563,6 @@
     width: 20px;
     height: 20px;
   } */
-
 }
 
 @media (max-width: 320px) {
@@ -1573,4 +1595,3 @@
     height: 14px;
   }
 }
- 

@@ -54,6 +54,11 @@
   border-radius: 4px;
 }
 
+.socialShareIcon{
+  font-size: 16px;
+  color: #1f8534;
+}
+
 .title {
   margin: 0 0 20px;
   font-size: 35px;
@@ -490,6 +495,9 @@
 @media (max-width: 991px) {
   .relatedGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .relatedBody {
+    padding: 20px;
   }
 }
 

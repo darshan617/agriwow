@@ -21,6 +21,12 @@ import {
   useGetBuyNowDataQuery,
 } from "@/redux/apis/buyProductApi";
 import { useRouter } from "next/router";
+import OrderInformation from "@/components/product-category/components/order-information/OrderInformation";
+import ProductCard from "@/common-components/product-card/ProductCard";
+import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const Checkout = () => {
   const router = useRouter();
@@ -87,6 +93,8 @@ const Checkout = () => {
       !isBuyNowFlow ||
       (shouldAddBuyNowProduct && !buyNowSynced),
   });
+  const { data: homeData } = useGetHomeDataQuery();
+  const [cachedTrendingProducts, setCachedTrendingProducts] = useState([]);
 
   const activeCartData = isBuyNowFlow ? buyNowData : cartData;
   const isCartLoading = isBuyNowFlow ? isBuyNowLoading : isLoading;
@@ -224,6 +232,24 @@ const Checkout = () => {
     handleBuyProduct();
   }, [router?.isReady, canFetchCart, shouldAddBuyNowProduct, router.query]);
 
+  useEffect(() => {
+    if (cartData?.trending_products?.length > 0) {
+      setCachedTrendingProducts(cartData.trending_products);
+    }
+  }, [cartData?.trending_products]);
+
+  const homeTrendingFallback =
+    homeData?.data?.products?.best_selling ??
+    homeData?.data?.products?.top_rated ??
+    [];
+
+  const trending_products =
+    cartData?.trending_products?.length > 0
+      ? cartData.trending_products
+      : cachedTrendingProducts.length > 0
+        ? cachedTrendingProducts
+        : homeTrendingFallback;
+
   return (
     <Layout>
       <div className="container">
@@ -281,6 +307,77 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+        
+        <div className="container">
+
+        {trending_products?.length > 0 && (
+          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <h2 className="swiper-title">Trending Products</h2>
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              navigation={{
+                prevEl: ".swiper-btn-prev",
+                nextEl: ".swiper-btn-next",
+              }}
+              autoplay={{
+                delay: 8000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 2,
+                  spaceBetween: 5,
+                },
+                425: {
+                  slidesPerView: 2,
+                  spaceBetween: 5,
+                },
+                575: {
+                  slidesPerView: 3,
+                  spaceBetween: 14,
+                },
+                767: {
+                  slidesPerView: 3,
+                  spaceBetween: 16,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 18,
+                },
+                1200: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+              className="swiper-wrapper"
+            >
+              {trending_products.map((item) => (
+                <SwiperSlide key={item?.id}>
+                  <ProductCard
+                    image={item?.gallery?.[0]}
+                    imageHover={item?.gallery?.[1]}
+                    discount={item?.discount}
+                    isBestSeller={item?.is_best_selling}
+                    name={item?.name}
+                    price={item?.selling_price}
+                    oldPrice={item?.price}
+                    reviews={item?.total_reviews}
+                    average_rating={item?.average_rating}
+                    isTrending={item?.is_trending}
+                    isFeatured={item?.is_featured}
+                    isTopRated={item?.is_top_rated}
+                    slug={item?.slug}
+                    productId={item?.id}
+                    isWishlist={item?.is_wishlist}
+                    similarProductData={item}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
+        </div>
+        <OrderInformation />
     </Layout>
   );
 };

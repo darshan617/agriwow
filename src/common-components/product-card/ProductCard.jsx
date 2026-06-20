@@ -43,6 +43,7 @@ const ProductCard = ({
   path = null,
   isWishlist = false,
   isSimilarProduct = false,
+  similarProductData = null,
 }) => {
   const router = useRouter();
   const isHomeOrProductPage = ["productPage", "homePage", "home"].includes(

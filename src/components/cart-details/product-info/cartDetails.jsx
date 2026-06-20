@@ -28,6 +28,7 @@ import {
 import ProductCard from "@/common-components/product-card/ProductCard";
 
 const CartDetails = ({
+  similar_products = [],
   cartItems = [],
   isLoading = false,
   getQuantity,
