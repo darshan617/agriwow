@@ -13,6 +13,10 @@ import {
   useReviewDislikeMutation,
 } from "@/redux/apis/reviewApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import {
+  getIsLoggedIn,
+  useLoginPopup,
+} from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const Stars = ({ count }) => (
   <div className={styles.reviewerStars}>
@@ -137,6 +141,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   const [reviewDislike, { isLoading: isReviewDislikeLoading }] =
     useReviewDislikeMutation();
 
+  const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
+
   const handleReviewLike = async (reviewId) => {
     try {
       const res = await reviewLike({ body: { review_id: reviewId } });
@@ -185,7 +191,13 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         <div className={styles.helpfulBtns}>
           <button
             className={styles.helpfulBtn}
-            onClick={() => handleReviewLike(review?.id)}
+            onClick={() => {
+              if (getIsLoggedIn()) {
+                handleReviewLike(review?.id);
+              } else {
+                openLoginPopup();
+              }
+            }}
           >
             <span className={styles.icon}>
               <FaThumbsUp />
@@ -194,7 +206,13 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
           </button>
           <button
             className={styles.helpfulBtn}
-            onClick={() => handleReviewDislike(review?.id)}
+            onClick={() => {
+              if (getIsLoggedIn()) {
+                handleReviewDislike(review?.id);
+              } else {
+                openLoginPopup();
+              }
+            }}
           >
             <span className={styles.icon}>
               <FaThumbsDown />
@@ -267,6 +285,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
                   alt="review"
                   width={100}
                   height={100}
+                  style={{ objectFit: "cover" }}
                 />
               )}
             </button>
