@@ -307,6 +307,8 @@ const ReviewsRating = ({
   reviews = [],
   onViewMore = () => {},
   ratingData = null,
+  can_review = false,
+  has_purchased = false,
 }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewText, setReviewText] = useState("");
@@ -502,13 +504,29 @@ const ReviewsRating = ({
         </div>
 
         <div
-          className={`${styles.reviewBtn} d-flex justify-content-between py-2`}
+          className={`${styles.reviewBtn} py-2 ${reviewsList.length > 0 ? styles.reviewBtnHasReviews : ""}`}
         >
-          <div className={styles.productName}>{productName}</div>
+          {reviewsList.length === 0 && (
+            <div className={styles.reviewBtnText}>Be the first to review this product</div>
+          )}
           {!showReviewForm && (
             <button
               className={styles.writeReviewBtn}
-              onClick={handleWriteReviewClick}
+              onClick={() => {
+                if (!has_purchased) {
+                  showToast(
+                    "You need to purchase the product to write a review",
+                    "error",
+                  );
+                } else if (!can_review) {
+                  showToast(
+                    "You can't write another review for this product",
+                    "error",
+                  );
+                } else {
+                  handleWriteReviewClick();
+                }
+              }}
             >
               WRITE A REVIEW
             </button>

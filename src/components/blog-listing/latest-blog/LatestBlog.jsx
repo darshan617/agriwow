@@ -318,7 +318,7 @@ const LatestBlog = () => {
               </>
             )}
 
-            {totalPages >= 1 && (
+            {totalPages > 1 && (
               <nav
                 className={styles.paginationWrapper}
                 aria-label="Blog list pagination"

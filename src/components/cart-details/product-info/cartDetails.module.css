@@ -5,6 +5,7 @@
   z-index: 10;
   margin-bottom: 20px;
   margin-top: 50px;
+  
 }
 
 .breadcrumb ul {
@@ -90,6 +91,10 @@
   gap: 5px
 }
 
+.productCartRow> :first-child {
+  justify-self: start;
+}
+
 .productCartInfo {
   display: flex;
   align-items: flex-start;
@@ -161,9 +166,7 @@
   display: block;
 }
 
-@media (max-width: 768px) {
- 
-}
+@media (max-width: 768px) {}
 
 .coupon2 {
   margin-top: 20px;
@@ -358,14 +361,16 @@
 
 @media (max-width: 768px) {
   .productInfo {
-    position: static;
+    /* position: static; */
     top: auto;
+    margin-top: 0;
   }
 
   .productCartWrapper {
     margin-top: 10px;
   }
-  .productCartHeader{
+
+  .productCartHeader {
     display: none;
   }
 
@@ -458,6 +463,7 @@
     display: none;
 
   }
+
   .emptyVisual {
     justify-content: center;
   }
@@ -530,6 +536,21 @@
   .emptyImage {
     max-width: 300px;
   }
+}
+
+@media (max-width: 480px) {
+  .checkoutBtn span {
+    font-size: 11px;
+  }
+  
+.checkoutBtn p {
+  font-size: 11px;
+}
+
+.checkoutBtn {
+  gap: 10px;
+}
+
 }
 
 @media (max-width: 425px) {

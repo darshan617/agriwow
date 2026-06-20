@@ -145,7 +145,7 @@ const Footer = () => {
                       <Link href="#">Testimonials</Link>
                     </li> */}
                     <li>
-                      <Link href="/blog">Blog</Link>
+                      <Link href="/blog?category=all">Blog</Link>
                     </li>
                   </ul>
                 </nav>
@@ -193,7 +193,9 @@ const Footer = () => {
                       <FaInstagram />
                     </Link>
                     <Link
-                      href="#"
+                      href="https://www.facebook.com/share/1D562vca71/"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={styles.footerSocialBtn}
                       aria-label="Facebook"
                     >
@@ -207,7 +209,9 @@ const Footer = () => {
                       <FaXTwitter />
                     </Link>
                     <Link
-                      href="#"
+                      href=" https://www.youtube.com/@agriwow"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={styles.footerSocialBtn}
                       aria-label="YouTube"
                     >

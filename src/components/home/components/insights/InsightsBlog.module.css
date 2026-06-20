@@ -189,13 +189,13 @@
     }
 
     .cardTitle {
-        font-size: 12px;
+        font-size: 14px;
         margin: 0 0 6px;
         -webkit-line-clamp: 2;
     }
 
     .excerpt {
-        font-size: 10px;
+        font-size: 14px;
         -webkit-line-clamp: 3;
     }
 

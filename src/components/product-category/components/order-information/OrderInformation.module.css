@@ -134,7 +134,7 @@
 
 @media (max-width: 575px) {
   .orderInformation {
-    padding: 16px 0 8px;
+    padding: 25px 0;
   }
 
   .orderInformation :global(.detail-section) {
@@ -151,6 +151,7 @@
 
   .orderInformationContent {
     padding: 14px 0;
+    padding-top: 0;
     gap: 12px;
     align-items: flex-start;
   }

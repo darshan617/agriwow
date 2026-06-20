@@ -232,7 +232,7 @@ const CartSummery = ({
   }, [cartData?.coupon?.code, cartData]);
 
   return (
-    <div className={`${styles.cartSummaryWrapper} pt-3 pb-5`}>
+    <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
       <div className={`${styles.summaryCard}`}>
         <div className={`${styles.summaryHeader}`}>
           <h3>Cart Summary</h3>
@@ -462,7 +462,15 @@ const CartSummery = ({
           {availableCoupons?.data?.length > 0 ? (
             availableCoupons?.data?.map((coupon) => (
               <div key={coupon?.id} className={`${styles.couponItem}`}>
-                <p>{coupon?.code}</p>
+                <div>
+                  <p className="m-0">{coupon?.code}</p>
+                  <p
+                    className="fs-12 text-muted small"
+                    style={{ fontSize: "12px", fontWeight: "400" }}
+                  >
+                    {coupon?.applicability?.apply_on_text}
+                  </p>
+                </div>
                 <button
                   onClick={() => setCouponCode(coupon?.code)}
                   className={`${styles.applyBtn}`}
