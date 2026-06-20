@@ -104,6 +104,7 @@
 .bannerBtn:hover {
   background: linear-gradient(to right, #f6c417, #8dba3b);
 }
+
 .noFaqAvailable {
   font-size: 14px;
   font-weight: 600;
@@ -111,6 +112,7 @@
   margin-bottom: 14px;
   text-align: center;
 }
+
 .askQuestionPopupContent {
   width: 460px;
   max-width: 100%;
@@ -123,6 +125,7 @@
   gap: 10px;
   padding: 20px 24px 16px;
 }
+
 .popupHeaderIcon {
   width: 36px;
   height: 36px;
@@ -134,17 +137,20 @@
   color: #185fa5;
   flex-shrink: 0;
 }
+
 .popupHeader h3 {
   font-size: 15px;
   font-weight: 600;
   color: #1a1a1a;
   margin: 0;
 }
+
 .popupSubtitle {
   font-size: 12px;
   color: #888;
   margin: 0;
 }
+
 .closeBtn {
   margin-left: auto;
   background: none;
@@ -156,6 +162,7 @@
   border-radius: 6px;
   line-height: 1;
 }
+
 .closeBtn:hover {
   background: #f3f3f3;
   color: #333;
@@ -173,16 +180,19 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .formGroup {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .formGroup label {
   font-size: 13px;
   font-weight: 500;
   color: #1a1a1a;
 }
+
 .formGroup input,
 .formGroup textarea {
   width: 100%;
@@ -197,11 +207,13 @@
   font-family: inherit;
   resize: vertical;
 }
+
 .formGroup input:focus,
 .formGroup textarea:focus {
   border-color: #185fa5;
   box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
 }
+
 .formGroup input::placeholder,
 .formGroup textarea::placeholder {
   color: #bbb;
@@ -213,6 +225,7 @@
   gap: 10px;
   padding-top: 4px;
 }
+
 .cancelBtn {
   flex: 1;
   padding: 9px 0;
@@ -223,9 +236,11 @@
   font-size: 14px;
   cursor: pointer;
 }
+
 .cancelBtn:hover {
   background: #efefef;
 }
+
 .submitBtn {
   flex: 2;
   padding: 9px 0;
@@ -241,8 +256,10 @@
   justify-content: center;
   gap: 6px;
 }
+
 .submitBtn:hover {
-  background: #8dba3b;
+  background: #1b8431;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 480px) {
@@ -250,6 +267,7 @@
     font-size: 18px;
     margin-bottom: 20px;
   }
+
   .faqQuestion {
     padding: 10px;
   }

@@ -21,7 +21,8 @@ const Faqs = ({ productData, productId }) => {
     setOpenId(openId === id ? null : id);
   };
 
-  const [askQuestion, { isLoading: isAskQuestionLoading }] = useAskQuestionMutation();
+  const [askQuestion, { isLoading: isAskQuestionLoading }] =
+    useAskQuestionMutation();
   const { showToast } = useToast();
   const [question, setQuestion] = useState("");
   const userData = Cookies.get("userData")
@@ -29,11 +30,13 @@ const Faqs = ({ productData, productId }) => {
     : null;
   const handleAskQuestion = async () => {
     try {
-      const res = await askQuestion({ body: { 
-        product_id: productId,
-        question: question,
-        user_id: userData?.id,
-       } });
+      const res = await askQuestion({
+        body: {
+          product_id: productId,
+          question: question,
+          user_id: userData?.id,
+        },
+      });
       if (res?.data?.success || res?.data?.status) {
         setShowAskQuestionPopup(false);
         setQuestion("");
@@ -94,7 +97,10 @@ const Faqs = ({ productData, productId }) => {
             Ask a Question?
           </button>
           {showAskQuestionPopup && (
-            <CustomPopup onclose={() => setShowAskQuestionPopup(false)}>
+            <CustomPopup
+              onclose={() => setShowAskQuestionPopup(false)}
+              maxWidth="460px"
+            >
               <div className={styles.askQuestionPopupContent}>
                 <div className={styles.popupHeader}>
                   <div>
@@ -142,7 +148,11 @@ const Faqs = ({ productData, productId }) => {
                     >
                       Cancel
                     </button>
-                    <button className={styles.submitBtn} onClick={handleAskQuestion} disabled={isAskQuestionLoading}>
+                    <button
+                      className={styles.submitBtn}
+                      onClick={handleAskQuestion}
+                      disabled={isAskQuestionLoading}
+                    >
                       {isAskQuestionLoading ? "Submitting..." : "Submit"}
                     </button>
                   </div>
