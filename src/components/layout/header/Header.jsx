@@ -37,6 +37,9 @@ import {
   useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
 
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+
+
 const TRENDING_SEARCHES = [
   { label: "Fogging Machines", href: "/product-category/fogging-machines" },
   // {label: "Garden Equipment", href: "/product-category/garden-tools"},
@@ -211,7 +214,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
-
+  const { openLoginPopup } = useLoginPopup();
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -836,18 +839,31 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               )}
             </div>
 
-            <button
-              type="button"
-              className={`${styles.iconBtn}`}
-              aria-label="Wishlist"
-            >
-              <Link href="/wishlist">
-                <FaHeart size={21} />
-              </Link>
-              {wishlistCount > 0 && (
-                <span className={styles.badge}>{wishlistCount}</span>
-              )}
-            </button>
+
+            {!isLoggedIn && (
+              <button 
+                onClick={openLoginPopup}
+                type="button" 
+                className={`${styles.iconBtn}`}
+                aria-label="Wishlist"
+              >
+                <Link href="#" onClick={openLoginPopup}>
+                  <FaHeart size={21} />
+                </Link>
+              </button>
+            )}  
+
+            {isLoggedIn && (
+              <button
+                type="button"
+                className={`${styles.iconBtn}`}
+                aria-label="Wishlist"
+              >
+                <Link href="/wishlist">
+                  <FaHeart size={21} />
+                </Link>
+              </button>
+            )}
             <button
               type="button"
               className={`${styles.iconBtn}`}

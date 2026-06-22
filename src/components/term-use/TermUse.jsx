@@ -4,9 +4,9 @@ import styles from "@/components/term-use/TermUse.module.css";
 const TermUse = () => {
   return (
     <div className="container">
-      <div className={`${styles.termUseHeading} `}>
+      {/* <div className={`${styles.termUseHeading} `}>
         <h1>Terms of Use</h1>
-      </div>
+      </div> */}
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>
