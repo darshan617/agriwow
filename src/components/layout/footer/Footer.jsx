@@ -202,13 +202,6 @@ const Footer = () => {
                       <FaFacebookF />
                     </Link>
                     <Link
-                      href="#"
-                      className={styles.footerSocialBtn}
-                      aria-label="X"
-                    >
-                      <FaXTwitter />
-                    </Link>
-                    <Link
                       href=" https://www.youtube.com/@agriwow"
                       target="_blank"
                       rel="noopener noreferrer"

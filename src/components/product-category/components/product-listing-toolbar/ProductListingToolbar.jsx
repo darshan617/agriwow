@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import styles from "@/components/product-category/components/product-listing-toolbar/ProductListingToolbar.module.css";
 import ProductCard from "@/common-components/product-card/ProductCard";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import ProductCardShimmer from "@/common-components/product-card/ProductCardShimmer";
 
 export const SORT_OPTIONS = [
   { value: "default", label: "Default Sorting" },
@@ -24,6 +25,7 @@ function ProductListingToolbar({
   onSortChange,
   pageSize = 12,
   isLoading = false,
+  isFetching = false,
   isError = false,
 }) {
   const [internalSortBy, setInternalSortBy] = useState("default");
@@ -196,34 +198,39 @@ function ProductListingToolbar({
           </button>
         </div>
       )}
-      <div className={`${styles.productListWrapper}`}>
-        {isLoading && products.length === 0 ? (
-          <p className={`${styles.emptyState}`}>Loading products...</p>
-        ) : isError || paginatedProducts?.length === 0 ? (
-          <p className={`${styles.emptyState}`}>No products found.</p>
-        ) : (
-          paginatedProducts?.map((item) => (
+      <div className={styles.productListWrapper}>
+        {isLoading ? (
+          <>
+           {Array.from({ length: 12 }).map((_, index) => (
+            <ProductCardShimmer key={index} />
+           ))}
+          </>
+        ) : paginatedProducts?.length > 0 ? (
+          paginatedProducts.map((item) => (
             <ProductCard
-              key={item?.id ?? item?.slug ?? item?.name}
-              type="productPage"
-              image={item?.thumbnail ?? item?.gallery?.[0]}
-              imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
-              discount={item?.discount}
-              isBestSeller={item?.is_best_selling}
-              isTrending={item?.is_trending}
-              isFeatured={item?.is_featured}
-              isTopRated={item?.is_top_rated}
-              name={item?.name}
-              price={item?.selling_price}
-              oldPrice={item?.price}
-              reviews={item?.total_reviews}
-              average_rating={item?.average_rating}
-              slug={item?.slug}
-              productId={item?.id}
-            />
+            key={item?.id ?? item?.slug ?? item?.name}
+            type="productPage"
+            image={item?.thumbnail ?? item?.gallery?.[0]}
+            imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
+            discount={item?.discount}
+            isBestSeller={item?.is_best_selling}
+            isTrending={item?.is_trending}
+            isFeatured={item?.is_featured}
+            isTopRated={item?.is_top_rated}
+            name={item?.name}
+            price={item?.selling_price}
+            oldPrice={item?.price}
+            reviews={item?.total_reviews}
+            average_rating={item?.average_rating}
+            slug={item?.slug}
+            productId={item?.id}
+          />
           ))
+        ) : (
+          <p className={styles.emptyState}>No products found.</p>
         )}
       </div>
+
       {products.length > 0 && totalPages > 1 && (
         <div className={`${styles.paginationWrapper}`}>
           <div className={`${styles.pagination}`}>

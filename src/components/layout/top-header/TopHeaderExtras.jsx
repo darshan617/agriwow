@@ -50,9 +50,6 @@ export const TopHeaderSocial = () => (
     >
       <FaFacebookF className={styles.topHeaderRightIcon} />
     </Link>
-    <Link href="#">
-      <FaXTwitter className={styles.topHeaderRightIcon} />
-    </Link>
     <Link
       href=" https://www.youtube.com/@agriwow"
       target="_blank"
