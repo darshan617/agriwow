@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import fireIcon from "@/assets/icon/fire.png";
 import mailIllustration from "@/assets/icon/big-mail.png";
-import styles from "@/components/blog-listing/trending-blog/trendingBlog.module.css";
+import styles from "@/components/blog-listing/trending-blog/TrendingBlog.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";

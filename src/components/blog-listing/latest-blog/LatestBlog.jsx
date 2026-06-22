@@ -21,7 +21,7 @@ const LatestBlog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [blogListData, setBlogListData] = useState([]);
   const [categories, setCategories] = useState([{ id: "all", label: "All" }]);
-  const [getAllBlogs, { isLoading }] = useGetBlogListingMutation();
+  const [getAllBlogs, { isLoading: isLoadingBlogs, }] = useGetBlogListingMutation();
   const [getAllBlogCategories] = useGetAllBlogCategoriesMutation();
   const [trendingBlogs, setTrendingBlogs] = useState([]);
 
