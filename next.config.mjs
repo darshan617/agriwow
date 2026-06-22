@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
@@ -12,6 +11,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  compress: true,
 };
 
 export default nextConfig;

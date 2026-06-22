@@ -37,6 +37,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
         reviews={productDetails?.data?.reviews}
         can_review={productDetails?.data?.can_review}
         has_purchased={productDetails?.data?.has_purchased}
+        product_review_media={productDetails?.data?.product_review_media}
       />
       <Faqs
         productData={productDetails?.data}

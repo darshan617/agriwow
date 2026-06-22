@@ -126,6 +126,7 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
               onChange={(e) => handleChange(e.target.value, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
               onPaste={handlePaste}
+              autoFocus={i === 0}
             />
           ))}
         </div>

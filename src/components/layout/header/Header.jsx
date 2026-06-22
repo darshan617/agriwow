@@ -293,6 +293,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           showToast(res?.data?.message, "success");
           setShowPopup("");
           setPhone("");
+          router?.reload();
         } else {
           console.error("OTP verification failed", res?.error);
         }
@@ -549,220 +550,220 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               className={`${styles.searchWrap} ${mobileSearchOpen ? styles.searchWrapMobileOpen : ""}`}
               ref={searchRef}
             >
-            {mobileSearchOpen && (
-              <button
-                type="button"
-                className={`${styles.mobileSearchClose}`}
-                aria-label="Close search"
-                onClick={handleMobileSearchClose}
-              >
-                <IoClose size={22} />
-              </button>
-            )}
-            <form
-              onSubmit={handleSearchSubmit}
-              className={`${styles.searchForm}`}
-            >
-              <input
-                ref={searchInputRef}
-                type="text"
-                className={`${styles.searchInput}`}
-                placeholder="Search Product, Category, Brands..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onFocus={handleSearchFocus}
-                aria-haspopup="listbox"
-                aria-expanded={showSearchPanel}
-              />
-              {searchQuery && (
+              {mobileSearchOpen && (
                 <button
                   type="button"
-                  className={`${styles.searchClearBtn}`}
-                  aria-label="Clear search"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setDebouncedQuery("");
-                    searchInputRef.current?.focus();
-                  }}
+                  className={`${styles.mobileSearchClose}`}
+                  aria-label="Close search"
+                  onClick={handleMobileSearchClose}
                 >
-                  <IoClose size={16} />
+                  <IoClose size={22} />
                 </button>
               )}
-              <button
-                type="submit"
-                className={`${styles.searchBtn}`}
-                aria-label="Search"
-                onClick={handleSearchBtnClick}
+              <form
+                onSubmit={handleSearchSubmit}
+                className={`${styles.searchForm}`}
               >
-                <FaSearch size={18} />
-              </button>
-            </form>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  className={`${styles.searchInput}`}
+                  placeholder="Search Product, Category, Brands..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={handleSearchFocus}
+                  aria-haspopup="listbox"
+                  aria-expanded={showSearchPanel}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    className={`${styles.searchClearBtn}`}
+                    aria-label="Clear search"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setDebouncedQuery("");
+                      searchInputRef.current?.focus();
+                    }}
+                  >
+                    <IoClose size={16} />
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  className={`${styles.searchBtn}`}
+                  aria-label="Search"
+                  onClick={handleSearchBtnClick}
+                >
+                  <FaSearch size={18} />
+                </button>
+              </form>
 
-            {showSearchPanel && (
-              <div className={`${styles.searchResultsPanel}`} role="listbox">
-                {showResultsView ? (
-                  isSearching && searchResults.length === 0 ? (
-                    <div className={`${styles.searchStatus}`}>Searching…</div>
-                  ) : searchResults.length === 0 ? (
-                    <div className={`${styles.searchStatus}`}>
-                      No products found for &ldquo;{debouncedQuery}&rdquo;
-                    </div>
-                  ) : (
-                    <>
-                      <ul className={`${styles.searchResultsList}`}>
-                        {searchResults.slice(0, 6).map((product) => {
-                          const categorySlug = product?.category?.slug;
-                          const href =
-                            categorySlug && product?.slug
-                              ? `/product-details/${product.slug}`
-                              : "#";
-                          return (
-                            <li key={product?.id ?? product?.slug}>
-                              <Link
-                                href={href}
-                                className={`${styles.searchResultItem}`}
-                                onClick={handleResultClick}
-                                role="option"
-                              >
-                                <div className={`${styles.searchResultInfo}`}>
-                                  <p className={`${styles.searchResultName}`}>
-                                    {product?.name}
-                                  </p>
-                                </div>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      {searchResults.length > 6 && (
-                        <div className={`${styles.searchResultsFooter}`}>
-                          <span>
-                            Showing 6 of {searchResults.length} results
-                          </span>
-                        </div>
-                      )}
-                    </>
-                  )
-                ) : (
-                  <div className={`${styles.suggestionsPanel}`}>
-                    <section className={`${styles.suggestionSection}`}>
-                      <h3 className={`${styles.suggestionTitle}`}>
-                        <HiOutlineTrendingUp aria-hidden />
-                        <span>Trending Searches</span>
-                      </h3>
-                      <div className={`${styles.trendingChips}`}>
-                        {trendingToShow?.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            className={`${styles.trendingChip}`}
-                            onClick={closeSearch}
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                        {hiddenTrendingCount > 0 && !trendingExpanded && (
-                          <button
-                            type="button"
-                            className={`${styles.trendingMore}`}
-                            onClick={() => setTrendingExpanded(true)}
-                          >
-                            {hiddenTrendingCount} more searches...
-                          </button>
-                        )}
+              {showSearchPanel && (
+                <div className={`${styles.searchResultsPanel}`} role="listbox">
+                  {showResultsView ? (
+                    isSearching && searchResults.length === 0 ? (
+                      <div className={`${styles.searchStatus}`}>Searching…</div>
+                    ) : searchResults.length === 0 ? (
+                      <div className={`${styles.searchStatus}`}>
+                        No products found for &ldquo;{debouncedQuery}&rdquo;
                       </div>
-                    </section>
-
-                    {topCategories.length > 0 && (
+                    ) : (
+                      <>
+                        <ul className={`${styles.searchResultsList}`}>
+                          {searchResults.slice(0, 6).map((product) => {
+                            const categorySlug = product?.category?.slug;
+                            const href =
+                              categorySlug && product?.slug
+                                ? `/product-details/${product.slug}`
+                                : "#";
+                            return (
+                              <li key={product?.id ?? product?.slug}>
+                                <Link
+                                  href={href}
+                                  className={`${styles.searchResultItem}`}
+                                  onClick={handleResultClick}
+                                  role="option"
+                                >
+                                  <div className={`${styles.searchResultInfo}`}>
+                                    <p className={`${styles.searchResultName}`}>
+                                      {product?.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        {searchResults.length > 6 && (
+                          <div className={`${styles.searchResultsFooter}`}>
+                            <span>
+                              Showing 6 of {searchResults.length} results
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    )
+                  ) : (
+                    <div className={`${styles.suggestionsPanel}`}>
                       <section className={`${styles.suggestionSection}`}>
                         <h3 className={`${styles.suggestionTitle}`}>
-                          <TbCategory2 aria-hidden />
-                          <span>Top Categories</span>
+                          <HiOutlineTrendingUp aria-hidden />
+                          <span>Trending Searches</span>
                         </h3>
-                        <div className={`${styles.topCategoriesGrid}`}>
-                          {topCategories.map((cat) => (
+                        <div className={`${styles.trendingChips}`}>
+                          {trendingToShow?.map((item) => (
                             <Link
-                              key={cat?.slug ?? cat?.name}
-                              href={
-                                cat?.slug
-                                  ? `/product-category/${cat.slug}`
-                                  : "#"
-                              }
-                              className={`${styles.topCategoryCard}`}
+                              key={item.href}
+                              href={item.href}
+                              className={`${styles.trendingChip}`}
                               onClick={closeSearch}
                             >
-                              <div className={`${styles.topCategoryImage}`}>
-                                {cat?.image && (
-                                  <Image
-                                    src={cat.image}
-                                    alt={cat?.name ?? "Category"}
-                                    width={44}
-                                    height={44}
-                                  />
-                                )}
-                              </div>
-                              <span className={`${styles.topCategoryName}`}>
-                                {cat?.name}
-                              </span>
+                              {item.label}
                             </Link>
                           ))}
+                          {hiddenTrendingCount > 0 && !trendingExpanded && (
+                            <button
+                              type="button"
+                              className={`${styles.trendingMore}`}
+                              onClick={() => setTrendingExpanded(true)}
+                            >
+                              {hiddenTrendingCount} more searches...
+                            </button>
+                          )}
                         </div>
                       </section>
-                    )}
 
-                    <section
-                      className={`${styles.suggestionSection} ${styles.historySection}`}
-                    >
-                      <div className={`${styles.historyHeader}`}>
-                        <h3 className={`${styles.suggestionTitle}`}>
-                          <MdHistory aria-hidden />
-                          <span>Search History</span>
-                        </h3>
-                        {searchHistory.length > 0 && (
-                          <button
-                            type="button"
-                            className={`${styles.historyClearBtn}`}
-                            onClick={clearHistory}
-                          >
-                            Clear All
-                          </button>
-                        )}
-                      </div>
-                      {searchHistory.length === 0 ? (
-                        <p className={`${styles.historyEmpty}`}>
-                          There is no search history
-                        </p>
-                      ) : (
-                        <div className={`${styles.historyChips}`}>
-                          {searchHistory.map((term) => (
-                            <span
-                              key={term}
-                              className={`${styles.historyChip}`}
-                            >
-                              <button
-                                type="button"
-                                className={`${styles.historyChipText}`}
-                                onClick={() => handleSuggestionClick(term)}
+                      {topCategories.length > 0 && (
+                        <section className={`${styles.suggestionSection}`}>
+                          <h3 className={`${styles.suggestionTitle}`}>
+                            <TbCategory2 aria-hidden />
+                            <span>Top Categories</span>
+                          </h3>
+                          <div className={`${styles.topCategoriesGrid}`}>
+                            {topCategories.map((cat) => (
+                              <Link
+                                key={cat?.slug ?? cat?.name}
+                                href={
+                                  cat?.slug
+                                    ? `/product-category/${cat.slug}`
+                                    : "#"
+                                }
+                                className={`${styles.topCategoryCard}`}
+                                onClick={closeSearch}
                               >
-                                {term}
-                              </button>
-                              <button
-                                type="button"
-                                className={`${styles.historyChipRemove}`}
-                                aria-label={`Remove ${term} from history`}
-                                onClick={() => removeHistoryItem(term)}
-                              >
-                                <IoClose size={12} />
-                              </button>
-                            </span>
-                          ))}
-                        </div>
+                                <div className={`${styles.topCategoryImage}`}>
+                                  {cat?.image && (
+                                    <Image
+                                      src={cat.image}
+                                      alt={cat?.name ?? "Category"}
+                                      width={44}
+                                      height={44}
+                                    />
+                                  )}
+                                </div>
+                                <span className={`${styles.topCategoryName}`}>
+                                  {cat?.name}
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
+                        </section>
                       )}
-                    </section>
-                  </div>
-                )}
-              </div>
-            )}
+
+                      <section
+                        className={`${styles.suggestionSection} ${styles.historySection}`}
+                      >
+                        <div className={`${styles.historyHeader}`}>
+                          <h3 className={`${styles.suggestionTitle}`}>
+                            <MdHistory aria-hidden />
+                            <span>Search History</span>
+                          </h3>
+                          {searchHistory.length > 0 && (
+                            <button
+                              type="button"
+                              className={`${styles.historyClearBtn}`}
+                              onClick={clearHistory}
+                            >
+                              Clear All
+                            </button>
+                          )}
+                        </div>
+                        {searchHistory.length === 0 ? (
+                          <p className={`${styles.historyEmpty}`}>
+                            There is no search history
+                          </p>
+                        ) : (
+                          <div className={`${styles.historyChips}`}>
+                            {searchHistory.map((term) => (
+                              <span
+                                key={term}
+                                className={`${styles.historyChip}`}
+                              >
+                                <button
+                                  type="button"
+                                  className={`${styles.historyChipText}`}
+                                  onClick={() => handleSuggestionClick(term)}
+                                >
+                                  {term}
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`${styles.historyChipRemove}`}
+                                  aria-label={`Remove ${term} from history`}
+                                  onClick={() => removeHistoryItem(term)}
+                                >
+                                  <IoClose size={12} />
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </section>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -958,7 +959,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       </aside>
 
       {showPopup === "login" && (
-        <CustomPopup onclose={() => setShowPopup("")}>
+        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
           <Login
             handleLogin={handleLogin}
             phone={phone}
@@ -968,7 +969,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         </CustomPopup>
       )}
       {showPopup === "verify-otp" && (
-        <CustomPopup onclose={() => setShowPopup("")}>
+        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
           <VerifyOtp
             handleVerify={handleVerify}
             phone={phone}

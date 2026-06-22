@@ -85,6 +85,7 @@ export const LoginPopupProvider = ({ children }) => {
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
           closeLoginPopup();
+          router?.reload();
         } else {
           console.error("OTP verification failed", res?.error);
         }
@@ -100,7 +101,7 @@ export const LoginPopupProvider = ({ children }) => {
     >
       {children}
       {showPopup === "login" && (
-        <CustomPopup onclose={closeLoginPopup} maxWidth="740px">
+        <CustomPopup onclose={closeLoginPopup} maxWidth="fit-content">
           <Login
             handleLogin={handleLogin}
             phone={phone}
@@ -110,7 +111,7 @@ export const LoginPopupProvider = ({ children }) => {
         </CustomPopup>
       )}
       {showPopup === "verify-otp" && (
-        <CustomPopup onclose={closeLoginPopup}>
+        <CustomPopup onclose={closeLoginPopup} maxWidth="fit-content">
           <VerifyOtp
             handleVerify={handleVerify}
             phone={phone}
