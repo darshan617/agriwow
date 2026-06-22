@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,10 +24,27 @@ import { IoPlay } from "react-icons/io5";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
+const AUTOPLAY_DELAY = 3000;
 
 const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
+  const gallery = productDetails?.data?.gallery ?? [];
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [autoplayKey, setAutoplayKey] = useState(0);
+  const isPausedRef = useRef(false);
+
+  const resetAutoplay = () => setAutoplayKey((key) => key + 1);
+
+  useEffect(() => {
+    if (gallery.length <= 1) return undefined;
+
+    const timer = setInterval(() => {
+      if (isPausedRef.current) return;
+      setSelectedIndex((prev) => (prev >= gallery.length - 1 ? 0 : prev + 1));
+    }, AUTOPLAY_DELAY);
+
+    return () => clearInterval(timer);
+  }, [gallery.length, autoplayKey]);
   const [isPopupVisible, setIsPopupVisible] = useState("");
   const [showCouponsDrawer, setShowCouponsDrawer] = useState(false);
   const [activePopupTab, setActivePopupTab] = useState("specifications");
@@ -111,10 +128,18 @@ const ItemDetail = ({ productDetails }) => {
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
         <div className={`${styles.imageDetail} col-lg-5`}>
-          <div className={`${styles.mainImageWrapper}`}>
+          <div
+            className={`${styles.mainImageWrapper}`}
+            onMouseEnter={() => {
+              isPausedRef.current = true;
+            }}
+            onMouseLeave={() => {
+              isPausedRef.current = false;
+            }}
+          >
             <Image
-              src={productDetails?.data?.gallery[selectedIndex]}
-              alt={productDetails?.data?.gallery[selectedIndex]?.alt}
+              src={gallery[selectedIndex]}
+              alt={gallery[selectedIndex]?.alt}
               className={styles.mainImage}
               width={100}
               height={100}
@@ -180,14 +205,17 @@ const ItemDetail = ({ productDetails }) => {
                 576: { slidesPerView: 4 },
               }}
             >
-              {productDetails?.data?.gallery.map((item, index) => (
-                <SwiperSlide key={item.id}>
+              {gallery.map((item, index) => (
+                <SwiperSlide key={item.id ?? index}>
                   <button
                     type="button"
                     className={`${styles.thumbButton} ${
                       selectedIndex === index ? styles.thumbButtonActive : ""
                     }`}
-                    onClick={() => setSelectedIndex(index)}
+                    onClick={() => {
+                      setSelectedIndex(index);
+                      resetAutoplay();
+                    }}
                     aria-label={`Show image ${item.id}`}
                   >
                     <Image
@@ -480,7 +508,7 @@ const ItemDetail = ({ productDetails }) => {
       />
 
       {isPopupVisible === "prdInfo" && (
-        <CustomPopup onclose={closeProductPopup} wide>
+        <CustomPopup onclose={closeProductPopup} wide maxWidth="600px">
           <div className={`${styles.productInfoPopup}`}>
             <div className={`${styles.productInfoPopupTabs}`}>
               <button

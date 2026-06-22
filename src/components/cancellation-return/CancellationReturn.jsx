@@ -5,9 +5,9 @@ import Link from "next/link";
 const CancellationReturn = () => {
   return (
     <div className="container">
-      <div className={`${styles.cancellationReturnHeading} `}>
+      {/* <div className={`${styles.cancellationReturnHeading} `}>
         <h1>Cancellation / Return Policy</h1>
-      </div>
+      </div> */}
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>

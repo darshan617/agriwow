@@ -8,6 +8,7 @@ import {
   useUpdateMyProfileMutation,
 } from "@/redux/apis/myProfileApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import Cookies from "js-cookie";
 
 const MyProfileComponent = () => {
   const { showToast } = useToast();
@@ -19,11 +20,17 @@ const MyProfileComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [saved, setSaved] = useState(form);
 
-  const { data: myProfileDetails, isLoading: isMyProfileDetailsLoading } =
-    useGetMyProfileDetailsQuery();
+  const userData = Cookies.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+    : null;
+
+  const {
+    data: myProfileDetails,
+    isLoading: isMyProfileDetailsLoading,
+    refetch: refetchMyProfileDetails,
+  } = useGetMyProfileDetailsQuery();
   const [updateMyProfile, { isLoading: isUpdateMyProfileLoading }] =
     useUpdateMyProfileMutation();
-  console.log(myProfileDetails, "myProfileDetails");
 
   const handleEdit = () => {
     setSaved({ ...form });
@@ -40,10 +47,17 @@ const MyProfileComponent = () => {
         },
       });
       console.log(res, "res");
-      if (res?.data?.success || res?.data?.status) {
+      if (res?.data?.success || res?.data?.status || res?.status) {
         showToast(res?.data?.message, "success");
         setSaved({ ...form });
         setIsEditing(false);
+        const updatedUserData = {
+          ...userData,
+          ...res?.data?.user,
+          name: res?.data?.user?.name ?? form?.fullName,
+        };
+        Cookies.set("userData", JSON.stringify(updatedUserData));
+        refetchMyProfileDetails();
       }
     } catch (error) {
       console.log(error, "error");

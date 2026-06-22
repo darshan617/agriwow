@@ -13,7 +13,10 @@ import paypal from "@/assets/icon/paypal.png";
 import mastercard from "@/assets/icon/smartcard.png";
 import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import {
+  getIsLoggedIn,
+  useLoginPopup,
+} from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +24,8 @@ const Footer = () => {
   const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
     useSubscribeEmailMutation();
   const { showToast } = useToast();
+
+  const { openLoginPopup } = useLoginPopup();
 
   const handleSubscribe = async () => {
     if (isSubscribeEmailLoading) return;
@@ -134,16 +139,19 @@ const Footer = () => {
                       <Link href="/">Home</Link>
                     </li>
 
+                    {!isLoggedIn && (
+                      <li onClick={openLoginPopup}>
+                        <Link href="#">My Profile</Link>
+                      </li>
+                    )}
+                    {isLoggedIn && (
+                      <li>
+                        <Link href="/my-profile">My Profile</Link>
+                      </li>
+                    )}
                     <li>
-                      <Link href="/my-profile">My Profile</Link>
+                      <Link href="https://www.youtube.com/@agriwow" target="_blank" rel="noopener noreferrer">Videos</Link>
                     </li>
-
-                    <li>
-                      <Link href="#">Videos</Link>
-                    </li>
-                    {/* <li>
-                      <Link href="#">Testimonials</Link>
-                    </li> */}
                     <li>
                       <Link href="/blog?category=all">Blog</Link>
                     </li>
@@ -200,13 +208,6 @@ const Footer = () => {
                       aria-label="Facebook"
                     >
                       <FaFacebookF />
-                    </Link>
-                    <Link
-                      href="#"
-                      className={styles.footerSocialBtn}
-                      aria-label="X"
-                    >
-                      <FaXTwitter />
                     </Link>
                     <Link
                       href=" https://www.youtube.com/@agriwow"

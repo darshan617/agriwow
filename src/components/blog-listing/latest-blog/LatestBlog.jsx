@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaChevronLeft, FaChevronRight, FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
 import styles from "@/components/blog-listing/latest-blog/LatestBlog.module.css";
-import TrendingBlog from "../trending-blog/TrendingBlog";
+import TrendingBlog from "@/components/blog-listing/trending-blog/TrendingBlog";
 import {
   useGetAllBlogCategoriesMutation,
   useGetBlogListingMutation,
@@ -21,7 +21,7 @@ const LatestBlog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [blogListData, setBlogListData] = useState([]);
   const [categories, setCategories] = useState([{ id: "all", label: "All" }]);
-  const [getAllBlogs, { isLoading }] = useGetBlogListingMutation();
+  const [getAllBlogs, { isLoading: isLoadingBlogs, }] = useGetBlogListingMutation();
   const [getAllBlogCategories] = useGetAllBlogCategoriesMutation();
   const [trendingBlogs, setTrendingBlogs] = useState([]);
 

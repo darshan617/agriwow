@@ -17,6 +17,7 @@ import {
   getIsLoggedIn,
   useLoginPopup,
 } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import CustomPopup from "@/components/custom-popup/CustomPopup";
 
 const Stars = ({ count }) => (
   <div className={styles.reviewerStars}>
@@ -89,11 +90,99 @@ const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
   </>
 );
 
+const NoReviewsState = ({ onWriteReview }) => (
+  <div className={styles.noReviewsState}>
+    <div className={styles.noReviewsStars}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i} className={styles.noReviewsStar}>
+          ★
+        </span>
+      ))}
+    </div>
+    <p className={styles.noReviewsTitle}>No reviews yet</p>
+    <p className={styles.noReviewsSubtitle}>
+      Be the first to share your experience with this product
+    </p>
+    <button
+      type="button"
+      className={`${styles.writeReviewBtn} ${styles.noReviewsBtn}`}
+      onClick={onWriteReview}
+    >
+      WRITE A REVIEW
+    </button>
+  </div>
+);
+
+const getMediaPreviewInfo = (file) => {
+  const isFile = file instanceof File;
+
+  const isImage = isFile
+    ? file.type.startsWith("image")
+    : file?.type === "image" ||
+      /\.(jpg|jpeg|png|gif|webp)$/i.test(file?.url || "");
+
+  const isVideo = isFile
+    ? file.type.startsWith("video")
+    : file?.type === "video" || /\.(mp4|mov|avi|webm)$/i.test(file?.url || "");
+
+  const url = isFile ? URL.createObjectURL(file) : file?.url || file;
+
+  return { isImage, isVideo, url };
+};
+
+const SelectedMediaPreview = ({ media, onRemove }) => {
+  if (!media?.length) return null;
+
+  return (
+    <div className={styles.selectedMediaList}>
+      {media.map((file, idx) => {
+        const { isImage, isVideo, url } = getMediaPreviewInfo(file);
+
+        return (
+          <div key={idx} className={styles.selectedMediaItem}>
+            <button
+              type="button"
+              className={styles.removeMediaBtn}
+              onClick={() => onRemove(idx)}
+              aria-label="Remove media"
+            >
+              <span className={styles.removeMediaIcon}>×</span>
+            </button>
+            {isImage && (
+              <img
+                src={url}
+                alt={getAttachmentFilename(file)}
+                className={styles.mediaPreview}
+              />
+            )}
+            {isVideo && (
+              <video
+                src={url}
+                className={styles.mediaPreview}
+                controls={false}
+                muted
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const normalizeReviewMedia = (attachmentUrls = [], imageUrls = []) =>
   attachmentUrls
     .map((attachment, idx) => ({
       type: attachment?.type || "image",
       url: attachment?.url || imageUrls?.[idx] || "",
+    }))
+    .filter((item) => item.url);
+
+const normalizeProductReviewMedia = (media = []) =>
+  media
+    .map((item) => ({
+      type: item?.media_type || item?.type || "image",
+      url: item?.media_url || item?.url || "",
     }))
     .filter((item) => item.url);
 
@@ -309,6 +398,7 @@ const ReviewsRating = ({
   ratingData = null,
   can_review = false,
   has_purchased = false,
+  product_review_media = [],
 }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewText, setReviewText] = useState("");
@@ -318,6 +408,7 @@ const ReviewsRating = ({
   const [reviewsList, setReviewsList] = useState(reviews);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+  const [isMediaPopupOpen, setIsMediaPopupOpen] = useState(false);
   const touchStart = useRef(0);
 
   const [addReview, { isLoading: isAddReviewLoading }] = useAddReviewMutation();
@@ -326,7 +417,7 @@ const ReviewsRating = ({
   const [deleteReview, { isLoading: isDeleteReviewLoading }] =
     useDeleteReviewMutation();
   const { showToast } = useToast();
-
+  const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
   useEffect(() => {
     setReviewsList(reviews);
     setShowAllReviews(false);
@@ -336,6 +427,7 @@ const ReviewsRating = ({
     ? reviewsList
     : reviewsList.slice(0, INITIAL_REVIEWS_COUNT);
   const hasMoreReviews = reviewsList.length > INITIAL_REVIEWS_COUNT;
+  const productReviewMedia = normalizeProductReviewMedia(product_review_media);
 
   const handleWriteReviewClick = () => {
     setEditingReview(null);
@@ -344,6 +436,45 @@ const ReviewsRating = ({
     setSelectedMedia([]);
     setShowReviewForm(true);
   };
+
+  const handleCancelReview = () => {
+    setShowReviewForm(false);
+    setEditingReview(null);
+    setReviewText("");
+    setRating(0);
+    setSelectedMedia([]);
+  };
+
+  const handleWriteReviewButtonClick = () => {
+    if (!getIsLoggedIn()) {
+      openLoginPopup();
+      return;
+    }
+
+    if (!has_purchased) {
+      showToast("You need to purchase the product to write a review", "error");
+      return;
+    }
+
+    if (!can_review) {
+      showToast("You can't write another review for this product", "error");
+      return;
+    }
+
+    handleWriteReviewClick();
+  };
+
+  const handleMediaUpload = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedMedia((prev) => [...prev, ...files]);
+    e.target.value = "";
+  };
+
+  const handleRemoveMedia = (index) => {
+    setSelectedMedia((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const hasRatingData = ratingData?.total_reviews > 0;
 
   const handleEditReview = (review) => {
     setEditingReview(review);
@@ -444,15 +575,6 @@ const ReviewsRating = ({
       body: formData,
     });
 
-    // const res = await addReview({
-    //   body: {
-    //     product_id: productId,
-    //     rating,
-    //     review: reviewText,
-    //     images: selectedMedia,
-    //   },
-    // });
-
     if (res.error) {
       showToast(res.error?.data?.message || "Failed to submit review", "error");
       return;
@@ -483,6 +605,20 @@ const ReviewsRating = ({
     });
   };
 
+  const openMediaPopup = () => {
+    if (!productReviewMedia.length) return;
+    setIsMediaPopupOpen(true);
+  };
+
+  const closeMediaPopup = () => {
+    setIsMediaPopupOpen(false);
+  };
+
+  const handlePopupMediaClick = (index) => {
+    setIsMediaPopupOpen(true);
+    openLightbox(productReviewMedia, index);
+  };
+
   const handleDeleteReview = async (reviewId) => {
     const res = await deleteReview({
       reviewId,
@@ -503,54 +639,30 @@ const ReviewsRating = ({
           <h2>Reviews &amp; Ratings</h2>
         </div>
 
-        <div
-          className={`${styles.reviewBtn} py-2 ${reviewsList.length > 0 ? styles.reviewBtnHasReviews : ""}`}
-        >
-          {reviewsList.length === 0 && (
-            <div className={styles.reviewBtnText}>Be the first to review this product</div>
-          )}
-          {!showReviewForm && (
-            <button
-              className={styles.writeReviewBtn}
-              onClick={() => {
-                if (!has_purchased) {
-                  showToast(
-                    "You need to purchase the product to write a review",
-                    "error",
-                  );
-                } else if (!can_review) {
-                  showToast(
-                    "You can't write another review for this product",
-                    "error",
-                  );
-                } else {
-                  handleWriteReviewClick();
-                }
-              }}
-            >
-              WRITE A REVIEW
-            </button>
-          )}
-        </div>
+        <div className={styles.ratingSection}>
+          <div
+            className={`${styles.ratingRow} ${
+              !hasRatingData && !showReviewForm ? styles.ratingRowEmpty : ""
+            }`}
+          >
+            {hasRatingData && (
+              <RatingSummary
+                average={averageRating}
+                totalRatings={totalRatings}
+                totalReviews={totalReviews}
+                ratingData={ratingData}
+              />
+            )}
 
-        {/* <div className={`${styles.earnCoins} gap-1`}>
-        Review with Images{" "}
-        <Image src={coin} alt="coin" width={15} height={15} />
-        <span>Earn Coins!</span>
-      </div> */}
+            {!hasRatingData && !showReviewForm && (
+              <NoReviewsState onWriteReview={handleWriteReviewButtonClick} />
+            )}
 
-        <div className={styles.ratingRow}>
-          <RatingSummary
-            average={averageRating}
-            totalRatings={totalRatings}
-            totalReviews={totalReviews}
-            ratingData={ratingData}
-          />
-
-          {showReviewForm && (
-            <>
+            {showReviewForm && (
               <form
-                className={styles.writeReviewForm}
+                className={`${styles.writeReviewForm} ${
+                  !hasRatingData ? styles.writeReviewFormFull : ""
+                }`}
                 onSubmit={handleSubmitReview}
               >
                 <div className={styles.reviewFormContent}>
@@ -564,182 +676,33 @@ const ReviewsRating = ({
                   />
                 </div>
 
-                <div
-                  className={styles.uploadMediaWrapper}
-                  style={{ marginTop: "16px", marginBottom: "10px" }}
-                >
+                <div className={styles.uploadMediaWrapper}>
                   <label
                     htmlFor="review-media-upload"
                     className={styles.uploadMediaBtn}
-                    style={{
-                      display: "inline-block",
-                      padding: "8px 18px",
-                      background: "#e8f5e9",
-                      color: "#157104",
-                      border: "1px solid #157104",
-                      borderRadius: "5px",
-                      fontSize: "13px",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      marginBottom: "7px",
-                    }}
                   >
                     Upload Media
                     <input
                       type="file"
                       id="review-media-upload"
+                      className={styles.uploadMediaInput}
                       multiple
                       accept="image/*,video/*"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        const files = Array.from(e.target.files);
-                        setSelectedMedia((prev) => [...prev, ...files]);
-                        e.target.value = "";
-                      }}
+                      onChange={handleMediaUpload}
                     />
                   </label>
 
-                  {selectedMedia && selectedMedia.length > 0 && (
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        flexWrap: "wrap",
-                        marginLeft: 24,
-                        verticalAlign: "top",
-                        alignItems: "center",
-                      }}
-                    >
-                      {selectedMedia.map((file, idx) => {
-                        // const isImage = file?.type?.startsWith("image");
-                        // const isVideo = file?.type?.startsWith("video");
-                        // const url = URL.createObjectURL(file);
-                        const isFile = file instanceof File;
-
-                        const isImage = isFile
-                          ? file.type.startsWith("image")
-                          : file?.type === "image" ||
-                            /\.(jpg|jpeg|png|gif|webp)$/i.test(file?.url || "");
-
-                        const isVideo = isFile
-                          ? file.type.startsWith("video")
-                          : file?.type === "video" ||
-                            /\.(mp4|mov|avi|webm)$/i.test(file?.url || "");
-                        const url = isFile
-                          ? URL.createObjectURL(file)
-                          : file?.url || file;
-                        return (
-                          <div
-                            key={idx}
-                            style={{
-                              margin: "0 8px 8px 0",
-                              position: "relative",
-                            }}
-                          >
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setSelectedMedia(
-                                  selectedMedia.filter((_, i) => i !== idx),
-                                );
-                              }}
-                              style={{
-                                position: "absolute",
-                                top: 2,
-                                right: 2,
-                                background: "rgba(255,255,255,0.85)",
-                                border: "none",
-                                borderRadius: "50%",
-                                width: 22,
-                                height: 22,
-                                cursor: "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                              }}
-                              aria-label="Remove media"
-                            >
-                              <span
-                                style={{
-                                  fontSize: 16,
-                                  color: "#d32f2f",
-                                  lineHeight: 1,
-                                }}
-                              >
-                                ×
-                              </span>
-                            </button>
-                            {isImage && (
-                              <img
-                                src={url}
-                                alt={file.name}
-                                style={{
-                                  width: 80,
-                                  height: 80,
-                                  objectFit: "cover",
-                                  borderRadius: 4,
-                                  border: "1px solid #eee",
-                                }}
-                              />
-                            )}
-                            {isVideo && (
-                              <video
-                                src={url}
-                                style={{
-                                  width: 80,
-                                  height: 80,
-                                  objectFit: "cover",
-                                  borderRadius: 4,
-                                  border: "1px solid #eee",
-                                }}
-                                controls={false}
-                                muted
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <SelectedMediaPreview
+                    media={selectedMedia}
+                    onRemove={handleRemoveMedia}
+                  />
                 </div>
-                <div className={styles.submitReviewBtnWrapper}>
-                  {editingReview && (
-                    <button
-                      type="button"
-                      className={styles.submitReviewBtn}
-                      style={{
-                        marginRight: "10px",
-                        background: "#ddd",
-                        color: "#222",
-                      }}
-                      onClick={() => {
-                        setShowReviewForm(false);
-                        setEditingReview(null);
-                        setReviewText("");
-                        setRating(0);
-                        setSelectedMedia([]);
-                      }}
-                      disabled={isAddReviewLoading || isUpdateReviewLoading}
-                    >
-                      CANCEL
-                    </button>
-                  )}
 
+                <div className={styles.submitReviewBtnWrapper}>
                   <button
                     type="button"
-                    className={styles.submitReviewBtn}
-                    style={{
-                      marginRight: "10px",
-                      background: "#ddd",
-                      color: "#222",
-                    }}
-                    onClick={() => {
-                      setShowReviewForm(false);
-                      setEditingReview(null);
-                      setReviewText("");
-                      setRating(0);
-                      setSelectedMedia([]);
-                    }}
+                    className={`${styles.submitReviewBtn} ${styles.cancelReviewBtn}`}
+                    onClick={handleCancelReview}
                     disabled={isAddReviewLoading || isUpdateReviewLoading}
                   >
                     CANCEL
@@ -759,7 +722,76 @@ const ReviewsRating = ({
                   </button>
                 </div>
               </form>
-            </>
+            )}
+          </div>
+
+          {!showReviewForm && hasRatingData && (
+            <div
+              className={`${styles.reviewBtn} ${
+                reviewsList.length > 0
+                  ? styles.reviewBtnHasReviews
+                  : styles.reviewBtnEmpty
+              }`}
+            >
+              {reviewsList.length === 0 && hasRatingData && (
+                <div className={styles.reviewBtnText}>
+                  Be the first to review this product
+                </div>
+              )}
+              <button
+                type="button"
+                className={styles.writeReviewBtn}
+                onClick={handleWriteReviewButtonClick}
+              >
+                WRITE A REVIEW
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div>
+          {productReviewMedia.length > 0 && (
+            <div className={styles.productReviewMediaRow}>
+              {productReviewMedia.slice(0, 5).map((media, idx) => (
+                <button
+                  key={`${media.url}-${idx}`}
+                  type="button"
+                  className={styles.reviewImg}
+                  onClick={() => openLightbox(productReviewMedia, idx)}
+                  aria-label={`Open review ${media.type} ${idx + 1}`}
+                >
+                  {media.type === "image" ? (
+                    <Image
+                      src={media.url}
+                      alt="product review media"
+                      width={100}
+                      height={100}
+                    />
+                  ) : (
+                    <video
+                      src={media.url}
+                      width={100}
+                      height={100}
+                      muted
+                      playsInline
+                    />
+                  )}
+                </button>
+              ))}
+
+              {productReviewMedia.length > 5 && (
+                <button
+                  type="button"
+                  className={styles.viewMoreMedia}
+                  onClick={openMediaPopup}
+                >
+                  View {productReviewMedia.length - 5} more
+                  <span className={styles.arrowCircle}>
+                    <FaChevronRight />
+                  </span>
+                </button>
+              )}
+            </div>
           )}
         </div>
 
@@ -774,6 +806,43 @@ const ReviewsRating = ({
             />
           ))}
         </div>
+
+        {isMediaPopupOpen && (
+          <CustomPopup onclose={closeMediaPopup} wide maxWidth="960px">
+            <div className={styles.mediaPopupContent}>
+              <div className={styles.mediaPopupHeader}>
+                <h3>All Review Media</h3>
+                <span>{productReviewMedia.length} items</span>
+              </div>
+              <div className={styles.mediaPopupGrid}>
+                {productReviewMedia.map((media, idx) => (
+                  <button
+                    key={`${media.url}-${idx}`}
+                    type="button"
+                    className={styles.mediaPopupItem}
+                    onClick={() => handlePopupMediaClick(idx)}
+                    aria-label={`Open review ${media.type} ${idx + 1}`}
+                  >
+                    {media.type === "video" ? (
+                      <video
+                        src={media.url}
+                        className={styles.mediaPopupPreview}
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={media.url}
+                        alt={`Review media ${idx + 1}`}
+                        className={styles.mediaPopupPreview}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </CustomPopup>
+        )}
 
         {lightbox && (
           <div className={styles.lightbox} onClick={() => setLightbox(null)}>

@@ -31,14 +31,25 @@ export const ToastProvider = ({ children }) => {
             key={toast?.id}
             className={`${styles.toast} ${styles[toast.type]}`}
           >
-            {toast?.type === "success" && (
-              <IoMdCheckmarkCircleOutline color="white" size={20} />
-            )}
-            {toast?.type === "error" && (
+            <div>
+              {toast?.type === "success" && (
+                <IoMdCheckmarkCircleOutline color="white" size={20} />
+              )}
+              {toast?.type === "error" && (
+                <IoIosCloseCircleOutline color="white" size={20} />
+              )}{" "}
+              {toast?.type === "warning" && <IoWarningOutline size={20} />}{" "}
+              <span className={styles.toastMessage}>{toast.message}</span>
+            </div>
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={() =>
+                setToasts((prev) => prev.filter((t) => t.id !== toast.id))
+              }
+            >
               <IoIosCloseCircleOutline color="white" size={20} />
-            )}{" "}
-            {toast?.type === "warning" && <IoWarningOutline size={20} />}{" "}
-            {toast.message}
+            </button>
           </div>
         ))}
       </div>

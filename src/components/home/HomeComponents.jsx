@@ -1,25 +1,123 @@
-import React from "react";
-import TopHeader from "@/components/layout/top-header/TopHeader";
-import TopBanner from "@/components/layout/top-banner/TopBanner";
-import HomeBanner from "@/components/home/components/banner/home-banner/HomeBanner";
-import Marquee from "@/components/home/components/marquee/Marquee";
-import Benefit from "@/components/home/components/benifit/Benefit";
-import FarmEquipments from "@/components/home/components/farm-equipmemts/FarmEquipments";
-import Detail from "@/components/home/components/detail/Detail";
-import IndustrialProduct from "@/components/home/components/industrial-product/IndustrialProduct";
-import Solution from "@/components/home/components/solution/Solution";
-import GardenTool from "@/components/home/components/garden-tool/GardenTool";
-import PostHarvest from "@/components/home/components/post-harvast/PostHarvest";
-import FoogingMachine from "@/components/home/components/fooging-machine/FoogingMachine";
-import BestSelling from "@/components/home/components/best-selling/BestSelling";
-import ExclusiveDeal from "@/components/home/components/deal/ExclusiveDeal";
-import TopRating from "@/components/home/components/top-rating/TopRating";
-import VideoSection from "@/components/home/components/video/VideoSection";
-import InsightsBlog from "@/components/home/components/insights/InsightsBlog";
-import Footer from "@/components/layout/footer/Footer";
+import React, { Suspense } from "react";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
-import ProductsItem from "@/common-components/products/ProductsItem";
+import dynamic from "next/dynamic";
 
+const DynamicTopHeader = dynamic(
+  () => import("@/components/layout/top-header/TopHeader"),
+  {
+    ssr: false,
+  },
+);
+const DynamicTopBanner = dynamic(
+  () => import("@/components/layout/top-banner/TopBanner"),
+  {
+    ssr: false,
+  },
+);
+const DynamicHomeBanner = dynamic(
+  () => import("@/components/home/components/banner/home-banner/HomeBanner"),
+  {
+    ssr: false,
+  },
+);
+const DynamicMarquee = dynamic(
+  () => import("@/components/home/components/marquee/Marquee"),
+  {
+    ssr: false,
+  },
+);
+const DynamicBenefit = dynamic(
+  () => import("@/components/home/components/benifit/Benefit"),
+  {
+    ssr: false,
+  },
+);
+const DynamicFarmEquipments = dynamic(
+  () => import("@/components/home/components/farm-equipmemts/FarmEquipments"),
+  {
+    ssr: false,
+  },
+);
+const DynamicIndustrialProduct = dynamic(
+  () =>
+    import("@/components/home/components/industrial-product/IndustrialProduct"),
+  {
+    ssr: false,
+  },
+);
+const DynamicSolution = dynamic(
+  () => import("@/components/home/components/solution/Solution"),
+  {
+    ssr: false,
+  },
+);
+
+const DynamicGardenTool = dynamic(
+  () => import("@/components/home/components/garden-tool/GardenTool"),
+  {
+    ssr: false,
+  },
+);
+const DynamicPostHarvest = dynamic(
+  () => import("@/components/home/components/post-harvast/PostHarvest"),
+  {
+    ssr: false,
+  },
+);
+const DynamicFoogingMachine = dynamic(
+  () => import("@/components/home/components/fooging-machine/FoogingMachine"),
+  {
+    ssr: false,
+  },
+);
+const DynamicBestSelling = dynamic(
+  () => import("@/components/home/components/best-selling/BestSelling"),
+  {
+    ssr: false,
+  },
+);
+const DynamicExclusiveDeal = dynamic(
+  () => import("@/components/home/components/deal/ExclusiveDeal"),
+  {
+    ssr: false,
+  },
+);
+const DynamicTopRating = dynamic(
+  () => import("@/components/home/components/top-rating/TopRating"),
+  {
+    ssr: false,
+  },
+);
+const DynamicVideoSection = dynamic(
+  () => import("@/components/home/components/video/VideoSection"),
+  {
+    ssr: false,
+  },
+);
+const DynamicInsightsBlog = dynamic(
+  () => import("@/components/home/components/insights/InsightsBlog"),
+  {
+    ssr: false,
+  },
+);
+const DynamicFooter = dynamic(
+  () => import("@/components/layout/footer/Footer"),
+  {
+    ssr: false,
+  },
+);
+const DynamicProductsItem = dynamic(
+  () => import("@/common-components/products/ProductsItem"),
+  {
+    ssr: false,
+  },
+);
+const DynamicDetail = dynamic(
+  () => import("@/components/home/components/detail/Detail"),
+  {
+    ssr: false,
+  },
+);
 const HomeComponents = ({ homeData: ssrHomeData }) => {
   const { data: cachedHomeData } = useGetHomeDataQuery();
   const homeData = cachedHomeData ?? ssrHomeData;
@@ -40,11 +138,11 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
 
   return (
     <>
-      <TopHeader />
-      <TopBanner categoriesData={categoriesData} />
-      <HomeBanner />
-      <Marquee />
-      <ProductsItem
+      <DynamicTopHeader />
+      <DynamicTopBanner categoriesData={categoriesData} />
+      <DynamicHomeBanner />
+      <DynamicMarquee />
+      <DynamicProductsItem
         agricultureProductsData={agricultureProductsData}
         title="Agriculture Sprayers"
         bannerTitle="Power Sprayer"
@@ -55,49 +153,49 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
         }
         bannersLink={banners?.agriculture_sprayers}
       />
-      <Detail />
-      <FarmEquipments
+      <DynamicDetail />
+      <DynamicFarmEquipments
         farmEquipmentsData={farmEquipmentsData}
         categoriesData={categoriesData}
         viewAllLink="/product-category/farm-mechanization-equipments"
         bannersLink={banners?.farm_equipments}
       />
-      <Benefit />
-      <IndustrialProduct
+      <DynamicBenefit />
+      <DynamicIndustrialProduct
         industrialProductsData={industrialProductsData}
         viewAllLink="/product-category/industrial-products"
         bannersLink={banners?.industrial_products}
       />
-      <Solution bannersLink={banners?.pay_online_save_more} />
-      <GardenTool
+      <DynamicSolution bannersLink={banners?.pay_online_save_more} />
+      <DynamicGardenTool
         gardeningToolsData={gardeningToolsData}
         viewAllLink="/product-category/garden-tools"
         bannersLink={banners?.garden_tools}
       />
-      <PostHarvest
+      <DynamicPostHarvest
         postHarvestData={postHarvestData}
         viewAllLink="/product-category/post-harvest"
         bannersLink={banners?.post_harvest}
       />
-      <FoogingMachine
+      <DynamicFoogingMachine
         foogingMachineData={foogingMachineData}
         viewAllLink="/product-category/fogging-machines"
         bannersLink={banners?.fogging_machines}
       />
-      <BestSelling
+      <DynamicBestSelling
         bestSellingData={bestSellingData}
         viewAllLink="/product-category/best-selling"
         bannersLink={banners?.best_selling}
       />
-      <ExclusiveDeal bannersLink={banners?.exclusive_deals} />
-      <TopRating
+      <DynamicExclusiveDeal bannersLink={banners?.exclusive_deals} />
+      <DynamicTopRating
         topRatedData={topRatedData}
         viewAllLink="/product-category/top-rating"
         bannersLink={banners?.top_rating}
       />
-      <VideoSection />
-      <InsightsBlog insightsBlogData={insightsBlogData} />
-      <Footer />
+      <DynamicVideoSection />
+      <DynamicInsightsBlog insightsBlogData={insightsBlogData} />
+      <DynamicFooter />
     </>
   );
 };

@@ -257,7 +257,9 @@ const Checkout = () => {
           <CheckoutStepper activeStep={1} />
         )} */}
         <div className="row">
-          <div className={cartItems.length > 0 ? "col-lg-8 mt-3" : "col-12 mt-3"}>
+          <div
+            className={cartItems.length > 0 ? "col-lg-8 mt-3" : "col-12 mt-3"}
+          >
             {cartItems.length > 0 && (
               <DeliveryAddress
                 handleUpdateCart={handleUpdateCart}
@@ -307,9 +309,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-        
-        <div className="container">
 
+      <div className="container">
         {trending_products?.length > 0 && (
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
             <h2 className="swiper-title">Trending Products</h2>
@@ -376,8 +377,8 @@ const Checkout = () => {
             </Swiper>
           </div>
         )}
-        </div>
-        <OrderInformation />
+      </div>
+      <OrderInformation />
     </Layout>
   );
 };
