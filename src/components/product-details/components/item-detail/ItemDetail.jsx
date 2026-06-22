@@ -480,7 +480,7 @@ const ItemDetail = ({ productDetails }) => {
       />
 
       {isPopupVisible === "prdInfo" && (
-        <CustomPopup onclose={closeProductPopup} wide>
+        <CustomPopup onclose={closeProductPopup} wide maxWidth="600px">
           <div className={`${styles.productInfoPopup}`}>
             <div className={`${styles.productInfoPopupTabs}`}>
               <button
