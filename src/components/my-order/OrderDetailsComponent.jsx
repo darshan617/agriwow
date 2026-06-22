@@ -278,6 +278,12 @@ const OrderDetailsComponent = ({ orderId }) => {
                         {formatStatus(order.payment_status)}
                       </span>
                     </div>
+                    <div className={styles.summaryRow}>
+                      <span className={styles.summaryLabel}>Discount</span>
+                      <span className={styles.summaryValue}>
+                        ₹ {formatPrice(order.full_payment_discount)}
+                      </span>
+                    </div>
                     <div
                       className={`${styles.summaryRow} ${styles.grandTotalRow}`}
                     >

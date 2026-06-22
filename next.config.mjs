@@ -11,7 +11,6 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  compress: true,
 };
 
 export default nextConfig;

@@ -10,6 +10,7 @@ import { PiPackageThin } from "react-icons/pi";
 import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useGetMyProfileDetailsQuery } from "@/redux/apis/myProfileApi";
 
 const MENU_ITEMS = [
   {
@@ -41,14 +42,23 @@ const CustomerInfo = () => {
   const [userInitial, setUserInitial] = useState(GUEST_USER_INITIAL);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [mounted, setMounted] = useState(false);
+
+  const { data: myProfileDetails } = useGetMyProfileDetailsQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   useEffect(() => {
-    setMounted(true);
     setIsLoggedIn(getIsLoggedIn());
-  }, [getIsLoggedIn]);
+  }, []);
 
   useEffect(() => {
+    const profileName = myProfileDetails?.user?.name;
+    if (profileName) {
+      setDisplayName(profileName);
+      setUserInitial(profileName.charAt(0).toUpperCase() || GUEST_USER_INITIAL);
+      return;
+    }
+
     const raw = Cookies.get("userData");
     if (!raw) return;
 
@@ -58,7 +68,7 @@ const CustomerInfo = () => {
       setDisplayName(name);
       setUserInitial(name.charAt(0).toUpperCase() || GUEST_USER_INITIAL);
     } catch {}
-  }, []);
+  }, [myProfileDetails]);
 
   const isActive = (matchPath) =>
     router.pathname === matchPath || router.asPath === matchPath;
