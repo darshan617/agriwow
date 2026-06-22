@@ -4,9 +4,9 @@ import Link from "next/link";
 const ShippingReturn = () => {
   return (
     <div className="container">
-      <div className={`${styles.shippingReturnHeading} `}>
+      {/* <div className={`${styles.shippingReturnHeading} `}>
         <h1>Shipping & Returns</h1>
-      </div>
+      </div> */}
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>

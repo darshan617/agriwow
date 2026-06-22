@@ -3,10 +3,11 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
-import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { getIsLoggedIn, useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 export const TopHeaderLeftLinks = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { openLoginPopup } = useLoginPopup();
 
   useEffect(() => {
     setIsLoggedIn(getIsLoggedIn());
@@ -20,9 +21,16 @@ export const TopHeaderLeftLinks = () => {
         <li>
           <Link href="/shipping-return">Shipping & Returns</Link>
         </li>
-        <li>
-          <Link href="/my-profile">My Profile</Link>
-        </li>
+        {!isLoggedIn && (
+          <li onClick={openLoginPopup}>
+            <Link href="#">My Profile</Link>
+          </li>
+        )}
+        {isLoggedIn && (
+          <li>
+            <Link href="/my-profile">My Profile</Link>
+          </li>
+        )}
       </ul>
     </div>
   );
