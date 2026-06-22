@@ -31,7 +31,10 @@ const ProductCategoryList = () => {
     Number(Cookies.get("minPrice")) || 1000,
   );
   const [maxPrice, setMaxPrice] = useState(Number(Cookies.get("maxPrice")));
-  const [debouncedPriceFilter, setDebouncedPriceFilter] = useState(null);
+  const [debouncedPriceFilter, setDebouncedPriceFilter] = useState(() => ({
+    minPrice: Number(Cookies.get("minPrice")) || 1000,
+    maxPrice: Number(Cookies.get("maxPrice")) || undefined,
+  }));
   const [priceMaxBound, setPriceMaxBound] = useState(50000);
 
   useEffect(() => {
@@ -45,6 +48,7 @@ const ProductCategoryList = () => {
   const {
     data: categoryData,
     isFetching: categoryIsFetching,
+    isLoading: categoryIsLoading,
     isError: categoryIsError,
   } = useGetProductsByCategoryQuery(
     {
@@ -64,6 +68,7 @@ const ProductCategoryList = () => {
   const {
     data: subCategoryData,
     isFetching: subCategoryIsFetching,
+    isLoading: subCategoryIsLoading,
     isError: subCategoryIsError,
   } = useGetProductsBySubCategoryQuery(
     {
@@ -85,15 +90,21 @@ const ProductCategoryList = () => {
     { slug: categorySlug },
     { skip: !categorySlug || !router?.isReady },
   );
-  console.log(categoryCountData, "categoryCountData");
 
   const categoryTotalCount = categoryCountData?.data?.length;
 
   const activeQuery = subCategory ? subCategoryData : categoryData;
 
   const isFetching = subCategory ? subCategoryIsFetching : categoryIsFetching;
+  const isLoading = subCategory ? subCategoryIsLoading : categoryIsLoading;
   const isError = subCategory ? subCategoryIsError : categoryIsError;
   const products = useMemo(() => activeQuery?.data ?? [], [activeQuery?.data]);
+
+  const isProductsPending =
+    !router?.isReady ||
+    !debouncedPriceFilter ||
+    isLoading ||
+    (isFetching && products.length === 0);
 
   const resultCount = products?.length;
 
@@ -189,7 +200,8 @@ const ProductCategoryList = () => {
               products={products}
               sortBy={sortBy}
               onSortChange={setSortBy}
-              isLoading={isFetching}
+              isLoading={isProductsPending}
+              isFetching={isFetching}
               isError={isError}
               minPrice={minPrice}
               maxPrice={maxPrice}

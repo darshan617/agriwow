@@ -1,0 +1,70 @@
+.productCard {
+  margin-top: 20px;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  width: 100%;
+  height: 450px;
+  padding: 8px;
+}
+.cardTags {
+  position: absolute;
+  top: 11px;
+  left: 8px;
+  right: 0;
+  z-index: 99;
+  height: 20px;
+  width: 80px;
+}
+.imageWrap {
+  height: 280px;
+  width: 100%;
+  z-index: 1;
+}
+
+.productName {
+  height: 45px;
+  width: 100%;
+  margin-top: 10px;
+}
+.priceRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+  position: absolute;
+  /* bottom: 0; */
+  /* left: 0;
+  right: 0; */
+  margin-top: 10px;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+.currentPrice {
+  height: 20px;
+  width: 100px;
+}
+.oldPrice {
+  height: 20px;
+  width: 100px;
+}
+.cardActions {
+  position: absolute;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 20px;
+
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.addToCartBtn {
+  height: 40px;
+  width: 100%;
+}
+.buyNowBtn {
+  height: 40px;
+  width: 100%;
+}
