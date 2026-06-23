@@ -509,6 +509,11 @@
     .footerLegal a {
         font-size: 12px;
     }
+    
+    .footerLegal {
+        justify-content: center;
+        gap: 8px 16px;
+    }
 }
 
 @media (max-width: 375px) {

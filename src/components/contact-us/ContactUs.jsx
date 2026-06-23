@@ -8,6 +8,7 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import { IoCallOutline } from "react-icons/io5";
 import { LuAlarmClockCheck } from "react-icons/lu";
+import Link from "next/link";
 
 const ContactUs = ({ contactDetailsData }) => {
   if (contactDetailsData?.error) {
@@ -63,17 +64,16 @@ const ContactUs = ({ contactDetailsData }) => {
                       <p className={`${styles.chatUsDescription}`}>
                         Agriwow is here to help you
                       </p>
-                      <button
-                        className={`${styles.chatUsButton}`}
-                        onClick={() => {
-                          window.open(
-                            "https://wa.me/919082681149?text=Hi%2C%20I%27m%20interested%20in%20chatting%20with%20Agriwow%20customer%20support",
-                            "_blank",
-                          );
-                        }}
+                      <Link
+                        href="whatsapp://send?phone=+919229297668 &text=Hello, I am interested in your products "
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.chatUsButton}
+                        style={{ textDecoration: "none", display: "inline-block" }}
                       >
                         Chat Now
-                      </button>
+                      </Link>
+                 
                     </div>
                   </div>
                   <div className={`${styles.chatUsGif}`}>
