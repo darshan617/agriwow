@@ -4,12 +4,12 @@ import styles from "@/components/blog-listing/latest-blog/LatestBlogShimmer.modu
 const LatestBlogShimmer = () => {
   return (
     <>
-      <div className={`${styles.heading} shimmerEffect`}></div>
-      <div className={`${styles.breadcrumb} shimmerEffect`}></div>
-      <div className={`${styles.heroContent} shimmerEffect`}>
+      {/* <div className={`${styles.heading} shimmerEffect`}></div> */}
+      {/* <div className={`${styles.breadcrumb} shimmerEffect`}></div> */}
+      {/* <div className={`${styles.heroContent} shimmerEffect`}>
         <div className={`${styles.searchForm} shimmerEffect`}></div>
-      </div>
-      <div className={styles.categoryNav}>
+      </div> */}
+      {/* <div className={styles.categoryNav}>
         <ul className={`${styles.categoryList}`}>
           <li>
             <button
@@ -26,7 +26,7 @@ const LatestBlogShimmer = () => {
             ></button>
           </li>
         </ul>
-      </div>
+      </div> */}
       <div className="container ">
         <div className={styles.featuredCard}>
           <div className={`${styles.featuredMedia} shimmerEffect`}></div>

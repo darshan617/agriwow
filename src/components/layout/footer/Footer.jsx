@@ -248,7 +248,7 @@ const Footer = () => {
           <div className={`row align-items-center ${styles.footerBottomRow}`}>
             <div className="col-lg-6">
               <p className={`${styles.footerCopyright}`}>
-                Copyright © 2026 AGRIWOW. All rights reserved. Designed by{" "}
+                Copyright © 2026 AGRIWOW. All rights reserved. <br /> Designed by{" "}
                 <Link
                   href="https://goyalinfotech.com"
                   target="_blank"

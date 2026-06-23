@@ -71,7 +71,7 @@ const ShippingReturn = () => {
             </ul>
             <p>
               5) For any issues in utilizing our services you may contact our
-              helpdesk on +91 8640035758
+              helpdesk on +91 8770281487
             </p>
           </div>
         </div>

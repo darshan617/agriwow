@@ -33,6 +33,7 @@ const CartSummery = ({
   cartData,
   hideCoupon = false,
 }) => {
+  console.log(cartData, "cartData");
   const router = useRouter();
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
@@ -66,6 +67,8 @@ const CartSummery = ({
     appliedCoupon?.discount_amount ??
     cartData?.coupon?.discount_amount ??
     0;
+
+  console.log(discountAmount, "discountAmount");
   const gstAmount =
     cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
   const shippingAmount =
@@ -323,7 +326,7 @@ const CartSummery = ({
                   {selectedPaymentMethod === "partial" && (
                     <>
                       <span className={`${styles.paymentWrapperText}`}>
-                        Partial Payment of ₹ {(totalAmount * 0.3).toFixed(2)}
+                        Balance 70% Cash on Delivery
                       </span>
                     </>
                   )}

@@ -237,5 +237,6 @@
     .heading {
         font-size: 20px;
         margin: 0px 0 16px;
+        padding: 20px 0 0 ;
     }
 }
