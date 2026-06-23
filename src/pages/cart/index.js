@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
 import OrderInformation from "@/components/product-category/components/order-information/OrderInformation";
+import styles from "@/components/cart-details/cart-summery/CartSummery.module.css"
 import Cookies from "js-cookie";
 import {
   getCartSessionId,
@@ -153,7 +154,7 @@ const Cart = () => {
 
         {trending_products?.length > 0 && (
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <h2 className="swiper-title">Trending Products</h2>
+            <h2 className={styles.swiperTitle}>Trending Products</h2>
             <Swiper
               modules={[Navigation, Autoplay]}
               navigation={{

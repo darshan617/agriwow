@@ -113,6 +113,12 @@
     background: linear-gradient(to right, #f6c417, #8dba3b);
 }
 
+@media (max-width: 1200px){
+    .bannerBtn{
+        padding: 8px 40px;
+    } 
+}
+
 @media (max-width: 1024px) {
     .ExclusiveDealSection {
         padding: 50px 0;

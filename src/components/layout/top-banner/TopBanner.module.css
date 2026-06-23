@@ -55,15 +55,21 @@
     transition: 0.3s ease-in-out;
 }
 
+
+@media (max-width: 1024px) {
+    .topBannerWrapper {
+        padding: 0;
+    }
+}
 @media (max-width: 768px) {
     .categoryImgWrapper {
         height: 70px;
         width: 70px;
     }
 
-    .topBannerWrapper {
+    /* .topBannerWrapper {
         padding: 10px 0 0;
-    }
+    } */
 
     .categoryLabel {
         font-size: 12px;
@@ -73,6 +79,7 @@
 @media (max-width: 576px) {
     .topBannerWrapper {
         margin-top: 100px;
+        padding: 10px 0;
     }
 }
 

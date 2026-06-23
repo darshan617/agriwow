@@ -466,6 +466,9 @@
   .title {
     font-size: 34px;
   }
+  .heading{
+    margin-top: 0;
+  }
 
   .featuredCard {
     flex-direction: column;

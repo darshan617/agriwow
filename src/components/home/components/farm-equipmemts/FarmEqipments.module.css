@@ -193,7 +193,7 @@
     }
 
     .bannerBtn {
-        padding: 6px 7px;
+        padding: 12px   ;
         font-size: 12px;
     }
 
@@ -208,6 +208,12 @@
     .farmProductsSection {
         padding: 0;
 
+    }
+}
+
+@media (max-width: 575px) {
+    .title {
+        font-size: 25px;
     }
 }
 
