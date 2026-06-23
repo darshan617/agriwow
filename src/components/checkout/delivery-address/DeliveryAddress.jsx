@@ -213,7 +213,8 @@ const DeliveryAddress = ({
             </button>
           </div>
           <div className={styles.addressList}>
-            {allAddresses?.data?.map((addr) => {
+            {addressCount > 0 ? (
+              allAddresses.data.map((addr) => {
               const isSelected = selectedAddressId === addr.id;
 
               return (
@@ -277,7 +278,12 @@ const DeliveryAddress = ({
                   )}
                 </div>
               );
-            })}
+            })
+            ) : (
+              <p className="m-0 small">
+                No Address Found. Please add a new address.
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -300,12 +306,17 @@ const DeliveryAddress = ({
               setShowAddressForm(false);
               setEditingAddress(null);
             }}
-            onSave={(form) => {
-              handleUpdateCart(null, null, form.id);
+            onSave={(savedAddress) => {
+              if (savedAddress?.id) {
+                handleUpdateCart(null, null, savedAddress.id);
+                setSelectedAddressId(savedAddress.id);
+              }
               setAddress({
-                name: form.name,
-                address: formatAddressLine(form),
-                mobile: form.phone,
+                name: savedAddress.name,
+                address: savedAddress.flat
+                  ? formatApiAddressLine(savedAddress)
+                  : formatAddressLine(savedAddress),
+                mobile: savedAddress.phone,
               });
               refetchAllAddresses();
             }}

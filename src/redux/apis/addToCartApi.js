@@ -114,7 +114,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         method: "GET",
         headers: getCartRequestHeaders(),
       }),
-      invalidatesTags: ["getCartData"],
+      providesTags: ["getAllDeliveryAddresses"],
     }),
     updateDeliveryAddress: builder.mutation({
       query: ({ body }) => ({
