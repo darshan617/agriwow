@@ -11,6 +11,8 @@ import {
   useGetBlogListingMutation,
 } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
+import LatestBlogShimmer from "./LatestBlogShimmer";
+import TrendingBlogShimmer from "../trending-blog/TrendingBlogShimmer";
 
 const BLOGS_PER_PAGE = 6;
 
@@ -21,7 +23,8 @@ const LatestBlog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [blogListData, setBlogListData] = useState([]);
   const [categories, setCategories] = useState([{ id: "all", label: "All" }]);
-  const [getAllBlogs, { isLoading: isLoadingBlogs, }] = useGetBlogListingMutation();
+  const [getAllBlogs, { isLoading: isLoadingBlogs }] =
+    useGetBlogListingMutation();
   const [getAllBlogCategories] = useGetAllBlogCategoriesMutation();
   const [trendingBlogs, setTrendingBlogs] = useState([]);
 
@@ -205,7 +208,9 @@ const LatestBlog = () => {
           </div>
 
           <div className="col-xl-9 col-lg-8 col-md-7">
-            {filteredBlogs.length === 0 ? (
+            {isLoadingBlogs ? (
+              <LatestBlogShimmer />
+            ) : filteredBlogs?.length === 0 ? (
               <p className={styles.emptyMessage}>
                 No blogs found. Try a different search or category.
               </p>
@@ -261,7 +266,7 @@ const LatestBlog = () => {
                   </div>
                 )}
 
-                {blogsExcludingFeatured.length > 0 && (
+                {blogsExcludingFeatured?.length > 0 && (
                   <div className={styles.blogList}>
                     <h2 className={styles.blogListTitle}>Latest Blogs</h2>
                     <div className={styles.blogListGrid}>
@@ -384,7 +389,11 @@ const LatestBlog = () => {
           </div>
 
           <div className="col-xl-3 col-lg-4 col-md-5">
-            <TrendingBlog trendingBlogs={trendingBlogs} />
+            {isLoadingBlogs ? (
+              <TrendingBlogShimmer />
+            ) : (
+              <TrendingBlog trendingBlogs={trendingBlogs} />
+            )}
           </div>
         </div>
       </div>
