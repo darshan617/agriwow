@@ -42,29 +42,27 @@ const AddressForm = ({
     useUpdateDeliveryAddressMutation();
 
   const handleAddDeliveryAddress = async () => {
-    try {
-      const res = await addDeliveryAddress({ body: form });
-      if (res?.data?.success || res?.data?.status) {
-        showToast(res.data.message, "success");
-        refetchCartData();
-      }
-      console.log(res, "res");
-    } catch (error) {
-      console.log(error, "error");
+    const res = await addDeliveryAddress({ body: form });
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res.data.message, "success");
+      refetchCartData?.();
+      const savedAddress = res?.data?.data || form;
+      onSave?.(savedAddress);
+      onClose?.();
     }
+    return res;
   };
 
   const handleUpdateDeliveryAddress = async () => {
-    try {
-      const res = await updateDeliveryAddress({
-        body: { ...form, id: addressId },
-      });
-      if (res?.data?.success || res?.data?.status) {
-        showToast(res.data.message, "success");
-      }
-    } catch (error) {
-      console.log(error, "error");
+    const res = await updateDeliveryAddress({
+      body: { ...form, id: addressId },
+    });
+    if (res?.data?.success || res?.data?.status) {
+      showToast(res.data.message, "success");
+      onSave?.({ ...form, id: addressId });
+      onClose?.();
     }
+    return res;
   };
 
   useEffect(() => {
@@ -162,11 +160,19 @@ const AddressForm = ({
   const handleUseLocation = () => {
     console.log("use location");
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid) return;
-    onSave?.(form);
-    onClose?.();
+
+    try {
+      if (isEditing) {
+        await handleUpdateDeliveryAddress();
+      } else {
+        await handleAddDeliveryAddress();
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   return (
@@ -327,9 +333,10 @@ const AddressForm = ({
         <button
           type="submit"
           className={styles.saveBtn}
-          disabled={!isFormValid}
-          onClick={
-            isEditing ? handleUpdateDeliveryAddress : handleAddDeliveryAddress
+          disabled={
+            !isFormValid ||
+            isAddDeliveryAddressLoading ||
+            isUpdateDeliveryAddressLoading
           }
         >
           {isAddDeliveryAddressLoading || isUpdateDeliveryAddressLoading
