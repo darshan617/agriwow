@@ -39,7 +39,6 @@ import {
 
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
-
 const TRENDING_SEARCHES = [
   { label: "Fogging Machines", href: "/product-category/fogging-machines" },
   // {label: "Garden Equipment", href: "/product-category/garden-tools"},
@@ -205,16 +204,17 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setSearchOpen(false);
     setMobileSearchOpen(false);
   };
-  const [showPopup, setShowPopup] = useState("");
+  // const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
+
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
-  const isLoggedIn = Object.keys(userData).length > 0;
+  // const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
-  const { openLoginPopup } = useLoginPopup();
+  const { openLoginPopup, isLoggedIn } = useLoginPopup();
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -247,67 +247,67 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   const clearHistory = () => persistHistory([]);
 
-  // login ====================
-  const handleLogin = async () => {
-    if (!phone || !/^[0-9]+$/.test(phone)) {
-      showToast("Please enter a valid phone number", "error");
-      return;
-    }
-    try {
-      const res = await auth({
-        body: {
-          phone: phone,
-        },
-      });
-      if (res?.data?.success || res?.data?.status) {
-        setShowPopup("verify-otp");
-      }
-    } catch (error) {
-      console.log(error, "error");
-    }
-  };
+  // // login ====================
+  // const handleLogin = async () => {
+  //   if (!phone || !/^[0-9]+$/.test(phone)) {
+  //     showToast("Please enter a valid phone number", "error");
+  //     return;
+  //   }
+  //   try {
+  //     const res = await auth({
+  //       body: {
+  //         phone: phone,
+  //       },
+  //     });
+  //     if (res?.data?.success || res?.data?.status) {
+  //       setShowPopup("verify-otp");
+  //     }
+  //   } catch (error) {
+  //     console.log(error, "error");
+  //   }
+  // };
 
-  // otp verify ===================
-  const handleVerify = async (otp) => {
-    try {
-      const res = await verifyOtp({
-        body: {
-          otp: otp,
-          phone: phone,
-        },
-      });
-      console.log(res, "res");
-      if (res?.data?.success || res?.data?.status) {
-        if (res?.data?.token) {
-          Cookies.set("userData", JSON.stringify(res?.data?.user));
-          Cookies.set("userToken", res?.data?.token);
+  // // otp verify ===================
+  // const handleVerify = async (otp) => {
+  //   try {
+  //     const res = await verifyOtp({
+  //       body: {
+  //         otp: otp,
+  //         phone: phone,
+  //       },
+  //     });
+  //     console.log(res, "res");
+  //     if (res?.data?.success || res?.data?.status) {
+  //       if (res?.data?.token) {
+  //         Cookies.set("userData", JSON.stringify(res?.data?.user));
+  //         Cookies.set("userToken", res?.data?.token);
 
-          const sessionId = getCartSessionId();
-          if (sessionId) {
-            try {
-              await mergeCart({
-                body: { session_id: sessionId },
-              }).unwrap();
-            } catch (mergeError) {
-              console.error("Cart merge failed", mergeError);
-            }
-          }
+  //         const sessionId = getCartSessionId();
+  //         if (sessionId) {
+  //           try {
+  //             await mergeCart({
+  //               body: { session_id: sessionId },
+  //             }).unwrap();
+  //           } catch (mergeError) {
+  //             console.error("Cart merge failed", mergeError);
+  //           }
+  //         }
 
-          showToast(res?.data?.message, "success");
-          setShowPopup("");
-          setPhone("");
-          router?.reload();
-        } else {
-          console.error("OTP verification failed", res?.error);
-        }
-      } else {
-        showToast(res?.error?.data?.message, "error");
-      }
-    } catch (error) {
-      console.log(error, "error");
-      showToast(error?.data?.message || "Failed to verify OTP", "error");
-    }
-  };
+  //         showToast(res?.data?.message, "success");
+  //         setShowPopup("");
+  //         setPhone("");
+  //         router?.reload();
+  //       } else {
+  //         console.error("OTP verification failed", res?.error);
+  //       }
+  //     } else {
+  //       showToast(res?.error?.data?.message, "error");
+  //     }
+  //   } catch (error) {
+  //     console.log(error, "error");
+  //     showToast(error?.data?.message || "Failed to verify OTP", "error");
+  //   }
+  // };
 
   //logout ==============
   const handleLogout = async () => {
@@ -779,7 +779,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
                 onClick={() => {
-                  isLoggedIn ? setUserMenuOpen(true) : setShowPopup("login");
+                  isLoggedIn ? setUserMenuOpen(true) : openLoginPopup();
                 }}
               >
                 {isLoggedIn ? (
@@ -839,31 +839,21 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               )}
             </div>
 
-
-            {!isLoggedIn && (
-              <button 
-                onClick={openLoginPopup}
-                type="button" 
-                className={`${styles.iconBtn}`}
-                aria-label="Wishlist"
-              >
-                <Link href="#" onClick={openLoginPopup}>
-                  <FaHeart size={21} />
-                </Link>
-              </button>
-            )}  
-
-            {isLoggedIn && (
+            {isLoggedIn ? (
+              <Link href="/wishlist" className={`${styles.iconBtn}`}>
+                <FaHeart size={21} />
+              </Link>
+            ) : (
               <button
+                onClick={openLoginPopup}
                 type="button"
                 className={`${styles.iconBtn}`}
                 aria-label="Wishlist"
               >
-                <Link href="/wishlist">
-                  <FaHeart size={21} />
-                </Link>
+                <FaHeart size={21} />
               </button>
             )}
+
             <button
               type="button"
               className={`${styles.iconBtn}`}
@@ -974,7 +964,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         </div>
       </aside>
 
-      {showPopup === "login" && (
+      {/* {showPopup === "login" && (
         <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
           <Login
             handleLogin={handleLogin}
@@ -992,7 +982,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             isLoading={isVerifyOtpLoading}
           />
         </CustomPopup>
-      )}
+      )} */}
     </header>
   );
 };
