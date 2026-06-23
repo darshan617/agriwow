@@ -37,6 +37,7 @@ export const apiSlice = createApi({
     "askQuestion",
     "getContactDetails",
     "orderHistory",
+    "aboutUs",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),

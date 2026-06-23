@@ -3,7 +3,10 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
-import { getIsLoggedIn, useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import {
+  getIsLoggedIn,
+  useLoginPopup,
+} from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 export const TopHeaderLeftLinks = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,7 +19,7 @@ export const TopHeaderLeftLinks = () => {
     <div className={styles.topHeaderLeft}>
       <ul className="d-flex gap-3">
         <li>
-          <Link href="#">About</Link>
+          <Link href="/about-us">About</Link>
         </li>
         <li>
           <Link href="/shipping-return">Shipping & Returns</Link>
