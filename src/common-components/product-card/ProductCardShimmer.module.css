@@ -169,10 +169,11 @@
   .productName {
     height: 20px;
     margin-top: 8px;
+    margin-bottom: 8px;
   }
   .priceRow {
-    margin-top: 8px;
-    margin-bottom: 8px;
+   margin-top: -3px;
+
   }
   .currentPrice,
   .oldPrice {
@@ -184,7 +185,7 @@
   }
   .addToCartBtn {
     height: 32px;
-    width: 90px;
+    width: 100%;
   }
   .buyNowBtn {
     height: 32px;
@@ -259,4 +260,3 @@
     height: 24px;
   }
 }
-

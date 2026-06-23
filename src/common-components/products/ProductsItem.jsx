@@ -55,8 +55,10 @@ const ProductsItem = ({
 
   useEffect(() => {
     const updateCount = () => {
-      if (window.innerWidth <= 575) {
+       if(window.innerWidth <= 425) {
         setShimmerCount(2);
+      } else if (window.innerWidth <= 575) {
+        setShimmerCount(3);
       } else if (window.innerWidth <= 768) {
         setShimmerCount(3);
       } else {

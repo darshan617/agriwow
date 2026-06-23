@@ -64,7 +64,7 @@
 @media (max-width: 575px) {
   .pageLayout {
     border-radius: 20px 20px 0 0;
-    padding: 24px 20px 20px;
+    padding: 20px;
   }
 
   .breadcrumb ul {
@@ -82,7 +82,7 @@
 
 @media (max-width: 425px) {
   .pageLayout {
-    padding: 24px 10px 20px;
+    padding: 17px 10px;
   }
 }
 

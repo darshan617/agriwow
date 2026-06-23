@@ -281,12 +281,18 @@ const AddressForm = ({
         <div className={styles.field}>
           <input
             id="address-pincode"
+            type="text"
             className={styles.input}
             placeholder="Pincode*"
             value={form.pincode}
-            onChange={updateField("pincode")}
+            onChange={e => {
+              const val = e.target.value.replace(/[^0-9]/g, "").slice(0, 6);
+              updateField("pincode")({ target: { value: val } });
+            }}
+            pattern="^\d{6}$"
             maxLength={6}
             required
+    
           />
         </div>
 

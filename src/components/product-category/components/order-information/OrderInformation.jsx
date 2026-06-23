@@ -17,11 +17,9 @@ const OrderInformation = () => {
                 <div className={`${styles.orderInformationContent}`}>
                   <Image src={shipping} alt="Shipping" width={60} height={60} />
                   <div className={`${styles.orderInformationContentText}`}>
-                    <h2>Free Shipping on Orders Over Rs.1000</h2>
+                    <h2>Free Shipping</h2>
                     <p>
-                      Enjoy free standard shipping when you spend Rs.1000 or{" "}
-                      <br />
-                      more. No hidden fees — just more value with every order.
+                      Enjoy free standard shipping on all orders. <br /> No hidden fees — just more value with every order.
                     </p>
                   </div>
                 </div>
@@ -30,10 +28,9 @@ const OrderInformation = () => {
                 <div className={`${styles.orderInformationContent}`}>
                   <Image src={returnIcon} alt="Return" width={60} height={60} />
                   <div className={`${styles.orderInformationContentText}`}>
-                    <h2>Easy 30-day Returns</h2>
+                    <h2>Easy Returns Policy</h2>
                     <p>
-                      Changed your mind? No problem. You have 30 days <br />
-                      to return your item, no questions asked.
+                    Changed your mind? Returns are quick and hassle-free. <br />Shop with confidence and enjoy easy returns.
                     </p>
                   </div>
                 </div>

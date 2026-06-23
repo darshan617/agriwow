@@ -326,7 +326,7 @@ const CartSummery = ({
                   {selectedPaymentMethod === "partial" && (
                     <>
                       <span className={`${styles.paymentWrapperText}`}>
-                        Partial Payment of ₹ {(totalAmount * 0.3).toFixed(2)}
+                        Balance 70% Cash on Delivery
                       </span>
                     </>
                   )}
