@@ -96,11 +96,11 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
 
           <p className={`${styles.terms}`}>
             By continuing, you agree to our{" "}
-            <Link href="#" className={`${styles.link}`}>
+            <Link href="/terms-of-use" className={`${styles.link}`}>
               Terms of Use
             </Link>{" "}
             &amp;{" "}
-            <Link href="#" className={`${styles.link}`}>
+            <Link href="/privacy-policy" className={`${styles.link}`}>
               Privacy Policy
             </Link>
             .

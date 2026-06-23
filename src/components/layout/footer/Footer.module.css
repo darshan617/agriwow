@@ -177,15 +177,19 @@
     margin-bottom: 0;
 }
 
-.footerNavList a {
+.footerNavList a,
+.footerNavList button {
     color: rgba(255, 255, 255, 0.55);
     font-size: 14px;
     line-height: 1.4;
     text-decoration: none;
     transition: color 0.2s ease;
+    background: none;
+    border: none;
 }
 
-.footerNavList a:hover {
+.footerNavList a:hover,
+.footerNavList button:hover {
     color: #8dba3b;
 }
 
@@ -480,12 +484,15 @@
         right: 15px;
         padding: 5px;
     }
+
     .footerMain {
         padding-top: 15px;
     }
+
     .footerLogoLink img {
         max-width: 150px;
     }
+
     .footerBrandText {
         font-size: 12px;
         margin: 0 0 10px;
@@ -494,10 +501,12 @@
     .footerNavList a {
         font-size: 12px;
     }
-    .footerCopyright{
+
+    .footerCopyright {
         font-size: 12px;
     }
-    .footerLegal a{
+
+    .footerLegal a {
         font-size: 12px;
     }
 }

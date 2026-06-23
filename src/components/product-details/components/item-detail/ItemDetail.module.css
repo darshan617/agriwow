@@ -210,7 +210,7 @@
 
 .couponArrow {
   height: 20px;
-  width: 20;
+  width: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -384,6 +384,7 @@
 }
 
 .policyIcon {
+  color: #27a353;
   width: 100%;
 }
 
@@ -427,7 +428,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .videoPopupVideo {
@@ -522,7 +522,7 @@
   }
 
   .policyIcon img {
-    width: 35px;
+    width: 22px;
     height: auto;
   }
 
@@ -530,8 +530,6 @@
     font-size: 10px;
   }
 }
-
-
 
 @media (max-width: 768px) {
   /* .itemDetail {
@@ -606,7 +604,6 @@
   .productDescription {
     flex-direction: column;
     gap: 8px;
-    padding-bottom: 0;
   }
 
   .priceRow {
@@ -656,7 +653,6 @@
     line-height: 1.6;
   }
 
-
   .productSpecificationsTable {
     font-size: 13px;
     width: 100%;
@@ -705,10 +701,7 @@
   }
 }
 
-
-
 @media (max-width: 575px) {
-
   /* .itemDetail {
       padding: 10px;
     } */
@@ -734,6 +727,9 @@
     height: 24px;
     font-size: 14px;
   }
+  .productSpecificationsTable tr:nth-child(odd) td {
+    font-size: 12px;
+  }
 
   .productName {
     font-size: 15px;
@@ -745,6 +741,9 @@
   }
 
   .oldPrice {
+    font-size: 13px;
+  }
+  .couponText {
     font-size: 13px;
   }
 
@@ -798,52 +797,55 @@
     font-size: 12px;
     padding: 6px 12px;
   }
+  .stockStatusText {
+    margin-top: 10px;
+  }
 }
 
-
-  @media (max-width: 480px) {
-    
-    .imageDetail,
-    .productInfo {
-      width: 100%;
-      padding: 0 10px;
-    }
-    .mrpText{
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-    .productReviewCountValue,
-    .productReviewCountText {
-      font-size: 12px;
-    }
-    .discountText,
-    .peopleBought {
-      font-size: 12px;
-    }
-    .aboutProductList li {
-      font-size: 12px;
-    }
-    .aboutProductList {
-      padding-left: 14px;
-      margin: 0;
-    }
-    .showAllButton {
-      font-size: 12px;
-      padding: 0;
-      margin: 6px 0;
-    }
-    .productInfoPopup{
-      padding: 25px;
-      max-height: 250px;
-      min-height: 300px;
-    }
-    .productInfoPopupTab {
-      padding:10px;
-      font-size: 9px;
-    }
+@media (max-width: 480px) {
+  .imageDetail,
+  .productInfo {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .mrpText {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .productReviewCountValue,
+  .productReviewCountText {
+    font-size: 12px;
+  }
+  .discountText,
+  .peopleBought {
+    font-size: 12px;
+  }
+  .aboutProductList li {
+    font-size: 12px;
+  }
+  .aboutProductList {
+    padding-left: 14px;
+    margin: 0;
+  }
+  .showAllButton {
+    font-size: 12px;
+    padding: 0;
+    margin: 6px 0;
+  }
+  .productInfoPopup {
+    padding: 25px 14px;
+    max-height: 250px;
+    min-height: 450px;
+  }
+  .productInfoPopupTab {
+    padding: 5px;
+    font-size: 10px;
+  }
+  .productInfoPopupDetails {
+    font-size: 12px;
+  }
 }
-
 
 @media (max-width: 425px) {
   /* .itemDetail {
@@ -855,8 +857,8 @@
   }
 
   .quickActionBtn {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .thumbRow {
@@ -956,24 +958,24 @@
   .policyItem {
     font-size: 11px;
     gap: 5px;
-    padding: 8px 6px;
+    padding: 13px 5px;
   }
 
   .policyIcon img {
-    width: 18px;
-    height: 18px;
+    width: 27px;
+    height: 24px;
   }
-
-
-
 }
-
-
 
 @media (max-width: 375px) {
   /* .itemDetail {
       padding: 6px;
     } */
+
+  .productInfoPopupTab {
+    padding: 5px;
+    font-size: 11px;
+  }
 
   .mainImage {
     height: 300px;
@@ -1097,13 +1099,7 @@
 
   .policyItem {
     font-size: 10px;
-    gap: 4px;
-    padding: 6px 4px;
-  }
-
-  .policyIcon img {
-    width: 16px;
-    height: 16px;
+    /* gap: 4px; */
   }
 
   .policyLabel {

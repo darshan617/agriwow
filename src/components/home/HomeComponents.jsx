@@ -119,7 +119,8 @@ const DynamicDetail = dynamic(
   },
 );
 const HomeComponents = ({ homeData: ssrHomeData }) => {
-  const { data: cachedHomeData } = useGetHomeDataQuery();
+  const { data: cachedHomeData, isLoading: isHomeDataLoading } =
+    useGetHomeDataQuery();
   const homeData = cachedHomeData ?? ssrHomeData;
 
   const categoriesData = homeData?.data?.categories;
@@ -133,7 +134,6 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
   const insightsBlogData = homeData?.data?.blogs;
   const bestSellingData = homeData?.data?.products?.best_selling;
   const topRatedData = homeData?.data?.products?.top_rated;
-
   const banners = homeData?.data?.banners;
 
   return (
@@ -152,6 +152,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
           </>
         }
         bannersLink={banners?.agriculture_sprayers}
+        isHomeDataLoading={isHomeDataLoading}
       />
       <DynamicDetail />
       <DynamicFarmEquipments

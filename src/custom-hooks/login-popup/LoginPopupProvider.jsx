@@ -9,6 +9,7 @@ import {
   useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useRouter } from "next/router";
 
 const LoginPopupContext = createContext();
 
@@ -24,6 +25,7 @@ export const getIsLoggedIn = () => {
 };
 
 export const LoginPopupProvider = ({ children }) => {
+  const router = useRouter();
   const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -94,6 +96,12 @@ export const LoginPopupProvider = ({ children }) => {
       console.log(error, "error");
     }
   };
+
+  useEffect(() => {
+    if (router?.pathname) {
+      closeLoginPopup();
+    }
+  }, [router?.pathname]);
 
   return (
     <LoginPopupContext.Provider

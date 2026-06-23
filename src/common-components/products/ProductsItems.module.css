@@ -1,6 +1,7 @@
 .sectionSpace {
   padding: 30px 0 !important;
 }
+
 .productsSectionEquipment {
   background: transparent;
 }
@@ -20,7 +21,7 @@
   object-position: top;
   width: 100%;
   height: auto;
-  min-height: 500px; 
+  min-height: 500px;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -39,6 +40,7 @@
   pointer-events: none;
   border: none;
 }
+
 .overlayTitle {
   margin: 0 0 6px;
   color: #239c3d;
@@ -47,6 +49,7 @@
   line-height: 1.15;
   letter-spacing: 0.2px;
 }
+
 .overlayDescription {
   margin: 0;
   color: #1a1a1a;
@@ -443,16 +446,26 @@
   justify-content: center;
 }
 
+.productsShimmer {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: -20px;
+}
+
 @media (max-width: 1500px) {
   .productsTitle {
     font-size: 35px;
   }
+
   .promoImage {
     height: 400px !important;
   }
-  .promoCard{
+
+  .promoCard {
     min-height: 400px !important;
   }
+
   .productCard {
     min-height: 450px !important;
   }
@@ -460,18 +473,21 @@
 }
 
 @media (max-width: 1400px) {
-    .overlayTitle {
+  .overlayTitle {
     font-size: 24px;
     line-height: 1.1;
   }
+
   .overlayDescription {
     font-size: 16px;
     line-height: 1.1;
   }
+
   .bestSellingFooter {
     font-size: 11px;
     padding: 8px 10px;
   }
+
   .cardsRow {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
@@ -480,9 +496,11 @@
   .productCard {
     padding: 8px 8px 10px;
   }
+
   .sectionSpace {
     padding: 40px 0;
   }
+
   .promoCol {
     display: none;
   }
@@ -492,6 +510,7 @@
     max-width: 100%;
     width: 100%;
   }
+
   .viewAllBtn {
     font-size: 13px;
     display: flex;
@@ -508,9 +527,11 @@
   .productCard {
     padding: 8px 8px 10px;
   }
+
   .sectionSpace {
     padding: 40px 0;
   }
+
   .promoCol {
     display: none;
   }
@@ -526,6 +547,7 @@
   .sectionSpace {
     padding: 30px 0;
   }
+
   .promoCol {
     display: none;
   }
@@ -533,24 +555,37 @@
   .overlayTitle {
     font-size: 24px;
   }
+
   .overlayDescription {
     font-size: 16px;
   }
+
   .overlayTitleIndustrial {
     font-size: 26px;
   }
+
   .overlayTitleBestSelling {
     font-size: 24px;
   }
+
   .bestSellingProductImageWrap {
     width: 120px;
     height: 150px;
   }
+
   .bestSellingProductLabel {
     font-size: 16px;
   }
+
   .bestSellingProducts {
     padding: 70px 12px 48px;
+  }
+
+  .productsShimmer {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: -20px;
   }
 }
 
@@ -562,42 +597,57 @@
   .promoCard {
     min-height: 340px;
   }
+
   .overlayContent {
     padding: 18px 16px 0;
   }
+
   .overlayContentIndustrial {
     padding: 22px 16px 0;
   }
+
   .overlayTitle {
     font-size: 22px;
   }
+
   .overlayDescription {
     font-size: 14px;
   }
+
   .overlayTitleIndustrial {
     font-size: 22px;
   }
+
   .overlayTitleBestSelling {
     font-size: 20px;
   }
+
   .bestSellingProductImageWrap {
     width: 100px;
     height: 125px;
   }
+
   .bestSellingProductLabel {
     font-size: 14px;
   }
+
   .bestSellingProducts {
     padding: 60px 10px 44px;
     gap: 10px;
   }
+
   .bestSellingFooter {
     font-size: 11px;
     padding: 8px 10px;
   }
+
   .overlayProductIconLeaf,
   .overlayProductIconDrop {
     font-size: 15px;
+  }
+  .productsTitle {
+    font-size: 30px;
+    padding-bottom: 0;
   }
 }
 
@@ -606,15 +656,11 @@
     padding: 16px 0 0;
   }
 
-  .productsTitle {
-    font-size: 30px;
-    padding-bottom: 0;
-  }
-
   .cardsRow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
+
   .promoImage {
     object-fit: scale-down;
   }
@@ -628,9 +674,17 @@
   .promoCard {
     display: none;
   }
+
   .productsTitle {
     font-size: 20px;
     padding-bottom: 0;
+  }
+
+  .productsShimmer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: -20px;
   }
 }
 
@@ -648,16 +702,20 @@
   .imageWrap {
     min-height: 100px;
   }
+
   .promoImage {
     display: none;
   }
+
   .promoCard {
     display: none;
   }
-  .swiperNav{
+
+  .swiperNav {
     display: none;
   }
 }
+
 @media (max-width: 375px) {
   .promoImage {
     display: none;
