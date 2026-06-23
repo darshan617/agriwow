@@ -1,0 +1,506 @@
+.aboutPage {
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 90, 40, 0.88) 0%,
+    rgba(35, 156, 61, 0.75) 100%
+  );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 70px 16px;
+}
+
+.heroContent h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.sectionLabel {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #239c3d;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+
+.sectionText {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.introSection {
+  background: #fff;
+}
+
+.introImageWrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.introImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.experienceBadge {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  background: #239c3d;
+  color: #fff;
+  padding: 18px 22px;
+  border-radius: 10px;
+  max-width: 180px;
+  box-shadow: 0 10px 30px rgba(35, 156, 61, 0.35);
+}
+
+.experienceBadge span {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.experienceBadge small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.featureList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 20px;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.featureList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.featureList svg {
+  color: #239c3d;
+  flex-shrink: 0;
+}
+
+.primaryBtn,
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #239c3d;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.primaryBtn:hover,
+.ctaBtn:hover {
+  background: #1a7a30;
+  color: #fff;
+}
+
+.statsBar {
+  background: #239c3d;
+  padding: 50px 0;
+}
+
+.statItem {
+  text-align: center;
+  color: #fff;
+}
+
+.statIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  margin-bottom: 14px;
+  font-size: 26px;
+}
+
+.statItem h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.statItem p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.storySection {
+  background: #f8f9fa;
+}
+
+.offerSection {
+  background: #fff;
+}
+
+.offerCard {
+  height: 100%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offerCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.offerCard svg {
+  font-size: 28px;
+  color: #239c3d;
+  margin-bottom: 12px;
+}
+
+.offerCard p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.4;
+}
+
+.offerDescription {
+  margin-top: 32px;
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chooseSection {
+  background: #f8f9fa;
+}
+
+.chooseCard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px 24px;
+  text-align: center;
+  height: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef0f2;
+}
+
+.chooseIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(35, 156, 61, 0.1);
+  color: #239c3d;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.chooseCard h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.missionSection {
+  background: #fff;
+}
+
+.tabList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 20px;
+}
+
+.tabList button {
+  border: 1px solid #d9e2dc;
+  background: #fff;
+  color: #555;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabActive {
+  background: #239c3d !important;
+  border-color: #239c3d !important;
+  color: #fff !important;
+}
+
+.tabPanel h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.tabPanel p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #666;
+  margin: 0;
+}
+
+.missionImageWrap,
+.indiaImageWrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+.missionImage,
+.indiaImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.indiaSection {
+  background: #f8f9fa;
+}
+
+.indiaHighlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 12px 18px;
+  background: #fff;
+  border-radius: 50px;
+  border: 1px solid #e5e7eb;
+  color: #239c3d;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ctaSection {
+  padding: 60px 0 80px;
+  background: linear-gradient(180deg, #fff 0%, #f3faf5 100%);
+}
+
+.ctaCard {
+  text-align: center;
+  background: #239c3d;
+  color: #fff;
+  border-radius: 20px;
+  padding: 48px 24px;
+  box-shadow: 0 20px 50px rgba(35, 156, 61, 0.25);
+}
+
+.ctaLabel {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ctaCard h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ctaCard p {
+  max-width: 760px;
+  margin: 0 auto 24px;
+  line-height: 1.8;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ctaTags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.ctaTags span {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ctaBtn {
+  background: #fff;
+  color: #239c3d;
+}
+
+.ctaBtn:hover {
+  background: #f0fdf4;
+  color: #1a7a30;
+}
+
+.errorState {
+  padding: 80px 16px;
+  text-align: center;
+  color: #666;
+}
+
+.shimmerWrapper {
+  padding-bottom: 60px;
+}
+
+.heroShimmer {
+  height: 280px;
+}
+
+.introShimmer {
+  height: 420px;
+  margin: 40px auto;
+  max-width: 1200px;
+  border-radius: 16px;
+}
+
+.statsShimmer {
+  height: 160px;
+  margin: 0 auto 40px;
+  max-width: 1200px;
+  border-radius: 12px;
+}
+
+.gridShimmer {
+  height: 300px;
+  margin: 0 auto;
+  max-width: 1200px;
+  border-radius: 12px;
+}
+
+@media (max-width: 992px) {
+  .featureList {
+    grid-template-columns: 1fr;
+  }
+
+  .experienceBadge {
+    left: 16px;
+    bottom: 16px;
+    padding: 14px 16px;
+  }
+
+  .experienceBadge span {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 220px;
+  }
+
+  .heroContent {
+    padding: 50px 16px;
+  }
+
+  .statsBar {
+    padding: 36px 0;
+  }
+
+  .ctaCard {
+    padding: 36px 20px;
+  }
+
+  .tabList button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .sectionText,
+  .tabPanel p,
+  .ctaCard p {
+    font-size: 15px;
+  }
+
+  .offerCard {
+    padding: 20px 14px;
+  }
+}

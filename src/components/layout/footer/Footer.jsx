@@ -138,19 +138,28 @@ const Footer = () => {
                     <li>
                       <Link href="/">Home</Link>
                     </li>
-
-                    {!isLoggedIn && (
-                      <li onClick={openLoginPopup}>
-                        <Link href="#">My Profile</Link>
-                      </li>
-                    )}
-                    {isLoggedIn && (
+                    {isLoggedIn ? (
                       <li>
                         <Link href="/my-profile">My Profile</Link>
                       </li>
+                    ) : (
+                      <li onClick={openLoginPopup}>
+                        <button className={styles.footerNavBtn}>
+                          My Profile
+                        </button>
+                      </li>
                     )}
                     <li>
-                      <Link href="https://www.youtube.com/@agriwow" target="_blank" rel="noopener noreferrer">Videos</Link>
+                      <Link href="/about-us">About Us</Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://www.youtube.com/@agriwow"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Videos
+                      </Link>
                     </li>
                     <li>
                       <Link href="/blog?category=all">Blog</Link>
