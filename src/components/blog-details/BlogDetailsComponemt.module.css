@@ -464,6 +464,11 @@
   margin-bottom: 8px;
 }
 
+.noTags{
+  padding: 0;
+  margin: 0;
+}
+
 @media (max-width: 1024px) {
   .tags {
     gap: 10px;

@@ -68,3 +68,195 @@
   height: 40px;
   width: 100%;
 }
+
+
+@media (max-width: 1600px) {
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 30px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .productCard {
+    height: 380px;
+  }
+  .imageWrap {
+    height: 220px;
+  }
+  .productName {
+    height: 36px;
+  }
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 28px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .productCard {
+    height: 400px;
+    padding: 8px 8px 10px;
+  }
+  .imageWrap {
+    height: 250px;
+  }
+  .productName {
+    height: 36px;
+  }
+  .cardActions {
+    gap: 10px;
+  }
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .productCard {
+    height: 380px;
+  }
+  .imageWrap {
+    height: 220px;
+    min-height: 70px;
+  }
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 34px;
+  }
+}
+
+@media (max-width: 992px) {
+  .productCard {
+    height: auto;
+    min-height: 350px;
+  }
+  .imageWrap {
+    height: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .productCard {
+    height: 350px;
+  }
+  .imageWrap {
+    height: 190px;
+  }
+  .currentPrice,
+  .oldPrice {
+    width: 75px;
+  }
+}
+
+@media (max-width: 768px) {
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 30px;
+  }
+}
+
+@media (max-width: 575px) {
+  .productCard {
+    height: auto;
+    min-height: unset;
+    padding-bottom: 60px;
+  }
+  .imageWrap {
+    height: 180px;
+  }
+  .productName {
+    height: 20px;
+    margin-top: 8px;
+  }
+  .priceRow {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .currentPrice,
+  .oldPrice {
+    height: 16px;
+    width: 65px;
+  }
+  .cardActions {
+    gap: 8px;
+  }
+  .addToCartBtn {
+    height: 32px;
+    width: 90px;
+  }
+  .buyNowBtn {
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productCard {
+    padding-bottom: 55px;
+  }
+  .imageWrap {
+    height: 160px;
+  }
+  .productName {
+    height: 16px;
+    width: 85%;
+  }
+  .currentPrice {
+    height: 15px;
+    width: 55px;
+  }
+  .oldPrice {
+    height: 12px;
+    width: 40px;
+  }
+  .cardTags {
+    height: 14px;
+    width: 50px;
+  }
+  .cardActions {
+    gap: 6px;
+  }
+  .addToCartBtn {
+    height: 28px;
+    width: 40px;
+  }
+  .buyNowBtn {
+    height: 28px;
+  }
+}
+
+@media (max-width: 390px) {
+  .productCard {
+    min-height: 300px;
+    height: 280px;
+    padding: 6px;
+    padding-bottom: 50px;
+  }
+  .imageWrap {
+    height: 140px;
+  }
+  .addToCartBtn,
+  .buyNowBtn {
+    height: 26px;
+  }
+}
+
+@media (max-width: 320px) {
+  .productCard {
+    height: 260px;
+    padding-bottom: 48px;
+  }
+  .imageWrap {
+    height: 110px;
+  }
+  .addToCartBtn {
+    width: 36px;
+    height: 24px;
+  }
+  .buyNowBtn {
+    width: 60px;
+    height: 24px;
+  }
+}
+

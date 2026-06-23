@@ -11,6 +11,7 @@
     padding: 0;
     margin-bottom: 0;
     /* margin-top: 50px; */
+    margin: 30px 0;
     font-size: 14px;
   }
 
@@ -25,7 +26,7 @@
     padding: 20px 100px;
     text-align: justify;
     line-height: 1.8;
-    font-size: 18px;
+    font-size: 14px;
   }
 
   @media (max-width: 1500px) {
@@ -50,13 +51,14 @@
       font-size: 20px;
     }
     .breadcrumb ul{
+      margin: 15px 0;
       font-size: 12px;
     }
     .breadcrumb ul li{
       font-size: 12px;
     }
     .cancellationReturnContentItem p {
-      font-size: 16px;
+      font-size: 14px;
     }
     .cancellationReturnContainer{
       padding: 10px;

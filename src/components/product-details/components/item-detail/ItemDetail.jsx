@@ -6,13 +6,12 @@ import { Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
-import rise from "@/assets/icon/rise.png";
 import coupon from "@/assets/icon/coupon.png";
 import shipping from "@/assets/icon/shipping.png";
 import quality from "@/assets/icon/quality.png";
 import secure from "@/assets/icon/payment.png";
 import return1 from "@/assets/icon/return1.png";
-
+import { FaShippingFast } from "react-icons/fa";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import AllCoupons from "@/components/all-coupons/AllCoupons";
 import "swiper/css";
@@ -22,6 +21,12 @@ import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Link from "next/link";
 import { IoPlay } from "react-icons/io5";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { AiOutlineRise } from "react-icons/ai";
+import { FaRegCreditCard } from "react-icons/fa6";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
+
+
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 const AUTOPLAY_DELAY = 3000;
@@ -83,10 +88,19 @@ const ItemDetail = ({ productDetails }) => {
   );
 
   const policiesData = [
-    { icon: shipping, label: "Free Shipping" },
-    { icon: quality, label: "Quality Product" },
-    { icon: secure, label: "Secure Payment" },
-    { icon: return1, label: "10 Days Return" },
+    { icon: <FaShippingFast size={20} />, label: "Free Shipping" },
+    {
+      icon: <Image src={quality} alt="Quality Product" width={20} height={20} />,
+      label: "Quality Product",
+    },
+    {
+      icon: <FaRegCreditCard size={20} />,
+      label: "Secure Payment",
+    },
+    {
+      icon: <FaRegCalendarAlt size={20} />,
+      label: "10 Days Return",
+    },
   ];
 
   const userData = Cookies.get("userData")
@@ -381,7 +395,7 @@ const ItemDetail = ({ productDetails }) => {
                     <div
                       className={`${styles.discountImg} d-inline-flex align-items-center`}
                     >
-                      <Image src={rise} alt="rise" width={18} height={18} />
+                      <AiOutlineRise size={25} />
                     </div>
                     <span className={`${styles.peopleBought}`}>
                       {productData?.recently_bought?.count} people bought this
@@ -483,12 +497,7 @@ const ItemDetail = ({ productDetails }) => {
               {policiesData.map((policy, index) => (
                 <div key={index} className={`${styles.policyItem}`}>
                   <span className={`${styles.policyIcon}`}>
-                    <Image
-                      src={policy.icon}
-                      alt={policy.label}
-                      width={20}
-                      height={20}
-                    />
+                    {policy.icon}
                   </span>
                   <span className={`${styles.policyLabel}`}>
                     {policy.label}

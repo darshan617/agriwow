@@ -2,11 +2,10 @@
   font-size: 35px;
 }
 .breadcrumbHead {
-  margin-top: 50px;
-  /* margin-bottom: 20px; */
   font-size: 35px;
   font-weight: 700;
   color: #333;
+  
 }
 
 .privacyPolicyContainer{
@@ -22,6 +21,7 @@
     padding: 0;
     margin-bottom: 0;
     /* margin-top: 50px; */
+    margin: 30px 0;
     font-size: 14px;
   }
 
@@ -29,7 +29,7 @@
     padding: 20px 100px;
     text-align: justify;
     line-height: 1.8;
-    font-size: 18px;
+    font-size: 14px;
   }
 
   @media (max-width: 1024px) {
@@ -47,12 +47,13 @@
     }
     .breadcrumb ul{
       font-size: 12px;
+      margin: 15px 0;
     }
     .breadcrumb ul li{
       font-size: 12px;
     }
     .privacyPolicyContentItem p {
-      font-size: 16px;
+      font-size: 14px;
     }
     .privacyPolicyContainer{
       padding: 10px;

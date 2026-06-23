@@ -645,16 +645,15 @@
   .overlayProductIconDrop {
     font-size: 15px;
   }
+  .productsTitle {
+    font-size: 30px;
+    padding-bottom: 0;
+  }
 }
 
 @media (max-width: 768px) {
   .productsSection {
     padding: 16px 0 0;
-  }
-
-  .productsTitle {
-    font-size: 30px;
-    padding-bottom: 0;
   }
 
   .cardsRow {
