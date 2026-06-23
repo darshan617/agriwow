@@ -47,7 +47,7 @@
   padding: 40px 32px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center
 }
 
 .formTitle {
@@ -102,14 +102,14 @@
   color: #fff;
   border: none;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.2px;
   cursor: pointer;
   margin-bottom: 16px;
   box-shadow: 0 4px 14px rgba(46, 125, 50, 0.25);
   transition: opacity 0.2s ease;
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 
 .continueBtn:hover {
@@ -170,6 +170,12 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+.terms a {
+  color: #43a047;
+  text-decoration: underline;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
