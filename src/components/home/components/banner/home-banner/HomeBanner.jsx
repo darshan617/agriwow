@@ -10,28 +10,34 @@ import Link from "next/link";
 import { useGetBannerDataQuery } from "@/redux/apis/homeApi";
 
 const HomeBanner = () => {
-    const { data: bannerDataResponse } = useGetBannerDataQuery();
-    const bannerData = bannerDataResponse?.data;
+  const {
+    data: bannerDataResponse,
+    isLoading: isBannerDataLoading,
+    isFetching: isBannerDataFetching,
+  } = useGetBannerDataQuery();
+  const bannerData = bannerDataResponse?.data;
 
-    const slides = useMemo(() => {
-      if (!Array.isArray(bannerData)) {
-        return [];
-      }
+  const slides = useMemo(() => {
+    if (!Array.isArray(bannerData)) {
+      return [];
+    }
 
-      return bannerData
-        .filter((slide) => slide?.status === 1 && slide?.image)
-        .map((slide) => ({
-          id: slide.id,
-          backgroundImage: slide.image,
-          link: slide.link,
-        }));
-    }, [bannerData]);
+    return bannerData
+      .filter((slide) => slide?.status === 1 && slide?.image)
+      .map((slide) => ({
+        id: slide.id,
+        backgroundImage: slide.image,
+        link: slide.link,
+      }));
+  }, [bannerData]);
 
-  if (slides.length === 0) {
-    return null;
-  }
+  // if (slides.length === 0) {
+  //   return null;
+  // }
 
-  return (
+  return isBannerDataLoading || isBannerDataFetching ? (
+    <div className={`${styles.bannerShimmer} shimmerEffect`}></div>
+  ) : (
     <section className={`${styles.bannerSection}`}>
       <div className={`${styles.bannerCard}`}>
         <Swiper
@@ -50,24 +56,24 @@ const HomeBanner = () => {
           }}
           className={`${styles.bannerSwiper}`}
         >
-          {slides.map((slide, index) => (
+          {slides?.map((slide, index) => (
             <SwiperSlide key={slide.id ?? index}>
-            <Link
-              href={slide.link}
-              {...(slide.link?.startsWith("http") && {
-                target: "_blank",
-                rel: "noopener noreferrer",
-              })}
-            >
-            <Image
-              src={slide.backgroundImage}
-              alt="Farm background banner"
-              className={`${styles.bannerBackground}`}
-              priority={index === 0}
-              width={1920}
-              height={600}
-            />
-            </Link>
+              <Link
+                href={slide.link}
+                {...(slide.link?.startsWith("http") && {
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                })}
+              >
+                <Image
+                  src={slide.backgroundImage}
+                  alt="Farm background banner"
+                  className={`${styles.bannerBackground}`}
+                  priority={index === 0}
+                  width={1920}
+                  height={600}
+                />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

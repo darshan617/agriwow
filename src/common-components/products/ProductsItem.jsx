@@ -9,8 +9,11 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ProductCardShimmer from "../product-card/ProductCardShimmer";
+import { useEffect, useState } from "react";
 
 const ProductsItem = ({
+  isHomeDataLoading,
   bannerTitle,
   bannerDescription,
   description,
@@ -31,6 +34,7 @@ const ProductsItem = ({
   viewAllLink = "/product-category/agriculture-sprayers",
   bannersLink,
 }) => {
+  const [shimmerCount, setShimmerCount] = useState(4);
   const {
     className: bannerImageClassName,
     style: bannerImageStyle,
@@ -48,6 +52,23 @@ const ProductsItem = ({
   ]
     .filter(Boolean)
     .join(" ");
+
+  useEffect(() => {
+    const updateCount = () => {
+      if (window.innerWidth <= 575) {
+        setShimmerCount(2);
+      } else if (window.innerWidth <= 768) {
+        setShimmerCount(3);
+      } else {
+        setShimmerCount(4);
+      }
+    };
+
+    updateCount();
+    window.addEventListener("resize", updateCount);
+
+    return () => window.removeEventListener("resize", updateCount);
+  }, []);
 
   return (
     <section className={sectionClassName}>
@@ -158,7 +179,7 @@ const ProductsItem = ({
                     425: {
                       slidesPerView: isEquipment ? 2 : 2,
                       spaceBetween: 5,
-                    },  
+                    },
                     575: {
                       slidesPerView: isEquipment ? 3 : 3,
                       spaceBetween: 14,
@@ -176,34 +197,40 @@ const ProductsItem = ({
                       spaceBetween: 20,
                     },
                   }}
-             
                   className={styles.cardsRow}
                 >
-                  {agricultureProductsData?.map((item) => {
-                    // console.log(item, "itemfewwrewrge😊😊😊"),\
-                    return (
-                      <SwiperSlide key={item.id}>
-                        <ProductCard
-                          type="home"
-                          image={item?.gallery[0]}
-                          imageHover={item?.gallery[1]}
-                          discount={item?.discount}
-                          isBestSeller={item?.is_best_selling}
-                          name={item?.name}
-                          price={item?.selling_price}
-                          oldPrice={item?.price}
-                          reviews={item?.total_reviews}
-                          average_rating={item?.average_rating}
-                          isTrending={item?.is_trending}
-                          isFeatured={item?.is_featured}
-                          isTopRated={item?.is_top_rated}
-                          slug={item?.slug}
-                          productId={item?.id}
-                          isWishlist={item?.is_wishlist}
-                        />
-                      </SwiperSlide>
-                    );
-                  })}
+                  {isHomeDataLoading ? (
+                    <div className={styles.productsShimmer}>
+                      {Array.from({ length: shimmerCount }).map((_, index) => (
+                        <ProductCardShimmer key={index} />
+                      ))}
+                    </div>
+                  ) : (
+                    agricultureProductsData?.map((item) => {
+                      return (
+                        <SwiperSlide key={item.id}>
+                          <ProductCard
+                            type="home"
+                            image={item?.gallery[0]}
+                            imageHover={item?.gallery[1]}
+                            discount={item?.discount}
+                            isBestSeller={item?.is_best_selling}
+                            name={item?.name}
+                            price={item?.selling_price}
+                            oldPrice={item?.price}
+                            reviews={item?.total_reviews}
+                            average_rating={item?.average_rating}
+                            isTrending={item?.is_trending}
+                            isFeatured={item?.is_featured}
+                            isTopRated={item?.is_top_rated}
+                            slug={item?.slug}
+                            productId={item?.id}
+                            isWishlist={item?.is_wishlist}
+                          />
+                        </SwiperSlide>
+                      );
+                    })
+                  )}
                 </Swiper>
 
                 {!isEquipment && (
