@@ -208,6 +208,7 @@ const ProductsItem = ({
                       ))}
                     </div>
                   ) : (
+                    agricultureProductsData?.length > 0 ? (
                     agricultureProductsData?.map((item) => {
                       return (
                         <SwiperSlide key={item.id}>
@@ -232,11 +233,17 @@ const ProductsItem = ({
                         </SwiperSlide>
                       );
                     })
+                    ) : (
+                      <div className={`${styles.noProductsFound} text-center`}>
+                        <p>No products found</p>
+                      </div>
+                    )
                   )}
                 </Swiper>
 
                 {!isEquipment && (
-                  <div className={`${styles.swiperNav}`}>
+                  agricultureProductsData?.length > 0 && (
+                    <div className={`${styles.swiperNav}`}>
                     <button
                       className={`swiper-btn-prev ${styles.swiperNavBtn}`}
                       aria-label="Previous"
@@ -249,12 +256,14 @@ const ProductsItem = ({
                       aria-label="Next"
                     >
                       <FiChevronRight />
-                    </button>
-                  </div>
+                      </button>
+                    </div>
+                  )
                 )}
               </div>
 
-              <div
+              {agricultureProductsData?.length > 0 && (
+                <div
                 className={
                   isEquipment
                     ? `${styles.viewAllWrapper} ${styles.centerViewAll}`
@@ -265,6 +274,7 @@ const ProductsItem = ({
                   View All
                 </Link>
               </div>
+              )}
             </div>
           </div>
         </div>

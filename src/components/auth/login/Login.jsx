@@ -57,9 +57,6 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
                 onChange={(e) => setCountryCode(e.target.value)}
               >
                 <option value="+91">+91</option>
-                <option value="+1">+1</option>
-                <option value="+44">+44</option>
-                <option value="+61">+61</option>
               </select>
               <div className={`${styles.divider}`} />
               <input

@@ -1,30 +1,67 @@
-import React from "react";
-import Image from "next/image";
+import React, { useMemo } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { IoPlay } from "react-icons/io5";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
-import videoThumb from "@/assets/video/video1.jpg";
 import styles from "@/components/home/components/video/VideoSection.module.css";
-import Link from "next/link";
+import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 
-const videoSlides = [
-  {
-    id: "1",
-    youtubeUrl: "",
-  },
-  {
-    id: "2",
-    youtubeUrl: "",
-  },
-  {
-    id: "3",
-    youtubeUrl: "",
-  },
-].map((item) => ({ ...item, image: videoThumb }));
+const getYoutubeEmbedUrl = (url) => {
+  if (!url) return null;
+
+  const trimmed = url.trim();
+
+  if (!trimmed.includes("/") && !trimmed.includes(".")) {
+    return `https://www.youtube.com/embed/${trimmed}`;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    const host = parsed.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      const videoId = parsed.pathname.split("/").filter(Boolean)[0];
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (parsed.pathname.startsWith("/embed/")) {
+        return trimmed;
+      }
+
+      if (parsed.pathname.startsWith("/shorts/")) {
+        const videoId = parsed.pathname.split("/").filter(Boolean)[1];
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+      }
+
+      const videoId = parsed.searchParams.get("v");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+};
 
 const VideoSection = () => {
+  const { data: homeData } = useGetHomeDataQuery();
+  const video_banner = homeData?.data?.banners?.video_banner;
+
+  const embedVideos = useMemo(() => {
+    return (video_banner?.youtube_links ?? [])
+      .filter(Boolean)
+      .map((youtubeUrl) => ({
+        youtubeUrl,
+        embedUrl: getYoutubeEmbedUrl(youtubeUrl),
+      }))
+      .filter((video) => video.embedUrl);
+  }, [video_banner?.youtube_links]);
+
+  if (embedVideos.length === 0) {
+    return null;
+  }
+
   return (
     <section className={`${styles.VideoContainer} sectionSpace`}>
       <div className="container">
@@ -33,53 +70,31 @@ const VideoSection = () => {
             modules={[Navigation]}
             slidesPerView={1}
             spaceBetween={0}
-            loop={videoSlides.length > 1}
+            loop={embedVideos.length > 1}
             navigation={{
               prevEl: "#videoSwiperPrev",
               nextEl: "#videoSwiperNext",
             }}
             className={`${styles.swiper}`}
           >
-            {videoSlides.map((slide) => (
-              <SwiperSlide key={slide.id} className={`${styles.slide}`}>
+            {embedVideos.map((video, index) => (
+              <SwiperSlide
+                key={video.youtubeUrl || index}
+                className={`${styles.slide}`}
+              >
                 <div className={`${styles.card}`}>
-                  <Image
-                    src={slide.image}
-                    alt={slide.title || "Video thumbnail"}
-                    fill
-                    className={`${styles.bgImage}`}
-                    sizes="(max-width: 768px) 100vw, min(1200px, 92vw)"
-                    priority={slide.id === "1"}
+                  <iframe
+                    src={video.embedUrl}
+                    title={
+                      video_banner?.title
+                        ? `${video_banner.title} - video ${index + 1}`
+                        : `YouTube video ${index + 1}`
+                    }
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className={`${styles.iframe}`}
                   />
-                  <div className={`${styles.scrim}`} aria-hidden="true" />
-                  <div className={`${styles.inner}`}>
-                    <h2 className={`${styles.title}`}>{slide.title || ""}</h2>
-                    <Link
-                      href={"https://youtu.be/KyZqmylsmkQ"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${styles.playBtn}`}
-                      aria-label={`Watch${slide.title ? ` ${slide.title}` : ""} on YouTube`}
-                    >
-                      <IoPlay
-                        className={`${styles.playIcon}`}
-                        aria-hidden="true"
-                      />
-                    </Link>
-                    <div className={`${styles.footer}`}>
-                      <span className={`${styles.footerText}`}>
-                        Watch more videos on Youtube
-                      </span>
-                      <Link
-                        href="https://www.youtube.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`${styles.viewAll}`}
-                      >
-                        View All
-                      </Link>
-                    </div>
-                  </div>
                 </div>
               </SwiperSlide>
             ))}

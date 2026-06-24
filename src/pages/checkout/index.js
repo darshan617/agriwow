@@ -27,6 +27,7 @@ import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
+import styles from "@/components/cart-details/cart-summery/CartSummery.module.css";
 
 const Checkout = () => {
   const router = useRouter();
@@ -311,9 +312,9 @@ const Checkout = () => {
       </div>
 
       <div className="container">
-        {trending_products?.length > 0 && (
+      {trending_products?.length > 0 && (
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <h2 className="swiper-title">Trending Products</h2>
+            <h2 className={styles.swiperTitle}>Trending Products</h2>
             <Swiper
               modules={[Navigation, Autoplay]}
               navigation={{
