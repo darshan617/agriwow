@@ -39,6 +39,8 @@ export const apiSlice = createApi({
     "orderHistory",
     "aboutUs",
     "getAllDeliveryAddresses",
+    "shippingReturn",
+    "orderInfo",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),

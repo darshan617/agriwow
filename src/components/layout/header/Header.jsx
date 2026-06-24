@@ -32,7 +32,6 @@ import {
   useGetWishlistQuery,
 } from "@/redux/apis/addToWishlist";
 import {
-  getCartSessionId,
   useGetCartDataQuery,
   useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
@@ -41,7 +40,6 @@ import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const TRENDING_SEARCHES = [
   { label: "Fogging Machines", href: "/product-category/fogging-machines" },
-  // {label: "Garden Equipment", href: "/product-category/garden-tools"},
   {
     label: "Agriculture Sprayers",
     href: "/product-category/agriculture-sprayers",
@@ -192,9 +190,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     () => getWishlistItems(wishlistData).length,
     [wishlistData],
   );
-  const { data: cartData } = useGetCartDataQuery(undefined, {
-    skip: !(Cookies.get("userToken") || getCartSessionId()),
-  });
+  const { data: cartData } = useGetCartDataQuery();
   const { data: homeData } = useGetHomeDataQuery();
   const [triggerSearch, { data: searchData, isFetching: isSearching }] =
     useLazySearchProductsQuery();
@@ -204,7 +200,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setSearchOpen(false);
     setMobileSearchOpen(false);
   };
-  // const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
 
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
@@ -212,7 +207,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
-  // const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
   const { openLoginPopup, isLoggedIn } = useLoginPopup();
   useEffect(() => {
@@ -247,69 +241,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   const clearHistory = () => persistHistory([]);
 
-  // // login ====================
-  // const handleLogin = async () => {
-  //   if (!phone || !/^[0-9]+$/.test(phone)) {
-  //     showToast("Please enter a valid phone number", "error");
-  //     return;
-  //   }
-  //   try {
-  //     const res = await auth({
-  //       body: {
-  //         phone: phone,
-  //       },
-  //     });
-  //     if (res?.data?.success || res?.data?.status) {
-  //       setShowPopup("verify-otp");
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "error");
-  //   }
-  // };
-
-  // // otp verify ===================
-  // const handleVerify = async (otp) => {
-  //   try {
-  //     const res = await verifyOtp({
-  //       body: {
-  //         otp: otp,
-  //         phone: phone,
-  //       },
-  //     });
-  //     console.log(res, "res");
-  //     if (res?.data?.success || res?.data?.status) {
-  //       if (res?.data?.token) {
-  //         Cookies.set("userData", JSON.stringify(res?.data?.user));
-  //         Cookies.set("userToken", res?.data?.token);
-
-  //         const sessionId = getCartSessionId();
-  //         if (sessionId) {
-  //           try {
-  //             await mergeCart({
-  //               body: { session_id: sessionId },
-  //             }).unwrap();
-  //           } catch (mergeError) {
-  //             console.error("Cart merge failed", mergeError);
-  //           }
-  //         }
-
-  //         showToast(res?.data?.message, "success");
-  //         setShowPopup("");
-  //         setPhone("");
-  //         router?.reload();
-  //       } else {
-  //         console.error("OTP verification failed", res?.error);
-  //       }
-  //     } else {
-  //       showToast(res?.error?.data?.message, "error");
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "error");
-  //     showToast(error?.data?.message || "Failed to verify OTP", "error");
-  //   }
-  // };
-
-  //logout ==============
   const handleLogout = async () => {
     try {
       await logout().unwrap();
@@ -470,14 +401,34 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   useEffect(() => {
     if (!menuOpen) return;
+
     const onKeyDown = (e) => {
       if (e.key === "Escape") closeMenu();
     };
+
+    const scrollY = window.scrollY;
+    const { documentElement } = document;
+    const prevHtmlOverflow = documentElement.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevBodyPosition = document.body.style.position;
+    const prevBodyTop = document.body.style.top;
+    const prevBodyWidth = document.body.style.width;
+
     document.addEventListener("keydown", onKeyDown);
+    documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      document.body.style.position = prevBodyPosition;
+      document.body.style.top = prevBodyTop;
+      document.body.style.width = prevBodyWidth;
+      window.scrollTo(0, scrollY);
     };
   }, [menuOpen]);
 
@@ -842,6 +793,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             {isLoggedIn ? (
               <Link href="/wishlist" className={`${styles.iconBtn}`}>
                 <FaHeart size={21} />
+                <span className={styles.badge}>{wishlistCount}</span>
               </Link>
             ) : (
               <button
@@ -862,7 +814,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/cart">
                 <FaShoppingCart size={21} />
               </Link>
-              <span className={styles.badge}>{cartItems?.length ?? 0}</span>
+              {cartItems?.length > 0 && (
+                <span className={`${styles.badge}`}>{cartItems?.length}</span>
+              )}
             </button>
             <button
               type="button"
@@ -917,7 +871,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           {NAV_LINKS?.map((item) => {
             const isActive = isNavLinkActive(item, router.asPath);
             return item?.label === "Products" ? (
-              <div key={item?.label} className={styles.drawerNavItem}>
+              <div
+                key={item?.label}
+                className={`${styles.drawerNavItem} ${productsExpanded ? styles.drawerNavItemExpanded : ""}`}
+              >
                 <button
                   type="button"
                   className={`${styles.drawerProductsToggle} ${productsExpanded ? styles.drawerProductsToggleOpen : ""} ${isActive ? styles.navLinkActive : ""}`}

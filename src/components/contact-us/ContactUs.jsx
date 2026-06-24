@@ -69,20 +69,14 @@ const ContactUs = ({ contactDetailsData }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.chatUsButton}
-                        style={{ textDecoration: "none", display: "inline-block" }}
+                        style={{
+                          textDecoration: "none",
+                          display: "inline-block",
+                        }}
                       >
                         Chat Now
                       </Link>
-                 
                     </div>
-                  </div>
-                  <div className={`${styles.chatUsGif}`}>
-                    <Image
-                      src={chatUsGif}
-                      alt="Chat Us"
-                      width={100}
-                      height={100}
-                    />
                   </div>
                 </div>
               </div>
@@ -95,18 +89,27 @@ const ContactUs = ({ contactDetailsData }) => {
                     <div
                       className={`${styles.chatUsContent} d-flex flex-column gap-2`}
                     >
-                      <h3 className={`${styles.chatUsTitle}`}>FAQS</h3>
+                      <h3 className={`${styles.chatUsTitle}`}>
+                        Track Your Order
+                      </h3>
                       <p className={`${styles.chatUsDescription}`}>
-                        You can manage your orders in Orders section
+                        Track your order from order placement to delivery
                       </p>
-                      <button className={`${styles.chatUsButton}`}>
-                        View All
-                      </button>
+                      <Link
+                        href="/my-order"
+                        className={styles.chatUsButton}
+                        style={{
+                          textDecoration: "none",
+                          display: "inline-block",
+                        }}
+                      >
+                        Track Now
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <div className={`${styles.officeAddressSection}`}>
                 <h2 className={`${styles.officeAddressTitle}`}>Contact Us</h2>
                 <div className="row g-3">

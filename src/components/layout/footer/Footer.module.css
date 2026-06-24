@@ -284,6 +284,10 @@
     margin: 0;
 }
 
+.footerCopyright br{
+    display: none;
+}
+
 .footerLegal a {
     color: rgba(255, 255, 255, 0.5);
     font-size: 14px;
@@ -305,7 +309,6 @@
     outline: none;
 }
 
-/* ── Tablet ── */
 @media (min-width: 768px) {
     .footerNavGroup {
         grid-template-columns: repeat(3, 1fr);
@@ -513,6 +516,10 @@
     .footerLegal {
         justify-content: center;
         gap: 8px 16px;
+    }
+
+    .footerCopyright br{
+        display: block;
     }
 }
 

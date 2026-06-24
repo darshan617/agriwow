@@ -2,7 +2,6 @@
 
 import Layout from "@/components/layout/Layout";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import CheckoutStepper from "@/components/checkout/checkout-stepper/CheckoutStepper";
 import DeliveryAddress from "@/components/checkout/delivery-address/DeliveryAddress";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
@@ -12,7 +11,6 @@ import {
   useGetCartDataQuery,
   useUpdateCartMutation,
 } from "@/redux/apis/addToCartApi";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import {
   clearBuyNowAddPending,
@@ -27,6 +25,7 @@ import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
+import styles from "@/components/cart-details/cart-summery/CartSummery.module.css";
 
 const Checkout = () => {
   const router = useRouter();
@@ -253,9 +252,6 @@ const Checkout = () => {
   return (
     <Layout>
       <div className="container">
-        {/* { cartItems.length > 0 && (
-          <CheckoutStepper activeStep={1} />
-        )} */}
         <div className="row">
           <div
             className={cartItems.length > 0 ? "col-lg-8 mt-3" : "col-12 mt-3"}
@@ -275,8 +271,6 @@ const Checkout = () => {
               <CartDetails
                 cartData={activeCartData}
                 setShowAddressForm={setShowAddressForm}
-                // hideBreadcrumb
-                // hideCheckoutButton
                 cartItems={cartItems}
                 getQuantity={getQuantity}
                 getItemKey={getItemKey}
@@ -311,9 +305,9 @@ const Checkout = () => {
       </div>
 
       <div className="container">
-        {trending_products?.length > 0 && (
+      {trending_products?.length > 0 && (
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <h2 className="swiper-title">Trending Products</h2>
+            <h2 className={styles.swiperTitle}>Trending Products</h2>
             <Swiper
               modules={[Navigation, Autoplay]}
               navigation={{

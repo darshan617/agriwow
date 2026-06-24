@@ -26,23 +26,6 @@ function AppContent({ Component, pageProps }) {
 }
 export default function App({ Component, pageProps, ...rest }) {
   const { store } = storeWrapper.useWrappedStore(rest);
-  // const router = useRouter();
-  // const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const start = () => setLoading(true);
-  //   const end = () => setLoading(false);
-
-  //   router.events.on("routeChangeStart", start);
-  //   router.events.on("routeChangeComplete", end);
-  //   router.events.on("routeChangeError", end);
-
-  //   return () => {
-  //     router.events.off("routeChangeStart", start);
-  //     router.events.off("routeChangeComplete", end);
-  //     router.events.off("routeChangeError", end);
-  //   };
-  // }, []);
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
       <Provider store={store}>
@@ -51,7 +34,6 @@ export default function App({ Component, pageProps, ...rest }) {
         </Head>
         <ToastProvider>
           <LoginPopupProvider>
-            {/* {loading && <div className="loading-bar"></div>} */}
             <Script src="https://checkout.razorpay.com/v1/checkout.js" />
             <ProgressBar />
             <AppContent Component={Component} pageProps={pageProps} />

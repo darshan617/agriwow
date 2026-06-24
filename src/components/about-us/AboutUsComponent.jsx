@@ -6,12 +6,7 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import Link from "next/link";
 import { FiCheck } from "react-icons/fi";
-import {
-  LuShieldCheck,
-  LuSprout,
-  LuUsers,
-  LuMapPin,
-} from "react-icons/lu";
+import { LuShieldCheck, LuSprout, LuUsers, LuMapPin } from "react-icons/lu";
 import { useGetAboutUsDataQuery } from "@/redux/apis/aboutUsApi";
 import heroImage from "@/assets/images/agriculture-sprayer.jpg";
 import aboutImage from "@/assets/images/agri-equipments.jpg";
@@ -90,7 +85,7 @@ const AboutUsComponent = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 680px)");
     setIsMobile(mq.matches);
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
@@ -141,16 +136,8 @@ const AboutUsComponent = () => {
   return (
     <div className={styles.aboutPage}>
       <section className={styles.hero}>
-        <Image
-          src={heroImage}
-          alt="About Agriwow"
-          fill
-          priority
-          className={styles.heroImage}
-        />
-        <div className={styles.heroOverlay} />
         <div className={`container ${styles.heroContent}`}>
-          <h1>{formatPageTitle(aboutUs?.title)}</h1>
+          {/* <h1>{formatPageTitle(aboutUs?.title)}</h1> */}
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <ul>
               <li>
@@ -185,7 +172,7 @@ const AboutUsComponent = () => {
                 )}
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-6 mt-0">
               <div className={styles.introContent}>
                 <h2 className={styles.introTitle}>
                   {formatPageTitle(aboutUs?.title)}
@@ -246,7 +233,7 @@ const AboutUsComponent = () => {
             ) : (
               <div className="row g-4">
                 {storyTags.map((tag, index) => (
-                  <div key={tag} className="col-md-4">
+                  <div key={tag} className="col-lg-4 col-md-4">
                     <div className={styles.statItem}>
                       <span className={styles.statIcon}>
                         {getStatIcon(index)}
@@ -356,9 +343,7 @@ const AboutUsComponent = () => {
                   <div key={item.title} className={styles.chooseGridItem}>
                     <div className={styles.chooseCard}>
                       <h3>{item.title}</h3>
-                      <p className={styles.chooseDescription}>
-                        {item.content}
-                      </p>
+                      <p className={styles.chooseDescription}>{item.content}</p>
                     </div>
                   </div>
                 ))}

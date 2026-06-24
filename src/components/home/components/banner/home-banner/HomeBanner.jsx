@@ -31,10 +31,6 @@ const HomeBanner = () => {
       }));
   }, [bannerData]);
 
-  // if (slides.length === 0) {
-  //   return null;
-  // }
-
   return isBannerDataLoading || isBannerDataFetching ? (
     <div className={`${styles.bannerShimmer} shimmerEffect`}></div>
   ) : (
@@ -77,45 +73,6 @@ const HomeBanner = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* <div className={`${styles.bannerContent}`}>
-          <div className={`${styles.leftContent}`}>
-            <h2 className={`${styles.title}`} data-aos="fade-up">
-              {hero.title}
-            </h2>
-            <p className={`${styles.subtitle}`} data-aos="fade-in">
-              {hero.subtitle}
-            </p>
-
-            <div className={`${styles.offerStrip}`} data-aos="fade-up">
-              <div className={`${styles.offerMain}`}>
-                <span className={`${styles.upto}`}>UPTO</span>
-                <span className={`${styles.offerPercent}`}>
-                  25% OFF <br />
-                  <span className={`${styles.offerPercentSub}`}>
-                    on Selected Products
-                  </span>
-                </span>
-              </div>
-            </div>
-
-            <button type="button" className={`${styles.bannerBtn}`}>
-              {hero.btnLabel}
-            </button>
-          </div>
-          <div
-            className={`${styles.rightContent}`}
-            data-aos="zoom-in"
-            data-aos-duration="1500"
-          >
-            <div className={`${styles.productImageWrapper}`}>
-              <Image
-                src={hero.sideImage}
-                alt="Agriculture machines"
-                className={`${styles.productImage}`}
-              />
-            </div>
-          </div>
-        </div> */}
       </div>
     </section>
   );

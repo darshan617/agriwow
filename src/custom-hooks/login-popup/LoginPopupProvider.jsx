@@ -46,6 +46,10 @@ export const LoginPopupProvider = ({ children }) => {
   };
 
   const handleLogin = async () => {
+    if (phone.length !== 10) {
+      showToast("Please enter a valid phone number", "error");
+      return;
+    }
     try {
       const res = await auth({
         body: {
@@ -68,6 +72,7 @@ export const LoginPopupProvider = ({ children }) => {
           phone: phone,
         },
       });
+      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
@@ -91,6 +96,8 @@ export const LoginPopupProvider = ({ children }) => {
         } else {
           console.error("OTP verification failed", res?.error);
         }
+      } else {
+        showToast(res?.error?.data?.message, "error");
       }
     } catch (error) {
       console.log(error, "error");
