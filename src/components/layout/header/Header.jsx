@@ -32,7 +32,6 @@ import {
   useGetWishlistQuery,
 } from "@/redux/apis/addToWishlist";
 import {
-  getCartSessionId,
   useGetCartDataQuery,
   useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
@@ -192,9 +191,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     () => getWishlistItems(wishlistData).length,
     [wishlistData],
   );
-  const { data: cartData } = useGetCartDataQuery(undefined, {
-    skip: !(Cookies.get("userToken") || getCartSessionId()),
-  });
+  const { data: cartData } = useGetCartDataQuery();
   const { data: homeData } = useGetHomeDataQuery();
   const [triggerSearch, { data: searchData, isFetching: isSearching }] =
     useLazySearchProductsQuery();
@@ -842,6 +839,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             {isLoggedIn ? (
               <Link href="/wishlist" className={`${styles.iconBtn}`}>
                 <FaHeart size={21} />
+                <span className={styles.badge}>{wishlistCount}</span>
               </Link>
             ) : (
               <button

@@ -37,15 +37,57 @@ const addToCartApi = apiSlice.injectEndpoints({
         },
         body,
       }),
-      async onQueryStarted(_arg, { queryFulfilled }) {
+      async onQueryStarted({ body }, { dispatch, queryFulfilled, getState }) {
+        const productId = body?.product_id;
+        const entry = productId
+          ? { product_id: productId, quantity: body?.quantity ?? 1 }
+          : null;
+
+        let patchResult;
+        if (entry) {
+          const cached =
+            addToCartApi.endpoints.getCartData.select()(getState());
+          if (cached?.data !== undefined) {
+            patchResult = dispatch(
+              addToCartApi.util.updateQueryData(
+                "getCartData",
+                undefined,
+                (draft) => {
+                  if (!Array.isArray(draft?.data)) draft.data = [];
+                  const exists = draft?.data?.some(
+                    (item) =>
+                      (item?.product_id ?? item?.product?.id) === productId,
+                  );
+                  if (!exists) draft?.data?.push(entry);
+                },
+              ),
+            );
+          } else {
+            dispatch(
+              addToCartApi.util.upsertQueryData("getCartData", undefined, {
+                data: [entry],
+              }),
+            );
+          }
+        }
+
         try {
           const { data } = await queryFulfilled;
-          if (data?.session_id) {
-            setCartSessionId(data.session_id);
+          const sessionId = data?.session_id ?? data?.data?.session_id;
+          if (sessionId) {
+            setCartSessionId(sessionId);
           }
-        } catch {}
+          await dispatch(
+            addToCartApi.endpoints.getCartData.initiate(undefined, {
+              forceRefetch: true,
+              subscribe: false,
+            }),
+          );
+        } catch {
+          patchResult?.undo?.();
+        }
       },
-      invalidatesTags: ["getCartData", "addToCart"],
+      invalidatesTags: ["addToCart"],
     }),
     getCartData: builder.query({
       query: () => ({

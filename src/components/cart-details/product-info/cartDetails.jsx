@@ -84,6 +84,10 @@ const CartDetails = ({
   );
 
   const handleLogin = async () => {
+    if (phone.length !== 10) {
+      showToast("Please enter a valid phone number", "error");
+      return;
+    }
     try {
       const res = await auth({
         body: {
