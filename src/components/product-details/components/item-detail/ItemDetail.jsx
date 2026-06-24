@@ -25,9 +25,6 @@ import { AiOutlineRise } from "react-icons/ai";
 import { FaRegCreditCard } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
-
-
-
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 const AUTOPLAY_DELAY = 3000;
 
@@ -90,7 +87,9 @@ const ItemDetail = ({ productDetails }) => {
   const policiesData = [
     { icon: <FaShippingFast size={20} />, label: "Free Shipping" },
     {
-      icon: <Image src={quality} alt="Quality Product" width={20} height={20} />,
+      icon: (
+        <Image src={quality} alt="Quality Product" width={20} height={20} />
+      ),
       label: "Quality Product",
     },
     {
@@ -136,6 +135,14 @@ const ItemDetail = ({ productDetails }) => {
       text: productDetails?.data?.description,
       url: `${window?.location?.origin}${window?.location?.pathname}`,
     });
+  };
+
+  const getYoutubeId = (url) => {
+    const regExp =
+      /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^?&/]+)/;
+
+    const match = url?.match(regExp);
+    return match ? match[1] : url;
   };
 
   return (
@@ -496,9 +503,7 @@ const ItemDetail = ({ productDetails }) => {
             <div className={`${styles.policiesGrid}`}>
               {policiesData.map((policy, index) => (
                 <div key={index} className={`${styles.policyItem}`}>
-                  <span className={`${styles.policyIcon}`}>
-                    {policy.icon}
-                  </span>
+                  <span className={`${styles.policyIcon}`}>{policy.icon}</span>
                   <span className={`${styles.policyLabel}`}>
                     {policy.label}
                   </span>
@@ -593,16 +598,18 @@ const ItemDetail = ({ productDetails }) => {
         <CustomPopup
           onclose={() => setIsPopupVisible("")}
           wide
-          maxWidth="800px"
+          maxWidth="600px"
         >
           <div className={`${styles.videoPopup}`}>
-            <video
-              src={productDetails?.data?.video_url}
-              controls
-              autoPlay
-              playsInline
+            <iframe
+              src={`https://www.youtube.com/embed/${getYoutubeId(productDetails?.data?.video_url)}`}
+              title="YouTube video player"
               className={`${styles.videoPopupVideo}`}
-            />
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
         </CustomPopup>
       )}
