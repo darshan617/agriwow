@@ -1,497 +1,515 @@
-
-.contactUsSection{
-    padding:  0 150px ;
+.contactUsSection {
+  padding: 0 150px;
 }
 
-.contactUsContent{
-    padding: 100px 0;   
-}
-.contactUsTitle{
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #239c3d;
-}
-.contactUsSubtitle{
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-.contactUsDescription{
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    color: #666;
-    width: 80%;
-}
-.contactUsDescription{
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    color: #666;
+.contactUsContent {
+  padding: 100px 0;
 }
 
-.chatUsTitle{
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-    color: #1a1a1a;
-}
-.chatUsDescription{
-    font-size: 16px;
-    font-weight: 400;
-    margin: 0 ;
-    color: #666;
-}
-.chatUs{
-    padding:  40px 30px;
-    background: #f2f2f2;
-    border-radius: 10px;
-    /* margin-top: 20px; */
+.contactUsTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #239c3d;
 }
 
-.chatUsButton{
-    background-color: #239c3d;
+.contactUsSubtitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.contactUsDescription {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: #666;
+  width: 80%;
+}
+
+.contactUsDescription {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.chatUsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.chatUsDescription {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  color: #666;
+}
+
+.chatUs {
+  padding: 40px 30px;
+  background: #f2f2f2;
+  border-radius: 10px;
+  /* margin-top: 20px; */
+}
+
+.chatUsButton {
+  background-color: #239c3d;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  width: fit-content;
+
+  &:hover {
+    background-color: #1d9436c7;
     color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-    width: fit-content;
-    &:hover {
-        background-color: #1d9436c7;
-        color: #fff;
-    }
+  }
 }
 
-.faqs{
-    background: #f2f2f2;
-    border-radius: 10px;
-    padding:  40px 30px;
-    /* margin-top: 20px; */
+.faqs {
+  background: #f2f2f2;
+  border-radius: 10px;
+  padding: 40px 30px;
+  /* margin-top: 20px; */
 }
 
 .officeAddressSection {
-    margin-top: 2.5rem;
-  }
-  
-  .officeAddressTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-    color: #111;
-  }
-  
-  .officeCard {
-    background: #f2f2f2;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    height: 100%;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  
-  .officeBadge {
-    display: inline-block;
-    font-size: 12px;
-    color: #6b7280;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 2px 10px;
-    margin-bottom: 0.75rem;
-  }
-  
-  .officeCountry {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 0.5rem;
-  }
-  
-  .officeAddress {
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.6;
-    margin: 0;
-  }
-  .contactUsDetail p{
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 0;
-  }
-  .contactUsDetail span{
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    color: #666;
-  }
+  margin-top: 2.5rem;
+}
 
-  .contactUsImage{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.officeAddressTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #111;
+}
+
+.officeCard {
+  background: #f2f2f2;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  height: 100%;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.officeBadge {
+  display: inline-block;
+  font-size: 12px;
+  color: #6b7280;
+  /* border: 1px solid #d1d5db; */
+  /* border-radius: 6px; */
+  padding: 2px 10px;
+  margin-bottom: 0.75rem;
+}
+
+.officeCountry {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.officeAddress {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+
+.contactUsDetail p {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.contactUsDetail span {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.contactUsImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.faqsContent,
+.chatUsContent {
+  height: 100%;
+}
 
 @media (max-width: 1200px) {
-    .contactUsSection {
-      padding: 0 80px;
-    }
-  
-    .contactUsContent {
-      padding: 80px 30px;
-    }
-  
-    .contactUsTitle {
-      font-size: 32px;
-    }
+  .contactUsSection {
+    padding: 0 80px;
   }
-  
-  @media (max-width: 1024px) {
-    .contactUsSection {
-      padding: 0 50px;
-    }
-  
-    .contactUsContent {
-      padding: 60px 20px;
-    }
-  
-    .contactUsTitle {
-      font-size: 30px;
-    }
-  
-    .chatUsTitle {
-      font-size: 20px;
-    }
-  
-    .chatUs {
-      padding: 15px;
-    }
-  
-    .faqs {
-      padding: 15px;
-    }
-    .contactUsDescription{
-        width: 100%;
-    }
+
+  .contactUsContent {
+    padding: 80px 30px;
   }
-  
-  @media (max-width: 992px) {
-    .contactUsSection {
-      padding: 0 30px;
-    }
-  
-    .contactUsContent {
-      padding: 40px 15px;
-    }
-  
-    .contactUsTitle {
-      font-size: 28px;
-    }
-  
-    .contactUsSubtitle {
-      font-size: 16px;
-    }
-  
-    .chatUsTitle {
-      font-size: 18px;
-    }
-  
-    .chatUsDescription {
-      font-size: 14px;
-    }
-  
-    .chatUsButton {
-      font-size: 14px;
-      padding: 8px 10px;
-    }
-  
-    .officeAddressTitle {
-      font-size: 1.1rem;
-    }
-  
-    .officeCard {
-      padding: 1rem;
-    }
-    .contactUsImage{
-        display: flex;
-        width: 500px;
-        height: 350px;
-        object-fit: cover;
-        margin: 0 auto;
-      }
-      .contactUsDescription{
-        text-align: justify;
-      }
+
+  .contactUsTitle {
+    font-size: 32px;
   }
-  
-  @media (max-width: 768px) {
-    .contactUsSection {
-      padding: 0 20px;
-    }
-  
-    .contactUsContent {
-      padding: 30px 10px;
-      text-align: center;
-    }
-  
-    .contactUsTitle {
-      font-size: 26px;
-    }
-  
-    .contactUsSubtitle {
-      font-size: 15px;
-    }
-  
-    .contactUsDescription {
-      font-size: 14px;
-    }
-  
-    .chatUs {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-      margin-top: 15px;
-      min-height: 150px;
-    }
-  
-    .chatUsTitle {
-      font-size: 17px;
-    }
-  
-    .chatUsWrapper {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  
-    .chatUsGif {
-      display: none;
-    }
-  
-    .faqs {
-      margin-top: 15px;
-      min-height: 150px;
-    }
-  
-    .officeAddressSection {
-      margin-top: 1.5rem;
-    }
-  
-    .officeCard {
-      margin-bottom: 0;
-    }
-  
-    .contactUsDetail p,
-    .contactUsDetail span {
-      font-size: 14px;
-      text-align: center;
-    }
+}
+
+@media (max-width: 1024px) {
+  .contactUsSection {
+    padding: 0 50px;
   }
-  
-  @media (max-width: 575px) {
-    .contactUsImage{
-      width: 350px;
-      height: 250px;
-    }
-    .contactUsSection {
-      padding: 0 15px;
-    }
-  
-    .contactUsContent {
-      padding: 25px 8px;
-    }
-  
-    .contactUsTitle {
-      font-size: 24px;
-    }
-  
-    .contactUsSubtitle {
-      font-size: 14px;
-    }
-  
-    .contactUsDescription {
-      font-size: 13px;
-    }
-  
-    .chatUs {
-      padding: 15px;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  
-    .chatUsWrapper {
-      gap: 10px;
-    }
-  
-    .chatUsTitle {
-      font-size: 16px;
-    }
-  
-    .chatUsDescription {
-      font-size: 13px;
-    }
-  
-    .chatUsButton {
-      font-size: 13px;
-      padding: 7px 10px;
-    }
-  
-    .officeAddressTitle {
-      font-size: 1rem;
-    }
-  
-    .officeCountry {
-      font-size: 14px;
-    }
-  
-    .officeAddress {
-      font-size: 12px;
-    }
-  
-    .officeBadge {
-      font-size: 11px;
-    }
-  
-    .contactUsDetail p,
-    .contactUsDetail span {
-      font-size: 13px;
-    }
+
+  .contactUsContent {
+    padding: 60px 20px;
   }
-  
-  /* 425px and below */
-  @media (max-width: 425px) {
-    .contactUsSection {
-      padding: 0 10px;
-    }
-  
-    .contactUsContent {
-      padding: 20px 5px;
-    }
-  
-    .contactUsTitle {
-      font-size: 22px;
-    }
-  
-    .chatUsIcon svg {
-      width: 24px;
-      height: 24px;
-    }
-  
-    .chatUs {
-      padding: 12px;
-      gap: 10px;
-    }
-  
-    .faqs {
-      padding: 12px;
-    }
-  
-    .chatUsTitle {
-      font-size: 15px;
-    }
-  
-    .chatUsDescription {
-      font-size: 12px;
-    }
-  
-    .chatUsButton {
-      font-size: 12px;
-      padding: 6px 10px;
-    }
-  
-    .officeAddressSection {
-      margin-top: 1rem;
-    }
-  
-    .officeCard {
-      padding: 0.85rem;
-      border-radius: 10px;
-    }
-  
-    .officeCountry {
-      font-size: 13px;
-    }
-  
-    .officeAddress {
-      font-size: 12px;
-    }
-  
-    .contactUsDetail p,
-    .contactUsDetail span {
-      font-size: 12px;
-    }
+
+  .contactUsTitle {
+    font-size: 30px;
   }
-  
-  /* 375px and below */
-  @media (max-width: 375px) {
-    .contactUsSection {
-      padding: 0 8px;
-    }
-  
-    .contactUsContent {
-      padding: 15px 5px;
-    }
-  
-    .contactUsTitle {
-      font-size: 20px;
-    }
-  
-    .contactUsSubtitle {
-      font-size: 13px;
-    }
-  
-    .contactUsDescription {
-      font-size: 12px;
-    }
-  
-    .chatUs {
-      padding: 10px;
-    }
-  
-    .faqs {
-      padding: 10px;
-    }
-  
-    .chatUsTitle {
-      font-size: 14px;
-    }
-  
-    .chatUsDescription {
-      font-size: 11px;
-    }
-  
-    .chatUsButton {
-      font-size: 11px;
-      padding: 5px 8px;
-      margin-top: 6px;
-    }
-  
-    .officeCard {
-      padding: 0.75rem;
-      border-radius: 8px;
-    }
-  
-    .officeBadge {
-      font-size: 10px;
-      padding: 2px 8px;
-    }
-  
-    .officeCountry {
-      font-size: 13px;
-    }
-  
-    .officeAddress {
-      font-size: 11px;
-    }
-  
-    .contactUsDetail p,
-    .contactUsDetail span {
-      font-size: 11px;
-    }
+
+  .chatUsTitle {
+    font-size: 20px;
   }
+
+  .chatUs {
+    padding: 15px;
+  }
+
+  .faqs {
+    padding: 15px;
+  }
+
+  .contactUsDescription {
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .contactUsSection {
+    padding: 0 30px;
+  }
+
+  .contactUsContent {
+    padding: 40px 15px;
+  }
+
+  .contactUsTitle {
+    font-size: 28px;
+  }
+
+  .contactUsSubtitle {
+    font-size: 16px;
+  }
+
+  .chatUsTitle {
+    font-size: 18px;
+  }
+
+  .chatUsDescription {
+    font-size: 14px;
+  }
+
+  .chatUsButton {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .officeAddressTitle {
+    font-size: 1.1rem;
+  }
+
+  .officeCard {
+    padding: 1rem;
+  }
+
+  .contactUsImage {
+    display: flex;
+    width: 500px;
+    height: 350px;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+
+  .contactUsDescription {
+    text-align: justify;
+  }
+}
+
+@media (max-width: 768px) {
+  .contactUsSection {
+    padding: 0 20px;
+  }
+
+  .contactUsContent {
+    padding: 30px 10px;
+    text-align: center;
+  }
+
+  .contactUsTitle {
+    font-size: 26px;
+  }
+
+  .contactUsSubtitle {
+    font-size: 15px;
+  }
+
+  .contactUsDescription {
+    font-size: 14px;
+  }
+
+  .chatUs {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    min-height: 150px;
+  }
+
+  .chatUsTitle {
+    font-size: 17px;
+  }
+
+  .chatUsWrapper {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .chatUsGif {
+    display: none;
+  }
+
+  .faqs {
+    margin-top: 15px;
+    min-height: 150px;
+  }
+
+  .officeAddressSection {
+    margin-top: 1.5rem;
+  }
+
+  .officeCard {
+    margin-bottom: 0;
+  }
+
+  .contactUsDetail p,
+  .contactUsDetail span {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .contactUsImage {
+    width: 350px;
+    height: 250px;
+  }
+
+  .contactUsSection {
+    padding: 0 15px;
+  }
+
+  .contactUsContent {
+    padding: 25px 8px;
+  }
+
+  .contactUsTitle {
+    font-size: 24px;
+  }
+
+  .contactUsSubtitle {
+    font-size: 14px;
+  }
+
+  .contactUsDescription {
+    font-size: 13px;
+  }
+
+  .chatUs {
+    padding: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .chatUsWrapper {
+    gap: 10px;
+  }
+
+  .chatUsTitle {
+    font-size: 16px;
+  }
+
+  .chatUsDescription {
+    font-size: 13px;
+  }
+
+  .chatUsButton {
+    font-size: 13px;
+    padding: 7px 10px;
+  }
+
+  .officeAddressTitle {
+    font-size: 1rem;
+  }
+
+  .officeCountry {
+    font-size: 14px;
+  }
+
+  .officeAddress {
+    font-size: 12px;
+  }
+
+  .officeBadge {
+    font-size: 11px;
+  }
+
+  .contactUsDetail p,
+  .contactUsDetail span {
+    font-size: 13px;
+  }
+}
+
+/* 425px and below */
+@media (max-width: 425px) {
+  .contactUsSection {
+    padding: 0 10px;
+  }
+
+  .contactUsContent {
+    padding: 20px 5px;
+  }
+
+  .contactUsTitle {
+    font-size: 22px;
+  }
+
+  .chatUsIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .chatUs {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .faqs {
+    padding: 12px;
+  }
+
+  .chatUsTitle {
+    font-size: 15px;
+  }
+
+  .chatUsDescription {
+    font-size: 12px;
+  }
+
+  .chatUsButton {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .officeAddressSection {
+    margin-top: 1rem;
+  }
+
+  .officeCard {
+    padding: 0.85rem;
+    border-radius: 10px;
+  }
+
+  .officeCountry {
+    font-size: 13px;
+  }
+
+  .officeAddress {
+    font-size: 12px;
+  }
+
+  .contactUsDetail p,
+  .contactUsDetail span {
+    font-size: 12px;
+  }
+}
+
+/* 375px and below */
+@media (max-width: 375px) {
+  .contactUsSection {
+    padding: 0 8px;
+  }
+
+  .contactUsContent {
+    padding: 15px 5px;
+  }
+
+  .contactUsTitle {
+    font-size: 20px;
+  }
+
+  .contactUsSubtitle {
+    font-size: 13px;
+  }
+
+  .contactUsDescription {
+    font-size: 12px;
+  }
+
+  .chatUs {
+    padding: 10px;
+  }
+
+  .faqs {
+    padding: 10px;
+  }
+
+  .chatUsTitle {
+    font-size: 14px;
+  }
+
+  .chatUsDescription {
+    font-size: 11px;
+  }
+
+  .chatUsButton {
+    font-size: 11px;
+    padding: 5px 8px;
+    margin-top: 6px;
+  }
+
+  .officeCard {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .officeBadge {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  .officeCountry {
+    font-size: 13px;
+  }
+
+  .officeAddress {
+    font-size: 11px;
+  }
+
+  .contactUsDetail p,
+  .contactUsDetail span {
+    font-size: 11px;
+  }
+}
