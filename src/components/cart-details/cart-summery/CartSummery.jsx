@@ -33,7 +33,6 @@ const CartSummery = ({
   cartData,
   hideCoupon = false,
 }) => {
-  console.log(cartData, "cartData");
   const router = useRouter();
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
@@ -68,7 +67,6 @@ const CartSummery = ({
     cartData?.coupon?.discount_amount ??
     0;
 
-  console.log(discountAmount, "discountAmount");
   const gstAmount =
     cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
   const shippingAmount =

@@ -13,6 +13,7 @@ import categoryImg4 from "@/assets/category-image/4.png";
 import categoryImg5 from "@/assets/category-image/5.png";
 import categoryImg6 from "@/assets/category-image/6.png";
 import styles from "@/components/wish-list/wishlist-detail/WishlistDetail.module.css";
+import ProductCardShimmer from "@/common-components/product-card/ProductCardShimmer";
 
 const FALLBACK_CATEGORIES = [
   { name: "Safety", slug: "safety", image: categoryImg1 },
@@ -62,20 +63,20 @@ const WishlistDetail = ({
 
   const { data: homeData } = useGetHomeDataQuery();
 
-  const { data: wishlistData, isLoading, isFetching } = useGetWishlistQuery(
-    userId,
-    { skip: !userId }
-  );
+  const {
+    data: wishlistData,
+    isLoading,
+    isFetching,
+  } = useGetWishlistQuery(userId, { skip: !userId });
 
   const wishlistItems = useMemo(
     () => normalizeWishlistItems(wishlistData),
-    [wishlistData]
+    [wishlistData],
   );
 
   const itemCount = wishlistItems.length;
   const hasItems = itemCount > 0;
-  const showEmpty =
-    isMounted && !hasItems && !isLoading && !isFetching;
+  const showEmpty = isMounted && !hasItems && !isLoading && !isFetching;
 
   const trendingCategories = useMemo(() => {
     const fromApi = homeData?.data?.categories;
@@ -94,9 +95,11 @@ const WishlistDetail = ({
   return (
     <section className={styles.wishlistPanel}>
       <div className={styles.pageHeader}>
-        {title && <h1 className={styles.pageTitle}>
-          {title} ({itemCount} {itemLabel})
-        </h1>}
+        {title && (
+          <h1 className={styles.pageTitle}>
+            {title} ({itemCount} {itemLabel})
+          </h1>
+        )}
       </div>
 
       {showEmpty && (
@@ -114,9 +117,7 @@ const WishlistDetail = ({
 
           <div className={styles.emptyContent}>
             <h2 className={styles.emptyTitle}>{emptyTitle}</h2>
-            <p className={styles.emptyText}>
-              {emptyText}
-            </p>
+            <p className={styles.emptyText}>{emptyText}</p>
             <Link href={shopBtnHref} className={styles.shopBtn}>
               {shopBtnText}
             </Link>
@@ -124,39 +125,47 @@ const WishlistDetail = ({
         </div>
       )}
 
-      {hasItems && (
+      {isLoading || isFetching ? (
         <div className={styles.productsSection}>
           <div className={styles.productsGrid}>
-            {wishlistItems.map((item) => {
-              const product = item?.product ?? item;
-              return (
-                <ProductCard
-                  key={item?.id ?? product?.id}
-                  type="productPage"
-                  image={product?.thumbnail ?? product?.gallery?.[0]}
-                  imageHover={
-                    product?.gallery?.[1] ?? product?.gallery?.[0]
-                  }
-                  discount={product?.discount}
-                  isBestSeller={product?.is_best_selling}
-                  isTrending={product?.is_trending}
-                  isFeatured={product?.is_featured}
-                  isTopRated={product?.is_top_rated}
-                  name={product?.name}
-                  price={product?.selling_price}
-                  oldPrice={product?.price}
-                  reviews={
-                    product?.reviews?.length ?? product?.total_reviews ?? 0
-                  }
-                  rating={product?.rating ?? "4.5"}
-                  slug={product?.slug}
-                  productId={product?.id}
-                  path="/wishlist"
-                />
-              );
-            })}
+            {Array.from({ length: 4 }).map((_, index) => (
+              <ProductCardShimmer key={index} />
+            ))}
           </div>
         </div>
+      ) : (
+        hasItems && (
+          <div className={styles.productsSection}>
+            <div className={styles.productsGrid}>
+              {wishlistItems.map((item) => {
+                const product = item?.product ?? item;
+                return (
+                  <ProductCard
+                    key={item?.id ?? product?.id}
+                    type="productPage"
+                    image={product?.thumbnail ?? product?.gallery?.[0]}
+                    imageHover={product?.gallery?.[1] ?? product?.gallery?.[0]}
+                    discount={product?.discount}
+                    isBestSeller={product?.is_best_selling}
+                    isTrending={product?.is_trending}
+                    isFeatured={product?.is_featured}
+                    isTopRated={product?.is_top_rated}
+                    name={product?.name}
+                    price={product?.selling_price}
+                    oldPrice={product?.price}
+                    reviews={
+                      product?.reviews?.length ?? product?.total_reviews ?? 0
+                    }
+                    rating={product?.rating ?? "4.5"}
+                    slug={product?.slug}
+                    productId={product?.id}
+                    path="/wishlist"
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )
       )}
 
       <div className={styles.trendingSection}>
@@ -165,11 +174,7 @@ const WishlistDetail = ({
           {trendingCategories.map((category) => (
             <Link
               key={category?.slug ?? category?.name}
-              href={
-                category?.slug
-                  ? `/product-category/${category.slug}`
-                  : "#"
-              }
+              href={category?.slug ? `/product-category/${category.slug}` : "#"}
               className={styles.categoryCard}
             >
               <div className={styles.categoryImageWrap}>

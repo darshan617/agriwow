@@ -135,6 +135,10 @@ const VerifyOtp = ({ phone, handleVerify, isLoading }) => {
           className={`${styles.pwBtn}`}
           onClick={onVerifyClick}
           disabled={isLoading || !isComplete}
+          style={{
+            opacity: isLoading || !isComplete ? 0.5 : 1,
+            cursor: isLoading || !isComplete ? "not-allowed" : "pointer",
+          }}
         >
           {isLoading ? "VERIFYING..." : "VERIFY OTP"}
         </button>
