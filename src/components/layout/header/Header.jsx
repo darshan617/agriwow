@@ -467,14 +467,34 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   useEffect(() => {
     if (!menuOpen) return;
+
     const onKeyDown = (e) => {
       if (e.key === "Escape") closeMenu();
     };
+
+    const scrollY = window.scrollY;
+    const { documentElement } = document;
+    const prevHtmlOverflow = documentElement.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevBodyPosition = document.body.style.position;
+    const prevBodyTop = document.body.style.top;
+    const prevBodyWidth = document.body.style.width;
+
     document.addEventListener("keydown", onKeyDown);
+    documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      document.body.style.position = prevBodyPosition;
+      document.body.style.top = prevBodyTop;
+      document.body.style.width = prevBodyWidth;
+      window.scrollTo(0, scrollY);
     };
   }, [menuOpen]);
 
@@ -860,7 +880,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link href="/cart">
                 <FaShoppingCart size={21} />
               </Link>
-              <span className={styles.badge}>{cartItems?.length ?? 0}</span>
+              {cartItems?.length > 0 && (
+                <span className={`${styles.badge}`}>{cartItems?.length}</span>
+              )}
             </button>
             <button
               type="button"
@@ -915,7 +937,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           {NAV_LINKS?.map((item) => {
             const isActive = isNavLinkActive(item, router.asPath);
             return item?.label === "Products" ? (
-              <div key={item?.label} className={styles.drawerNavItem}>
+              <div
+                key={item?.label}
+                className={`${styles.drawerNavItem} ${productsExpanded ? styles.drawerNavItemExpanded : ""}`}
+              >
                 <button
                   type="button"
                   className={`${styles.drawerProductsToggle} ${productsExpanded ? styles.drawerProductsToggleOpen : ""} ${isActive ? styles.navLinkActive : ""}`}

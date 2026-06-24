@@ -453,6 +453,14 @@
   margin-top: -20px;
 }
 
+
+.noProductsFound{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
 @media (max-width: 1500px) {
   .productsTitle {
     font-size: 35px;
