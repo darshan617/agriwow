@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
 import OrderInformation from "@/components/product-category/components/order-information/OrderInformation";
-import styles from "@/components/cart-details/cart-summery/CartSummery.module.css"
+import styles from "@/components/cart-details/cart-summery/CartSummery.module.css";
 import Cookies from "js-cookie";
 import {
   getCartSessionId,
@@ -29,9 +29,12 @@ const Cart = () => {
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
 
-  const { data: cartData, isLoading } = useGetCartDataQuery(undefined, {
-    skip: !canFetchCart,
-  });
+  const { data: cartData, isLoading: isCartLoading } = useGetCartDataQuery(
+    undefined,
+    {
+      skip: !canFetchCart,
+    },
+  );
   const { data: homeData } = useGetHomeDataQuery();
   const [cachedTrendingProducts, setCachedTrendingProducts] = useState([]);
 
@@ -125,7 +128,6 @@ const Cart = () => {
             <CartDetails
               cartData={cartData}
               cartItems={cartItems}
-              isLoading={isLoading}
               getQuantity={getQuantity}
               onIncrease={handleIncrease}
               onDecrease={handleDecrease}
@@ -135,6 +137,7 @@ const Cart = () => {
                 setCouponCode("");
               }}
               handleUpdateCart={handleUpdateCart}
+              isLoadingData={isCartLoading}
             />
           </div>
           {cartItems?.length > 0 && (
