@@ -44,6 +44,7 @@ const CartDetails = ({
   onBuyNowRemoved = () => {},
   cartData = {},
   setShowAddressForm = () => {},
+  isLoadingData = false,
 }) => {
   const router = useRouter();
   const { showToast } = useToast();
@@ -89,6 +90,7 @@ const CartDetails = ({
           phone: phone,
         },
       });
+      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
       }
@@ -120,7 +122,6 @@ const CartDetails = ({
               console.error("Cart merge failed", mergeError);
             }
           }
-
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
           setShowPopup("");
@@ -233,7 +234,7 @@ const CartDetails = ({
           </div>
         )} */}
 
-        {cartItems?.length === 0 && (
+        {!isLoadingData && router?.isReady && cartItems?.length === 0 && (
           <div className={styles.emptySection}>
             <div className={styles.emptyVisual}>
               <Image
@@ -268,110 +269,121 @@ const CartDetails = ({
           </div>
         )}
 
-        {cartItems?.map((item) => {
-          const itemKey = getItemKey(item);
-          const qty = getQuantity ? getQuantity(item) : item.quantity;
+        {isLoadingData ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "300px" }}
+          >
+            <div className="spinner-border text-success" role="status">
+              <span className="visually-hidden">Loading Products...</span>
+            </div>
+          </div>
+        ) : (
+          cartItems?.map((item) => {
+            const itemKey = getItemKey(item);
+            const qty = getQuantity ? getQuantity(item) : item.quantity;
 
-          return (
-            <div className={styles.productCartWrapper} key={itemKey}>
-              <div className={styles.productCartRow}>
-                <div className={styles.productCartInfo}>
-                  <Image
-                    src={item.product.thumbnail}
-                    alt="product-img"
-                    className={styles.productImg}
-                    width={62}
-                    height={62}
-                  />
+            return (
+              <div className={styles.productCartWrapper} key={itemKey}>
+                <div className={styles.productCartRow}>
+                  <div className={styles.productCartInfo}>
+                    <Image
+                      src={item.product.thumbnail}
+                      alt="product-img"
+                      className={styles.productImg}
+                      width={62}
+                      height={62}
+                    />
 
-                  <div className={styles.productCartContent}>
-                    <h4 className={styles.productCartName}>
-                      <Link href={`/product-details/${item?.product?.slug}`}>
-                        {item?.product?.name}
-                      </Link>{" "}
-                    </h4>
-                    <span>SKU: {item?.product?.sku}</span>
-                    {item?.coupon_applicable && (
-                      <p
-                        className="fs-12 small"
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "400",
-                          color: "#2d8d2f",
+                    <div className={styles.productCartContent}>
+                      <h4 className={styles.productCartName}>
+                        <Link href={`/product-details/${item?.product?.slug}`}>
+                          {item?.product?.name}
+                        </Link>{" "}
+                      </h4>
+                      <span>SKU: {item?.product?.sku}</span>
+                      {item?.coupon_applicable && (
+                        <p
+                          className="fs-12 small"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            color: "#2d8d2f",
+                          }}
+                        >
+                          {item?.coupon_code} (You save ₹{" "}
+                          {item?.coupon_discount} on this product)
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.productCartPrice}>
+                    ₹ {item?.product?.selling_price}
+                  </div>
+
+                  <div className={styles.productCartQuantity}>
+                    {qty === 1 ? (
+                      <button
+                        className={styles.productCartDelete}
+                        onClick={() =>
+                          isBuyNowFlow
+                            ? handleRemoveBuyNow(itemKey)
+                            : handleRemoveFromCart(item.id)
+                        }
+                      >
+                        <ImBin />
+                      </button>
+                    ) : (
+                      <button
+                        className={styles.productCartDelete}
+                        onClick={() => {
+                          onDecrease(itemKey, qty);
+                          if (isBuyNowFlow) {
+                            handleUpdateCartForBuyNow(itemKey, qty - 1);
+                          } else {
+                            handleUpdateCart(
+                              item?.id || item?.product?.id,
+                              qty - 1,
+                            );
+                          }
                         }}
                       >
-                        {item?.coupon_code} (You save ₹ {item?.coupon_discount}{" "}
-                        on this product)
-                      </p>
+                        -
+                      </button>
                     )}
-                  </div>
-                </div>
 
-                <div className={styles.productCartPrice}>
-                  ₹ {item?.product?.selling_price}
-                </div>
+                    <span className={styles.productCartCount}>{qty}</span>
 
-                <div className={styles.productCartQuantity}>
-                  {qty === 1 ? (
                     <button
-                      className={styles.productCartDelete}
-                      onClick={() =>
-                        isBuyNowFlow
-                          ? handleRemoveBuyNow(itemKey)
-                          : handleRemoveFromCart(item.id)
-                      }
-                    >
-                      <ImBin />
-                    </button>
-                  ) : (
-                    <button
-                      className={styles.productCartDelete}
+                      className={styles.productCartPlus}
                       onClick={() => {
-                        onDecrease(itemKey, qty);
+                        onIncrease(itemKey, qty);
                         if (isBuyNowFlow) {
-                          handleUpdateCartForBuyNow(itemKey, qty - 1);
+                          handleUpdateCartForBuyNow(itemKey, qty + 1);
                         } else {
                           handleUpdateCart(
                             item?.id || item?.product?.id,
-                            qty - 1,
+                            qty + 1,
                           );
                         }
                       }}
                     >
-                      -
+                      +
                     </button>
-                  )}
+                  </div>
 
-                  <span className={styles.productCartCount}>{qty}</span>
-
-                  <button
-                    className={styles.productCartPlus}
-                    onClick={() => {
-                      onIncrease(itemKey, qty);
-                      if (isBuyNowFlow) {
-                        handleUpdateCartForBuyNow(itemKey, qty + 1);
-                      } else {
-                        handleUpdateCart(
-                          item?.id || item?.product?.id,
-                          qty + 1,
-                        );
-                      }
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-
-                <div className={styles.productCartSubtotal}>
-                  <h5>₹ {item?.product?.selling_price * qty}</h5>
-                  {item?.product?.discount > 0 && (
-                    <span>You save ₹ {item?.product?.discount * qty}</span>
-                  )}
+                  <div className={styles.productCartSubtotal}>
+                    <h5>₹ {item?.product?.selling_price * qty}</h5>
+                    {item?.product?.discount > 0 && (
+                      <span>You save ₹ {item?.product?.discount * qty}</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
 
         {cartItems?.length > 0 && !hideCheckoutButton && (
           <>
@@ -472,7 +484,7 @@ const CartDetails = ({
         )}
       </div>
       {showPopup === "login" && (
-        <CustomPopup onclose={() => setShowPopup("")}>
+        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
           <Login
             handleLogin={handleLogin}
             phone={phone}
@@ -482,7 +494,7 @@ const CartDetails = ({
         </CustomPopup>
       )}
       {showPopup === "verify-otp" && (
-        <CustomPopup onclose={() => setShowPopup("")}>
+        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
           <VerifyOtp
             handleVerify={handleVerify}
             phone={phone}

@@ -278,7 +278,6 @@ const Checkout = () => {
                 // hideBreadcrumb
                 // hideCheckoutButton
                 cartItems={cartItems}
-                isLoading={isCartLoading || isBuyProductLoading}
                 getQuantity={getQuantity}
                 getItemKey={getItemKey}
                 isBuyNowFlow={isBuyNowFlow}
@@ -291,6 +290,7 @@ const Checkout = () => {
                 }}
                 handleUpdateCart={handleUpdateCart}
                 onBuyNowRemoved={handleBuyNowRemoved}
+                isLoadingData={isCartLoading || isBuyProductLoading}
               />
             </div>
           </div>
