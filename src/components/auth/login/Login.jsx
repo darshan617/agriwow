@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import {
   getCartSessionId,
   useMergeCartMutation,
