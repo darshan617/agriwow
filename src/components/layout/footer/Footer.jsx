@@ -174,10 +174,7 @@ const Footer = () => {
                     </li>
 
                     <li>
-                      <Link href="/my-order">Track My Order</Link>
-                    </li>
-                    <li>
-                      <Link href="#">Buying Guide</Link>
+                      <Link href="#">Track My Order</Link>
                     </li>
                   </ul>
                 </nav>
@@ -185,15 +182,13 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Customer Service</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="#">Order Tracking</Link>
+                      <Link href="/my-order">My Order</Link>
                     </li>
                     <li>
                       <Link href="/cancellation-return-policy">
                         Cancellation and Return
                       </Link>
                     </li>
-                    <li>{/* <Link href="#">Refund</Link> */}</li>
-                    <li>{/* <Link href="#">Payment Option</Link> */}</li>
                   </ul>
                 </nav>
               </div>

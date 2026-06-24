@@ -13,7 +13,6 @@ const reviewApi = apiSlice.injectEndpoints({
           headers: {
             ...(userToken && {
               Authorization: `Bearer ${userToken}`,
-              // "Content-Type": "application/json",
             }),
           },
           body,
@@ -79,7 +78,6 @@ const reviewApi = apiSlice.injectEndpoints({
       invalidatesTags: ["reviews", "product"],
     }),
   }),
-  // overrideExisting: true,
 });
 
 export const {

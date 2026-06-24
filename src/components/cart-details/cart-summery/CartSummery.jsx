@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import NoCoupon from "@/assets/icon/No-coupon.png";
 import styles from "@/components/cart-details/cart-summery/CartSummery.module.css";
 import Image from "next/image";
-import Cookies from "js-cookie";
 import {
-  getCartSessionId,
   useApplyCouponMutation,
   useGetAvailableCouponsQuery,
-  useGetCartDataQuery,
   useRemoveCouponMutation,
   useUpdateCartMutation,
 } from "@/redux/apis/addToCartApi";
@@ -20,7 +17,6 @@ import {
   useVerifyPaymentMutation,
 } from "@/redux/apis/buyProductApi";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 
 const CartSummery = ({
@@ -71,7 +67,6 @@ const CartSummery = ({
     cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
   const shippingAmount =
     cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
-  // const totalAmount = subtotal + gstAmount + shippingAmount - discountAmount;
   const totalAmount = subtotal - discountAmount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
@@ -219,11 +214,6 @@ const CartSummery = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (cartData?.coupon?.code) {
-  //     setCouponCode(cartData?.coupon?.code);
-  //   }
-  // }, []);
   useEffect(() => {
     if (!cartData) return;
     if (cartData.coupon?.code) {
@@ -245,10 +235,6 @@ const CartSummery = ({
             <span>Subtotal</span>
             <span>₹ {subtotal.toFixed(2)}</span>
           </div>
-          {/* <div className={`${styles.summaryRow}`}>
-            <span>GST(18%)</span>
-            <span>₹ {gstAmount.toFixed(2)}</span>
-          </div> */}
           {(discountAmount || cartData?.coupon?.discount_amount) > 0 && (
             <div className={`${styles.summaryRow}`}>
               <span>Discount</span>
@@ -271,10 +257,6 @@ const CartSummery = ({
               </span>
             </div>
           )}
-          {/* <div className={`${styles.summaryRow}`}>
-            <span>Shipping</span>
-            <span>₹ {shippingAmount.toFixed(2)}</span>
-          </div> */}
           {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
@@ -383,9 +365,6 @@ const CartSummery = ({
                         </p>
                       </div>
                     </div>
-                    {/* <span className={styles.arrow}>
-                      <MdOutlineKeyboardArrowRight size={30} />
-                    </span> */}
                   </button>
                 )}
                 {selectedPaymentMethod === "full" && (
@@ -408,9 +387,6 @@ const CartSummery = ({
                         {/* <p>₹ {cartTotal}</p> */}
                       </div>
                     </div>
-                    {/* <span className={styles.arrow}>
-                      <MdOutlineKeyboardArrowRight size={30} />
-                    </span> */}
                   </button>
                 )}
               </div>
@@ -453,12 +429,6 @@ const CartSummery = ({
             >
               {isLoading ? "Applying..." : "Apply"}
             </button>
-            {/* <button
-            className={`${styles.removeCouponBtn}`}
-            onClick={handleRemoveCoupon}
-          >
-            Remove Coupon
-          </button> */}
           </div>
 
           {availableCoupons?.data?.length > 0 ? (
@@ -490,10 +460,6 @@ const CartSummery = ({
               />
             </div>
           )}
-
-          {/* <button type="button" className={`${styles.viewAllBtn} `}>
-          View All Coupons & Offers
-        </button> */}
         </div>
       )}
       {showPopup === "payment" && (

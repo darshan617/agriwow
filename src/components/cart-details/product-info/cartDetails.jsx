@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/components/cart-details/product-info/cartDetails.module.css";
 import Link from "next/link";
-import { FaCircleCheck } from "react-icons/fa6";
-import { RxCross2 } from "react-icons/rx";
 import { ImBin } from "react-icons/im";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Image from "next/image";
@@ -20,12 +18,9 @@ import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
 import {
-  usePlaceOrderMutation,
   useRemoveBuyNowMutation,
   useUpdateBuyNowMutation,
-  useVerifyPaymentMutation,
 } from "@/redux/apis/buyProductApi";
-import ProductCard from "@/common-components/product-card/ProductCard";
 
 const CartDetails = ({
   similar_products = [],
@@ -165,7 +160,6 @@ const CartDetails = ({
         },
       });
       if (res?.data?.success || res?.data?.status) {
-        // showToast(res?.data?.message, "success");
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -438,51 +432,6 @@ const CartDetails = ({
               </Link>
             ) : (
               ""
-              // <div className="d-flex justify-content-end mt-3 gap-3">
-              //   <button
-              //     type="button"
-              //     className={styles.checkoutBtn}
-              //     onClick={() =>
-              //       handlePlaceOrder(
-              //         router?.query?.productId ? "buy_now" : "cart",
-              //         "partial",
-              //         cartData?.selected_address?.id,
-              //       )
-              //     }
-              //   >
-              //     <div>
-              //       <div>
-              //         <span>Partial Payment (30%)</span>
-              //         {/* <p>₹ {(cartTotal * 0.3).toFixed(2)}</p> */}
-              //       </div>
-              //     </div>
-              //     <span className={styles.arrow}>
-              //       <MdOutlineKeyboardArrowRight size={30} />
-              //     </span>
-              //   </button>
-
-              //   <button
-              //     type="button"
-              //     className={styles.checkoutBtn}
-              //     onClick={() =>
-              //       handlePlaceOrder(
-              //         router?.query?.productId ? "buy_now" : "cart",
-              //         "full",
-              //         cartData?.selected_address?.id,
-              //       )
-              //     }
-              //   >
-              //     <div>
-              //       <div>
-              //         <span> Full Payment</span>
-              //         {/* <p>₹ {cartTotal}</p> */}
-              //       </div>
-              //     </div>
-              //     <span className={styles.arrow}>
-              //       <MdOutlineKeyboardArrowRight size={30} />
-              //     </span>
-              //   </button>
-              // </div>
             )}
           </>
         )}
@@ -506,23 +455,6 @@ const CartDetails = ({
           />
         </CustomPopup>
       )}
-      {/* {showPopup === "payment" && (
-        <CustomPopup onclose={() => setShowPopup("")} closeIcon={false}>
-          <div>
-            <div className="d-flex justify-content-center mb-3">
-              <div className="spinner-border text-success" role="status">
-                <span className="visually-hidden">
-                  Verifying Your Payment...
-                </span>
-              </div>
-            </div>
-            <p className="text-center m-0 fs-4">
-              {" "}
-              Verifying Your Payment. Please wait...{" "}
-            </p>
-          </div>
-        </CustomPopup>
-      )} */}
     </>
   );
 };

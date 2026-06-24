@@ -751,6 +751,10 @@
     .introContent {
         text-align: left;
     }
+
+    .tabList {
+        flex-wrap: nowrap;
+    }
 }
 
 @media (max-width: 425px) {

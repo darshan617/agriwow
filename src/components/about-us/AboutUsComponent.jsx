@@ -85,7 +85,7 @@ const AboutUsComponent = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 680px)");
     setIsMobile(mq.matches);
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
@@ -233,7 +233,7 @@ const AboutUsComponent = () => {
             ) : (
               <div className="row g-4">
                 {storyTags.map((tag, index) => (
-                  <div key={tag} className="col-md-4">
+                  <div key={tag} className="col-lg-4 col-md-4">
                     <div className={styles.statItem}>
                       <span className={styles.statIcon}>
                         {getStatIcon(index)}

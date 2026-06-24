@@ -41,15 +41,12 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
       {type === "blog-detail" && (
         <form
           className={styles.searchForm}
-          // onSubmit={(e) => e.preventDefault()}
           role="search"
         >
           <input
             type="search"
             className={styles.searchInput}
             placeholder="Search for Blogs..."
-            // value={searchQuery}
-            // onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search blogs"
           />
           <button

@@ -8,7 +8,6 @@ import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 import Cookies from "js-cookie";
 
 const PRICE_MIN_BOUND = 1000;
-// const PRICE_MAX_BOUND = 200000;
 const PRICE_STEP = 1000;
 
 function formatPrice(value) {
