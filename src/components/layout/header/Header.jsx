@@ -40,7 +40,6 @@ import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 const TRENDING_SEARCHES = [
   { label: "Fogging Machines", href: "/product-category/fogging-machines" },
-  // {label: "Garden Equipment", href: "/product-category/garden-tools"},
   {
     label: "Agriculture Sprayers",
     href: "/product-category/agriculture-sprayers",
@@ -201,7 +200,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setSearchOpen(false);
     setMobileSearchOpen(false);
   };
-  // const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
 
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
@@ -209,7 +207,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
-  // const isLoggedIn = Object.keys(userData).length > 0;
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
   const { openLoginPopup, isLoggedIn } = useLoginPopup();
   useEffect(() => {
@@ -244,69 +241,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   const clearHistory = () => persistHistory([]);
 
-  // // login ====================
-  // const handleLogin = async () => {
-  //   if (!phone || !/^[0-9]+$/.test(phone)) {
-  //     showToast("Please enter a valid phone number", "error");
-  //     return;
-  //   }
-  //   try {
-  //     const res = await auth({
-  //       body: {
-  //         phone: phone,
-  //       },
-  //     });
-  //     if (res?.data?.success || res?.data?.status) {
-  //       setShowPopup("verify-otp");
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "error");
-  //   }
-  // };
-
-  // // otp verify ===================
-  // const handleVerify = async (otp) => {
-  //   try {
-  //     const res = await verifyOtp({
-  //       body: {
-  //         otp: otp,
-  //         phone: phone,
-  //       },
-  //     });
-  //     console.log(res, "res");
-  //     if (res?.data?.success || res?.data?.status) {
-  //       if (res?.data?.token) {
-  //         Cookies.set("userData", JSON.stringify(res?.data?.user));
-  //         Cookies.set("userToken", res?.data?.token);
-
-  //         const sessionId = getCartSessionId();
-  //         if (sessionId) {
-  //           try {
-  //             await mergeCart({
-  //               body: { session_id: sessionId },
-  //             }).unwrap();
-  //           } catch (mergeError) {
-  //             console.error("Cart merge failed", mergeError);
-  //           }
-  //         }
-
-  //         showToast(res?.data?.message, "success");
-  //         setShowPopup("");
-  //         setPhone("");
-  //         router?.reload();
-  //       } else {
-  //         console.error("OTP verification failed", res?.error);
-  //       }
-  //     } else {
-  //       showToast(res?.error?.data?.message, "error");
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "error");
-  //     showToast(error?.data?.message || "Failed to verify OTP", "error");
-  //   }
-  // };
-
-  //logout ==============
   const handleLogout = async () => {
     try {
       await logout().unwrap();

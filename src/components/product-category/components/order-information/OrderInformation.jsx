@@ -9,7 +9,6 @@ import { useGetOrderInfoQuery } from "@/redux/apis/orderInfoApi";
 
 const OrderInformation = () => {
   const { data: orderInfoData } = useGetOrderInfoQuery();
-  console.log(orderInfoData, "----orderInfoData");
   const orderInfo = orderInfoData?.data || [];
   return (
     <div>
@@ -21,7 +20,7 @@ const OrderInformation = () => {
                 <div key={item?.id} className="col-md-4">
                     <div className={`${styles.orderInformationContent}`}>
                       <Image
-                        src={shipping}
+                        src={item?.icon}
                         alt="Shipping"
                         width={60}
                         height={60}

@@ -78,14 +78,6 @@ const ContactUs = ({ contactDetailsData }) => {
                       </Link>
                     </div>
                   </div>
-                  {/* <div className={`${styles.chatUsGif}`}>
-                    <Image
-                      src={chatUsGif}
-                      alt="Chat Us"
-                      width={100}
-                      height={100}
-                    />
-                  </div> */}
                 </div>
               </div>
               <div className={`${styles.faqsContent} col-lg-6 col-md-6`}>
