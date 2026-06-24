@@ -90,6 +90,7 @@ const CartSummery = ({
       body: {
         coupon_code: couponCode.trim(),
         subtotal,
+        source: router?.query?.productId ? "buy_now" : "cart",
       },
     });
 
