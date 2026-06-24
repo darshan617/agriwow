@@ -490,7 +490,7 @@
 
   .ddDeliveryPanel {
     border-radius: 8px;
-    padding: 10px;
+    padding: 20px;
   }
 }
 
@@ -521,13 +521,13 @@
 
 }
 
-@media(max-width: 480px){
+@media(max-width: 480px) {
   .ddCard {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     justify-content: center;
     margin-top: 20px;
-    }
+  }
 
 }

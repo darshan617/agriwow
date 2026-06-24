@@ -1,0 +1,595 @@
+.breadcrumb {
+  height: 20px;
+  width: 280px;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.itemDetail {
+  padding: 0;
+}
+
+.imageDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.mainImage {
+  width: 100%;
+  height: 480px;
+  border-radius: 8px;
+}
+
+.thumbRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.thumbItem {
+  flex: 1;
+  height: 68px;
+  border-radius: 6px;
+  min-width: 0;
+}
+
+.productInfo {
+  padding-left: 24px;
+}
+
+.productTitle {
+  height: 22px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.productTitleShort {
+  height: 22px;
+  width: 75%;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.priceSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #eaebeb;
+  margin-bottom: 16px;
+}
+
+.priceLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.currentPrice {
+  height: 28px;
+  width: 180px;
+  border-radius: 4px;
+}
+
+.mrpLine {
+  height: 18px;
+  width: 140px;
+  border-radius: 4px;
+}
+
+.discountBadge {
+  height: 18px;
+  width: 70px;
+  border-radius: 4px;
+}
+
+.boughtRow {
+  height: 36px;
+  width: 240px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.stockBadge {
+  height: 32px;
+  width: 80px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.couponBar {
+  height: 52px;
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.aboutSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionHeading {
+  height: 20px;
+  width: 160px;
+  border-radius: 4px;
+}
+
+.subHeading {
+  height: 16px;
+  width: 130px;
+  border-radius: 4px;
+}
+
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.featureLine {
+  height: 14px;
+  width: 90%;
+  border-radius: 4px;
+}
+
+.featureLine:nth-child(2) {
+  width: 85%;
+}
+
+.featureLine:nth-child(3) {
+  width: 70%;
+}
+
+.specTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.specLabel,
+.specValue {
+  height: 38px;
+  border-radius: 0;
+}
+
+.descriptionLine {
+  height: 14px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.descriptionLineShort {
+  height: 14px;
+  width: 80%;
+  border-radius: 4px;
+}
+
+.readMoreBtn {
+  height: 16px;
+  width: 80px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.policiesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #ddefb2;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.policyItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 10px;
+  border-right: 2px dashed #ffffff;
+}
+
+.policyItem:last-child {
+  border-right: none;
+}
+
+.policyIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.policyLabel {
+  height: 12px;
+  width: 70px;
+  border-radius: 4px;
+}
+
+.deliveryCard {
+  margin-left: 10px;
+  background: #f2f2f2;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: sticky;
+  top: 100px;
+}
+
+.deliveryPriceSection {
+  padding: 30px;
+}
+
+.ddBadge {
+  height: 22px;
+  width: 70px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.ddPrice {
+  height: 30px;
+  width: 200px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.ddSaveLine {
+  height: 16px;
+  width: 120px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.ddQtyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ddQtyLabel {
+  height: 18px;
+  width: 80px;
+  border-radius: 4px;
+}
+
+.ddQtyControl {
+  height: 36px;
+  width: 120px;
+  border-radius: 8px;
+}
+
+.ddBtn {
+  height: 46px;
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.ddSecure {
+  height: 14px;
+  width: 220px;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.deliveryPanel {
+  background: linear-gradient(to bottom, #cae37a, #e6f5cc, #e6f5cc);
+  border-top: 1.5px solid #c6f6d5;
+  padding: 30px;
+}
+
+.ddPanelTitle {
+  height: 18px;
+  width: 130px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.ddPincodeRow {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+}
+
+.ddPincodeInput {
+  flex: 1;
+  height: 44px;
+  border-radius: 8px 0 0 8px;
+}
+
+.ddUpdateBtn {
+  width: 90px;
+  height: 44px;
+  border-radius: 8px;
+  margin-left: -8px;
+}
+
+.ddInfoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ddInfoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ddInfoIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.ddInfoText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ddInfoTitle {
+  height: 14px;
+  width: 90%;
+  border-radius: 4px;
+}
+
+.ddInfoDesc {
+  height: 12px;
+  width: 70%;
+  border-radius: 4px;
+}
+
+.mobileStickyActions {
+  display: none;
+}
+
+.mobileStickyBtn {
+  flex: 1;
+  height: 48px;
+  border-radius: 6px;
+}
+
+@media (max-width: 1024px) {
+  .itemDetail {
+    padding: 0 16px;
+  }
+
+  .imageDetail {
+    width: 40%;
+  }
+
+  .mainImage {
+    height: 360px;
+  }
+
+  .productInfo {
+    width: 60%;
+    padding-left: 20px;
+  }
+
+  .policiesGrid {
+    gap: 8px;
+  }
+
+  .policyLabel {
+    width: 55px;
+  }
+
+  .deliveryPriceSection {
+    padding: 15px;
+  }
+
+  .deliveryPanel {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 991px) {
+  .deliveryCard {
+    position: static;
+    margin-left: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .deliveryPriceSection {
+    display: none;
+  }
+
+  .deliveryPanel {
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .mobileStickyActions {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-top: 1px solid #e8e8e8;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+  }
+
+  .mobileStickyBtn {
+    height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .imageDetail,
+  .productInfo {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .imageDetail {
+    margin-bottom: 20px;
+  }
+
+  .mainImage {
+    height: 320px;
+    max-height: 360px;
+  }
+
+  .thumbItem {
+    height: 60px;
+  }
+
+  .productTitle,
+  .productTitleShort {
+    height: 18px;
+  }
+
+  .priceSection {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stockBadge {
+    align-self: flex-start;
+  }
+
+  .boughtRow {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .policiesGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .policyItem {
+    padding: 12px 6px;
+  }
+
+  .policyLabel {
+    width: 50px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .breadcrumb {
+    width: 200px;
+    height: 16px;
+  }
+
+  .mainImage {
+    height: 280px;
+  }
+
+  .thumbRow {
+    gap: 6px;
+  }
+
+  .thumbItem {
+    height: 52px;
+  }
+
+  .currentPrice {
+    height: 24px;
+    width: 150px;
+  }
+
+  .couponBar {
+    height: 44px;
+  }
+
+  .policiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .policyItem:nth-child(2) {
+    border-right: none;
+  }
+
+  .policyItem:nth-child(1),
+  .policyItem:nth-child(2) {
+    border-bottom: 2px dashed #ffffff;
+  }
+
+  .ddPanelTitle {
+    height: 14px;
+    width: 110px;
+  }
+
+  .ddPincodeInput {
+    height: 38px;
+  }
+
+  .ddUpdateBtn {
+    height: 38px;
+    width: 72px;
+  }
+
+  .ddInfoTitle {
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainImage {
+    height: 350px;
+  }
+
+  .productTitleShort {
+    width: 65%;
+  }
+
+  .featureLine {
+    height: 12px;
+  }
+
+  .specLabel,
+  .specValue {
+    height: 34px;
+  }
+
+  .deliveryPanel {
+    padding: 16px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .mainImage {
+    height: 350px;
+  }
+
+  .thumbItem {
+    height: 48px;
+  }
+
+  .boughtRow {
+    height: 32px;
+  }
+}

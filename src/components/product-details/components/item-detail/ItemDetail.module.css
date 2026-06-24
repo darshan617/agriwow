@@ -702,6 +702,7 @@
 }
 
 @media (max-width: 575px) {
+
   /* .itemDetail {
       padding: 10px;
     } */
@@ -727,6 +728,7 @@
     height: 24px;
     font-size: 14px;
   }
+
   .productSpecificationsTable tr:nth-child(odd) td {
     font-size: 12px;
   }
@@ -743,6 +745,7 @@
   .oldPrice {
     font-size: 13px;
   }
+
   .couponText {
     font-size: 13px;
   }
@@ -786,6 +789,7 @@
   .policiesGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    padding: 10px;
   }
 
   .policyItem {
@@ -797,51 +801,62 @@
     font-size: 12px;
     padding: 6px 12px;
   }
+
   .stockStatusText {
     margin-top: 10px;
   }
 }
 
 @media (max-width: 480px) {
+
   .imageDetail,
   .productInfo {
     width: 100%;
     padding: 0 10px;
   }
+
   .mrpText {
     display: flex;
     gap: 5px;
     align-items: center;
   }
+
   .productReviewCountValue,
   .productReviewCountText {
     font-size: 12px;
   }
+
   .discountText,
   .peopleBought {
     font-size: 12px;
   }
+
   .aboutProductList li {
     font-size: 12px;
   }
+
   .aboutProductList {
     padding-left: 14px;
     margin: 0;
   }
+
   .showAllButton {
     font-size: 12px;
     padding: 0;
     margin: 6px 0;
   }
+
   .productInfoPopup {
     padding: 25px 14px;
     max-height: 250px;
     min-height: 450px;
   }
+
   .productInfoPopupTab {
     padding: 5px;
     font-size: 13px;
   }
+
   .productInfoPopupDetails {
     font-size: 12px;
   }
