@@ -182,11 +182,6 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Customer Service</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/cancellation-return-policy">
-                        Cancellation and Return
-                      </Link>
-                    </li>
-                    <li>
                       <Link href="/shipping-return">
                         Shipping &amp; Delivery Policy
                       </Link>
