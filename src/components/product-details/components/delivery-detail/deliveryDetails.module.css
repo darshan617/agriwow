@@ -219,7 +219,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0;
+}
+
+.ddWhatsappIcon {
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .ddSecure {
@@ -311,8 +316,8 @@
 }
 
 .ddInfoIcon {
-  margin-top: 1px;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .ddInfoTitle {
@@ -336,6 +341,13 @@
   font-size: 13px;
   font-weight: 600;
   margin-top: 1px;
+}
+
+
+@media (max-width: 1200px){
+.ddWhatsappText{
+  font-size: 13px;
+}
 }
 
 @media (max-width: 1024px) {
@@ -375,7 +387,7 @@
     font-weight: 600;
     font-size: 13px;
     margin-bottom: 6px;
-    gap: 4px;
+    gap: 0;
   }
 
   .ddSecure {
@@ -485,7 +497,7 @@
     font-weight: 600;
     font-size: 13px;
     margin-bottom: 6px;
-    gap: 4px;
+    gap: 0;
   }
 
   .ddDeliveryPanel {
@@ -517,6 +529,10 @@
   .ddInfoTitle {
     font-weight: 600;
     font-size: 11px;
+  }
+  .ddStickyActions {
+    padding: 5px;
+    gap: 5px;
   }
 
 }

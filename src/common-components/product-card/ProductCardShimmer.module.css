@@ -220,7 +220,7 @@
   }
   .addToCartBtn {
     height: 28px;
-    width: 40px;
+    width: 100%;
   }
   .buyNowBtn {
     height: 28px;

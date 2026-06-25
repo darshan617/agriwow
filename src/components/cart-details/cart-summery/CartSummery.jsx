@@ -28,11 +28,13 @@ const CartSummery = ({
   handleUpdateCart,
   cartData,
   hideCoupon = false,
+  setShowAddressForm,
 }) => {
   const router = useRouter();
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("full");
+  const [showAllCoupons, setShowAllCoupons] = useState(false);
 
   const [applyCoupon, { isLoading }] = useApplyCouponMutation();
   const { data: availableCoupons } = useGetAvailableCouponsQuery();
@@ -47,6 +49,13 @@ const CartSummery = ({
     useVerifyPaymentMutation();
   const [removeCoupon, { isLoading: isRemoveCouponLoading }] =
     useRemoveCouponMutation();
+
+  const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
+  const isCheckoutPage = router?.pathname === "/checkout";
+
+  console.log(hasSelectedAddress, "hasSelectedAddress");
+  console.log(isCheckoutPage, "isCheckoutPage");
+  console.log(cartData, "cartData");
 
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
@@ -72,6 +81,13 @@ const CartSummery = ({
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
   );
+
+  const VISIBLE_COUPONS_COUNT = 3;
+  const coupons = availableCoupons?.data ?? [];
+  const visibleCoupons = showAllCoupons
+    ? coupons
+    : coupons.slice(0, VISIBLE_COUPONS_COUNT);
+  const hasMoreCoupons = coupons.length > VISIBLE_COUPONS_COUNT;
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
@@ -276,121 +292,154 @@ const CartSummery = ({
             )}
           </div>
 
-          {router?.pathname === "/checkout" && (
+          {hasSelectedAddress ? (
             <>
-              <hr className={`${styles.divider}`} />
-              <div>
-                <p className="mb-0 fw-semibold fs-14 mb-2">Payment Method</p>
-                <div
-                  className={
-                    selectedPaymentMethod === "partial"
-                      ? styles.paymentWrapper
-                      : styles.paymentWrapperTransparent
-                  }
-                >
-                  <div className="d-flex align-items-center gap-2">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      id="partial-payment"
-                      checked={selectedPaymentMethod === "partial"}
-                      onChange={() => setSelectedPaymentMethod("partial")}
-                    />
-                    <label
-                      htmlFor="partial-payment"
-                      className="w-100"
-                      style={{ cursor: "pointer" }}
+              {isCheckoutPage && (
+                <>
+                  <hr className={`${styles.divider}`} />
+                  <div>
+                    <p className="mb-0 fw-semibold fs-14 mb-2">
+                      Payment Method
+                    </p>
+                    <div
+                      className={
+                        selectedPaymentMethod === "partial"
+                          ? styles.paymentWrapper
+                          : styles.paymentWrapperTransparent
+                      }
                     >
-                      Partial Payment (30%)
-                    </label>
-                  </div>
-                  {selectedPaymentMethod === "partial" && (
-                    <>
-                      <span className={`${styles.paymentWrapperText}`}>
-                        Balance 70% Cash on Delivery
-                      </span>
-                    </>
-                  )}
-                </div>
-                <div
-                  className={
-                    selectedPaymentMethod === "full"
-                      ? styles.paymentWrapper
-                      : styles.paymentWrapperTransparent
-                  }
-                >
-                  <div className="d-flex align-items-center gap-2">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      id="full-payment"
-                      checked={selectedPaymentMethod === "full"}
-                      onChange={() => setSelectedPaymentMethod("full")}
-                    />
-                    <label
-                      htmlFor="full-payment"
-                      className="w-100"
-                      style={{ cursor: "pointer" }}
+                      <div className="d-flex align-items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          id="partial-payment"
+                          checked={selectedPaymentMethod === "partial"}
+                          onChange={() => setSelectedPaymentMethod("partial")}
+                        />
+                        <label
+                          htmlFor="partial-payment"
+                          className={`${styles.paymentWrapperLabel} w-100`}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Partial Payment (30%)
+                        </label>
+                      </div>
+                      {selectedPaymentMethod === "partial" && (
+                        <>
+                          <span className={`${styles.paymentWrapperText}`}>
+                            Balance 70% Cash on Delivery
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div
+                      className={
+                        selectedPaymentMethod === "full"
+                          ? styles.paymentWrapper
+                          : styles.paymentWrapperTransparent
+                      }
                     >
-                      Full Payment (5% OFF)
-                    </label>
+                      <div className="d-flex align-items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          id="full-payment"
+                          checked={selectedPaymentMethod === "full"}
+                          onChange={() => setSelectedPaymentMethod("full")}
+                        />
+                        <label
+                          htmlFor="full-payment"
+                          className={`${styles.paymentWrapperLabel} w-100`}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Full Payment (5% OFF)
+                        </label>
+                      </div>
+                      {selectedPaymentMethod === "full" && (
+                        <>
+                          <span className={`${styles.paymentWrapperText}`}>
+                            Full Payment of ₹{" "}
+                            {(totalAmount - totalAmount * 0.05).toFixed(2)}
+                          </span>
+                        </>
+                      )}
+                    </div>
                   </div>
-                  {selectedPaymentMethod === "full" && (
-                    <>
-                      <span className={`${styles.paymentWrapperText}`}>
-                        Full Payment of ₹{" "}
-                        {(totalAmount - totalAmount * 0.05).toFixed(2)}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
-                {selectedPaymentMethod === "partial" && (
-                  <button
-                    type="button"
-                    className={styles.checkoutBtn}
-                    onClick={() =>
-                      handlePlaceOrder(
-                        router?.query?.productId ? "buy_now" : "cart",
-                        "partial",
-                        cartData?.selected_address?.id,
-                      )
-                    }
-                  >
-                    <div>
-                      <div>
-                        <p className="mb-0 fs-6 fw-semibold text-start text-white">
-                          Proceed to Payment
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                )}
-                {selectedPaymentMethod === "full" && (
-                  <button
-                    type="button"
-                    className={`${styles.checkoutBtn} text-white`}
-                    onClick={() =>
-                      handlePlaceOrder(
-                        router?.query?.productId ? "buy_now" : "cart",
-                        "full",
-                        cartData?.selected_address?.id,
-                      )
-                    }
-                  >
-                    <div>
-                      <div>
-                        <p className="mb-0 fs-6 fw-semibold text-start text-white">
-                          Proceed to Payment
-                        </p>
-                        {/* <p>₹ {cartTotal}</p> */}
-                      </div>
-                    </div>
-                  </button>
-                )}
-              </div>
+                  <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
+                    {selectedPaymentMethod === "partial" && (
+                      <button
+                        type="button"
+                        className={styles.checkoutBtn}
+                        onClick={() =>
+                          handlePlaceOrder(
+                            router?.query?.productId ? "buy_now" : "cart",
+                            "partial",
+                            cartData?.selected_address?.id,
+                          )
+                        }
+                        disabled={!hasSelectedAddress}
+                        style={{
+                          opacity: !hasSelectedAddress ? 0.5 : 1,
+                          cursor: !hasSelectedAddress
+                            ? "not-allowed"
+                            : "pointer",
+                        }}
+                      >
+                        <div>
+                          <div>
+                            <p className="mb-0 fs-6 fw-semibold text-start text-white">
+                              Proceed to Payment
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    )}
+                    {selectedPaymentMethod === "full" && (
+                      <button
+                        type="button"
+                        className={`${styles.checkoutBtn} text-white`}
+                        onClick={() =>
+                          handlePlaceOrder(
+                            router?.query?.productId ? "buy_now" : "cart",
+                            "full",
+                            cartData?.selected_address?.id,
+                          )
+                        }
+                        disabled={!hasSelectedAddress}
+                        style={{
+                          opacity: !hasSelectedAddress ? 0.5 : 1,
+                          cursor: !hasSelectedAddress
+                            ? "not-allowed"
+                            : "pointer",
+                        }}
+                      >
+                        <div>
+                          <div>
+                            <p className="mb-0 fs-6 fw-semibold text-start text-white">
+                              Proceed to Payment
+                            </p>
+                            {/* <p>₹ {cartTotal}</p> */}
+                          </div>
+                        </div>
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
             </>
+          ) : (
+            isCheckoutPage &&
+            !hasSelectedAddress && (
+              <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
+                <button
+                  type="button"
+                  className={styles.checkoutBtn}
+                  onClick={() => setShowAddressForm(true)}
+                >
+                  <span>Add Delivery Address To Proceed</span>
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>
@@ -431,26 +480,39 @@ const CartSummery = ({
             </button>
           </div>
 
-          {availableCoupons?.data?.length > 0 ? (
-            availableCoupons?.data?.map((coupon) => (
-              <div key={coupon?.id} className={`${styles.couponItem}`}>
-                <div>
-                  <p className="m-0">{coupon?.code}</p>
-                  <p
-                    className="fs-12 text-muted small"
-                    style={{ fontSize: "12px", fontWeight: "400" }}
+          {coupons.length > 0 ? (
+            <>
+              {visibleCoupons.map((coupon) => (
+                <div key={coupon?.id} className={`${styles.couponItem}`}>
+                  <div>
+                    <p className="m-0">{coupon?.code}</p>
+                    <p
+                      className="fs-12 text-muted small"
+                      style={{ fontSize: "12px", fontWeight: "400" }}
+                    >
+                      {coupon?.applicability?.apply_on_text}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setCouponCode(coupon?.code)}
+                    className={`${styles.applyBtn}`}
                   >
-                    {coupon?.applicability?.apply_on_text}
-                  </p>
+                    Copy Code <FaCopy />
+                  </button>
                 </div>
+              ))}
+              {hasMoreCoupons && (
                 <button
-                  onClick={() => setCouponCode(coupon?.code)}
-                  className={`${styles.applyBtn}`}
+                  type="button"
+                  className={`${styles.viewAllBtn}`}
+                  onClick={() => setShowAllCoupons((prev) => !prev)}
                 >
-                  Copy Code <FaCopy />
+                  {showAllCoupons
+                    ? "Show Less"
+                    : `View All Coupons`}
                 </button>
-              </div>
-            ))
+              )}
+            </>
           ) : (
             <div className={`${styles.emptyCouponBox}`}>
               <Image

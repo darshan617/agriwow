@@ -9,6 +9,7 @@ const TopRating = ({
   viewAllLink = "/product-category/top-rating",
 }) => {
   return (
+    <div className="sectionSpace">
     <ProductsItem
       sectionClassName=""
       title="Top Rating"
@@ -26,8 +27,9 @@ const TopRating = ({
           </div>
           <div className={styles.topRatingExplore}>Explore now</div>
         </div>
-      }
-    />
+        }
+      />
+    </div>
   );
 };
 

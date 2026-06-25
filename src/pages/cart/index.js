@@ -22,6 +22,7 @@ import "swiper/css";
 const Cart = () => {
   const { showToast } = useToast();
   const [canFetchCart, setCanFetchCart] = useState(false);
+  const [isCartInitialized, setIsCartInitialized] = useState(false);
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState("");
@@ -112,6 +113,7 @@ const Cart = () => {
 
   useEffect(() => {
     setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
+    setIsCartInitialized(true);
   }, []);
 
   return (
@@ -137,7 +139,7 @@ const Cart = () => {
                 setCouponCode("");
               }}
               handleUpdateCart={handleUpdateCart}
-              isLoadingData={isCartLoading}
+              isLoadingData={!isCartInitialized || isCartLoading}
             />
           </div>
           {cartItems?.length > 0 && (
@@ -156,8 +158,8 @@ const Cart = () => {
         </div>
 
         {trending_products?.length > 0 && (
-          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <h2 className={styles.swiperTitle}>Trending Products</h2>
+          <div className={styles.mayLike}>
+            <h2 className={styles.swiperTitle}>You may also like</h2>
             <Swiper
               modules={[Navigation, Autoplay]}
               navigation={{

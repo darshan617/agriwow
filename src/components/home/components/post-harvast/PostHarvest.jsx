@@ -9,7 +9,7 @@ const PostHarvest = ({
   bannersLink,
 }) => {
   return (
-    <div>
+    <div className="sectionSpace">
       <ProductsItem
         sectionClassName=""
         title="Post Harvest"

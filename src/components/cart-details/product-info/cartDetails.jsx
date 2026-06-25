@@ -232,7 +232,7 @@ const CartDetails = ({
           </div>
         )} */}
 
-        {!isLoadingData && router?.isReady && cartItems?.length === 0 && (
+        {!isLoadingData && cartItems?.length === 0 && (
           <div className={styles.emptySection}>
             <div className={styles.emptyVisual}>
               <Image
@@ -373,9 +373,9 @@ const CartDetails = ({
 
                   <div className={styles.productCartSubtotal}>
                     <h5>₹ {item?.product?.selling_price * qty}</h5>
-                    {item?.product?.discount > 0 && (
+                    {/* {item?.product?.discount > 0 && (
                       <span>You save ₹ {item?.product?.discount * qty}</span>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -386,18 +386,19 @@ const CartDetails = ({
         {cartItems?.length > 0 && !hideCheckoutButton && (
           <>
             {isLoggedIn && isCheckoutPage && !hasSelectedAddress ? (
-              <div className="w-100 d-flex justify-content-end mt-3">
-                <button
-                  type="button"
-                  className={styles.checkoutBtn + " p-3"}
-                  onClick={() => setShowAddressForm(true)}
-                >
-                  <span>Add Delivery Address To Proceed</span>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={20} />
-                  </span>
-                </button>
-              </div>
+              // <div className="w-100 d-flex justify-content-end mt-3">
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn + " p-3"}
+              //     onClick={() => setShowAddressForm(true)}
+              //   >
+              //     <span>Add Delivery Address To Proceed</span>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={20} />
+              //     </span>
+              //   </button>
+              // </div>
+              <></>
             ) : !isLoggedIn ? (
               <div className={styles.checkoutSection}>
                 <button

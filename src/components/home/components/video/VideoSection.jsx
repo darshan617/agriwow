@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -6,13 +6,36 @@ import "swiper/css";
 import styles from "@/components/home/components/video/VideoSection.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 
-const getYoutubeEmbedUrl = (url) => {
+const buildYoutubeEmbedUrl = (videoId, autoplay = false) => {
+  if (!videoId) return null;
+
+  const params = new URLSearchParams({
+    modestbranding: "1",
+    rel: "0",
+    controls: "1",
+    iv_load_policy: "3",
+    fs: "0",
+  });
+
+  if (autoplay) {
+    params.set("autoplay", "1");
+  }
+
+  return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+};
+
+const buildYoutubeThumbnailUrl = (videoId) => {
+  if (!videoId) return null;
+  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+};
+
+const getYoutubeVideoId = (url) => {
   if (!url) return null;
 
   const trimmed = url.trim();
 
   if (!trimmed.includes("/") && !trimmed.includes(".")) {
-    return `https://www.youtube.com/embed/${trimmed}`;
+    return trimmed;
   }
 
   try {
@@ -20,22 +43,23 @@ const getYoutubeEmbedUrl = (url) => {
     const host = parsed.hostname.replace(/^www\./, "");
 
     if (host === "youtu.be") {
-      const videoId = parsed.pathname.split("/").filter(Boolean)[0];
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+      return parsed.pathname.split("/").filter(Boolean)[0] ?? null;
     }
 
-    if (host === "youtube.com" || host === "m.youtube.com") {
+    if (
+      host === "youtube.com" ||
+      host === "m.youtube.com" ||
+      host === "youtube-nocookie.com"
+    ) {
       if (parsed.pathname.startsWith("/embed/")) {
-        return trimmed;
+        return parsed.pathname.split("/").filter(Boolean)[1] ?? null;
       }
 
       if (parsed.pathname.startsWith("/shorts/")) {
-        const videoId = parsed.pathname.split("/").filter(Boolean)[1];
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+        return parsed.pathname.split("/").filter(Boolean)[1] ?? null;
       }
 
-      const videoId = parsed.searchParams.get("v");
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+      return parsed.searchParams.get("v");
     }
   } catch {
     return null;
@@ -47,15 +71,22 @@ const getYoutubeEmbedUrl = (url) => {
 const VideoSection = () => {
   const { data: homeData } = useGetHomeDataQuery();
   const video_banner = homeData?.data?.banners?.video_banner;
+  const [activeVideoKey, setActiveVideoKey] = useState(null);
 
   const embedVideos = useMemo(() => {
     return (video_banner?.youtube_links ?? [])
       .filter(Boolean)
       .map((youtubeUrl) => ({
         youtubeUrl,
-        embedUrl: getYoutubeEmbedUrl(youtubeUrl),
+        videoId: getYoutubeVideoId(youtubeUrl),
       }))
-      .filter((video) => video.embedUrl);
+      .filter((video) => video.videoId)
+      .map((video) => ({
+        ...video,
+        embedUrl: buildYoutubeEmbedUrl(video.videoId),
+        autoplayEmbedUrl: buildYoutubeEmbedUrl(video.videoId, true),
+        thumbnailUrl: buildYoutubeThumbnailUrl(video.videoId),
+      }));
   }, [video_banner?.youtube_links]);
 
   if (embedVideos.length === 0) {
@@ -83,18 +114,43 @@ const VideoSection = () => {
                 className={`${styles.slide}`}
               >
                 <div className={`${styles.card}`}>
-                  <iframe
-                    src={video.embedUrl}
-                    title={
-                      video_banner?.title
-                        ? `${video_banner.title} - video ${index + 1}`
-                        : `YouTube video ${index + 1}`
-                    }
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className={`${styles.iframe}`}
-                  />
+                  {activeVideoKey === (video.youtubeUrl || index) ? (
+                    <iframe
+                      src={video.autoplayEmbedUrl}
+                      title={
+                        video_banner?.title
+                          ? `${video_banner.title} - video ${index + 1}`
+                          : `YouTube video ${index + 1}`
+                      }
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className={`${styles.iframe}`}
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      className={styles.previewButton}
+                      onClick={() => setActiveVideoKey(video.youtubeUrl || index)}
+                      aria-label={`Play video ${index + 1}`}
+                    >
+                      <img
+                        src={video.thumbnailUrl}
+                        alt=""
+                        className={styles.thumbnail}
+                      />
+                      <span className={styles.thumbnailOverlay} />
+                      <span className={styles.playBtn}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          className={styles.playIcon}
+                        >
+                          <path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor" />
+                        </svg>
+                      </span>
+                    </button>
+                  )}
                 </div>
               </SwiperSlide>
             ))}

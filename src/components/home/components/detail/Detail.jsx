@@ -9,7 +9,7 @@ import warrantyIcon from '@/assets/images/guaranteed.png'
 
 const Detail = () => {
     return (
-        <div>
+        <div className="sectionSpace">
             <div className="container">
                 <div className={styles.detailCardWrapper}>
                     <div className={styles.detailGrid}>

@@ -73,7 +73,6 @@ const Checkout = () => {
       router?.query?.userId,
     ],
   );
-
   const {
     data: cartData,
     isLoading,
@@ -262,6 +261,7 @@ const Checkout = () => {
                 cartData={activeCartData}
                 setShowAddressForm={setShowAddressForm}
                 showAddressForm={showAddressForm}
+                isBuyNowFlow={isBuyNowFlow}
                 refetchCartData={
                   isBuyNowFlow ? refetchBuyNowData : refetchCartData
                 }
@@ -298,6 +298,7 @@ const Checkout = () => {
                 setCouponCode={setCouponCode}
                 handleUpdateCart={handleUpdateCart}
                 cartData={activeCartData}
+                setShowAddressForm={setShowAddressForm}
               />
             )}
           </div>
@@ -305,9 +306,9 @@ const Checkout = () => {
       </div>
 
       <div className="container">
-      {trending_products?.length > 0 && (
-          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <h2 className={styles.swiperTitle}>Trending Products</h2>
+        {trending_products?.length > 0 && (
+           <div className={styles.mayLike}>
+            <h2 className={styles.swiperTitle}>You may also like</h2>
             <Swiper
               modules={[Navigation, Autoplay]}
               navigation={{

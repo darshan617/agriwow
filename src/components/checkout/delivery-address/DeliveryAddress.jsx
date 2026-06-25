@@ -39,12 +39,20 @@ const formatApiAddressLine = (addr) => {
   return line;
 };
 
+const getBuyNowId = (router, cartData) => {
+  if (router.query.buy_now_id) return router.query.buy_now_id;
+  const raw = cartData?.data;
+  const items = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  return items[0]?.buy_now_id;
+};
+
 const DeliveryAddress = ({
   handleUpdateCart,
   cartData,
   setShowAddressForm,
   showAddressForm,
   refetchCartData,
+  isBuyNowFlow = false,
   type = "cart",
 }) => {
   const [address, setAddress] = useState({});
@@ -73,11 +81,11 @@ const DeliveryAddress = ({
     }
   };
 
-  const handleDeliverHere = async (addr, type) => {
-    if (type === "buy_now") {
-      const res = await updateBuyNow({
+  const handleDeliverHere = async (addr, flowType) => {
+    if (flowType === "buy_now") {
+      await updateBuyNow({
         body: {
-          buy_now_id: router.query.buy_now_id,
+          buy_now_id: getBuyNowId(router, cartData),
           address_id: addr.id,
         },
       });
@@ -107,6 +115,7 @@ const DeliveryAddress = ({
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         refetchAllAddresses();
+        refetchCartData?.();
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -116,7 +125,11 @@ const DeliveryAddress = ({
   };
 
   useEffect(() => {
-    if (!allAddresses?.data?.length) return;
+    if (!allAddresses?.data?.length) {
+      setAddress({});
+      setSelectedAddressId(null);
+      return;
+    }
     const defaultAddr =
       allAddresses.data.find(
         (item) => item?.id === cartData?.selected_address?.id,
@@ -215,70 +228,70 @@ const DeliveryAddress = ({
           <div className={styles.addressList}>
             {addressCount > 0 ? (
               allAddresses.data.map((addr) => {
-              const isSelected = selectedAddressId === addr.id;
+                const isSelected = selectedAddressId === addr.id;
 
-              return (
-                <div
-                  key={addr.id}
-                  className={`${styles.selectAddressCard} ${
-                    isSelected ? styles.selectAddressCardActive : ""
-                  }`}
-                  onClick={() => setSelectedAddressId(addr.id)}
-                >
-                  <label
-                    className={styles.selectAddressHeader}
-                    onClick={(e) => e.stopPropagation()}
+                return (
+                  <div
+                    key={addr.id}
+                    className={`${styles.selectAddressCard} ${
+                      isSelected ? styles.selectAddressCardActive : ""
+                    }`}
+                    onClick={() => setSelectedAddressId(addr.id)}
                   >
-                    <input
-                      type="radio"
-                      name="deliveryAddress"
-                      className={styles.selectAddressRadio}
-                      checked={isSelected}
-                      onChange={() => setSelectedAddressId(addr.id)}
-                    />
-                    <span className={styles.selectAddressName}>
-                      {addr.name}
-                    </span>
-                  </label>
-
-                  <p className={styles.selectAddressLine}>
-                    {formatApiAddressLine(addr)}
-                  </p>
-                  <p className={styles.selectAddressMobile}>
-                    Mobile : {addr.phone}
-                  </p>
-
-                  {isSelected && (
-                    <div
-                      className={styles.selectAddressActions}
+                    <label
+                      className={styles.selectAddressHeader}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <button
-                        type="button"
-                        className={styles.editAddressBtn}
-                        onClick={() => handleEditAddress(addr)}
+                      <input
+                        type="radio"
+                        name="deliveryAddress"
+                        className={styles.selectAddressRadio}
+                        checked={isSelected}
+                        onChange={() => setSelectedAddressId(addr.id)}
+                      />
+                      <span className={styles.selectAddressName}>
+                        {addr.name}
+                      </span>
+                    </label>
+
+                    <p className={styles.selectAddressLine}>
+                      {formatApiAddressLine(addr)}
+                    </p>
+                    <p className={styles.selectAddressMobile}>
+                      Mobile : {addr.phone}
+                    </p>
+
+                    {isSelected && (
+                      <div
+                        className={styles.selectAddressActions}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        EDIT
-                      </button>
-                      <button
-                        type="button"
-                        className={styles.deleteAddressBtn}
-                        onClick={() => handleDeleteAddress(addr)}
-                        disabled={isDeleteDeliveryAddressLoading}
-                        style={{
-                          opacity: isDeleteDeliveryAddressLoading ? 0.5 : 1,
-                          cursor: isDeleteDeliveryAddressLoading
-                            ? "not-allowed"
-                            : "pointer",
-                        }}
-                      >
-                        <FaTrash size={16} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              );
-            })
+                        <button
+                          type="button"
+                          className={styles.editAddressBtn}
+                          onClick={() => handleEditAddress(addr)}
+                        >
+                          EDIT
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.deleteAddressBtn}
+                          onClick={() => handleDeleteAddress(addr)}
+                          disabled={isDeleteDeliveryAddressLoading}
+                          style={{
+                            opacity: isDeleteDeliveryAddressLoading ? 0.5 : 1,
+                            cursor: isDeleteDeliveryAddressLoading
+                              ? "not-allowed"
+                              : "pointer",
+                          }}
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
             ) : (
               <p className="m-0 small">
                 No Address Found. Please add a new address.
@@ -306,9 +319,18 @@ const DeliveryAddress = ({
               setShowAddressForm(false);
               setEditingAddress(null);
             }}
-            onSave={(savedAddress) => {
+            onSave={async (savedAddress) => {
               if (savedAddress?.id) {
-                handleUpdateCart(null, null, savedAddress.id);
+                if (isBuyNowFlow) {
+                  await updateBuyNow({
+                    body: {
+                      buy_now_id: getBuyNowId(router, cartData),
+                      address_id: savedAddress.id,
+                    },
+                  });
+                } else {
+                  handleUpdateCart(null, null, savedAddress.id);
+                }
                 setSelectedAddressId(savedAddress.id);
               }
               setAddress({

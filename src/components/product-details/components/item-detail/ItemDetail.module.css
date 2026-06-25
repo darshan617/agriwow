@@ -987,6 +987,9 @@
     width: 27px;
     height: 24px;
   }
+  .productInfoPopupTab {
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 375px) {

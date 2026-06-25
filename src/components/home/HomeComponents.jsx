@@ -1,11 +1,13 @@
 import React, { Suspense } from "react";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import dynamic from "next/dynamic";
+import SiteHeaderShimmer from "@/components/layout/top-header/SiteHeaderShimmer";
 
 const DynamicTopHeader = dynamic(
   () => import("@/components/layout/top-header/TopHeader"),
   {
     ssr: false,
+    loading: () => <SiteHeaderShimmer />,
   },
 );
 const DynamicTopBanner = dynamic(
@@ -138,6 +140,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
 
   return (
     <>
+    
       <DynamicTopHeader />
       <DynamicTopBanner categoriesData={categoriesData} />
       <DynamicHomeBanner />
