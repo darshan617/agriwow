@@ -31,6 +31,9 @@
     line-height: 1.8;
     font-size: 14px;
   }
+  .privacyPolicyContentItem ul{
+    padding: 0 0 0 20px;
+  }
 
   @media (max-width: 1024px) {
     .privacyPolicyContent{
@@ -40,7 +43,7 @@
 
   @media (max-width: 768px) {
     .privacyPolicyContent{
-      padding: 10px;
+      padding: 0;
     }
     .privacyPolicyHeading h1{
       font-size: 20px;
