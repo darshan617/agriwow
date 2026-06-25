@@ -518,6 +518,10 @@
     font-weight: 600;
     font-size: 11px;
   }
+  .ddStickyActions {
+    padding: 5px;
+    gap: 5px;
+  }
 
 }
 
