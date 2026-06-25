@@ -219,7 +219,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0;
+}
+
+.ddWhatsappIcon {
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .ddSecure {
@@ -338,6 +343,13 @@
   margin-top: 1px;
 }
 
+
+@media (max-width: 1200px){
+.ddWhatsappText{
+  font-size: 13px;
+}
+}
+
 @media (max-width: 1024px) {
   .ddPriceSection {
     padding: 15px;
@@ -375,7 +387,7 @@
     font-weight: 600;
     font-size: 13px;
     margin-bottom: 6px;
-    gap: 4px;
+    gap: 0;
   }
 
   .ddSecure {
@@ -485,7 +497,7 @@
     font-weight: 600;
     font-size: 13px;
     margin-bottom: 6px;
-    gap: 4px;
+    gap: 0;
   }
 
   .ddDeliveryPanel {
