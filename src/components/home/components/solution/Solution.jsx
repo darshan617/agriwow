@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 const Solution = () => {
     return (
-        <div>
+        <div className="sectionSpace">
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-lg-6 col-md-12" data-aos="fade-right" data-aos-delay="100">

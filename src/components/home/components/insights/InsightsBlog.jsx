@@ -74,8 +74,9 @@ const InsightsBlog = ({ insightsBlogData }) => {
   }, []);
 
   return (
+    <div className="sectionSpace">
     <section
-      className={`${styles.section}`}
+      className={`${styles.section} `}
       data-aos="fade-up"
       data-aos-delay="100"
     >
@@ -85,7 +86,10 @@ const InsightsBlog = ({ insightsBlogData }) => {
         {isMobile ? (
           <Swiper
             modules={[Pagination]}
-            pagination={{ clickable: true, bulletActiveClass: styles.swiperBulletActive }}
+            pagination={{
+              clickable: true,
+              bulletActiveClass: styles.swiperBulletActive,
+            }}
             spaceBetween={20}
             breakpoints={{
               576: { slidesPerView: 2 },
@@ -114,6 +118,7 @@ const InsightsBlog = ({ insightsBlogData }) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

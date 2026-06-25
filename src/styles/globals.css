@@ -33,7 +33,7 @@ a {
 }
 
 .sectionSpace {
-  padding: 75px 0;
+  padding: 75px 0 0;
 }
 
 .container {
@@ -92,18 +92,18 @@ a {
 
 @media (max-width: 1024px) {
   .sectionSpace {
-    padding: 40px 0;
+    padding: 40px 0 0;
   }
 }
 
 @media (max-width: 768px) {
   .sectionSpace {
-    padding: 30px 0;
+    padding: 30px 0 0;
   }
 }
 
 @media (max-width: 480px) {
   .sectionSpace {
-    padding: 20px 0;
+    padding: 20px 0 0;
   }
 }

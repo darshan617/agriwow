@@ -521,6 +521,9 @@
     .footerCopyright br{
         display: block;
     }
+    .footerPhoneLink {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 375px) {
@@ -533,9 +536,7 @@
         padding-left: 28px;
     }
 
-    .footerPhoneLink {
-        font-size: 1.1rem;
-    }
+   
 
     .footerSocialBtn {
         width: 26px;

@@ -307,7 +307,7 @@ const Checkout = () => {
 
       <div className="container">
         {trending_products?.length > 0 && (
-          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+           <div className={styles.mayLike}>
             <h2 className={styles.swiperTitle}>You may also like</h2>
             <Swiper
               modules={[Navigation, Autoplay]}

@@ -1129,7 +1129,7 @@
 
 .drawerMegaDropdown {
   /* flex: 1; */
-  height: 350px;
+  /* height: 350px; */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 0 20px 16px;
