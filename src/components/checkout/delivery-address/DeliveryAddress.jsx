@@ -39,12 +39,20 @@ const formatApiAddressLine = (addr) => {
   return line;
 };
 
+const getBuyNowId = (router, cartData) => {
+  if (router.query.buy_now_id) return router.query.buy_now_id;
+  const raw = cartData?.data;
+  const items = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  return items[0]?.buy_now_id;
+};
+
 const DeliveryAddress = ({
   handleUpdateCart,
   cartData,
   setShowAddressForm,
   showAddressForm,
   refetchCartData,
+  isBuyNowFlow = false,
   type = "cart",
 }) => {
   const [address, setAddress] = useState({});
@@ -73,11 +81,11 @@ const DeliveryAddress = ({
     }
   };
 
-  const handleDeliverHere = async (addr, type) => {
-    if (type === "buy_now") {
-      const res = await updateBuyNow({
+  const handleDeliverHere = async (addr, flowType) => {
+    if (flowType === "buy_now") {
+      await updateBuyNow({
         body: {
-          buy_now_id: router.query.buy_now_id,
+          buy_now_id: getBuyNowId(router, cartData),
           address_id: addr.id,
         },
       });
@@ -107,6 +115,7 @@ const DeliveryAddress = ({
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         refetchAllAddresses();
+        refetchCartData?.();
       } else {
         showToast(res?.data?.message, "error");
       }
@@ -310,9 +319,18 @@ const DeliveryAddress = ({
               setShowAddressForm(false);
               setEditingAddress(null);
             }}
-            onSave={(savedAddress) => {
+            onSave={async (savedAddress) => {
               if (savedAddress?.id) {
-                handleUpdateCart(null, null, savedAddress.id);
+                if (isBuyNowFlow) {
+                  await updateBuyNow({
+                    body: {
+                      buy_now_id: getBuyNowId(router, cartData),
+                      address_id: savedAddress.id,
+                    },
+                  });
+                } else {
+                  handleUpdateCart(null, null, savedAddress.id);
+                }
                 setSelectedAddressId(savedAddress.id);
               }
               setAddress({
