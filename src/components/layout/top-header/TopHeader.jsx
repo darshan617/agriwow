@@ -5,15 +5,20 @@ import {
   TopHeaderHelp,
   TopHeaderSocial,
 } from "@/components/layout/top-header/TopHeaderExtras";
+import TopHeaderShimmer from "@/components/layout/top-header/TopHeaderShimmer";
+import HeaderShimmer from "@/components/layout/header/HeaderShimmer";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const SCROLL_THRESHOLD = 20;
 
 const TopHeader = () => {
   const [scrolled, setScrolled] = useState(false);
-  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -31,6 +36,15 @@ const TopHeader = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (!isMounted) {
+    return (
+      <div className={styles.siteHeader}>
+        <TopHeaderShimmer />
+        <HeaderShimmer />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.siteHeader}>

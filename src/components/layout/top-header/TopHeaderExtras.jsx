@@ -41,7 +41,13 @@ export const TopHeaderLeftLinks = () => {
 export const TopHeaderHelp = () => (
   <div className={styles.topHeaderRight}>
     <h2>Need Help?</h2>
-    <Link href="whatsapp://send?phone=+919229297668 &text=Hello, I am interested in your products ">+91 9229297668</Link>
+    <Link
+      href="https://wa.me/9229297668?text=I'm%20interested%20in%20your%20products"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      +91 9229297668
+    </Link>
   </div>
 );
 

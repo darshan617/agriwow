@@ -190,7 +190,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     () => getWishlistItems(wishlistData).length,
     [wishlistData],
   );
-  const { data: cartData } = useGetCartDataQuery();
+  const { data: cartData, isLoading: isCartLoading } = useGetCartDataQuery();
   const { data: homeData } = useGetHomeDataQuery();
   const [triggerSearch, { data: searchData, isFetching: isSearching }] =
     useLazySearchProductsQuery();
@@ -200,11 +200,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setSearchOpen(false);
     setMobileSearchOpen(false);
   };
-  const [phone, setPhone] = useState("");
 
-  const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
-  const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
-  const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
@@ -455,13 +451,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   }, [userMenuOpen]);
 
   const [countryCode, setCountryCode] = useState("+91");
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
 
   const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
 
@@ -628,14 +617,14 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                         </div>
                       </section>
 
-                      {topCategories.length > 0 && (
+                      {topCategories?.length > 0 && (
                         <section className={`${styles.suggestionSection}`}>
                           <h3 className={`${styles.suggestionTitle}`}>
                             <TbCategory2 aria-hidden />
                             <span>Top Categories</span>
                           </h3>
                           <div className={`${styles.topCategoriesGrid}`}>
-                            {topCategories.map((cat) => (
+                            {topCategories?.map((cat) => (
                               <Link
                                 key={cat?.slug ?? cat?.name}
                                 href={
