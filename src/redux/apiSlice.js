@@ -43,6 +43,8 @@ export const apiSlice = createApi({
     "orderInfo",
     "termUse",
     "getLocation",
+    "returnPolicy",
+    "privacyPolicy",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),
