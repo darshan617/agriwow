@@ -73,7 +73,6 @@ const Checkout = () => {
       router?.query?.userId,
     ],
   );
-
   const {
     data: cartData,
     isLoading,
@@ -262,6 +261,7 @@ const Checkout = () => {
                 cartData={activeCartData}
                 setShowAddressForm={setShowAddressForm}
                 showAddressForm={showAddressForm}
+                isBuyNowFlow={isBuyNowFlow}
                 refetchCartData={
                   isBuyNowFlow ? refetchBuyNowData : refetchCartData
                 }

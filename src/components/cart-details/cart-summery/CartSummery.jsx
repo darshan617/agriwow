@@ -53,6 +53,10 @@ const CartSummery = ({
   const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
   const isCheckoutPage = router?.pathname === "/checkout";
 
+  console.log(hasSelectedAddress, "hasSelectedAddress");
+  console.log(isCheckoutPage, "isCheckoutPage");
+  console.log(cartData, "cartData");
+
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
   const cartSummary = cartData?.cart_summary ?? {};
@@ -424,7 +428,8 @@ const CartSummery = ({
               )}
             </>
           ) : (
-            isCheckoutPage && (
+            isCheckoutPage &&
+            !hasSelectedAddress && (
               <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
                 <button
                   type="button"

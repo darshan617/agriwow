@@ -373,9 +373,9 @@ const CartDetails = ({
 
                   <div className={styles.productCartSubtotal}>
                     <h5>₹ {item?.product?.selling_price * qty}</h5>
-                    {item?.product?.discount > 0 && (
+                    {/* {item?.product?.discount > 0 && (
                       <span>You save ₹ {item?.product?.discount * qty}</span>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

@@ -148,7 +148,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
+      invalidatesTags: ["getAllDeliveryAddresses"],
     }),
     getAllDeliveryAddresses: builder.query({
       query: () => ({
@@ -174,7 +174,7 @@ const addToCartApi = apiSlice.injectEndpoints({
         headers: getCartRequestHeaders(),
         body,
       }),
-      invalidatesTags: ["getCartData", "getAllDeliveryAddresses"],
+      invalidatesTags: ["getAllDeliveryAddresses"],
     }),
     removeCoupon: builder.mutation({
       query: ({ body }) => ({
