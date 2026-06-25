@@ -74,6 +74,7 @@ const ProductsItem = ({
 
   return (
     <section className={sectionClassName}>
+      {agricultureProductsData?.length > 0 ? (
       <div className="container">
         <div className={productsSectionClassNames}>
           <div className="row g-3 align-items-stretch">
@@ -208,7 +209,7 @@ const ProductsItem = ({
                       ))}
                     </div>
                   ) : (
-                    agricultureProductsData?.length > 0 ? (
+                    
                     agricultureProductsData?.map((item) => {
                       return (
                         <SwiperSlide key={item.id}>
@@ -233,11 +234,6 @@ const ProductsItem = ({
                         </SwiperSlide>
                       );
                     })
-                    ) : (
-                      <div className={`${styles.noProductsFound} text-center`}>
-                        <p>No products found</p>
-                      </div>
-                    )
                   )}
                 </Swiper>
 
@@ -279,6 +275,7 @@ const ProductsItem = ({
           </div>
         </div>
       </div>
+      ) : null}
     </section>
   );
 };

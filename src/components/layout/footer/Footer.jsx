@@ -182,11 +182,18 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Customer Service</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/my-order">My Order</Link>
+                      <Link href="/cancellation-return-policy">
+                        Cancellation and Return
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shipping-return">
+                        Shipping &amp; Delivery Policy
+                      </Link>
                     </li>
                     <li>
                       <Link href="/cancellation-return-policy">
-                        Cancellation and Return
+                        Cancellation / Return Policy
                       </Link>
                     </li>
                   </ul>
@@ -243,7 +250,8 @@ const Footer = () => {
           <div className={`row align-items-center ${styles.footerBottomRow}`}>
             <div className="col-lg-6">
               <p className={`${styles.footerCopyright}`}>
-                Copyright © 2026 AGRIWOW. All rights reserved. <br /> Designed by{" "}
+                Copyright © 2026 AGRIWOW. All Rights Reserved. <br /> Designed
+                by{" "}
                 <Link
                   href="https://goyalinfotech.com"
                   target="_blank"
@@ -257,12 +265,6 @@ const Footer = () => {
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
                 <Link href="/privacy-policy">Privacy Policy</Link>
                 <Link href="/terms-of-use">Terms of Use</Link>
-                <Link href="/shipping-return">
-                  Shipping &amp; Delivery Policy
-                </Link>
-                <Link href="/cancellation-return-policy">
-                  Cancellation / Return Policy
-                </Link>
               </nav>
             </div>
           </div>

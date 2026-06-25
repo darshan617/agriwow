@@ -255,9 +255,14 @@
   text-decoration: underline;
 }
 
+.mayLike {
+  margin: 20px 0 50px;
+}
+
 .swiperTitle {
   font-size: 30px;
   font-weight: 700;
+  margin-bottom: 30px;
 }
 
 
@@ -338,6 +343,10 @@
 }
 
 @media (max-width: 575px) {
+  .mayLike {
+    margin: 0 0 30px;
+  }
+
   .checkoutBtn {
     width: 100%;
     padding: 10px 20px;
@@ -346,6 +355,7 @@
 
   .swiperTitle {
     font-size: 22px;
+    margin-bottom: 20px;
   }
 }
 

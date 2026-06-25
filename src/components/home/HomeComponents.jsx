@@ -138,6 +138,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
 
   return (
     <>
+    
       <DynamicTopHeader />
       <DynamicTopBanner categoriesData={categoriesData} />
       <DynamicHomeBanner />
