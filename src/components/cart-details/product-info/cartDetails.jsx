@@ -232,7 +232,7 @@ const CartDetails = ({
           </div>
         )} */}
 
-        {!isLoadingData && router?.isReady && cartItems?.length === 0 && (
+        {!isLoadingData && cartItems?.length === 0 && (
           <div className={styles.emptySection}>
             <div className={styles.emptyVisual}>
               <Image

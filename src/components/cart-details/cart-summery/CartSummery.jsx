@@ -34,6 +34,7 @@ const CartSummery = ({
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("full");
+  const [showAllCoupons, setShowAllCoupons] = useState(false);
 
   const [applyCoupon, { isLoading }] = useApplyCouponMutation();
   const { data: availableCoupons } = useGetAvailableCouponsQuery();
@@ -76,6 +77,13 @@ const CartSummery = ({
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
   );
+
+  const VISIBLE_COUPONS_COUNT = 3;
+  const coupons = availableCoupons?.data ?? [];
+  const visibleCoupons = showAllCoupons
+    ? coupons
+    : coupons.slice(0, VISIBLE_COUPONS_COUNT);
+  const hasMoreCoupons = coupons.length > VISIBLE_COUPONS_COUNT;
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
@@ -306,7 +314,7 @@ const CartSummery = ({
                         />
                         <label
                           htmlFor="partial-payment"
-                          className="w-100"
+                          className={`${styles.paymentWrapperLabel} w-100`}
                           style={{ cursor: "pointer" }}
                         >
                           Partial Payment (30%)
@@ -337,7 +345,7 @@ const CartSummery = ({
                         />
                         <label
                           htmlFor="full-payment"
-                          className="w-100"
+                          className={`${styles.paymentWrapperLabel} w-100`}
                           style={{ cursor: "pointer" }}
                         >
                           Full Payment (5% OFF)
@@ -467,26 +475,39 @@ const CartSummery = ({
             </button>
           </div>
 
-          {availableCoupons?.data?.length > 0 ? (
-            availableCoupons?.data?.map((coupon) => (
-              <div key={coupon?.id} className={`${styles.couponItem}`}>
-                <div>
-                  <p className="m-0">{coupon?.code}</p>
-                  <p
-                    className="fs-12 text-muted small"
-                    style={{ fontSize: "12px", fontWeight: "400" }}
+          {coupons.length > 0 ? (
+            <>
+              {visibleCoupons.map((coupon) => (
+                <div key={coupon?.id} className={`${styles.couponItem}`}>
+                  <div>
+                    <p className="m-0">{coupon?.code}</p>
+                    <p
+                      className="fs-12 text-muted small"
+                      style={{ fontSize: "12px", fontWeight: "400" }}
+                    >
+                      {coupon?.applicability?.apply_on_text}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setCouponCode(coupon?.code)}
+                    className={`${styles.applyBtn}`}
                   >
-                    {coupon?.applicability?.apply_on_text}
-                  </p>
+                    Copy Code <FaCopy />
+                  </button>
                 </div>
+              ))}
+              {hasMoreCoupons && (
                 <button
-                  onClick={() => setCouponCode(coupon?.code)}
-                  className={`${styles.applyBtn}`}
+                  type="button"
+                  className={`${styles.viewAllBtn}`}
+                  onClick={() => setShowAllCoupons((prev) => !prev)}
                 >
-                  Copy Code <FaCopy />
+                  {showAllCoupons
+                    ? "Show Less"
+                    : `View All Coupons`}
                 </button>
-              </div>
-            ))
+              )}
+            </>
           ) : (
             <div className={`${styles.emptyCouponBox}`}>
               <Image
