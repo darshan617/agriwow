@@ -22,6 +22,7 @@ import "swiper/css";
 const Cart = () => {
   const { showToast } = useToast();
   const [canFetchCart, setCanFetchCart] = useState(false);
+  const [isCartInitialized, setIsCartInitialized] = useState(false);
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState("");
@@ -112,6 +113,7 @@ const Cart = () => {
 
   useEffect(() => {
     setCanFetchCart(Boolean(Cookies.get("userToken") || getCartSessionId()));
+    setIsCartInitialized(true);
   }, []);
 
   return (
@@ -137,7 +139,7 @@ const Cart = () => {
                 setCouponCode("");
               }}
               handleUpdateCart={handleUpdateCart}
-              isLoadingData={isCartLoading}
+              isLoadingData={!isCartInitialized || isCartLoading}
             />
           </div>
           {cartItems?.length > 0 && (
