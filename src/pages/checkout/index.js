@@ -298,6 +298,7 @@ const Checkout = () => {
                 setCouponCode={setCouponCode}
                 handleUpdateCart={handleUpdateCart}
                 cartData={activeCartData}
+                setShowAddressForm={setShowAddressForm}
               />
             )}
           </div>
@@ -305,7 +306,7 @@ const Checkout = () => {
       </div>
 
       <div className="container">
-      {trending_products?.length > 0 && (
+        {trending_products?.length > 0 && (
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
             <h2 className={styles.swiperTitle}>Trending Products</h2>
             <Swiper

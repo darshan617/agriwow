@@ -386,18 +386,19 @@ const CartDetails = ({
         {cartItems?.length > 0 && !hideCheckoutButton && (
           <>
             {isLoggedIn && isCheckoutPage && !hasSelectedAddress ? (
-              <div className="w-100 d-flex justify-content-end mt-3">
-                <button
-                  type="button"
-                  className={styles.checkoutBtn + " p-3"}
-                  onClick={() => setShowAddressForm(true)}
-                >
-                  <span>Add Delivery Address To Proceed</span>
-                  <span className={styles.arrow}>
-                    <MdOutlineKeyboardArrowRight size={20} />
-                  </span>
-                </button>
-              </div>
+              // <div className="w-100 d-flex justify-content-end mt-3">
+              //   <button
+              //     type="button"
+              //     className={styles.checkoutBtn + " p-3"}
+              //     onClick={() => setShowAddressForm(true)}
+              //   >
+              //     <span>Add Delivery Address To Proceed</span>
+              //     <span className={styles.arrow}>
+              //       <MdOutlineKeyboardArrowRight size={20} />
+              //     </span>
+              //   </button>
+              // </div>
+              <></>
             ) : !isLoggedIn ? (
               <div className={styles.checkoutSection}>
                 <button
