@@ -41,6 +41,8 @@ export const apiSlice = createApi({
     "getAllDeliveryAddresses",
     "shippingReturn",
     "orderInfo",
+    "termUse",
+    "getLocation",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),

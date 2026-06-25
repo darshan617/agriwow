@@ -7,6 +7,7 @@ import {
   useUpdateDeliveryAddressMutation,
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import { useGetLocationMutation } from "@/redux/apis/locationApi";
 
 const EMPTY_FORM = {
   name: "",
@@ -35,7 +36,20 @@ const AddressForm = ({
   const [form, setForm] = useState(EMPTY_FORM);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
+  const [getLocationData, { isLoading: isGetLocationLoading }] =
+    useGetLocationMutation();
 
+  const getCurrentPosition = () =>
+    new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) =>
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }),
+        (error) => reject(error),
+      );
+    });
   const [addDeliveryAddress, { isLoading: isAddDeliveryAddressLoading }] =
     useAddDeliveryAddressMutation();
   const [updateDeliveryAddress, { isLoading: isUpdateDeliveryAddressLoading }] =
@@ -118,8 +132,45 @@ const AddressForm = ({
     );
   }, [form]);
 
-  const handleUseLocation = () => {
-    console.log("use location");
+  const handleUseLocation = async () => {
+    setIsLocating(true);
+    try {
+      const { latitude, longitude } = await getCurrentPosition();
+      const res = await getLocationData({
+        body: { lat: latitude, lng: longitude },
+      });
+
+      const location = res?.data;
+      if (location?.status || location?.success) {
+        setForm((prev) => ({
+          ...prev,
+          area: location.area || prev.area,
+          pincode: location.pincode || prev.pincode,
+          city: location.city || prev.city,
+          state: location.state || prev.state,
+          country: location.country || prev.country || "INDIA",
+        }));
+
+        if (!location.city && !location.state && !location.pincode) {
+          showToast(
+            "Could not detect address from your location. Please enter manually.",
+            "error",
+          );
+        } else {
+          showToast("Location detected successfully.", "success");
+        }
+      } else {
+        showToast(
+          location?.message || "Unable to get address from location.",
+          "error",
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      showToast("Unable to get your location. Please try again.", "error");
+    } finally {
+      setIsLocating(false);
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -202,20 +253,24 @@ const AddressForm = ({
           type="button"
           className={styles.locationBtn}
           onClick={handleUseLocation}
-          disabled={isLocating}
+          disabled={isLocating || isGetLocationLoading}
         >
           <MdMyLocation size={18} />
-          {isLocating ? "LOCATING..." : "USE MY LOCATION"}
+          {isLocating || isGetLocationLoading
+            ? "LOCATING..."
+            : "USE MY LOCATION"}
         </button>
 
         <div className={styles.field}>
           <input
+            
             id="address-flat"
             className={styles.input}
             placeholder="Flat, House No., Building, Company*"
             value={form.flat}
             onChange={updateField("flat")}
             required
+
           />
         </div>
 
@@ -246,14 +301,13 @@ const AddressForm = ({
             className={styles.input}
             placeholder="Pincode*"
             value={form.pincode}
-            onChange={e => {
+            onChange={(e) => {
               const val = e.target.value.replace(/[^0-9]/g, "").slice(0, 6);
               updateField("pincode")({ target: { value: val } });
             }}
             pattern="^\d{6}$"
             maxLength={6}
             required
-    
           />
         </div>
 
