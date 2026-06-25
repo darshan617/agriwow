@@ -416,15 +416,17 @@ const CartSummery = ({
               )}
             </>
           ) : (
-            <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
-              <button
-                type="button"
-                className={styles.checkoutBtn}
-                onClick={() => setShowAddressForm(true)}
-              >
-                <span>Add Delivery Address To Proceed</span>
-              </button>
-            </div>
+            isCheckoutPage && (
+              <div className="d-flex justify-content-center mt-3 gap-3 align-items-center">
+                <button
+                  type="button"
+                  className={styles.checkoutBtn}
+                  onClick={() => setShowAddressForm(true)}
+                >
+                  <span>Add Delivery Address To Proceed</span>
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>
