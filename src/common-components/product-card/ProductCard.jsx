@@ -189,6 +189,19 @@ const ProductCard = ({
       );
     }
   };
+ 
+  const getTags = () => {
+if(isBestSeller){
+  return 'Best Seller'
+}if(isTrending){
+  return 'Trending'
+}if(isFeatured){
+  return 'Featured'
+}if(isTopRated){
+  return 'Top Rated'
+}
+return 
+  }
 
   return (
     <div
@@ -207,18 +220,13 @@ const ProductCard = ({
         >
           {isHomeOrProductPage ? (
             <>
-              {isBestSeller && (
-                <span className={`${styles.bestsellerTag}`}>BESTSELLER</span>
-              )}
-              {isTrending && (
-                <span className={`${styles.bestsellerTag}`}>TRENDING</span>
-              )}
-              {isFeatured && (
-                <span className={`${styles.bestsellerTag}`}>FEATURED</span>
-              )}
-              {isTopRated && (
-                <span className={`${styles.bestsellerTag}`}>TOP RATED</span>
-              )}
+           
+              {
+                getTags() && (
+                  <span className={`${styles.bestsellerTag}`}>{getTags()}</span>
+                )
+              }
+              
             </>
           ) : (
             <>

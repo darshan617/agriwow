@@ -132,7 +132,7 @@ export default function App({ Component, pageProps, ...rest }) {
                 bottom: 32px;
                 right: 32px;
                 z-index: 9999;
-                background: #2d8d2f;
+                background: black;
                 color: #fff;
                 border: none;
                 outline: none;
