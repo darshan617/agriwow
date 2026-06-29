@@ -46,6 +46,7 @@ export const apiSlice = createApi({
     "returnPolicy",
     "privacyPolicy",
     "checkPincode",
+    "buyingGuide",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),

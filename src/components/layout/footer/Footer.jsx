@@ -178,6 +178,9 @@ const Footer = () => {
                     <li>
                       <Link href="#">Track My Order</Link>
                     </li>
+                    <li>
+                      <Link href="/buying-guide">Buying Guide</Link>
+                    </li>
                   </ul>
                 </nav>
                 <nav className={styles.footerNavCol} aria-label="FAQs">
