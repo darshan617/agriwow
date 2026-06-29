@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 import NoCoupon from "@/assets/icon/No-coupon.png";
 import { BiSolidCoupon, BiSolidOffer, BiSolidFile   } from "react-icons/bi";
-import { useGetAvailableCouponsQuery } from "@/redux/apis/addToCartApi";
+// import { useGetAvailableCouponsQuery } from "@/redux/apis/addToCartApi";
+import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import styles from "@/components/all-coupons/AllCoupons.module.css";
 import logo from "@/assets/images/logo.png";
@@ -32,15 +34,17 @@ const otherOffers = [
 ];
 
 const AllCoupons = ({ open, onClose }) => {
+  const router = useRouter();
+  const slug = router?.query?.slug;
   const { showToast } = useToast();
   const [openOffer, setOpenOffer] = useState(null);
 
-  const { data: couponsResponse, isFetching } = useGetAvailableCouponsQuery(
-    undefined,
-    { skip: !open }
+  const { data: productDetails, isFetching } = useGetProductDetailsQuery(
+    { slug },
+    { skip: !open || !slug }
   );
 
-  const coupons = couponsResponse?.data ?? [];
+  const coupons = productDetails?.data?.available_coupons ?? [];
 
   useEffect(() => {
     if (!open) return undefined;
