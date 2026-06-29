@@ -16,6 +16,7 @@ import Cookies from "js-cookie";
 import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { FaWhatsapp } from "react-icons/fa";
+import { useCheckPincodeMutation } from "@/redux/apis/pincodeApi";
 
 const deliveryIcons = {
   pincode: <Image src={noEntry} alt="no entry" width={20} height={20} />,
@@ -25,12 +26,18 @@ const deliveryIcons = {
   returns: <Image src={returns} alt="returns" width={20} height={20} />,
 };
 
-const infoItems = (pincode) => [
+const infoItems = (deliveryData) => [
+  // {
+  //   icon: deliveryIcons.pincode,
+  //   title: "Pincode is not eligible for 24 hours delivery",
+  //   desc: null,
+  //   colorClass: "dd-info-title--red",
+  // },
   {
-    icon: deliveryIcons.pincode,
-    title: "Pincode is not eligible for 24 hours delivery",
+    icon: deliveryIcons.delivery,
+    title: `Delivery available at ${deliveryData?.pincode} till ${deliveryData?.estimated_delivery_date_formatted}`,
     desc: null,
-    colorClass: "dd-info-title--red",
+    colorClass: "dd-info-title--dark",
   },
   {
     icon: deliveryIcons.freeDelivery,
@@ -39,15 +46,9 @@ const infoItems = (pincode) => [
     colorClass: "dd-info-title--green",
   },
   {
-    icon: deliveryIcons.delivery,
-    title: `Delivery available at ${pincode} in 4 day(s)`,
-    desc: null,
-    colorClass: "dd-info-title--dark",
-  },
-  {
     icon: deliveryIcons.cod,
-    title: "COD Available",
-    desc: "You can pay at the time of delivery",
+    title: deliveryData?.cod_available ? "COD Available" : "COD Not Available",
+    desc: deliveryData?.cod_available ? "You can pay at the time of delivery" : "You cannot pay at the time of delivery",
     colorClass: "dd-info-title--dark",
   },
   {
@@ -63,8 +64,9 @@ export default function DeliveryDetails({ productDetails }) {
   const userData = Cookies.get("userData")
     ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
     : null;
-  const [pincode, setPincode] = useState("226016");
-  const [inputVal, setInputVal] = useState("226016");
+  const [pincodeData, setPincodeData] = useState(null);
+  console.log(pincodeData, "pincodeData");
+  const [inputVal, setInputVal] = useState(null);
   const [qty, setQty] = useState(1);
   const [addToCart] = useAddToCartMutation();
   const { showToast } = useToast();
@@ -94,6 +96,28 @@ export default function DeliveryDetails({ productDetails }) {
   const totalSellingPrice = unitSellingPrice * qty;
   const totalSaving = (unitSellingPrice - unitPrice) * qty;
   const gstAmount = (totalSellingPrice * 0.18).toFixed(2);
+
+  const [checkPincode, { isLoading: isCheckPincodeLoading }] =
+    useCheckPincodeMutation();
+  const handleCheckPincode = async () => {
+    try {
+      const res = await checkPincode({
+        body: {
+          pincode: inputVal,
+        },
+      });
+      if (res?.data?.success || res?.data?.status) {
+        showToast(res?.data?.message, "success");
+        // console.log(res, "res");
+        setPincodeData(res?.data?.data);
+      } else {
+        showToast(res?.data?.message, "error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className={styles.ddCard}>
       <div className={styles.ddPriceSection}>
@@ -270,39 +294,43 @@ export default function DeliveryDetails({ productDetails }) {
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               maxLength={6}
+              placeholder="Enter Pincode"
             />
           </div>
 
           <button
             className={styles.ddUpdateBtn}
-            onClick={() => setPincode(inputVal)}
+            onClick={handleCheckPincode}
+            disabled={isCheckPincodeLoading}
           >
-            UPDATE
+            {isCheckPincodeLoading ? "Checking..." : "Check"}
           </button>
         </div>
 
+          
         <div className={styles.ddPincodeHint}>
-          Check serviceable at your location
+          {pincodeData ? `Pincode: ${pincodeData?.pincode} is serviceable at your location` : "Check serviceable at your location"}
         </div>
 
-        {infoItems(pincode).map((item, index) => (
-          <div key={index} className={styles.ddInfoItem}>
-            <div className={styles.ddInfoIcon}>{item.icon}</div>
+          
+          {pincodeData && infoItems( pincodeData).map((item, index) => (
+            <div key={index} className={styles.ddInfoItem}>
+              <div className={styles.ddInfoIcon}>{item.icon}</div>
 
-            <div>
-              <div
-                className={`${styles.ddInfoTitle} ${styles[item.colorClass]}`}
-              >
-                {item.title}
+              <div>
+                <div
+                  className={`${styles.ddInfoTitle} ${styles[item.colorClass]}`}
+                >
+                  {item.title}
+                </div>
+
+                {item.desc && (
+                  <div className={styles.ddInfoDesc}>{item.desc}</div>
+                )}
               </div>
-
-              {item.desc && (
-                <div className={styles.ddInfoDesc}>{item.desc}</div>
-              )}
             </div>
-          </div>
-        ))}
-      </div>
+            ))}  
+        </div>
     </div>
   );
 }

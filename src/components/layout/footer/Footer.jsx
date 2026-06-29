@@ -9,9 +9,9 @@ import { IoCallOutline } from "react-icons/io5";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import maestro from "@/assets/icon/Maestro_logo.png";
 import visa from "@/assets/icon/Visa.png";
+import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import paypal from "@/assets/icon/paypal.png";
 import mastercard from "@/assets/icon/smartcard.png";
-import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import {
   getIsLoggedIn,
@@ -124,7 +124,9 @@ const Footer = () => {
                     aria-hidden
                   />
                   <Link
-                    href="tel:+919229297668"
+                    href="https://wa.me/919229297668?text=Hello, I am interested in your products"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={styles.footerPhoneLink}
                   >
                     +91 9229297668
@@ -175,6 +177,9 @@ const Footer = () => {
 
                     <li>
                       <Link href="#">Track My Order</Link>
+                    </li>
+                    <li>
+                      <Link href="/buying-guide">Buying Guide</Link>
                     </li>
                   </ul>
                 </nav>
