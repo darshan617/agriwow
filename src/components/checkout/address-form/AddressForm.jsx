@@ -241,11 +241,17 @@ const AddressForm = ({
           <input
             id="address-alt-phone"
             type="tel"
+            inputMode="numeric"
             className={styles.input}
             placeholder="Enter Alternate Phone Number"
             value={form.alternate_phone}
-            onChange={updateField("alternate_phone")}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+              updateField("alternate_phone")({ target: { value: val } });
+            }}
             maxLength={10}
+            pattern="^\d{10}$"
+            required
           />
         </div>
 
@@ -317,7 +323,11 @@ const AddressForm = ({
             className={styles.input}
             placeholder="City/District/Town*"
             value={form.city}
-            onChange={updateField("city")}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
+              updateField("city")({ target: { value: val } });
+            }}
+            maxLength={20}
             required
           />
         </div>
@@ -325,10 +335,15 @@ const AddressForm = ({
         <div className={styles.field}>
           <input
             id="address-state"
+            inputMode="text"
             className={styles.input}
             placeholder="State*"
             value={form.state}
-            onChange={updateField("state")}
+            onChange={(e) => {
+              const val = e.target.value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
+              updateField("state")({ target: { value: val } });
+            }}
+            maxLength={20}
             required
           />
         </div>
