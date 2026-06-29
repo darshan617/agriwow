@@ -77,6 +77,9 @@ const CartSummery = ({
   const shippingAmount =
     cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
   const totalAmount = subtotal - discountAmount;
+  const fullPaymentDiscount =
+    selectedPaymentMethod === "full" ? totalAmount * 0.05 : 0;
+  const payableAmount = totalAmount - fullPaymentDiscount;
   const productSavings = cartItems.reduce(
     (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
     0,
@@ -273,6 +276,14 @@ const CartSummery = ({
               </span>
             </div>
           )}
+          {selectedPaymentMethod === "full" && (
+            <div className={`${styles.summaryRow}`}>
+              <span>Extra 5% OFF</span>
+              <span className={`${styles.discount}`} style={{ color: "#2c9a43" }}>
+                ₹ -{fullPaymentDiscount.toFixed(2)}
+              </span>
+            </div>
+          )}
           {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
@@ -282,15 +293,26 @@ const CartSummery = ({
               <h4>Total Amount</h4>
               <p>(Inclusive of all taxes)</p>
             </div>
-            <h4>₹ {totalAmount.toFixed(2)}</h4>
+            <h4>₹ {payableAmount.toFixed(2)}</h4>
           </div>
-          <div className={`${styles.saveText}`}>
+          {/* <div className={`${styles.saveText}`}>
             {productSavings + discountAmount > 0 && (
               <span>
                 You save ₹ {productSavings + discountAmount} on this order
               </span>
             )}
+          </div> */}
+          {selectedPaymentMethod === "partial" && (
+            <>
+          <hr className={`${styles.divider}`} />
+          <div className={`${styles.totalRow}`}>
+            <div>
+              <h4>Pay Deposit Amount</h4>
+            </div>
+            <h4>₹ {(totalAmount * 0.30).toFixed(2)}</h4>
           </div>
+          </>
+          )}
 
           {hasSelectedAddress ? (
             <>
@@ -327,7 +349,7 @@ const CartSummery = ({
                       {selectedPaymentMethod === "partial" && (
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
-                            Balance 70% Cash on Delivery
+                            Balance 70% Cash on Delivery (₹ {(totalAmount * 0.30).toFixed(2)})
                           </span>
                         </>
                       )}
@@ -352,14 +374,14 @@ const CartSummery = ({
                           className={`${styles.paymentWrapperLabel} w-100`}
                           style={{ cursor: "pointer" }}
                         >
-                          Full Payment (5% OFF)
+                          Pay Full Amount - Get 5% OFF Discount on Full Payment
                         </label>
                       </div>
                       {selectedPaymentMethod === "full" && (
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
                             Full Payment of ₹{" "}
-                            {(totalAmount - totalAmount * 0.05).toFixed(2)}
+                            {payableAmount.toFixed(2)}
                           </span>
                         </>
                       )}
@@ -507,9 +529,7 @@ const CartSummery = ({
                   className={`${styles.viewAllBtn}`}
                   onClick={() => setShowAllCoupons((prev) => !prev)}
                 >
-                  {showAllCoupons
-                    ? "Show Less"
-                    : `View All Coupons`}
+                  {showAllCoupons ? "Show Less" : `View All Coupons`}
                 </button>
               )}
             </>
