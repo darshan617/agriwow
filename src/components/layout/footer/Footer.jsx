@@ -124,7 +124,9 @@ const Footer = () => {
                     aria-hidden
                   />
                   <Link
-                    href="tel:+919229297668"
+                    href="https://wa.me/919229297668?text=Hello, I am interested in your products"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={styles.footerPhoneLink}
                   >
                     +91 9229297668
