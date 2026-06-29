@@ -247,6 +247,7 @@
 .productSpecificationsTable {
   width: 100%;
   border-collapse: collapse;
+  text-transform: capitalize;
 }
 
 .productSpecificationsTable td {
@@ -254,6 +255,7 @@
   border: 1px solid #e0e0e0;
   font-size: 14px;
   color: #333;
+  text-transform: capitalize;
 }
 
 .productSpecificationsTable tr:nth-child(odd) td {
