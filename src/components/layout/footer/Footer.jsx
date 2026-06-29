@@ -10,8 +10,8 @@ import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import maestro from "@/assets/icon/Maestro_logo.png";
 import visa from "@/assets/icon/Visa.png";
 import paypal from "@/assets/icon/paypal.png";
-import mastercard from "@/assets/icon/smartcard.png";
 import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
+import mastercard from "@/assets/icon/smartcard.png";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import {
   getIsLoggedIn,
