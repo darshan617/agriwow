@@ -1,9 +1,12 @@
-import React from 'react'
-
+import React from "react";
+import Layout from "@/components/layout/Layout";
+import BuyingGuide from "@/components/buying-guide/BuyingGuide";
 const index = () => {
   return (
-    <div>index</div>
-  )
-}
+    <Layout>
+      <BuyingGuide />
+    </Layout>
+  );
+};
 
-export default index
+export default index;
