@@ -1,440 +1,556 @@
 .section {
-    background: #f5f7fa;
-    min-height: 100vh;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    color: #1a1a2e;
-  }
-  
-  .heroBanner {
-    position: relative;
-    width: 100%;
-    height: 320px;
-    overflow: hidden;
-  }
+  background: #f5f7fa;
+  min-height: 100vh;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #1a1a2e;
+}
 
-  .heroPlaceholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1a2a5e 0%, #2d4a8a 100%);
-  }
-  
-  .heroImage {
-    object-fit: cover;
-    object-position: center;
-  }
-  
-  .heroOverlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      rgba(10, 20, 60, 0.72) 0%,
-      rgba(10, 20, 60, 0.32) 70%,
-      transparent 100%
-    );
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 5%;
-  }
-  
-  .heroTitle {
-    font-size: 2.4rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    margin: 0 0 0.5rem;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-  
-  .heroSubtitle {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-    max-width: 480px;
-  }
-  
-  .guideDetailsLayout {
-    padding: 40px 0;
-  }
-  
-  /* .sidebar {
+.heroBanner {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.heroPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a2a5e 0%, #2d4a8a 100%);
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 20, 60, 0.72) 0%,
+    rgba(10, 20, 60, 0.32) 70%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5%;
+}
+
+.heroTitle {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.heroSubtitle {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 480px;
+}
+
+.guideDetailsLayout {
+  padding: 40px 0;
+}
+
+/* .sidebar {
     position: sticky;
     top: 1.5rem;
     align-self: start;
   } */
-  
-  .sidebarCard {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  }
-  
-  .sidebarHeading {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 0.85rem;
-  }
-  
-  .linkList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  
-  .sidebarLink {
-    display: inline-block;
-    padding: 0.5rem 0.85rem;
-    background: #ffffff;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    color: #337ab7;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.3;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  
-  .sidebarLink:hover {
-    border-color: #337ab7;
-    color: #23527c;
-  }
-  
-  .guideDetailsContent {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    padding: 20px 0 ;
-  }
-  
-  .contentBlock {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    padding: 2rem 2rem 2.5rem;
-  }
-  
-  .sectionHeader {
-    margin-bottom: 1.75rem;
-  }
-  
-  .eyebrow {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #e8232a;
-    margin-bottom: 0.35rem;
-  }
-  
-  .sectionTitle {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #1a1a2e;
-    margin: 0;
-    line-height: 1.25;
-  }
-  
-  .typesImageWrap {
-    margin-bottom: 1.75rem;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .typesImage {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    display: block;
-  }
-  
-  .typeGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.25rem;
-  }
-  
-  .typeCard {
-    background: #f9f9fb;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    padding: 1.1rem 1rem;
-    transition: box-shadow 0.2s, border-color 0.2s;
-  }
-  
-  .typeCard:hover {
-    box-shadow: 0 4px 16px rgba(232, 35, 42, 0.1);
-    border-color: #f5b8ba;
-  }
-  
-  .typeIcon {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .typeName {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 0.4rem;
-  }
-  
-  .typeDesc {
-    font-size: 0.8rem;
-    color: #555;
-    margin: 0;
-    line-height: 1.5;
-  }
-  
-  .chooseGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.25rem;
-  }
-  
-  .chooseCard {
-    border-left: 3px solid #e8232a;
-    padding: 1rem 1.1rem;
-    background: #fafafa;
-    border-radius: 0 8px 8px 0;
-    position: relative;
-  }
-  
-  .chooseNumber {
-    font-size: 1.75rem;
-    font-weight: 900;
-    color: #f5b8ba;
-    line-height: 1;
-    display: block;
-    margin-bottom: 0.25rem;
-    font-variant-numeric: tabular-nums;
-  }
-  
-  .chooseTitle {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 0.4rem;
-  }
-  
-  .chooseDesc {
-    font-size: 0.8rem;
-    color: #555;
-    margin: 0;
-    line-height: 1.55;
-  }
-  
-  .infoBox {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    padding: 1.75rem 2rem;
-  }
-  
-  .infoBoxTitle {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 1.25rem;
-  }
-  
-  .kelvinsBar {
-    display: flex;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #e8e8e8;
-  }
-  
-  .kelvinSegment {
-    flex: 1;
-    padding: 1rem 0.5rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  
-  .kelvinSegment span {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #333;
-  }
-  
-  .kelvinSegment small {
-    font-size: 0.7rem;
-    color: #666;
-  }
-  
-  .faqList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .faqItem {
-    border: 1px solid #ebebeb;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  
-  .faqItem[open] {
-    border-color: #e8232a;
-  }
-  
-  .faqQuestion {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.25rem;
-    font-size: 0.925rem;
-    font-weight: 600;
-    color: #1a1a2e;
-    cursor: pointer;
-    list-style: none;
-    background: #fafafa;
-    user-select: none;
-    transition: background 0.15s;
-  }
-  
-  .faqQuestion::-webkit-details-marker {
-    display: none;
-  }
-  
-  .faqItem[open] .faqQuestion {
-    background: #fff5f5;
-    color: #e8232a;
-  }
-  
-  .faqItem[open] .faqChevron {
-    transform: rotate(90deg);
-    color: #e8232a;
-  }
-  
-  .faqChevron {
-    font-size: 1.3rem;
-    transition: transform 0.25s;
-    color: #aaa;
-    flex-shrink: 0;
-  }
-  
-  .faqAnswer {
-    padding: 1rem 1.25rem 1.25rem;
-    margin: 0;
-    font-size: 0.875rem;
-    color: #444;
-    line-height: 1.7;
-    border-top: 1px solid #f0f0f0;
+
+.sidebarCard {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.sidebarHeading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.85rem;
+}
+
+.linkList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sidebarLink {
+  display: inline-block;
+  padding: 0.5rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  color: #337ab7;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.3;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.sidebarLink:hover {
+  border-color: #337ab7;
+  color: #23527c;
+}
+
+.guideDetailsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 20px 0;
+}
+
+.contentBlock {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 2rem 2rem 2.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #e8232a;
+  margin-bottom: 0.35rem;
+}
+
+.faqTitle {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.typesImageWrap {
+  margin-bottom: 1.75rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.typesImage {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.typeCard {
+  background: #f9f9fb;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1.1rem 1rem;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.typeCard:hover {
+  box-shadow: 0 4px 16px rgba(232, 35, 42, 0.1);
+  border-color: #f5b8ba;
+}
+
+.typeIcon {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.typeName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.4rem;
+}
+
+.typeDesc {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.chooseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.chooseCard {
+  border-left: 3px solid #e8232a;
+  padding: 1rem 1.1rem;
+  background: #fafafa;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+}
+
+.chooseNumber {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #f5b8ba;
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chooseTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.4rem;
+}
+
+.chooseDesc {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.infoBox {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.75rem 2rem;
+}
+
+.infoBoxTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 1.25rem;
+}
+
+.kelvinsBar {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+}
+
+.kelvinSegment {
+  flex: 1;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.kelvinSegment span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.kelvinSegment small {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faqItem {
+  border: 1px solid #ebebeb;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.faqItem[open] {
+  border-color: #239c3d;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  list-style: none;
+  background: #fafafa;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem[open] .faqQuestion {
+  background: #bffdcb;
+  color: #1a1a2e;
+}
+
+.faqItem[open] .faqChevron {
+  transform: rotate(90deg);
+  color: #239c3d;
+}
+
+.faqChevron {
+  font-size: 1.3rem;
+  transition: transform 0.25s;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.faqAnswer {
+  padding: 1rem 1.25rem 1.25rem;
+  margin: 0;
+  font-size: 0.875rem;
+  color: #444;
+  line-height: 1.7;
+  border-top: 1px solid #f0f0f0;
+}
+
+.guideContent h1,
+.guideContent h2,
+.guideContent h3,
+.guideContent h4,
+.guideContent h5,
+.guideContent h6 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 1.5rem 0 0.75rem;
+}
+.guideContent h1 {
+  font-size: 1.7rem;
+}
+.guideContent h2 {
+  font-size: 1.5rem;
+}
+.guideContent h3 {
+  font-size: 1.3rem;
+}
+.guideContent h4 {
+  font-size: 1.1rem;
+}
+.guideContent h5 {
+  font-size: 1rem;
+}
+.guideContent h6 {
+  font-size: 0.925rem;
+}
+
+.guideContent h1:first-child,
+.guideContent h2:first-child,
+.guideContent h3:first-child {
+  margin-top: 0;
+}
+
+.guideContent p {
+  font-size: 0.925rem;
+  line-height: 1.75;
+  color: #444;
+  margin: 0 0 1rem;
+}
+
+.guideContent ul,
+.guideContent ol {
+  padding-left: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.guideContent li {
+  font-size: 0.925rem;
+  line-height: 1.65;
+  color: #444;
+  margin-bottom: 0.4rem;
+}
+
+.guideContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.875rem;
+}
+
+.guideContent th,
+.guideContent td {
+  border: 1px solid #e8e8e8;
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.guideContent th {
+  background: #f5f7fa;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.guideContent figure {
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.emptyGuide {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.guideContent a {
+  color: #239c3d;
+  text-decoration: underline;
+  word-break: break-word;
+  transition: color 0.15s ease;
+}
+
+.guideContent a:hover {
+  color: #1f8534;
+}
+
+.guideContent strong,
+.guideContent b {
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.guideContent em,
+.guideContent i {
+  font-style: italic;
+}
+.guideContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.25rem 0;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
   }
 
+  .sidebar {
+    position: static;
+  }
+
+  .heroTitle {
+    font-size: 1.75rem;
+  }
+
+  .heroBanner {
+    height: 220px;
+  }
+  .guideContent h1 {
+    font-size: 1.5rem;
+  }
+  .guideContent h2 {
+    font-size: 1.3rem;
+  }
+  .guideContent h3 {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .typeGrid,
+  .chooseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .kelvinsBar {
+    flex-direction: column;
+  }
+
+  .contentBlock {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .heroTitle {
+    font-size: 1.4rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
   .guideContent h1,
   .guideContent h2,
   .guideContent h3,
   .guideContent h4,
   .guideContent h5,
   .guideContent h6 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 1.5rem 0 0.75rem;
+    margin: 1.25rem 0 0.6rem;
   }
 
-  .guideContent p {
-    font-size: 0.925rem;
-    line-height: 1.75;
-    color: #444;
-    margin: 0 0 1rem;
-  }
+  .guideContent h1 { font-size: 1.3rem; }
+  .guideContent h2 { font-size: 1.15rem; }
+  .guideContent h3,
+  .guideContent h4,
+  .guideContent h5,
+  .guideContent h6 { font-size: 1rem; }
 
-  .guideContent ul,
-  .guideContent ol {
-    padding-left: 1.25rem;
-    margin: 0 0 1rem;
-  }
-
+  .guideContent p,
   .guideContent li {
-    font-size: 0.925rem;
-    line-height: 1.65;
-    color: #444;
-    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .guideContent blockquote {
+    padding: 0.6rem 0.9rem;
+  }
+
+  .guideContent pre {
+    padding: 0.85rem 1rem;
+    font-size: 0.75rem;
   }
 
   .guideContent table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0 1.5rem;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .guideContent th,
   .guideContent td {
-    border: 1px solid #e8e8e8;
-    padding: 0.65rem 0.75rem;
-    text-align: left;
-    vertical-align: top;
+    padding: 0.45rem 0.5rem;
   }
 
-  .guideContent th {
-    background: #f5f7fa;
-    font-weight: 700;
-    color: #1a1a2e;
+  .guideContent .image-style-align-left,
+  .guideContent .image-style-align-right,
+  .guideContent .image-style-side {
+    float: none;
+    max-width: 100%;
+    margin: 0.85rem 0;
   }
-
-  .guideContent figure {
-    margin: 1rem 0;
-    overflow-x: auto;
-  }
-
-  .emptyGuide {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #666;
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-  
-  @media (max-width: 900px) {
-    .layout {
-      grid-template-columns: 1fr;
-    }
-  
-    .sidebar {
-      position: static;
-    }
-  
-    .heroTitle {
-      font-size: 1.75rem;
-    }
-  
-    .heroBanner {
-      height: 220px;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .typeGrid,
-    .chooseGrid {
-      grid-template-columns: 1fr;
-    }
-  
-    .kelvinsBar {
-      flex-direction: column;
-    }
-  
-    .contentBlock {
-      padding: 1.25rem 1rem 1.5rem;
-    }
-  
-    .heroTitle {
-      font-size: 1.4rem;
-    }
-  
-    .sectionTitle {
-      font-size: 1.3rem;
-    }
-  }
+}

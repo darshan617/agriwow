@@ -18,6 +18,7 @@ import {
 } from "@/redux/apis/buyProductApi";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
+import { BiX } from "react-icons/bi";
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -256,7 +257,19 @@ const CartSummery = ({
           </div>
           {(discountAmount || cartData?.coupon?.discount_amount) > 0 && (
             <div className={`${styles.summaryRow}`}>
-              <span>Discount</span>
+              <div className={`${styles.discountRow}`}>
+                <span>Discount</span>
+                <div className={`${styles.discountCode}`}>
+                  <p>
+                    {cartData?.coupon?.code && `(${cartData.coupon.code})`}
+                  </p>
+                  <button onClick={() => handleRemoveCoupon()}>
+                    <BiX size={18} />
+                  </button>
+             
+                </div>
+              </div>
+
               <span
                 className={`${styles.discount}`}
                 style={{
@@ -276,14 +289,18 @@ const CartSummery = ({
               </span>
             </div>
           )}
-          {selectedPaymentMethod === "full" && (
-            <div className={`${styles.summaryRow}`}>
-              <span>Extra 5% OFF</span>
-              <span className={`${styles.discount}`} style={{ color: "#2c9a43" }}>
-                ₹ -{fullPaymentDiscount.toFixed(2)}
-              </span>
-            </div>
-          )}
+          {selectedPaymentMethod === "full" &&
+            router?.pathname === "/checkout" && (
+              <div className={`${styles.summaryRow}`}>
+                <span>Extra 5% OFF</span>
+                <span
+                  className={`${styles.discount}`}
+                  style={{ color: "#2c9a43" }}
+                >
+                  ₹ -{fullPaymentDiscount.toFixed(2)}
+                </span>
+              </div>
+            )}
           {shippingAmount < 0 && (
             <div className={`${styles.freeShipping}`}>Free shipping</div>
           )}
@@ -304,14 +321,14 @@ const CartSummery = ({
           </div> */}
           {selectedPaymentMethod === "partial" && (
             <>
-          <hr className={`${styles.divider}`} />
-          <div className={`${styles.totalRow}`}>
-            <div>
-              <h4>Pay Deposit Amount</h4>
-            </div>
-            <h4>₹ {(totalAmount * 0.30).toFixed(2)}</h4>
-          </div>
-          </>
+              <hr className={`${styles.divider}`} />
+              <div className={`${styles.totalRow}`}>
+                <div>
+                  <h4>Pay Deposit Amount</h4>
+                </div>
+                <h4>₹ {(totalAmount * 0.3).toFixed(2)}</h4>
+              </div>
+            </>
           )}
 
           {hasSelectedAddress ? (
@@ -349,7 +366,8 @@ const CartSummery = ({
                       {selectedPaymentMethod === "partial" && (
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
-                            Balance 70% Cash on Delivery (₹ {(totalAmount * 0.30).toFixed(2)})
+                            Balance 70% Cash on Delivery (₹{" "}
+                            {(totalAmount * 0.3).toFixed(2)})
                           </span>
                         </>
                       )}
@@ -380,8 +398,7 @@ const CartSummery = ({
                       {selectedPaymentMethod === "full" && (
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
-                            Full Payment of ₹{" "}
-                            {payableAmount.toFixed(2)}
+                            Full Payment of ₹ {payableAmount.toFixed(2)}
                           </span>
                         </>
                       )}
@@ -469,7 +486,7 @@ const CartSummery = ({
         <div className={`${styles.couponCard}`}>
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h3 className={`${styles.couponTitle} `}>Apply Coupon</h3>
-            {appliedCoupon && (
+            {cartData?.coupon?.code && (
               <button
                 onClick={() => handleRemoveCoupon()}
                 className={`${styles.removeCouponBtn}`}
@@ -515,8 +532,15 @@ const CartSummery = ({
                       {coupon?.applicability?.apply_on_text}
                     </p>
                   </div>
+                  
                   <button
-                    onClick={() => setCouponCode(coupon?.code)}
+                    onClick={() => {
+                      if (!getIsLoggedIn()) {
+                        openLoginPopup();
+                        return;
+                      }
+                      setCouponCode(coupon?.code);
+                    }}
                     className={`${styles.applyBtn}`}
                   >
                     Copy Code <FaCopy />

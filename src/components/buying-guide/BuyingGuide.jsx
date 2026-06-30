@@ -12,7 +12,7 @@ const BuyingGuide = () => {
     id: item?.id,
     name: item?.name,
     slug: item?.slug,
-    image: item?.image,
+    image: item?.image_url,
   }));
   return isLoading ? (
     <div>Loading...</div>
@@ -28,13 +28,14 @@ const BuyingGuide = () => {
               className={styles.tile}
             >
               <span className={styles.iconWrap}>
-                <Image
+                {/* <Image
                   src={category?.image}
                   alt={category?.name}
                   width={28}
                   height={28}
                   className={styles.icon}
-                />
+                /> */}
+                {category?.svg_icon}
               </span>
               <span className={styles.label}>{category?.name}</span>
             </Link>

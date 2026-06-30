@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
+import CustomPopup from "@/components/custom-popup/CustomPopup";
 import styles from "@/components/home/components/video/VideoSection.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 
@@ -71,7 +72,7 @@ const getYoutubeVideoId = (url) => {
 const VideoSection = () => {
   const { data: homeData } = useGetHomeDataQuery();
   const video_banner = homeData?.data?.banners?.video_banner;
-  const [activeVideoKey, setActiveVideoKey] = useState(null);
+  const [activeVideo, setActiveVideo] = useState(null);
 
   const embedVideos = useMemo(() => {
     return (video_banner?.youtube_links ?? [])
@@ -114,43 +115,28 @@ const VideoSection = () => {
                 className={`${styles.slide}`}
               >
                 <div className={`${styles.card}`}>
-                  {activeVideoKey === (video.youtubeUrl || index) ? (
-                    <iframe
-                      src={video.autoplayEmbedUrl}
-                      title={
-                        video_banner?.title
-                          ? `${video_banner.title} - video ${index + 1}`
-                          : `YouTube video ${index + 1}`
-                      }
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className={`${styles.iframe}`}
+                  <button
+                    type="button"
+                    className={styles.previewButton}
+                    onClick={() => setActiveVideo(video)}
+                    aria-label={`Play video ${index + 1}`}
+                  >
+                    <img
+                      src={video.thumbnailUrl}
+                      alt=""
+                      className={styles.thumbnail}
                     />
-                  ) : (
-                    <button
-                      type="button"
-                      className={styles.previewButton}
-                      onClick={() => setActiveVideoKey(video.youtubeUrl || index)}
-                      aria-label={`Play video ${index + 1}`}
-                    >
-                      <img
-                        src={video.thumbnailUrl}
-                        alt=""
-                        className={styles.thumbnail}
-                      />
-                      <span className={styles.thumbnailOverlay} />
-                      <span className={styles.playBtn}>
-                        <svg
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          className={styles.playIcon}
-                        >
-                          <path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor" />
-                        </svg>
-                      </span>
-                    </button>
-                  )}
+                    <span className={styles.thumbnailOverlay} />
+                    <span className={styles.playBtn}>
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        className={styles.playIcon}
+                      >
+                        <path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor" />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
               </SwiperSlide>
             ))}
@@ -174,6 +160,25 @@ const VideoSection = () => {
           </button>
         </div>
       </div>
+
+      {activeVideo && (
+        <CustomPopup
+          onclose={() => setActiveVideo(null)}
+          wide
+          maxWidth="960px"
+        >
+          <div className={styles.videoPopup}>
+            <iframe
+              src={activeVideo.autoplayEmbedUrl}
+              title={video_banner?.title || "YouTube video"}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className={styles.videoPopupIframe}
+            />
+          </div>
+        </CustomPopup>
+      )}
     </section>
   );
 };

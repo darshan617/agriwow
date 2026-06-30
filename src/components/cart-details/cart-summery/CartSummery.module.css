@@ -100,6 +100,26 @@
   color: #222;
 }
 
+.discountRow p{
+  font-size: 12px;
+  color: #239c3d;
+  font-weight: 600;
+  margin: 0;
+}
+
+.discountCode{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.discountCode button{
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #b91919;
+}
+
 .couponForm {
   display: flex;
   gap: 12px;

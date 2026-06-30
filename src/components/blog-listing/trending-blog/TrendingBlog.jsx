@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronRight } from "react-icons/fa6";
-import { FaSearch } from "react-icons/fa";
 import fireIcon from "@/assets/icon/fire.png";
 import styles from "@/components/blog-listing/trending-blog/TrendingBlog.module.css";
 import mailIllustration from "@/assets/icon/big-mail.png";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-
 
 const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
   const { data: homeData, isLoading: isHomeDataLoading } =
@@ -19,7 +17,9 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
   const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
     useSubscribeEmailMutation();
   const { showToast } = useToast();
-  const handleSubscribe = async () => {
+
+  const handleSubscribe = async (e) => {
+    e?.preventDefault();
     if (isSubscribeEmailLoading) return;
     if (!email) return showToast("Please enter your email", "error");
     try {
@@ -37,40 +37,20 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
   };
 
   return (
-    <>
-      {type === "blog-detail" && (
-        <form
-          className={styles.searchForm}
-          role="search"
-        >
-          <input
-            type="search"
-            className={styles.searchInput}
-            placeholder="Search for Blogs..."
-            aria-label="Search blogs"
-          />
-          <button
-            type="submit"
-            className={styles.searchBtn}
-            aria-label="Search"
-          >
-            <FaSearch />
-          </button>
-        </form>
-      )}
-      <div className={styles.sidebar}>
-        <div className={styles.card} aria-label="Trending popular tags">
-          <div className={styles.header}>
-            <h2 className={styles.heading}>
-              <span className={styles.fireIcon} aria-hidden>
-                <Image src={fireIcon} alt="fire icon" width={20} height={20} />
-              </span>
-              Trending Blogs
-            </h2>
-          </div>
+    <div className={styles.sidebar}>
+      <div className={styles.card} aria-label="Trending popular tags">
+        <div className={styles.header}>
+          <h2 className={styles.heading}>
+            <span className={styles.fireIcon} aria-hidden>
+              <Image src={fireIcon} alt="fire icon" width={20} height={20} />
+            </span>
+            Trending Blogs
+          </h2>
+        </div>
 
-          <ul className={styles.list}>
-            {trendingBlogs?.map((topic) => (
+        <ul className={styles.list}>
+          {trendingBlogs?.length > 0 ? (
+            trendingBlogs.slice(0, 3).map((topic) => (
               <li key={topic?.id}>
                 <Link href={`/blog/${topic?.slug}`} className={styles.listItem}>
                   <span className={styles.thumb}>
@@ -92,80 +72,86 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
                   <FaChevronRight className={styles.chevron} aria-hidden />
                 </Link>
               </li>
-            ))}
-          </ul>
-        </div>
-
-        <div
-          className={styles.newsletterCard}
-          aria-label="Newsletter subscription"
-        >
-          <div className={styles.illustration}>
-            <Image
-              src={mailIllustration}
-              alt=""
-              width={160}
-              height={120}
-              className={styles.illustrationImage}
-            />
-          </div>
-
-          <h2 className={styles.newsletterHeading}>
-            Get Farming Tips in Your Inbox
-          </h2>
-          <p className={styles.subheading}>
-            Join our community and never miss an update.
-          </p>
-
-          <form className={styles.form} onSubmit={handleSubscribe}>
-            <label htmlFor="newsletter-email" className={styles.srOnly}>
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              className={styles.input}
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button type="submit" className={styles.subscribeBtn} onClick={handleSubscribe} disabled={isSubscribeEmailLoading}>
-              {isSubscribeEmailLoading ? "Subscribing..." : "Subscribe"}
-            </button>
-          </form>
-
-          <p className={styles.disclaimer}>
-            By subscribing, you agree to our{" "}
-            <Link href="/terms-of-use" className={styles.disclaimerLink}>
-              Terms of Use
-            </Link>{" "}
-            &amp;{" "}
-            <Link href="/privacy-policy" className={styles.disclaimerLink}>
-              Privacy Policy
-            </Link>
-          </p>
-        </div>
-        {type === "blog-detail" && (
-          <div className={styles.card}>
-            <h2 className={styles.heading}>Product Categories</h2>
-            <div className={styles.grid}>
-              {categoriesData?.map((category) => (
-                <Link
-                  key={category?.slug}
-                  href={`/product-category/${category?.slug}`}
-                  className={styles.tag}
-                >
-                  {category?.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+            ))
+          ) : (
+            <li>
+              <p className={styles.noTrendingBlogs}>No trending blogs found</p>
+            </li>
+          )}
+        </ul>
       </div>
-    </>
+
+      <div className={styles.newsletterCard} aria-label="Newsletter subscription">
+        <div className={styles.illustration}>
+          <Image
+            src={mailIllustration}
+            alt=""
+            width={160}
+            height={120}
+            className={styles.illustrationImage}
+          />
+        </div>
+
+        <h2 className={styles.newsletterHeading}>
+          Get Farming Tips in Your Inbox
+        </h2>
+        <p className={styles.subheading}>
+          Join our community and never miss an update.
+        </p>
+
+        <form className={styles.form} onSubmit={handleSubscribe}>
+          <label htmlFor="newsletter-email" className={styles.srOnly}>
+            Email address
+          </label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            className={styles.input}
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button
+            type="submit"
+            className={styles.subscribeBtn}
+            disabled={isSubscribeEmailLoading}
+          >
+            {isSubscribeEmailLoading ? "Subscribing..." : "Subscribe"}
+          </button>
+        </form>
+
+        <p className={styles.disclaimer}>
+          By subscribing, you agree to our{" "}
+          <Link href="/terms-of-use" className={styles.disclaimerLink}>
+            Terms of Use
+          </Link>{" "}
+          &amp;{" "}
+          <Link href="/privacy-policy" className={styles.disclaimerLink}>
+            Privacy Policy
+          </Link>
+        </p>
+      </div>
+
+      {type === "blog-detail" && (
+        <div className={styles.card}>
+          <h2 className={styles.heading}>Product Categories</h2>
+          <div className={styles.grid}>
+            {categoriesData?.map((category) => (
+              <Link
+                key={category?.slug}
+                href={`/product-category/${category?.slug}`}
+                className={styles.tag}
+              >
+                {category?.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
