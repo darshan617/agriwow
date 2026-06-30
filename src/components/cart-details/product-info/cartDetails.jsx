@@ -267,6 +267,7 @@ const CartDetails = ({
           </div>
         )}
 
+
         {isLoadingData ? (
           <div
             className="d-flex justify-content-center align-items-center"
@@ -286,7 +287,7 @@ const CartDetails = ({
                 <div className={styles.productCartRow}>
                   <div className={styles.productCartInfo}>
                     <Image
-                      src={item.product.thumbnail}
+                      src={item?.product?.thumbnail}
                       alt="product-img"
                       className={styles.productImg}
                       width={62}

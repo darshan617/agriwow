@@ -146,7 +146,7 @@ const OrderHistory = () => {
                             ₹ {formatPrice(order?.grand_total)}
                           </span>
                         </div>
-                        <div className="d-flex gap-2 justify-content-end">
+                        <div className={`d-flex gap-2 justify-content-end ${styles.orderActions}`}>
                           <button
                             onClick={() =>
                               router.push(`/track-order?orderId=${order?.order_id}`)
