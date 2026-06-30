@@ -5,7 +5,7 @@ import { useGetOrderHistoryQuery } from "@/redux/apis/orderHistory";
 import styles from "@/components/my-order/OrderHistory.module.css";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRouter } from "next/router";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaShippingFast } from "react-icons/fa";
 
 const formatPrice = (price) => {
   const num = Number(price);
@@ -146,7 +146,16 @@ const OrderHistory = () => {
                             ₹ {formatPrice(order?.grand_total)}
                           </span>
                         </div>
-                        <div className="d-flex gap-2 justify-content-end">
+                        <div className={`d-flex gap-2 justify-content-end ${styles.orderActions}`}>
+                          <button
+                            onClick={() =>
+                              router.push(`/track-order?orderId=${order?.order_id}`)
+                            }
+                            className={styles.invoiceDownload}
+                          >
+                            Track Order
+                            <FaShippingFast size={18} className="ms-2" />
+                          </button>
                           <button
                             onClick={() =>
                               router.push(`/my-order/${order?.order_id}`)

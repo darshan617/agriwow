@@ -140,7 +140,7 @@ export default function DeliveryDetails({ productDetails }) {
               <span className={styles.oldPrice}>
                 {" "}
                 ₹ {totalPrice.toLocaleString()}
-              </span>
+              </span> <br />
               <div className={`${styles.discountRow}`}>
                 {unitPrice > 0 && unitSellingPrice < unitPrice && (
                   <>

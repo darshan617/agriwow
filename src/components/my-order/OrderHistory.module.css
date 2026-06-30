@@ -279,6 +279,7 @@
   background-color: var(--oh-primary);
   color: #ffffff;
   border: none;
+  justify-content: center;
 }
 
 
@@ -314,5 +315,17 @@
 
   .orderTotal {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 576px){
+  .orderActions {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .invoiceDownload {
+    min-width: 200px;
   }
 }

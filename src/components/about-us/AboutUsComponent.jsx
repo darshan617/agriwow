@@ -74,9 +74,9 @@ const AboutUsShimmer = () => (
 );
 
 const getStatIcon = (index) => {
-  if (index === 0) return <LuShieldCheck />;
-  if (index === 1) return <LuUsers />;
-  return <LuSprout />;
+  if (index === 0) return <LuShieldCheck size={40} />;
+  if (index === 1) return <LuUsers size={40} />;
+  return <LuSprout size={40} />;
 };
 
 const AboutUsComponent = () => {
@@ -155,7 +155,7 @@ const AboutUsComponent = () => {
       <section className={`sectionSpace ${styles.introSection}`}>
         <div className="container">
           <div className="row align-items-center g-4 g-lg-5">
-            <div className="col-lg-6">
+            <div className="col-lg-6 m-0">
               <div className={styles.introImageWrap}>
                 <Image
                   src={aboutImage}
@@ -208,7 +208,8 @@ const AboutUsComponent = () => {
       </section>
 
       {storyTags.length > 0 && (
-        <section className={styles.statsBar}>
+        <div className="sectionSpace">
+        <section className={`${styles.statsBar}`}>
           <div className="container">
             {isMobile ? (
               <Swiper
@@ -245,8 +246,9 @@ const AboutUsComponent = () => {
                 ))}
               </div>
             )}
-          </div>
-        </section>
+            </div>
+          </section>
+        </div>
       )}
 
       {ourStory?.content && (

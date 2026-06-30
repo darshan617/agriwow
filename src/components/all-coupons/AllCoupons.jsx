@@ -122,6 +122,9 @@ const AllCoupons = ({ open, onClose }) => {
               >
                 <div className={styles.couponCodeRow}>
                   <span className={styles.couponCode}>{coupon?.code}</span>
+                <div className={styles.couponDescription}>
+                  <p>{coupon?.applicability?.label}</p>
+                </div>
                 </div>
 
                 <button

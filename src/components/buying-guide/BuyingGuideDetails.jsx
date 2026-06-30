@@ -23,7 +23,9 @@ const BuyingGuideDetails = () => {
   );
 
   const guide = buyingGuideDetails?.data;
-  const heroImage = guide?.image;
+  const heroImage =
+    guide?.buying_guide_banner ?? guide?.banner_image ?? guide?.image;
+  const faqs = guide?.buying_guide_faqs ?? guide?.faqs ?? [];
   const relatedLinks = (buyingGuideList?.data ?? []).filter(
     (item) => item?.slug !== slug,
   );
@@ -83,6 +85,39 @@ const BuyingGuideDetails = () => {
                 </p>
               )}
             </article>
+
+            {faqs.length > 0 && (
+              <article className={styles.contentBlock}>
+                <div className={styles.sectionHeader}>
+                  <h2 className={styles.faqTitle}>
+                    Frequently Asked Questions
+                  </h2>
+                </div>
+                <div className={styles.faqList}>
+                  {faqs.map((faq, index) => (
+                    <details
+                      key={faq?.id ?? index}
+                      className={styles.faqItem}
+                    >
+                      <summary className={styles.faqQuestion}>
+                        {faq?.question}
+                        <span className={styles.faqChevron} aria-hidden="true">
+                          ›
+                        </span>
+                      </summary>
+                      {faq?.answer ? (
+                        <div
+                          className={styles.faqAnswer}
+                          dangerouslySetInnerHTML={{ __html: faq.answer }}
+                        />
+                      ) : (
+                        <p className={styles.faqAnswer}>—</p>
+                      )}
+                    </details>
+                  ))}
+                </div>
+              </article>
+            )}
           </div>
         </div>
       </div>

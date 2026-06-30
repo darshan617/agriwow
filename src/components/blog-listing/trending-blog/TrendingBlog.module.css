@@ -297,6 +297,14 @@
   border: 0;
 }
 
+.noTrendingBlogs{
+  font-size: 15px;
+  font-weight: 400;
+  color: #888888;
+  text-align: center;
+  padding: 10px 0;
+}
+
 .card {
   position: relative;
   background: #ffffff;

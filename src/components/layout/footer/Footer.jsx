@@ -175,9 +175,17 @@ const Footer = () => {
                       <Link href="/contact-us">Contact Us</Link>
                     </li>
 
-                    <li>
-                      <Link href="#">Track My Order</Link>
-                    </li>
+                    {isLoggedIn ? (
+                      <li>
+                        <Link href="/my-order">Track My Order</Link>
+                      </li>
+                    ) : (
+                      <li>
+                        <button className={styles.footerNavBtn} onClick={openLoginPopup}>
+                          Track My Order
+                        </button>
+                      </li>
+                    )}
                     <li>
                       <Link href="/buying-guide">Buying Guide</Link>
                     </li>

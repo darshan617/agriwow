@@ -125,7 +125,7 @@ const renderMenuProductColumns = (
       </div>
     ))}
     <div className={`${styles.megaColumn}`}>
-      <h2 className={`${styles.megaColumnTitle}`}>Best Seller</h2>
+      <h2 className={`${styles.megaColumnTitle}`}>New Arrivals</h2>
       <ul className={`${styles.megaList}`}>
         {menuProductData?.data?.Product?.map((prd) => (
           <li key={prd?.id ?? prd?.slug ?? prd?.name}>
