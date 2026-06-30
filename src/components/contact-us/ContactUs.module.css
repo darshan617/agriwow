@@ -171,6 +171,11 @@
   color: #666;
 }
 
+.contactUsDescription h2{
+  color: #239c3d;
+}
+
+
 @media (max-width: 992px) {
   .contactUsContent {
     padding: 1.5rem 0 0.5rem;

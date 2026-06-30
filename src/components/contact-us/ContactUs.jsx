@@ -21,8 +21,8 @@ const ContactUs = ({ contactDetailsData }) => {
       <div className={`row align-items-center ${styles.heroRow}`}>
         <div className="col-lg-7">
           <div className={styles.contactUsContent}>
-            <h2 className={styles.contactUsTitle}>Contact Us</h2>
-            <h4 className={styles.contactUsSubtitle}>
+            {/* <h2 className={styles.contactUsTitle}>Contact Us</h2> */}
+            {/* <h4 className={styles.contactUsSubtitle}>
               Support team ready to help
             </h4>
             <p className={styles.contactUsDescription}>
@@ -31,7 +31,11 @@ const ContactUs = ({ contactDetailsData }) => {
               world. And that is why the culture of customer feedback and
               satisfaction ranks high on our agenda. We are happy to help you
               round the clock to the best of our ability.
-            </p>
+            </p> */}
+
+            <div className={styles.contactUsDescription}>
+              <div dangerouslySetInnerHTML={{ __html: contactDetails?.title }} />
+            </div>
           </div>
         </div>
         <div className="col-lg-5">
