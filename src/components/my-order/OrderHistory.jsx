@@ -91,7 +91,7 @@ const OrderHistory = () => {
                   You haven&apos;t placed any orders. Browse our products and
                   find something you love.
                 </p>
-                <Link href="/" className={styles.shopBtn}>
+                <Link href="/" className={styles.shopBtn} prefetch={true}>
                   START SHOPPING
                 </Link>
               </div>
@@ -172,6 +172,7 @@ const OrderHistory = () => {
                                 target="_blank"
                                 className={styles.invoiceDownload}
                                 download
+                                prefetch={true}
                               >
                                 Download Invoice
                                 <MdOutlineFileDownload size={20} />

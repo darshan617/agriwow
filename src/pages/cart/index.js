@@ -201,7 +201,7 @@ const Cart = () => {
               {trending_products.map((item) => (
                 <SwiperSlide key={item?.id}>
                   <ProductCard
-                    image={item?.gallery?.[1]}
+                    image={item?.thumbnail}
                     imageHover={item?.gallery?.[0]}
                     discount={item?.discount}
                     isBestSeller={item?.is_best_selling}

@@ -52,7 +52,7 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
           {trendingBlogs?.length > 0 ? (
             trendingBlogs.slice(0, 3).map((topic) => (
               <li key={topic?.id}>
-                <Link href={`/blog/${topic?.slug}`} className={styles.listItem}>
+                <Link href={`/blog/${topic?.slug}`} className={styles.listItem} prefetch={true}>
                   <span className={styles.thumb}>
                     <Image
                       src={topic?.image}
@@ -125,11 +125,11 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
 
         <p className={styles.disclaimer}>
           By subscribing, you agree to our{" "}
-          <Link href="/terms-of-use" className={styles.disclaimerLink}>
+          <Link href="/terms-of-use" className={styles.disclaimerLink} prefetch={true}>
             Terms of Use
           </Link>{" "}
           &amp;{" "}
-          <Link href="/privacy-policy" className={styles.disclaimerLink}>
+          <Link href="/privacy-policy" className={styles.disclaimerLink} prefetch={true}>
             Privacy Policy
           </Link>
         </p>
@@ -144,6 +144,7 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
                 key={category?.slug}
                 href={`/product-category/${category?.slug}`}
                 className={styles.tag}
+                prefetch={true}
               >
                 {category?.name}
               </Link>

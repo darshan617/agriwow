@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
-import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 import {
   getCartSessionId,
-  useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
-import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { GoogleLogin } from "@react-oauth/google";
-import GoogleLoginBtn from "@/components/google-login-btn/GoogleLoginBtn";
 import Link from "next/link";
 const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const router = useRouter();
@@ -76,27 +71,13 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
             {isAuthLoading ? "LOADING..." : "CONTINUE"}
           </button>
 
-          {/* <div className={`${styles.orRow}`}>
-            <div className={`${styles.orLine}`} />
-            <span className={`${styles.orText}`}>or</span>
-            <div className={`${styles.orLine}`} />
-          </div> */}
-
-          {/* <button className={`${styles.socialBtn}`} style={{ marginTop: 12 }}>
-            <FcGoogle size={18} style={{ marginRight: 8 }} />
-            Continue with Google
-          </button> */}
-          {/* <h1>
-            <GoogleLoginBtn />
-          </h1> */}
-
           <p className={`${styles.terms}`}>
             By continuing, you agree to our{" "}
-            <Link href="/terms-of-use" className={`${styles.link}`}>
+            <Link href="/terms-of-use" className={`${styles.link}`} prefetch={true}>
               Terms of Use
             </Link>{" "}
             &amp;{" "}
-            <Link href="/privacy-policy" className={`${styles.link}`}>
+            <Link href="/privacy-policy" className={`${styles.link}`} prefetch={true}>
               Privacy Policy
             </Link>
             .

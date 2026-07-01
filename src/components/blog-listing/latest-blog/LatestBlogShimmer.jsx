@@ -4,29 +4,6 @@ import styles from "@/components/blog-listing/latest-blog/LatestBlogShimmer.modu
 const LatestBlogShimmer = () => {
   return (
     <>
-      {/* <div className={`${styles.heading} shimmerEffect`}></div> */}
-      {/* <div className={`${styles.breadcrumb} shimmerEffect`}></div> */}
-      {/* <div className={`${styles.heroContent} shimmerEffect`}>
-        <div className={`${styles.searchForm} shimmerEffect`}></div>
-      </div> */}
-      {/* <div className={styles.categoryNav}>
-        <ul className={`${styles.categoryList}`}>
-          <li>
-            <button
-              type="button"
-              className={`${styles.categoryBtn} shimmerEffect`}
-            ></button>
-            <button
-              type="button"
-              className={`${styles.categoryBtnMid} shimmerEffect`}
-            ></button>
-            <button
-              type="button"
-              className={`${styles.categoryBtnLast} shimmerEffect`}
-            ></button>
-          </li>
-        </ul>
-      </div> */}
       <div className="container ">
         <div className={styles.featuredCard}>
           <div className={`${styles.featuredMedia} shimmerEffect`}></div>
@@ -49,7 +26,6 @@ const LatestBlogShimmer = () => {
                 <div
                   className={`${styles.blogCardExcerpt} shimmerEffect`}
                 ></div>
-                {/* <div className={`${styles.blogCardMeta} shimmerEffect`}></div> */}
                 <div
                   className={`${styles.blogCardReadMore} shimmerEffect`}
                 ></div>
@@ -62,7 +38,6 @@ const LatestBlogShimmer = () => {
                 <div
                   className={`${styles.blogCardExcerpt} shimmerEffect`}
                 ></div>
-                {/* <div className={`${styles.blogCardMeta} shimmerEffect`}></div> */}
                 <div
                   className={`${styles.blogCardReadMore} shimmerEffect`}
                 ></div>

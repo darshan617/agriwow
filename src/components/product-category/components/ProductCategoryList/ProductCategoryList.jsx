@@ -57,11 +57,7 @@ const ProductCategoryList = () => {
       maxPrice: debouncedPriceFilter?.maxPrice,
     },
     {
-      skip:
-        !categorySlug ||
-        !!subCategory ||
-        !router?.isReady ||
-        !debouncedPriceFilter,
+      skip: !categorySlug || !router?.isReady || !debouncedPriceFilter,
     },
   );
 
@@ -100,6 +96,7 @@ const ProductCategoryList = () => {
     (isFetching && products.length === 0);
 
   const resultCount = products?.length;
+  const categoryCount = categoryData?.data?.length;
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
@@ -143,17 +140,17 @@ const ProductCategoryList = () => {
           <div>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/">Products</Link>
+                <Link href="/" prefetch={true}>Products</Link>
               </li>
               {categorySlug && (
                 <>
                   <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
                   <li>
-                    <Link href={`/product-category/${categorySlug}`}>
+                    <Link href={`/product-category/${categorySlug}`} prefetch={true}>
                       {categoryName}
                     </Link>
                   </li>
@@ -165,6 +162,7 @@ const ProductCategoryList = () => {
                   <li>
                     <Link
                       href={`/product-category/${categorySlug}/${subCategory}`}
+                      prefetch={true}
                     >
                       {subCategoryName}
                     </Link>
@@ -180,6 +178,7 @@ const ProductCategoryList = () => {
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
             resultCount={resultCount}
+            categoryCount={categoryCount}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}

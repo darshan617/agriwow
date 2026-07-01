@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import Image from "next/image";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa6";
@@ -272,10 +271,6 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
-          {/* <span className={styles.reviewerName}>{review?.image_urls}</span> */}
-          {/* {review?.image_urls && review?.image_urls?.length > 0 && (
-            <Image src={review?.image_urls} alt="review" width={25} height={25} />
-          )} */}
         </div>
         <div className={styles.helpfulBtns}>
           <button

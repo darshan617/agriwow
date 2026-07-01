@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import Image from "next/image";
 import benefitImage from "@/assets/images/pay-back.jpg";
 import styles from "@/components/home/components/benifit/Benefit.module.css";

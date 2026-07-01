@@ -28,7 +28,7 @@ const TopBanner = ({ categoriesData }) => {
                 >
                     {categoriesData?.map((category, idx) => (
                         <SwiperSlide key={idx}>
-                            <Link href={category?.slug}>
+                            <Link href={category?.slug} prefetch={true}>
                                 <div className={`${styles.categoryItem}`}>
                                     <div className={`${styles.categoryImgWrapper}`}>
                                         <Image

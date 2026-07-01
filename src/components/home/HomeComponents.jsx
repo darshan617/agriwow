@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import dynamic from "next/dynamic";
 import SiteHeaderShimmer from "@/components/layout/top-header/SiteHeaderShimmer";

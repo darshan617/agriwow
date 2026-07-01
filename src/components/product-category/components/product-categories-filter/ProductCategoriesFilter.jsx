@@ -74,7 +74,7 @@ function CategoryCheckbox({ slug, name, count, isChecked, href }) {
   const displayCount = count ?? 0;
 
   return (
-    <Link href={href} className={`${style.label}`}>
+    <Link href={href} className={`${style.label}`} prefetch={true}>
       <input
         type="checkbox"
         id={slug}
@@ -110,6 +110,7 @@ function ProductCategoriesFilter({
   drawerOpen = false,
   onDrawerClose,
   resultCount,
+  categoryCount,
   minPrice,
   maxPrice,
   setMinPrice,
@@ -191,10 +192,9 @@ function ProductCategoriesFilter({
               const subcategories = category?.subcategories ?? [];
               const hasSubcategories = subcategories?.length > 0;
 
-              const categoryCount =
-                isCategoryActive && !activeSubCategorySlug
-                  ? resultCount
-                  : undefined;
+              const displayCategoryCount = isCategoryActive
+                ? categoryCount
+                : undefined;
 
               return (
                 <li
@@ -204,7 +204,7 @@ function ProductCategoriesFilter({
                   <CategoryCheckbox
                     slug={category?.slug}
                     name={category?.name}
-                    count={categoryCount}
+                    count={displayCategoryCount}
                     isChecked={isCategoryActive}
                     href={`/product-category/${category?.slug}`}
                   />
@@ -231,6 +231,7 @@ function ProductCategoriesFilter({
                               href={`/product-category/${category?.slug}/${sub?.slug}`}
                               className={`${style.label}`}
                               style={{ padding: 0 }}
+                              prefetch={true}
                             >
                               <span
                                 className={`${style.name}`}

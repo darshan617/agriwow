@@ -6,7 +6,6 @@ import { useGetTermUseQuery } from "@/redux/apis/termUseApi";
 const TermUse = () => {
   const { data: termUseData } = useGetTermUseQuery();
   const termUse = termUseData?.data?.sections?.[0]?.paragraphs || [];
-  console.log(termUse,'termUse');
   
   return (
     <div className="container">
@@ -14,11 +13,11 @@ const TermUse = () => {
         <div style={{ margin: "16px 0" }}>
           <ul>
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" prefetch={true}>Home</Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li>
-              <Link href="/terms-use">Terms of Use</Link>
+              <Link href="/terms-use" prefetch={true}>Terms of Use</Link>
             </li>
           </ul>
         </div>

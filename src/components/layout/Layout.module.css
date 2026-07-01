@@ -6,7 +6,6 @@
 
 .page main {
   flex: 1;
-  /* Clear fixed promo bar (~60px) + main header (~70px) */
   padding-top: 130px;
 }
 

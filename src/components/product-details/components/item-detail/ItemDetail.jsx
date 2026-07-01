@@ -7,10 +7,7 @@ import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import coupon from "@/assets/icon/coupon.png";
-import shipping from "@/assets/icon/shipping.png";
 import quality from "@/assets/icon/quality.png";
-import secure from "@/assets/icon/payment.png";
-import return1 from "@/assets/icon/return1.png";
 import { FaShippingFast } from "react-icons/fa";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import AllCoupons from "@/components/all-coupons/AllCoupons";
@@ -334,6 +331,7 @@ const ItemDetail = ({ productDetails }) => {
                     <Link
                       href={`#review-card`}
                       className={`${styles.productReviewCountValue}`}
+                      prefetch={true}
                     >
                       ({productDetails?.data?.rating_summary?.total_reviews}{" "}
                       reviews)
@@ -366,9 +364,6 @@ const ItemDetail = ({ productDetails }) => {
                             <span className={`${styles.discountText}`}>
                               {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
                             </span>
-                            {/* <span>
-                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
-                </span> */}
                           </>
                         )}
                     </div>
@@ -486,7 +481,7 @@ const ItemDetail = ({ productDetails }) => {
               <p
                 className={`${styles.aboutProductDetailsText}`}
                 dangerouslySetInnerHTML={{
-                  __html: productDetails?.data?.description || "-",
+                  __html: productDetails?.data?.description_html || "-",
                 }}
               />
               <button
@@ -584,13 +579,6 @@ const ItemDetail = ({ productDetails }) => {
               )}
             </div>
 
-            {/* <button
-              type="button"
-              className={`${styles.showLessButton}`}
-              onClick={closeProductPopup}
-            >
-              SHOW LESS
-            </button> */}
           </div>
         </CustomPopup>
       )}

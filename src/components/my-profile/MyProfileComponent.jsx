@@ -46,7 +46,6 @@ const MyProfileComponent = () => {
           phone: form?.mobile,
         },
       });
-      console.log(res, "res");
       if (res?.data?.success || res?.data?.status || res?.status) {
         showToast(res?.data?.message, "success");
         setSaved({ ...form });

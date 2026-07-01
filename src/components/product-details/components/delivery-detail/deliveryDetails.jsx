@@ -27,12 +27,6 @@ const deliveryIcons = {
 };
 
 const infoItems = (deliveryData) => [
-  // {
-  //   icon: deliveryIcons.pincode,
-  //   title: "Pincode is not eligible for 24 hours delivery",
-  //   desc: null,
-  //   colorClass: "dd-info-title--red",
-  // },
   {
     icon: deliveryIcons.delivery,
     title: `Delivery available at ${deliveryData?.pincode} till ${deliveryData?.estimated_delivery_date_formatted}`,
@@ -65,7 +59,6 @@ export default function DeliveryDetails({ productDetails }) {
     ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
     : null;
   const [pincodeData, setPincodeData] = useState(null);
-  console.log(pincodeData, "pincodeData");
   const [inputVal, setInputVal] = useState(null);
   const [qty, setQty] = useState(1);
   const [addToCart] = useAddToCartMutation();
@@ -95,7 +88,6 @@ export default function DeliveryDetails({ productDetails }) {
   const totalPrice = unitPrice * qty;
   const totalSellingPrice = unitSellingPrice * qty;
   const totalSaving = (unitSellingPrice - unitPrice) * qty;
-  const gstAmount = (totalSellingPrice * 0.18).toFixed(2);
 
   const [checkPincode, { isLoading: isCheckPincodeLoading }] =
     useCheckPincodeMutation();
@@ -108,7 +100,6 @@ export default function DeliveryDetails({ productDetails }) {
       });
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
-        // console.log(res, "res");
         setPincodeData(res?.data?.data);
       } else {
         showToast(res?.data?.message, "error");
@@ -133,10 +124,6 @@ export default function DeliveryDetails({ productDetails }) {
           <div className={styles.priceRow}>
             <span className={styles.currentPrice}>
               ₹ {totalSellingPrice.toLocaleString()}
-              {/* <span className={styles.gsttPriceSmall}>
-                {" "}
-                +₹{gstAmount.toLocaleString()} GST
-              </span> */}
               <span className={styles.oldPrice}>
                 {" "}
                 ₹ {totalPrice.toLocaleString()}
@@ -147,25 +134,11 @@ export default function DeliveryDetails({ productDetails }) {
                     <span className={`${styles.discountText}`}>
                       {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
                     </span>
-                    {/* <span>
-                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
-                </span> */}
                   </>
                 )}
               </div>
             </span>
 
-            {/* <span className={styles.mrpText}>
-              <div className={`${styles.discountRow}`}>
-                {unitPrice > 0 && unitSellingPrice < unitPrice && (
-                  <>
-                    <span className={`${styles.discountText}`}>
-                      {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
-                    </span>
-                  </>
-                )}
-              </div>
-            </span> */}
           </div>
           {productDetails?.data?.discount > 0 && (
             <div className={styles.discountRow}>
@@ -174,18 +147,6 @@ export default function DeliveryDetails({ productDetails }) {
             </div>
           )}
 
-          {/* <div className={`${styles.discountRow}`}>
-            {unitPrice > 0 && unitSellingPrice < unitPrice && (
-              <>
-                <span className={`${styles.discountText}`}>
-                  {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
-                </span>
-                <span>
-                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
-                </span>
-              </>
-            )}
-          </div> */}
           <div className={styles.ddQtyRow} style={{ marginTop: "20px" }}>
             <span className={styles.ddQtyLabel}>Update Qty</span>
 

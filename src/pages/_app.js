@@ -50,6 +50,7 @@ function FloatingWhatsAppButton() {
   return (
     <Link
       href={whatsappHref}
+      prefetch={true}
       style={whatsappBtnStyle}
       target="_blank"
       rel="noopener noreferrer"

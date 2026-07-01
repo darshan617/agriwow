@@ -12,11 +12,11 @@ const PrivacyPolicy = () => {
         <div style={{ margin: "16px 0" }}>
           <ul>
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" prefetch={true}>Home</Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li>
-              <Link href="/privacy-policy">Privacy Policy</Link>
+              <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link>
             </li>
           </ul>
         </div>

@@ -146,11 +146,11 @@ const LatestBlog = () => {
           <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/">Blogs</Link>
+                <Link href="/" prefetch={true}>Blogs</Link>
               </li>
             </ul>
           </div>
@@ -258,6 +258,7 @@ const LatestBlog = () => {
                         <Link
                           href={`/blog/${featuredPost.slug}`}
                           className={styles.readMoreBtn}
+                          prefetch={true}
                         >
                           Read more
                         </Link>
@@ -275,6 +276,7 @@ const LatestBlog = () => {
                           key={post.id}
                           href={`/blog/${post?.slug}`}
                           className={styles.blogCard}
+                          prefetch={true}
                         >
                           <div className={styles.blogCardMedia}>
                             <Image

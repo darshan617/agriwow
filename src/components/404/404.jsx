@@ -5,12 +5,6 @@ import { LuHouse, LuSprout } from "react-icons/lu";
 import farmImage from "@/assets/images/farm-eqip.png";
 import styles from "@/components/404/404.module.css";
 
-const quickLinks = [
-  { label: "Agriculture Sprayers", href: "/product-category/agriculture-sprayers" },
-  { label: "Garden Tools", href: "/product-category/garden-tools" },
-  { label: "Track Order", href: "/track-order" },
-];
-
 const Page404Component = () => {
   return (
     <div className="container">
@@ -46,11 +40,11 @@ const Page404Component = () => {
           </p>
 
           <div className={styles.actions}>
-            <Link href="/" className={styles.primaryBtn}>
+            <Link href="/" className={styles.primaryBtn} prefetch={true}>
               <LuHouse size={18} />
               Back to Home
             </Link>
-            <Link href="/contact-us" className={styles.secondaryBtn}>
+            <Link href="/contact-us" className={styles.secondaryBtn} prefetch={true}>
               Contact Support
             </Link>
           </div>
