@@ -6,6 +6,15 @@
   top: 100px;
   height: fit-content;
   padding-top: 8px;
+  z-index: 2;
+}
+
+.imageDetailZooming {
+  z-index: 30;
+}
+
+.imageZoomArea {
+  position: relative;
 }
 
 .mainImageWrapper {
@@ -13,6 +22,42 @@
   border: 1px solid #f1f1f1;
   border-radius: 8px;
   background: #f2f2f2;
+  overflow: hidden;
+}
+
+.mainImageWrapperZooming {
+  cursor: crosshair;
+}
+
+.zoomLens {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.zoomPane {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 12px);
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.zoomPaneImage {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-color: #f2f2f2;
 }
 
 .mainImage {
@@ -457,6 +502,10 @@
     width: 100%;
   }
 
+  .zoomPane {
+    min-height: 300px;
+  }
+
   .mainImage {
     width: 100%;
     height: 300px;
@@ -558,6 +607,11 @@
   .mainImageWrapper {
     width: 100%;
     position: relative;
+  }
+
+  .zoomPane,
+  .zoomLens {
+    display: none;
   }
 
   .mainImage {
