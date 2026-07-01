@@ -5,7 +5,6 @@ import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 import NoCoupon from "@/assets/icon/No-coupon.png";
 import { BiSolidCoupon, BiSolidOffer, BiSolidFile   } from "react-icons/bi";
-// import { useGetAvailableCouponsQuery } from "@/redux/apis/addToCartApi";
 import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import styles from "@/components/all-coupons/AllCoupons.module.css";

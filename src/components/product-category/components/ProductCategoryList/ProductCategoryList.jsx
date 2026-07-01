@@ -140,17 +140,17 @@ const ProductCategoryList = () => {
           <div>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/">Products</Link>
+                <Link href="/" prefetch={true}>Products</Link>
               </li>
               {categorySlug && (
                 <>
                   <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
                   <li>
-                    <Link href={`/product-category/${categorySlug}`}>
+                    <Link href={`/product-category/${categorySlug}`} prefetch={true}>
                       {categoryName}
                     </Link>
                   </li>
@@ -162,6 +162,7 @@ const ProductCategoryList = () => {
                   <li>
                     <Link
                       href={`/product-category/${categorySlug}/${subCategory}`}
+                      prefetch={true}
                     >
                       {subCategoryName}
                     </Link>

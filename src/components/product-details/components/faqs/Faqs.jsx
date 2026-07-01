@@ -114,22 +114,6 @@ const Faqs = ({ productData, productId }) => {
                 <div className={styles.popupDivider} />
 
                 <div className={styles.popupBody}>
-                  {/* <div className={styles.formGroup}>
-                    <label htmlFor="name">Your name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      placeholder="Enter your name"
-                    />
-                  </div> */}
-                  {/* <div className={styles.formGroup}>
-                    <label htmlFor="email">Email address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      placeholder="you@example.com"
-                    />
-                  </div> */}
                   <div className={styles.formGroup}>
                     <label htmlFor="question">Your question</label>
                     <textarea

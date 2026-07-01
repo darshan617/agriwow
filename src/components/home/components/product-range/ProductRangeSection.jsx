@@ -5,7 +5,6 @@ import { IoWater } from 'react-icons/io5'
 
 import sprayerImg from '@/assets/products/1.png'
 import pumpImg from '@/assets/products/2.png'
-
 import styles from '@/components/product-range/ProductRangeSection.module.css'
 
 const ProductRangeSection = () => {

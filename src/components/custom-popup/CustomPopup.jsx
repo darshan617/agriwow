@@ -55,7 +55,6 @@ const CustomPopup = ({
           {closeIcon && (
             <button
               onClick={() => {
-                console.log("Close clicked");
                 onclose();
               }}
               className={styles.closeBtn}

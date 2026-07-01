@@ -27,7 +27,7 @@ const formatBlogDate = (dateStr) => {
 };
 
 const PostCard = ({ post }) => (
-  <Link href={`/blog/${post?.slug}`}>
+  <Link href={`/blog/${post?.slug}`} prefetch={true}>
     <article className={`${styles.card}`}>
       <div className={`${styles.media}`}>
         <Image
@@ -112,7 +112,7 @@ const InsightsBlog = ({ insightsBlogData }) => {
         )}
 
         <div className={`${styles.viewAll}`}>
-          <Link href="/blog?category=all" className={`${styles.viewAllBtn}`}>
+          <Link href="/blog?category=all" className={`${styles.viewAllBtn}`} prefetch={true}>
             View All
           </Link>
         </div>

@@ -63,7 +63,7 @@ const TopHeader = () => {
                     Sale Up to <span>60% Off</span> on Everything*
                   </p>
                 </div>
-                <Link href="/product-category/agriculture-sprayers" className={styles.shopNowButton}>Shop Now</Link>
+                <Link href="/product-category/agriculture-sprayers" className={styles.shopNowButton} prefetch={true}>Shop Now</Link>
               </div>
             </div>
             <div

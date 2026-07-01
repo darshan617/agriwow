@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/components/buying-guide/BuyingGuideDetails.module.css";
 import {
@@ -55,22 +54,6 @@ const BuyingGuideDetails = () => {
 
       <div className="container">
         <div className={styles.guideDetailsLayout}>
-          {/* <aside className={styles.sidebar}>
-            <div className={styles.sidebarCard}>
-              <h2 className={styles.sidebarHeading}>Related Links</h2>
-              <div className={styles.linkList}>
-                {relatedLinks.map((link) => (
-                  <Link
-                    key={link?.id}
-                    href={`/buying-guide/${link?.slug}`}
-                    className={styles.sidebarLink}
-                  >
-                    {link?.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </aside> */}
 
           <div className={styles.guideDetailsContent}>
             <article className={styles.contentBlock}>

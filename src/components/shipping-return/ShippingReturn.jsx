@@ -9,18 +9,15 @@ const ShippingReturn = () => {
   const shippingReturn = shippingReturnData?.data?.content || [];
   return (
     <div className="container">
-      {/* <div className={`${styles.shippingReturnHeading} `}>
-        <h1>Shipping & Returns</h1>
-      </div> */}
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" prefetch={true}>Home</Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li>
-              <Link href="/shipping-return">Shipping & Returns</Link>
+              <Link href="/shipping-return" prefetch={true}>Shipping & Returns</Link>
             </li>
           </ul>
         </div>

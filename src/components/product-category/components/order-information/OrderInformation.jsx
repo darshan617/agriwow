@@ -1,9 +1,5 @@
 import React from "react";
 import styles from "@/components/product-category/components/order-information/OrderInformation.module.css";
-import shield from "@/assets/icon/shield2.png";
-import { FaShippingFast, FaUndo } from "react-icons/fa";
-import shipping from "@/assets/icon/truck.png";
-import returnIcon from "@/assets/icon/undo.png";
 import Image from "next/image";
 import { useGetOrderInfoQuery } from "@/redux/apis/orderInfoApi";
 

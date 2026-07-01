@@ -3,28 +3,23 @@ import styles from "@/components/product-category/components/ProductCategoryList
 import Link from "next/link";
 
 const Breadcrumb = ({ productDetails, blogDetails }) => {
-  const categorySlug = "category-slug";
-  const categoryName = "Category Name";
-  const subCategory = "sub-category";
-  const subCategoryName = "Sub Category Name";
-  const blogTitle = blogDetails?.data?.title;
   return (
     <div className="container">
-      {/* <h2 className={`${styles.title}`}>Garden & Lawn Care</h2> */}
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" prefetch={true}>Home</Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li>
-              <Link href="/">Products</Link>
+              <Link href="/" prefetch={true}>Products</Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li className={`${styles.breadcrumbItem1}`}>
               <Link
                 href={`/product-category/${productDetails?.data?.category?.slug}`}
+                prefetch={true}
               >
                 {productDetails?.data?.category?.name}
               </Link>

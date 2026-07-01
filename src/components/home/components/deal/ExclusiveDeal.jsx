@@ -41,6 +41,7 @@ const ExclusiveDeal = () => {
                       <Link
                         href="/product-category/agriculture-sprayers"
                         className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}
+                        prefetch={true}
                       >
                         Shop Now
                       </Link>
@@ -87,6 +88,7 @@ const ExclusiveDeal = () => {
                   <Link
                     href="/product-category/agriculture-sprayers"
                     className={`${styles.bannerBtn} ${styles.bannerBtnTablet}`}
+                    prefetch={true}
                   >
                     Shop Now
                   </Link>

@@ -54,10 +54,6 @@ const CartSummery = ({
   const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
   const isCheckoutPage = router?.pathname === "/checkout";
 
-  console.log(hasSelectedAddress, "hasSelectedAddress");
-  console.log(isCheckoutPage, "isCheckoutPage");
-  console.log(cartData, "cartData");
-
   const cartItems =
     cartItemsProp ?? (Array.isArray(cartData?.data) ? cartData.data : []);
   const cartSummary = cartData?.cart_summary ?? {};
@@ -73,18 +69,13 @@ const CartSummery = ({
     cartData?.coupon?.discount_amount ??
     0;
 
-  const gstAmount =
-    cartSummary.gst_amount ?? cartSummary.gst ?? subtotal * 0.18;
   const shippingAmount =
     cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
   const totalAmount = subtotal - discountAmount;
   const fullPaymentDiscount =
     selectedPaymentMethod === "full" ? totalAmount * 0.05 : 0;
   const payableAmount = totalAmount - fullPaymentDiscount;
-  const productSavings = cartItems.reduce(
-    (acc, item) => acc + (item?.product?.discount ?? 0) * (item?.quantity ?? 0),
-    0,
-  );
+
 
   const VISIBLE_COUPONS_COUNT = 3;
   const coupons = availableCoupons?.data ?? [];
@@ -310,15 +301,15 @@ const CartSummery = ({
               <h4>Total Amount</h4>
               <p>(Inclusive of all taxes)</p>
             </div>
-            <h4>₹ {payableAmount.toFixed(2)}</h4>
+            {
+              router?.pathname === "/cart" ? (
+                <h4>₹ {totalAmount.toFixed(2)}</h4>
+                )  : (
+                <h4>₹ {payableAmount.toFixed(2)}</h4>
+              )
+            }
+
           </div>
-          {/* <div className={`${styles.saveText}`}>
-            {productSavings + discountAmount > 0 && (
-              <span>
-                You save ₹ {productSavings + discountAmount} on this order
-              </span>
-            )}
-          </div> */}
           {selectedPaymentMethod === "partial" && (
             <>
               <hr className={`${styles.divider}`} />
@@ -457,7 +448,6 @@ const CartSummery = ({
                             <p className="mb-0 fs-6 fw-semibold text-start text-white">
                               Proceed to Payment
                             </p>
-                            {/* <p>₹ {cartTotal}</p> */}
                           </div>
                         </div>
                       </button>

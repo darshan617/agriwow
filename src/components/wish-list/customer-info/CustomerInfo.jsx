@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { FaHeart, FaOutlineHeart, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
 import { HiOutlineMapPin, HiOutlinePower } from "react-icons/hi2";
@@ -94,7 +94,7 @@ const CustomerInfo = () => {
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
           <ul>
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" prefetch={true}>Home</Link>
             </li>
             <li className={styles.breadcrumbSeparator} aria-hidden>
               /
@@ -132,6 +132,7 @@ const CustomerInfo = () => {
                     href={item.href}
                     className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
                     aria-current={active ? "page" : undefined}
+                    prefetch={true}
                   >
                     <span className={styles.navIcon}>
                       <Icon size={20} />

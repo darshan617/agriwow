@@ -74,7 +74,7 @@ function CategoryCheckbox({ slug, name, count, isChecked, href }) {
   const displayCount = count ?? 0;
 
   return (
-    <Link href={href} className={`${style.label}`}>
+    <Link href={href} className={`${style.label}`} prefetch={true}>
       <input
         type="checkbox"
         id={slug}
@@ -231,6 +231,7 @@ function ProductCategoriesFilter({
                               href={`/product-category/${category?.slug}/${sub?.slug}`}
                               className={`${style.label}`}
                               style={{ padding: 0 }}
+                              prefetch={true}
                             >
                               <span
                                 className={`${style.name}`}

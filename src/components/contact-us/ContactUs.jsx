@@ -25,11 +25,11 @@ const ContactUs = ({ contactDetailsData }) => {
           <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/contact-us">Contact Us</Link>
+                <Link href="/contact-us" prefetch={true}>Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -39,18 +39,6 @@ const ContactUs = ({ contactDetailsData }) => {
           <div className={`row align-items-center ${styles.heroRow}`}>
             <div className="col-lg-7">
               <div className={styles.contactUsContent}>
-                {/* <h2 className={styles.contactUsTitle}>Contact Us</h2> */}
-                {/* <h4 className={styles.contactUsSubtitle}>
-              Support team ready to help
-            </h4>
-            <p className={styles.contactUsDescription}>
-              We are a highly agile and nimble footed organization which
-              believes in a collaborative approach to solve problems of the
-              world. And that is why the culture of customer feedback and
-              satisfaction ranks high on our agenda. We are happy to help you
-              round the clock to the best of our ability.
-            </p> */}
-
                 <div className={styles.contactUsDescription}>
                   <div
                     dangerouslySetInnerHTML={{ __html: contactDetails?.title }}
@@ -93,6 +81,7 @@ const ContactUs = ({ contactDetailsData }) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className={styles.actionButton}
+                          prefetch={true}
                         >
                           Chat Now
                         </Link>
@@ -115,6 +104,7 @@ const ContactUs = ({ contactDetailsData }) => {
                           <Link
                             href="/my-order"
                             className={styles.actionButton}
+                            prefetch={true}
                           >
                             Track Now
                           </Link>
@@ -158,6 +148,7 @@ const ContactUs = ({ contactDetailsData }) => {
                       <Link
                         href={`tel:${contactDetails?.phone}`}
                         className={styles.officeAddress}
+                        prefetch={true}
                       >
                         Telephone: {contactDetails?.phone}
                       </Link>
@@ -184,11 +175,6 @@ const ContactUs = ({ contactDetailsData }) => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className={styles.contactUsDetail}>
-                <p>{contactDetails?.support_message}</p>
-                <span>Call Timings:- {contactDetails?.support_timings}</span>
-              </div> */}
             </>
           )}
         </div>

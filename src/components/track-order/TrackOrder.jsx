@@ -141,7 +141,7 @@ const TrackOrder = ({ orderId }) => {
                 {data?.message ??
                   "We couldn't find tracking for this order. It may not be shipped yet or the link is incorrect."}
               </p>
-              <Link href="/my-order" className={historyStyles.shopBtn}>
+              <Link href="/my-order" className={historyStyles.shopBtn} prefetch={true}>
                 VIEW MY ORDERS
               </Link>
             </div>
@@ -173,7 +173,7 @@ const TrackOrder = ({ orderId }) => {
               </button>
             </header>
 
-            <Link href="/my-order" className={styles.backLink}>
+            <Link href="/my-order" className={styles.backLink} prefetch={true}>
                     <IoArrowBack size={16} />
                     Back to My Orders
                 </Link>
@@ -193,6 +193,7 @@ const TrackOrder = ({ orderId }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.trackingLink}
+                    prefetch={true}
                   >
                     {order.awb}
                     <FiExternalLink size={14} aria-hidden />

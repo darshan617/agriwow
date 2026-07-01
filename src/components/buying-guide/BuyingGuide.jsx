@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./BuyingGuide.module.css";
+import styles from "@/components/buying-guide/BuyingGuide.module.css";
 import { useGetBuyingGuideQuery } from "@/redux/apis/buyingGuideApi";
 
 
 const BuyingGuide = () => {
   const { data: buyingGuide, isLoading } = useGetBuyingGuideQuery();
-  console.log(buyingGuide, "buyingGuide");
   const categories = buyingGuide?.data?.map((item) => ({
     id: item?.id,
     name: item?.name,
@@ -27,6 +26,7 @@ const BuyingGuide = () => {
               key={category?.id}
               href={`/buying-guide/${category?.slug}`}
               className={styles.tile}
+              prefetch={true}
             >
               <span className={styles.iconWrap}>
                 {category?.svgIconData?.url ? (
