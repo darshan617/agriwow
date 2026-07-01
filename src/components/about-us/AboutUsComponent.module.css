@@ -47,7 +47,7 @@
     flex-wrap: wrap;
     list-style: none;
     padding: 0;
-    margin: 0;
+    /* margin: 0; */
     gap: 4px;
     font-size: 14px;
     color: #000000;
@@ -659,6 +659,7 @@
 
     .breadcrumb ul {
         font-size: 12px;
+        padding-top: 0;
     }
 
     .introTitle {
@@ -757,6 +758,10 @@
 
     .tabList {
         flex-wrap: nowrap;
+    }
+    .indiaSection {
+        margin-top: 0;
+        padding-bottom: 0;
     }
 }
 
