@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import SeoHead from "@/components/seo/SeoHead";
+import { buildBuyingGuideSeo } from "@/utils/seo";
 import styles from "@/components/buying-guide/BuyingGuideDetails.module.css";
 import {
   useGetBuyingGuideDetailsQuery,
@@ -28,9 +30,11 @@ const BuyingGuideDetails = () => {
   const relatedLinks = (buyingGuideList?.data ?? []).filter(
     (item) => item?.slug !== slug,
   );
+  const buyingGuideSeo = buildBuyingGuideSeo(guide);
 
   return (
     <section className={styles.section}>
+      {buyingGuideSeo ? <SeoHead {...buyingGuideSeo} /> : null}
       <div className={styles.heroBanner}>
         {heroImage ? (
           <Image
