@@ -74,8 +74,8 @@ const FarmEquipments = ({
                 <SwiperSlide key={item?.id}>
                   <ProductCard
                     type="home"
-                    image={item?.gallery[0]}
-                    imageHover={item?.gallery[1]}
+                    image={item?.gallery[1]}
+                    imageHover={item?.gallery[0]}
                     discount={item?.discount}
                     isBestSeller={item?.isBestSeller}
                     name={item?.name}

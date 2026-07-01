@@ -216,7 +216,7 @@ function ProductListingToolbar({
             <ProductCard
             key={item?.id ?? item?.slug ?? item?.name}
             type="productPage"
-            image={item?.thumbnail ?? item?.gallery?.[0]}
+            image={item?.thumbnail ?? item?.gallery?.[1]}
             imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
             discount={item?.discount}
             isBestSeller={item?.is_best_selling}
