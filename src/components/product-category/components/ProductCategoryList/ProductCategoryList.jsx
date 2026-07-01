@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import SeoHead from "@/components/seo/SeoHead";
+import { buildCategorySeo } from "@/utils/seo";
 import { IoClose } from "react-icons/io5";
 import styles from "@/components/product-category/components/ProductCategoryList/ProductCategoryList.module.css";
 import ProductCategoriesFilter from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter";
@@ -57,11 +59,7 @@ const ProductCategoryList = () => {
       maxPrice: debouncedPriceFilter?.maxPrice,
     },
     {
-      skip:
-        !categorySlug ||
-        !!subCategory ||
-        !router?.isReady ||
-        !debouncedPriceFilter,
+      skip: !categorySlug || !router?.isReady || !debouncedPriceFilter,
     },
   );
 
@@ -100,10 +98,12 @@ const ProductCategoryList = () => {
     (isFetching && products.length === 0);
 
   const resultCount = products?.length;
+  const categoryCount = categoryData?.data?.length;
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
     products?.[0]?.subcategory?.name || humanize(subCategory);
+  const categorySeo = buildCategorySeo({ categoryName, subCategoryName });
 
   function openSort() {
     setFilterOpen(false);
@@ -137,23 +137,24 @@ const ProductCategoryList = () => {
   }, [categoryData, subCategoryData]);
   return (
     <div>
+      {categorySeo ? <SeoHead {...categorySeo} /> : null}
       <div className={`${styles.productSection} container`}>
         <h2 className={`${styles.title}`}>{categoryName || "Products"}</h2>
         <div className={`${styles.breadcrumb}`}>
           <div>
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/">Products</Link>
+                <Link href="/" prefetch={true}>Products</Link>
               </li>
               {categorySlug && (
                 <>
                   <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
                   <li>
-                    <Link href={`/product-category/${categorySlug}`}>
+                    <Link href={`/product-category/${categorySlug}`} prefetch={true}>
                       {categoryName}
                     </Link>
                   </li>
@@ -165,6 +166,7 @@ const ProductCategoryList = () => {
                   <li>
                     <Link
                       href={`/product-category/${categorySlug}/${subCategory}`}
+                      prefetch={true}
                     >
                       {subCategoryName}
                     </Link>
@@ -180,6 +182,7 @@ const ProductCategoryList = () => {
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
             resultCount={resultCount}
+            categoryCount={categoryCount}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}

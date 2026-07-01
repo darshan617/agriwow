@@ -6,12 +6,10 @@ import DeliveryDetail from "./components/delivery-detail/deliveryDetails";
 import SimilarProduct from "./components/similar-product/SimilarProduct";
 import ReviewsRating from "./components/reviews-rating/ReviewsRating";
 import Faqs from "./components/faqs/Faqs";
-import Detail from "../home/components/detail/Detail";
 import OrderInformation from "../product-category/components/order-information/OrderInformation";
 const ProductDetailsComponent = ({ productDetails }) => {
   const similarProducts = productDetails?.data?.similar_products ?? [];
   const categorySlug = productDetails?.data?.category?.slug;
-  console.log(productDetails, "productDetails");
 
   return (
     <Layout>

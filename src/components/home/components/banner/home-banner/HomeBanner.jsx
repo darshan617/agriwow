@@ -54,7 +54,7 @@ const HomeBanner = () => {
         >
           {slides?.map((slide, index) => (
             <SwiperSlide key={slide.id ?? index}>
-              <Link
+              <Link prefetch={true}
                 href={slide.link}
                 {...(slide.link?.startsWith("http") && {
                   target: "_blank",

@@ -8,7 +8,6 @@ import Link from "next/link";
 import { FiCheck } from "react-icons/fi";
 import { LuShieldCheck, LuSprout, LuUsers, LuMapPin } from "react-icons/lu";
 import { useGetAboutUsDataQuery } from "@/redux/apis/aboutUsApi";
-import heroImage from "@/assets/images/agriculture-sprayer.jpg";
 import aboutImage from "@/assets/images/agri-equipments.jpg";
 import missionImage from "@/assets/images/contact-us.png";
 import indiaImage from "@/assets/images/Across-India.png";
@@ -137,11 +136,10 @@ const AboutUsComponent = () => {
     <div className={styles.aboutPage}>
       <section className={styles.hero}>
         <div className={`container ${styles.heroContent}`}>
-          {/* <h1>{formatPageTitle(aboutUs?.title)}</h1> */}
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" prefetch={true}>Home</Link>
               </li>
               <li className={styles.breadcrumbSep} aria-hidden="true">
                 /
@@ -198,6 +196,7 @@ const AboutUsComponent = () => {
                 <Link
                   href="/product-category/agriculture-sprayers"
                   className={styles.primaryBtn}
+                  prefetch={true}
                 >
                   Shop Now
                 </Link>
@@ -391,7 +390,6 @@ const AboutUsComponent = () => {
                   )}
                 </div>
                 <div className={styles.tabPanel} role="tabpanel">
-                  {/* <h3>{tabTitle}</h3> */}
                   <p>{tabContent}</p>
                 </div>
               </div>
@@ -458,6 +456,7 @@ const AboutUsComponent = () => {
               <Link
                 href="/product-category/agriculture-sprayers"
                 className={styles.ctaBtn}
+                prefetch={true}
               >
                 Explore Products
               </Link>

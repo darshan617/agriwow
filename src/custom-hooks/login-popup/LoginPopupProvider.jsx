@@ -72,7 +72,6 @@ export const LoginPopupProvider = ({ children }) => {
           phone: phone,
         },
       });
-      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));

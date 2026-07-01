@@ -1,5 +1,8 @@
 import { storeWrapper } from "@/redux/store";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import SeoHead from "@/components/seo/SeoHead";
+import { getStaticSeoForPath } from "@/config/seo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "aos/dist/aos.css";
 import "@/styles/globals.css";
@@ -50,6 +53,7 @@ function FloatingWhatsAppButton() {
   return (
     <Link
       href={whatsappHref}
+      prefetch={true}
       style={whatsappBtnStyle}
       target="_blank"
       rel="noopener noreferrer"
@@ -92,12 +96,17 @@ function BackToTopButton() {
 
 export default function App({ Component, pageProps, ...rest }) {
   const { store } = storeWrapper.useWrappedStore(rest);
+  const router = useRouter();
+  const staticSeo = getStaticSeoForPath(router.pathname);
+  const seo = { ...staticSeo, ...pageProps.seo };
+
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
       <Provider store={store}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
+        <SeoHead {...seo} />
         <ToastProvider>
           <LoginPopupProvider>
             <Script src="https://checkout.razorpay.com/v1/checkout.js" />

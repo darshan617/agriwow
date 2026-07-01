@@ -11,7 +11,6 @@
 }
 
 .leftPanel {
-  /* background: linear-gradient(160deg, #43a047 0%, #2e7d32 100%); */
   background-image: url('../../../assets/images/login.jpg');
   background-repeat: no-repeat;
   background-position: center center;
@@ -113,7 +112,6 @@
   margin-bottom: 16px;
   box-shadow: 0 4px 14px rgba(46, 125, 50, 0.25);
   transition: opacity 0.2s ease;
-  /* margin-top: auto; */
 }
 
 .continueBtn:hover {
@@ -159,7 +157,6 @@
 }
 
 .terms {
-  /* margin-top: auto; */
   padding-top: 16px;
   font-size: 9px;
   color: #888;

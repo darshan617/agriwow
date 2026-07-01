@@ -89,7 +89,7 @@ const CartDetails = ({
           phone: phone,
         },
       });
-      console.log(res, "res");
+      
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
       }
@@ -143,7 +143,6 @@ const CartDetails = ({
         cart_id: cartId,
       },
     });
-    console.log(res, "res");
     if (res?.data?.success || res?.data?.status) {
       showToast(res?.data?.message, "success");
     } else {
@@ -208,30 +207,6 @@ const CartDetails = ({
   return (
     <>
       <div className={styles.productInfo}>
-        {/* {appliedCoupon && (
-          <div className={styles.coupon}>
-            <FaCircleCheck size={30} color="#239c3d" />
-
-            <div className={styles.couponDetails}>
-              <span className={styles.couponText}>Coupon applied</span>
-
-              <p>
-                You saved ₹{appliedCoupon.discount_amount ?? 0} with coupon "
-                {appliedCoupon.coupon?.code ?? ""}"
-              </p>
-            </div>
-
-            <button
-              type="button"
-              className={`${styles.couponArrow} d-inline-flex justify-content-end`}
-              onClick={onRemoveCoupon}
-              aria-label="Remove coupon"
-            >
-              <RxCross2 size={20} />
-            </button>
-          </div>
-        )} */}
-
         {!isLoadingData && cartItems?.length === 0 && (
           <div className={styles.emptySection}>
             <div className={styles.emptyVisual}>
@@ -251,6 +226,7 @@ const CartDetails = ({
               <Link
                 href="/product-category/agriculture-sprayers"
                 className={styles.shopBtn}
+                prefetch={true}
               >
                 CONTINUE SHOPPING
               </Link>
@@ -296,7 +272,7 @@ const CartDetails = ({
 
                     <div className={styles.productCartContent}>
                       <h4 className={styles.productCartName}>
-                        <Link href={`/product-details/${item?.product?.slug}`}>
+                        <Link href={`/product-details/${item?.product?.slug}`} prefetch={true}>
                           {item?.product?.name}
                         </Link>{" "}
                       </h4>
@@ -374,9 +350,6 @@ const CartDetails = ({
 
                   <div className={styles.productCartSubtotal}>
                     <h5>₹ {item?.product?.selling_price * qty}</h5>
-                    {/* {item?.product?.discount > 0 && (
-                      <span>You save ₹ {item?.product?.discount * qty}</span>
-                    )} */}
                   </div>
                 </div>
               </div>
@@ -387,18 +360,6 @@ const CartDetails = ({
         {cartItems?.length > 0 && !hideCheckoutButton && (
           <>
             {isLoggedIn && isCheckoutPage && !hasSelectedAddress ? (
-              // <div className="w-100 d-flex justify-content-end mt-3">
-              //   <button
-              //     type="button"
-              //     className={styles.checkoutBtn + " p-3"}
-              //     onClick={() => setShowAddressForm(true)}
-              //   >
-              //     <span>Add Delivery Address To Proceed</span>
-              //     <span className={styles.arrow}>
-              //       <MdOutlineKeyboardArrowRight size={20} />
-              //     </span>
-              //   </button>
-              // </div>
               <></>
             ) : !isLoggedIn ? (
               <div className={styles.checkoutSection}>
@@ -419,7 +380,7 @@ const CartDetails = ({
                 </button>
               </div>
             ) : isCartPage ? (
-              <Link href="/checkout" className={styles.checkoutSection}>
+              <Link href="/checkout" className={styles.checkoutSection} prefetch={true}>
                 <button type="button" className={styles.checkoutBtn}>
                   <div>
                     <div>

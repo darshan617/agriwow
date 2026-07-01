@@ -111,7 +111,6 @@ const DeliveryAddress = ({
   const handleDeleteAddress = async (addr) => {
     try {
       const res = await deleteDeliveryAddress({ body: { id: addr?.id } });
-      console.log(res, "res");
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         refetchAllAddresses();

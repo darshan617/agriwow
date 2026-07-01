@@ -19,11 +19,7 @@ import {
   useLazySearchProductsQuery,
 } from "@/redux/apis/homeApi";
 import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
-import CustomPopup from "@/components/custom-popup/CustomPopup";
-import Login from "@/components/auth/login/Login";
-import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import { useLogoutMutation } from "@/redux/apis/authApi";
-import { useAuthMutation, useVerifyOtpMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
@@ -106,6 +102,7 @@ const renderMenuProductColumns = (
         <Link
           href={`/product-category/${item?.slug}`}
           className={`${styles.megaColumnTitle}`}
+          prefetch={true}
         >
           {item?.name}
         </Link>
@@ -116,6 +113,7 @@ const renderMenuProductColumns = (
                 href={`/product-category/${item?.slug}/${link?.slug}`}
                 className={linkClassName}
                 onClick={onLinkClick}
+                prefetch={true}
               >
                 {link?.name}
               </Link>
@@ -133,6 +131,7 @@ const renderMenuProductColumns = (
               href={prd?.slug ?? "#"}
               className={`${styles.megaProductCard}`}
               onClick={onLinkClick}
+              prefetch={true}
             >
               <div className={`${styles.megaProductImage}`}>
                 <Image
@@ -780,9 +779,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             </div>
 
             {isLoggedIn ? (
-              <Link href="/wishlist" className={`${styles.iconBtn}`}>
+              <Link href="/wishlist" className={`${styles.iconBtn}`} prefetch={true}>
                 <FaHeart size={21} />
-                <span className={styles.badge}>{wishlistCount}</span>
+                {wishlistCount > 0 && (
+                  <span className={styles.badge}>{wishlistCount}</span>
+                )}
               </Link>
             ) : (
               <button
@@ -800,7 +801,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               className={`${styles.iconBtn}`}
               aria-label="Cart"
             >
-              <Link href="/cart">
+              <Link href="/cart" prefetch={true}>
                 <FaShoppingCart size={21} />
               </Link>
               {cartItems?.length > 0 && (
@@ -828,7 +829,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 {renderMenuProductColumns(menuProductData)}
               </div>
               <div className={`${styles.megaViewAllWrap}`}>
-                <Link href="#" className={`${styles.megaViewAllBtn}`}>
+                <Link href="#" className={`${styles.megaViewAllBtn}`} prefetch={true}>
                   View All Product
                 </Link>
               </div>
@@ -899,6 +900,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 href={item.href}
                 className={isActive ? styles.navLinkActive : ""}
                 onClick={closeMenu}
+                prefetch={true}
               >
                 {item?.label}
               </Link>
@@ -909,26 +911,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           <TopHeaderExtras variant="drawer" />
         </div>
       </aside>
-
-      {/* {showPopup === "login" && (
-        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
-          <Login
-            handleLogin={handleLogin}
-            phone={phone}
-            setPhone={setPhone}
-            isAuthLoading={isAuthLoading}
-          />
-        </CustomPopup>
-      )}
-      {showPopup === "verify-otp" && (
-        <CustomPopup onclose={() => setShowPopup("")} maxWidth="fit-content">
-          <VerifyOtp
-            handleVerify={handleVerify}
-            phone={phone}
-            isLoading={isVerifyOtpLoading}
-          />
-        </CustomPopup>
-      )} */}
     </header>
   );
 };

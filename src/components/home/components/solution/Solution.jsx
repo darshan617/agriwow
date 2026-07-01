@@ -34,7 +34,7 @@ const Solution = () => {
                     from dispatch to doorstep
                   </p>
                   {isLoggedIn && (
-                    <Link href="/my-order" className={`${styles.btn}`}>
+                    <Link href="/my-order" className={`${styles.btn}`} prefetch={true}>
                       Track Now
                     </Link>
                   )}
@@ -74,6 +74,7 @@ const Solution = () => {
                   <Link
                     href="/product-category/agriculture-sprayers"
                     className={`${styles.btn}`}
+                    prefetch={true}
                   >
                     Explore Products
                   </Link>

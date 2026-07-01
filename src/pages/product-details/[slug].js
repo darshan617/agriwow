@@ -1,6 +1,8 @@
 import ProductDetailsComponent from "@/components/product-details/ProductDetailsComponent";
 import ProductDetailsShimmer from "@/components/product-details/ProductDetailsShimmer";
+import SeoHead from "@/components/seo/SeoHead";
 import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
+import { buildProductSeo } from "@/utils/seo";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -18,12 +20,15 @@ const ProductDetails = () => {
   const isProductsPending =
     !slug || isLoading || (isFetching && !productDetails);
 
+  const productSeo = buildProductSeo(productDetails?.data);
+
   if (isProductsPending) {
     return <ProductDetailsShimmer />;
   }
 
   return (
     <div>
+      {productSeo ? <SeoHead {...productSeo} /> : null}
       <ProductDetailsComponent productDetails={productDetails} />
     </div>
   );

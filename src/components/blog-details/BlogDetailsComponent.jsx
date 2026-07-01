@@ -57,11 +57,11 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
       <div className={styles.breadcrumb}>
         <ul>
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" prefetch={true}>Home</Link>
           </li>
           <li className={styles.breadcrumbSep}>/</li>
           <li>
-            <Link href="/blog">Blogs</Link>
+            <Link href="/blog" prefetch={true}>Blogs</Link>
           </li>
           <li className={styles.breadcrumbSep}>/</li>
           <li className={styles.breadcrumbCurrent}>{title}</li>
@@ -91,7 +91,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
           <div className={styles.socialShare}>
             <h2 className={styles.socialShareTitle}>Share:</h2>
             {SOCIAL_SHARE_LINKS?.map((item) => (
-              <Link href={`${item?.url}${fullUrl}`} target="_blank">
+              <Link href={`${item?.url}${fullUrl}`} target="_blank" prefetch={true}>
                 {item?.icon}
               </Link>
             ))}
@@ -170,6 +170,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
                   <Link
                     href={`/blog/${post?.slug}`}
                     className={styles.readMoreLink}
+                    prefetch={true}
                   >
                     Read more
                   </Link>

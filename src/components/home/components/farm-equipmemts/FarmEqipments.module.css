@@ -180,10 +180,6 @@
 }
 
 @media (max-width: 1024px) {
-  /* .productsWrapper {
-        padding: 60px 10px 30px;
-    } */
-
   .viewAllBtn {
     padding: 0 0 15px 0;
   }

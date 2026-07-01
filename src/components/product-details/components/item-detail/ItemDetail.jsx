@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import Image from "next/image";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,10 +7,7 @@ import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
 import { FaShareAlt, FaHeart, FaStar } from "react-icons/fa";
 import DiscountImg from "@/assets/icon/discount.png";
 import coupon from "@/assets/icon/coupon.png";
-import shipping from "@/assets/icon/shipping.png";
 import quality from "@/assets/icon/quality.png";
-import secure from "@/assets/icon/payment.png";
-import return1 from "@/assets/icon/return1.png";
 import { FaShippingFast } from "react-icons/fa";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import AllCoupons from "@/components/all-coupons/AllCoupons";
@@ -27,13 +24,28 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 const AUTOPLAY_DELAY = 3000;
+const ZOOM_LEVEL = 2.5;
+const LENS_RATIO = 0.4;
+
+const getGalleryImageSrc = (item) =>
+  typeof item === "string" ? item : item?.url || item?.src || "";
 
 const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
   const gallery = productDetails?.data?.gallery ?? [];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [autoplayKey, setAutoplayKey] = useState(0);
+  const [isZooming, setIsZooming] = useState(false);
+  const [canZoom, setCanZoom] = useState(false);
+  const [lensStyle, setLensStyle] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const [zoomBgStyle, setZoomBgStyle] = useState({
+    backgroundSize: "0px 0px",
+    backgroundPosition: "0px 0px",
+  });
   const isPausedRef = useRef(false);
+  const imageContainerRef = useRef(null);
+  const zoomPaneRef = useRef(null);
+  const lastMouseEventRef = useRef(null);
 
   const resetAutoplay = () => setAutoplayKey((key) => key + 1);
 
@@ -47,6 +59,89 @@ const ItemDetail = ({ productDetails }) => {
 
     return () => clearInterval(timer);
   }, [gallery.length, autoplayKey]);
+
+  useEffect(() => {
+    const checkZoomSupport = () => setCanZoom(window.innerWidth >= 992);
+    checkZoomSupport();
+    window.addEventListener("resize", checkZoomSupport);
+    return () => window.removeEventListener("resize", checkZoomSupport);
+  }, []);
+
+  useEffect(() => {
+    setIsZooming(false);
+  }, [selectedIndex]);
+
+  const handleImageMouseMove = useCallback(
+    (event) => {
+      if (!canZoom) return;
+
+      lastMouseEventRef.current = event;
+
+      const container = imageContainerRef.current;
+      const zoomPane = zoomPaneRef.current;
+      if (!container || !zoomPane) return;
+
+      const { left, top, width, height } = container.getBoundingClientRect();
+      const lensWidth = width * LENS_RATIO;
+      const lensHeight = height * LENS_RATIO;
+
+      const cursorX = event.clientX - left;
+      const cursorY = event.clientY - top;
+
+      const lensLeft = Math.max(
+        0,
+        Math.min(cursorX - lensWidth / 2, width - lensWidth),
+      );
+      const lensTop = Math.max(
+        0,
+        Math.min(cursorY - lensHeight / 2, height - lensHeight),
+      );
+
+      const zoomPaneWidth = zoomPane.offsetWidth;
+      const zoomPaneHeight = zoomPane.offsetHeight;
+      const bgWidth = width * ZOOM_LEVEL;
+      const bgHeight = height * ZOOM_LEVEL;
+      const maxBgOffsetX = Math.max(bgWidth - zoomPaneWidth, 0);
+      const maxBgOffsetY = Math.max(bgHeight - zoomPaneHeight, 0);
+      const bgOffsetX =
+        (lensLeft / Math.max(width - lensWidth, 1)) * maxBgOffsetX;
+      const bgOffsetY =
+        (lensTop / Math.max(height - lensHeight, 1)) * maxBgOffsetY;
+
+      setLensStyle({
+        left: lensLeft,
+        top: lensTop,
+        width: lensWidth,
+        height: lensHeight,
+      });
+      setZoomBgStyle({
+        backgroundSize: `${bgWidth}px ${bgHeight}px`,
+        backgroundPosition: `-${bgOffsetX}px -${bgOffsetY}px`,
+      });
+    },
+    [canZoom],
+  );
+
+  useLayoutEffect(() => {
+    if (isZooming && lastMouseEventRef.current) {
+      handleImageMouseMove(lastMouseEventRef.current);
+    }
+  }, [isZooming, handleImageMouseMove]);
+
+  const handleImageMouseEnter = (event) => {
+    isPausedRef.current = true;
+    lastMouseEventRef.current = event;
+    if (canZoom && getGalleryImageSrc(gallery[selectedIndex])) {
+      setIsZooming(true);
+    }
+  };
+
+  const handleImageMouseLeave = () => {
+    isPausedRef.current = false;
+    setIsZooming(false);
+  };
+
+  const currentImageSrc = getGalleryImageSrc(gallery[selectedIndex]);
   const [isPopupVisible, setIsPopupVisible] = useState("");
   const [showCouponsDrawer, setShowCouponsDrawer] = useState(false);
   const [activePopupTab, setActivePopupTab] = useState("specifications");
@@ -148,23 +243,39 @@ const ItemDetail = ({ productDetails }) => {
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
-        <div className={`${styles.imageDetail} col-lg-5`}>
-          <div
-            className={`${styles.mainImageWrapper}`}
-            onMouseEnter={() => {
-              isPausedRef.current = true;
-            }}
-            onMouseLeave={() => {
-              isPausedRef.current = false;
-            }}
-          >
-            <Image
-              src={gallery[selectedIndex]}
-              alt={gallery[selectedIndex]?.alt}
-              className={styles.mainImage}
-              width={100}
-              height={100}
-            />
+        <div
+          className={`${styles.imageDetail} col-lg-5 ${
+            isZooming ? styles.imageDetailZooming : ""
+          }`}
+        >
+          <div className={styles.imageZoomArea}>
+            <div
+              ref={imageContainerRef}
+              className={`${styles.mainImageWrapper} ${
+                isZooming ? styles.mainImageWrapperZooming : ""
+              }`}
+              onMouseEnter={handleImageMouseEnter}
+              onMouseLeave={handleImageMouseLeave}
+              onMouseMove={handleImageMouseMove}
+            >
+              <Image
+                src={gallery[selectedIndex]}
+                alt={gallery[selectedIndex]?.alt}
+                className={styles.mainImage}
+                width={100}
+                height={100}
+              />
+              {isZooming && (
+                <div
+                  className={styles.zoomLens}
+                  style={{
+                    left: `${lensStyle.left}px`,
+                    top: `${lensStyle.top}px`,
+                    width: `${lensStyle.width}px`,
+                    height: `${lensStyle.height}px`,
+                  }}
+                />
+              )}
             <div className={`${styles.quickActions}`}>
               <button
                 type="button"
@@ -202,6 +313,22 @@ const ItemDetail = ({ productDetails }) => {
                 <IoPlay />
                 <span>Watch Video</span>
               </button>
+            )}
+            </div>
+            {isZooming && currentImageSrc && (
+              <div
+                ref={zoomPaneRef}
+                className={styles.zoomPane}
+                aria-hidden="true"
+              >
+                <div
+                  className={styles.zoomPaneImage}
+                  style={{
+                    backgroundImage: `url(${currentImageSrc})`,
+                    ...zoomBgStyle,
+                  }}
+                />
+              </div>
             )}
           </div>
 
@@ -334,6 +461,7 @@ const ItemDetail = ({ productDetails }) => {
                     <Link
                       href={`#review-card`}
                       className={`${styles.productReviewCountValue}`}
+                      prefetch={true}
                     >
                       ({productDetails?.data?.rating_summary?.total_reviews}{" "}
                       reviews)
@@ -366,9 +494,6 @@ const ItemDetail = ({ productDetails }) => {
                             <span className={`${styles.discountText}`}>
                               {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
                             </span>
-                            {/* <span>
-                  Save ₹ {(totalPrice - totalSellingPrice).toLocaleString()}
-                </span> */}
                           </>
                         )}
                     </div>
@@ -486,7 +611,7 @@ const ItemDetail = ({ productDetails }) => {
               <p
                 className={`${styles.aboutProductDetailsText}`}
                 dangerouslySetInnerHTML={{
-                  __html: productDetails?.data?.description || "-",
+                  __html: productDetails?.data?.description_html || "-",
                 }}
               />
               <button
@@ -584,13 +709,6 @@ const ItemDetail = ({ productDetails }) => {
               )}
             </div>
 
-            {/* <button
-              type="button"
-              className={`${styles.showLessButton}`}
-              onClick={closeProductPopup}
-            >
-              SHOW LESS
-            </button> */}
           </div>
         </CustomPopup>
       )}

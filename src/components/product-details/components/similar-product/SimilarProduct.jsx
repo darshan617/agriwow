@@ -143,7 +143,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                   <ProductCard
                     type="productPage"
                     slug={product?.slug}
-                    image={product?.gallery?.[1]}
+                    image={product?.thumbnail}
                     imageHover={product?.gallery?.[0]}
                     discount={computedDiscount}
                     isBestSeller={product?.is_best_selling}

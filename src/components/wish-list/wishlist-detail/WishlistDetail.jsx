@@ -118,7 +118,7 @@ const WishlistDetail = ({
           <div className={styles.emptyContent}>
             <h2 className={styles.emptyTitle}>{emptyTitle}</h2>
             <p className={styles.emptyText}>{emptyText}</p>
-            <Link href={shopBtnHref} className={styles.shopBtn}>
+            <Link href={shopBtnHref} className={styles.shopBtn} prefetch={true}>
               {shopBtnText}
             </Link>
           </div>
@@ -143,7 +143,7 @@ const WishlistDetail = ({
                   <ProductCard
                     key={item?.id ?? product?.id}
                     type="productPage"
-                    image={product?.thumbnail ?? product?.gallery?.[1]}
+                    image={product?.thumbnail}
                     imageHover={product?.gallery?.[1] ?? product?.gallery?.[0]}
                     discount={product?.discount}
                     isBestSeller={product?.is_best_selling}
@@ -176,6 +176,7 @@ const WishlistDetail = ({
               key={category?.slug ?? category?.name}
               href={category?.slug ? `/product-category/${category.slug}` : "#"}
               className={styles.categoryCard}
+              prefetch={true}
             >
               <div className={styles.categoryImageWrap}>
                 <Image

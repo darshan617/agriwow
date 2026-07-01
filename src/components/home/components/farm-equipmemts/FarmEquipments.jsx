@@ -1,13 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import farmEquipments from "@/assets/images/agri-equipments.jpg";
 import styles from "@/components/home/components/farm-equipmemts/FarmEqipments.module.css";
 import ProductCard from "@/common-components/product-card/ProductCard";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const FarmEquipments = ({
@@ -39,6 +37,7 @@ const FarmEquipments = ({
 
             <Link
               href={`/product-category/${bannersLink?.slug}` || viewAllLink}
+              prefetch={true}
             >
               <button type="button" className={`${styles.bannerBtn}`}>
                 Explore Products
@@ -74,7 +73,7 @@ const FarmEquipments = ({
                 <SwiperSlide key={item?.id}>
                   <ProductCard
                     type="home"
-                    image={item?.gallery[1]}
+                    image={item?.thumbnail}
                     imageHover={item?.gallery[0]}
                     discount={item?.discount}
                     isBestSeller={item?.isBestSeller}
@@ -94,6 +93,7 @@ const FarmEquipments = ({
           <div className={styles.viewAllBtnWrapper}>
             <Link
               href={`/product-category/${bannersLink?.slug}` || viewAllLink}
+              prefetch={true}
             >
               <button type="button" className={styles.viewAllBtn}>
                 View All

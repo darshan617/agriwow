@@ -76,7 +76,7 @@ const OrderDetailsComponent = ({ orderId }) => {
             </div>
 
             <div className={styles.detailsSection}>
-              <Link href="/my-order" className={styles.backLink}>
+              <Link href="/my-order" className={styles.backLink} prefetch={true}>
                 <IoArrowBack size={16} />
                 Back to My Orders
               </Link>
@@ -94,7 +94,7 @@ const OrderDetailsComponent = ({ orderId }) => {
                     We couldn&apos;t find details for this order. It may have
                     been removed or the link is incorrect.
                   </p>
-                  <Link href="/my-order" className={styles.shopBtn}>
+                  <Link href="/my-order" className={styles.shopBtn} prefetch={true}>
                     VIEW MY ORDERS
                   </Link>
                 </div>
@@ -220,6 +220,7 @@ const OrderDetailsComponent = ({ orderId }) => {
                                 {product?.slug ? (
                                   <Link
                                     href={`/product-details/${product.slug}`}
+                                    prefetch={true}
                                   >
                                     {product.product_name}
                                   </Link>

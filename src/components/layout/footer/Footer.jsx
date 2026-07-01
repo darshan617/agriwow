@@ -4,7 +4,7 @@ import Image from "next/image";
 import logo from "@/assets/images/logo.png";
 import styles from "@/components/layout/footer/Footer.module.css";
 import { CiMail } from "react-icons/ci";
-import { FaArrowRightLong, FaXTwitter } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { IoCallOutline } from "react-icons/io5";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import maestro from "@/assets/icon/Maestro_logo.png";
@@ -100,8 +100,8 @@ const Footer = () => {
                 </form>
                 <p className={`${styles.footerFormPara}`}>
                   By subscribing you agree to the{" "}
-                  <Link href="/privacy-policy">Privacy Policy</Link> and{" "}
-                  <Link href="/terms-of-use">Terms and Conditions.</Link>
+                  <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link> and{" "}
+                  <Link href="/terms-of-use" prefetch={true}>Terms and Conditions.</Link>
                 </p>
               </div>
             </div>
@@ -111,7 +111,7 @@ const Footer = () => {
           <div className={`${styles.footerMain}`}>
             <div className={styles.footerMainGrid}>
               <div className={`${styles.footerBrand} `}>
-                <Link href="/" className={styles.footerLogoLink}>
+                <Link href="/" className={styles.footerLogoLink} prefetch={true}>
                   <Image src={logo} alt="Agriwow" width={170} priority />
                 </Link>
                 <p className={`${styles.footerBrandText}`}>
@@ -128,6 +128,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.footerPhoneLink}
+                    prefetch={true}
                   >
                     +91 9229297668
                   </Link>
@@ -138,11 +139,11 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Agriwow</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/">Home</Link>
+                      <Link href="/" prefetch={true}>Home</Link>
                     </li>
                     {isLoggedIn ? (
                       <li>
-                        <Link href="/my-profile">My Profile</Link>
+                        <Link href="/my-profile" prefetch={true}>My Profile</Link>
                       </li>
                     ) : (
                       <li onClick={openLoginPopup}>
@@ -152,7 +153,7 @@ const Footer = () => {
                       </li>
                     )}
                     <li>
-                      <Link href="/about-us">About Us</Link>
+                      <Link href="/about-us" prefetch={true}>About Us</Link>
                     </li>
                     <li>
                       <Link
@@ -164,7 +165,7 @@ const Footer = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/blog?category=all">Blog</Link>
+                      <Link href="/blog?category=all" prefetch={true}>Blog</Link>
                     </li>
                   </ul>
                 </nav>
@@ -172,12 +173,12 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Help</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/contact-us">Contact Us</Link>
+                      <Link href="/contact-us" prefetch={true}>Contact Us</Link>
                     </li>
 
                     {isLoggedIn ? (
                       <li>
-                        <Link href="/my-order">Track My Order</Link>
+                        <Link href="/my-order" prefetch={true}>Track My Order</Link>
                       </li>
                     ) : (
                       <li>
@@ -187,7 +188,7 @@ const Footer = () => {
                       </li>
                     )}
                     <li>
-                      <Link href="/buying-guide">Buying Guide</Link>
+                      <Link href="/buying-guide" prefetch={true}>Buying Guide</Link>
                     </li>
                   </ul>
                 </nav>
@@ -195,12 +196,12 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Customer Service</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/shipping-return">
+                      <Link href="/shipping-return" prefetch={true}>
                         Shipping &amp; Delivery Policy
                       </Link>
                     </li>
                     <li>
-                      <Link href="/cancellation-return-policy">
+                      <Link href="/cancellation-return-policy" prefetch={true}>
                         Cancellation / Return Policy
                       </Link>
                     </li>
@@ -216,6 +217,7 @@ const Footer = () => {
                       aria-label="Instagram"
                       target="_blank"
                       rel="noopener noreferrer"
+                      prefetch={true}
                     >
                       <FaInstagram />
                     </Link>
@@ -225,6 +227,7 @@ const Footer = () => {
                       rel="noopener noreferrer"
                       className={styles.footerSocialBtn}
                       aria-label="Facebook"
+                      prefetch={true}
                     >
                       <FaFacebookF />
                     </Link>
@@ -234,6 +237,7 @@ const Footer = () => {
                       rel="noopener noreferrer"
                       className={styles.footerSocialBtn}
                       aria-label="YouTube"
+                      prefetch={true}
                     >
                       <FaYoutube />
                     </Link>
@@ -264,6 +268,7 @@ const Footer = () => {
                   href="https://goyalinfotech.com"
                   target="_blank"
                   className={styles.footerCredit}
+                  prefetch={true}
                 >
                   Goyal Infotech
                 </Link>
@@ -271,8 +276,8 @@ const Footer = () => {
             </div>
             <div className="col-lg-6">
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
-                <Link href="/privacy-policy">Privacy Policy</Link>
-                <Link href="/terms-of-use">Terms of Use</Link>
+                <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link>
+                <Link href="/terms-of-use" prefetch={true}>Terms of Use</Link>
               </nav>
             </div>
           </div>
