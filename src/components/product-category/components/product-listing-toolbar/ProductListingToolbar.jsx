@@ -98,6 +98,10 @@ function ProductListingToolbar({
     return sortedProducts.slice(start, start + pageSize);
   }, [sortedProducts, currentPage, pageSize]);
 
+  const rangeStart =
+    displayCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const rangeEnd = Math.min(currentPage * pageSize, displayCount);
+
   const isFirstPage = currentPage <= 1;
   const isLastPage = currentPage >= totalPages;
 
@@ -143,7 +147,9 @@ function ProductListingToolbar({
       <div className={`${styles.topRow}`}>
         <p className={`${styles.resultsText}`}>
           Showing{" "}
-          <span className={`${styles.resultsCount}`}>{displayCount}</span>{" "}
+          <span className={`${styles.resultsCount}`}>
+            {rangeStart} to {rangeEnd} of {displayCount}
+          </span>{" "}
           results found
         </p>
 
@@ -210,7 +216,7 @@ function ProductListingToolbar({
             <ProductCard
             key={item?.id ?? item?.slug ?? item?.name}
             type="productPage"
-            image={item?.thumbnail ?? item?.gallery?.[0]}
+            image={item?.thumbnail ?? item?.gallery?.[1]}
             imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
             discount={item?.discount}
             isBestSeller={item?.is_best_selling}

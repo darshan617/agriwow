@@ -13,6 +13,7 @@ const BuyingGuide = () => {
     name: item?.name,
     slug: item?.slug,
     image: item?.image_url,
+    svgIconData: item?.svg_icon_data,
   }));
   return isLoading ? (
     <div>Loading...</div>
@@ -28,14 +29,23 @@ const BuyingGuide = () => {
               className={styles.tile}
             >
               <span className={styles.iconWrap}>
-                {/* <Image
-                  src={category?.image}
-                  alt={category?.name}
-                  width={28}
-                  height={28}
-                  className={styles.icon}
-                /> */}
-                {category?.svg_icon}
+                {category?.svgIconData?.url ? (
+                  <Image
+                    src={category.svgIconData.url}
+                    alt={category?.name}
+                    width={28}
+                    height={28}
+                    className={styles.icon}
+                  />
+                ) : category?.image ? (
+                  <Image
+                    src={category.image}
+                    alt={category?.name}
+                    width={28}
+                    height={28}
+                    className={styles.icon}
+                  />
+                ) : null}
               </span>
               <span className={styles.label}>{category?.name}</span>
             </Link>

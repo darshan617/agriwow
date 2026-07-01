@@ -36,6 +36,10 @@
 
 .ordersSection {
   padding: 20px 24px 28px;
+  overflow-y: scroll;
+  max-height: 600px;
+  scrollbar-width: thin;
+  scrollbar-color: #d4e8d8 #f4f6f8;
 }
 
 .orderCard {
