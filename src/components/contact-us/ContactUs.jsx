@@ -185,10 +185,10 @@ const ContactUs = ({ contactDetailsData }) => {
                 </div>
               </div>
 
-              <div className={styles.contactUsDetail}>
+              {/* <div className={styles.contactUsDetail}>
                 <p>{contactDetails?.support_message}</p>
                 <span>Call Timings:- {contactDetails?.support_timings}</span>
-              </div>
+              </div> */}
             </>
           )}
         </div>

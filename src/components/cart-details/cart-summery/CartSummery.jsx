@@ -367,7 +367,7 @@ const CartSummery = ({
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
                             Balance 70% Cash on Delivery (₹{" "}
-                            {(totalAmount * 0.3).toFixed(2)})
+                            {(totalAmount - (totalAmount * 0.3)).toFixed(2)})
                           </span>
                         </>
                       )}
@@ -392,7 +392,7 @@ const CartSummery = ({
                           className={`${styles.paymentWrapperLabel} w-100`}
                           style={{ cursor: "pointer" }}
                         >
-                          Pay Full Amount - Get 5% OFF Discount on Full Payment
+                          Pay Full Amount - Get 5% OFF
                         </label>
                       </div>
                       {selectedPaymentMethod === "full" && (
