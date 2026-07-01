@@ -196,6 +196,7 @@ const AddressForm = ({
           <input
             id="address-name"
             className={styles.input}
+            placeholder=" "
             value={form.name}
             onChange={updateField("name")}
             required
@@ -210,6 +211,7 @@ const AddressForm = ({
             id="address-email"
             type="email"
             className={styles.input}
+            placeholder=" "
             value={form.email}
             onChange={updateField("email")}
             required
@@ -224,6 +226,7 @@ const AddressForm = ({
             id="address-phone"
             type="tel"
             className={styles.input}
+            placeholder=" "
             value={form.phone}
             onChange={updateField("phone")}
             maxLength={10}
@@ -243,7 +246,7 @@ const AddressForm = ({
             type="tel"
             inputMode="numeric"
             className={styles.input}
-            placeholder="Enter Alternate Phone Number"
+            placeholder=" "
             value={form.alternate_phone}
             onChange={(e) => {
               const val = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
@@ -251,8 +254,10 @@ const AddressForm = ({
             }}
             maxLength={10}
             pattern="^\d{10}$"
-            required
           />
+          <label htmlFor="address-alt-phone" className={styles.label}>
+            Enter Alternate Phone Number
+          </label>
         </div>
 
         <button
@@ -269,35 +274,42 @@ const AddressForm = ({
 
         <div className={styles.field}>
           <input
-            
             id="address-flat"
             className={styles.input}
-            placeholder="Flat, House No., Building, Company*"
+            placeholder=" "
             value={form.flat}
             onChange={updateField("flat")}
             required
-
           />
+          <label htmlFor="address-flat" className={styles.label}>
+            Flat, House No., Building, Company*
+          </label>
         </div>
 
         <div className={styles.field}>
           <input
             id="address-area"
             className={styles.input}
-            placeholder="Area, Street, Sector, Village"
+            placeholder=" "
             value={form.area}
             onChange={updateField("area")}
           />
+          <label htmlFor="address-area" className={styles.label}>
+            Area, Street, Sector, Village
+          </label>
         </div>
 
         <div className={styles.field}>
           <input
             id="address-landmark"
             className={styles.input}
-            placeholder="Landmark"
+            placeholder=" "
             value={form.landmark}
             onChange={updateField("landmark")}
           />
+          <label htmlFor="address-landmark" className={styles.label}>
+            Landmark
+          </label>
         </div>
 
         <div className={styles.field}>
@@ -305,7 +317,7 @@ const AddressForm = ({
             id="address-pincode"
             type="text"
             className={styles.input}
-            placeholder="Pincode*"
+            placeholder=" "
             value={form.pincode}
             onChange={(e) => {
               const val = e.target.value.replace(/[^0-9]/g, "").slice(0, 6);
@@ -315,13 +327,16 @@ const AddressForm = ({
             maxLength={6}
             required
           />
+          <label htmlFor="address-pincode" className={styles.label}>
+            Pincode*
+          </label>
         </div>
 
         <div className={styles.field}>
           <input
             id="address-city"
             className={styles.input}
-            placeholder="City/District/Town*"
+            placeholder=" "
             value={form.city}
             onChange={(e) => {
               const val = e.target.value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
@@ -330,6 +345,9 @@ const AddressForm = ({
             maxLength={20}
             required
           />
+          <label htmlFor="address-city" className={styles.label}>
+            City/District/Town*
+          </label>
         </div>
 
         <div className={styles.field}>
@@ -337,7 +355,7 @@ const AddressForm = ({
             id="address-state"
             inputMode="text"
             className={styles.input}
-            placeholder="State*"
+            placeholder=" "
             value={form.state}
             onChange={(e) => {
               const val = e.target.value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
@@ -346,12 +364,16 @@ const AddressForm = ({
             maxLength={20}
             required
           />
+          <label htmlFor="address-state" className={styles.label}>
+            State*
+          </label>
         </div>
 
         <div className={styles.field}>
           <input
             id="address-country"
             className={styles.input}
+            placeholder=" "
             value={form.country}
             onChange={updateField("country")}
             required

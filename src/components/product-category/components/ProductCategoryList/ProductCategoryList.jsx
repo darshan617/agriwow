@@ -86,13 +86,6 @@ const ProductCategoryList = () => {
     },
   );
 
-  const { data: categoryCountData } = useGetProductsByCategoryQuery(
-    { slug: categorySlug },
-    { skip: !categorySlug || !router?.isReady },
-  );
-
-  const categoryTotalCount = categoryCountData?.data?.length;
-
   const activeQuery = subCategory ? subCategoryData : categoryData;
 
   const isFetching = subCategory ? subCategoryIsFetching : categoryIsFetching;
@@ -187,7 +180,6 @@ const ProductCategoryList = () => {
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
             resultCount={resultCount}
-            categoryTotalCount={categoryTotalCount}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}

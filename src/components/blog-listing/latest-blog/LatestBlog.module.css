@@ -93,6 +93,7 @@
   padding: 8px 10px;
   background: #e6f5cc;
   border-radius: 15px;
+
 }
 
 .categoryList {
@@ -566,6 +567,8 @@
   .categoryNav {
     border-radius: 20px;
     padding: 12px;
+    overflow-x: scroll;
+    max-width: 100%;
   }
 
   .categoryList {

@@ -143,7 +143,7 @@ const WishlistDetail = ({
                   <ProductCard
                     key={item?.id ?? product?.id}
                     type="productPage"
-                    image={product?.thumbnail ?? product?.gallery?.[0]}
+                    image={product?.thumbnail ?? product?.gallery?.[1]}
                     imageHover={product?.gallery?.[1] ?? product?.gallery?.[0]}
                     discount={product?.discount}
                     isBestSeller={product?.is_best_selling}

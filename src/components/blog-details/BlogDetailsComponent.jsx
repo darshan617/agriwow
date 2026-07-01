@@ -1,19 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MdWatchLater } from "react-icons/md";
-import { FaChevronLeft, FaChevronRight, FaRegUser } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
 import { FaFacebook, FaWhatsappSquare  } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import styles from "@/components/blog-details/BlogDetailsComponemt.module.css";
-import whatsappIcon from "@/assets/icon/whatsapp.png";
 import {
   useGetRelatedBlogsQuery,
 } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
-const RELATED_BLOGS_PER_PAGE = 6;
+const RELATED_BLOGS_LIMIT = 6;
 
 const SOCIAL_SHARE_LINKS = [
   {
@@ -35,7 +34,6 @@ const SOCIAL_SHARE_LINKS = [
 
 const BlogDetailsComponent = ({ blogDetailsData }) => {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
 
   const title = blogDetailsData?.data?.blog?.title;
   const category = blogDetailsData?.data?.blog?.category?.name;
@@ -47,49 +45,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
     { skip: !router?.query?.slug },
   );
   const stripHtml = (html) => html?.replace(/<[^>]*>/g, "") ?? "";
-  const relatedBlogs = relatedBlogsData?.data ?? [];
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(relatedBlogs.length / RELATED_BLOGS_PER_PAGE),
-  );
-
-  const isFirstPage = currentPage <= 1;
-  const isLastPage = currentPage >= totalPages;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [router?.query?.slug]);
-
-  useEffect(() => {
-    if (currentPage > totalPages) setCurrentPage(totalPages);
-  }, [currentPage, totalPages]);
-
-  const paginatedRelatedBlogs = useMemo(() => {
-    const start = (currentPage - 1) * RELATED_BLOGS_PER_PAGE;
-    return relatedBlogs.slice(start, start + RELATED_BLOGS_PER_PAGE);
-  }, [relatedBlogs, currentPage]);
-
-  const pageItems = useMemo(() => {
-    const items = [];
-    if (totalPages <= 8) {
-      for (let i = 1; i <= totalPages; i++) items.push(i);
-      return items;
-    }
-    const left = Math.max(2, currentPage - 1);
-    const right = Math.min(totalPages - 1, currentPage + 1);
-    items.push(1);
-    if (left > 2) items.push("left-ellipsis");
-    for (let i = left; i <= right; i++) items.push(i);
-    if (right < totalPages - 1) items.push("right-ellipsis");
-    items.push(totalPages);
-    return items;
-  }, [currentPage, totalPages]);
-
-  function goToPage(page) {
-    const target = Math.min(Math.max(1, page), totalPages);
-    if (target !== currentPage) setCurrentPage(target);
-  }
+  const relatedBlogs = (relatedBlogsData?.data ?? []).slice(0, RELATED_BLOGS_LIMIT);
 
   const tags = blogDetailsData?.data?.blog?.tags;
   const fullUrl =
@@ -135,7 +91,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
           <div className={styles.socialShare}>
             <h2 className={styles.socialShareTitle}>Share:</h2>
             {SOCIAL_SHARE_LINKS?.map((item) => (
-              <Link href={`${item?.url}/${fullUrl}`} target="_blank">
+              <Link href={`${item?.url}${fullUrl}`} target="_blank">
                 {item?.icon}
               </Link>
             ))}
@@ -180,7 +136,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
         <h2 className={styles.relatedTitle}>Related Articles</h2>
         <div className={styles.relatedGrid}>
           {relatedBlogs?.length > 0 ? (
-            paginatedRelatedBlogs.map((post) => (
+            relatedBlogs.map((post) => (
               <article key={post?.id} className={styles.relatedCard}>
                 <div className={styles.relatedMedia}>
                   <Image
@@ -224,67 +180,6 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
             <p className={styles.noRelatedBlogs}>No related articles found</p>
           )}
         </div>
-
-        {relatedBlogs.length > RELATED_BLOGS_PER_PAGE && (
-          <nav
-            className={styles.paginationWrapper}
-            aria-label="Related articles pagination"
-          >
-            <ul className={styles.pagination}>
-              <li>
-                <button
-                  type="button"
-                  className={styles.paginationBtn}
-                  onClick={() => goToPage(currentPage - 1)}
-                  disabled={isFirstPage}
-                  aria-label="Previous page"
-                >
-                  <FaChevronLeft aria-hidden />
-                </button>
-              </li>
-
-              {pageItems.map((item, index) => {
-                if (typeof item === "string") {
-                  return (
-                    <li key={`${item}-${index}`}>
-                      <span className={styles.pageEllipsis} aria-hidden="true">
-                        …
-                      </span>
-                    </li>
-                  );
-                }
-                const isActive = item === currentPage;
-                return (
-                  <li key={item}>
-                    <button
-                      type="button"
-                      className={`${styles.paginationBtn} ${
-                        isActive ? styles.paginationBtnActive : ""
-                      }`}
-                      onClick={() => goToPage(item)}
-                      aria-label={`Go to page ${item}`}
-                      aria-current={isActive ? "page" : undefined}
-                    >
-                      {item}
-                    </button>
-                  </li>
-                );
-              })}
-
-              <li>
-                <button
-                  type="button"
-                  className={styles.paginationBtn}
-                  onClick={() => goToPage(currentPage + 1)}
-                  disabled={isLastPage}
-                  aria-label="Next page"
-                >
-                  <FaChevronRight aria-hidden />
-                </button>
-              </li>
-            </ul>
-          </nav>
-        )}
       </section>
     </div>
   );
