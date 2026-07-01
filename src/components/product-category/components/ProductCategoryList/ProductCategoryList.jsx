@@ -57,11 +57,7 @@ const ProductCategoryList = () => {
       maxPrice: debouncedPriceFilter?.maxPrice,
     },
     {
-      skip:
-        !categorySlug ||
-        !!subCategory ||
-        !router?.isReady ||
-        !debouncedPriceFilter,
+      skip: !categorySlug || !router?.isReady || !debouncedPriceFilter,
     },
   );
 
@@ -100,6 +96,7 @@ const ProductCategoryList = () => {
     (isFetching && products.length === 0);
 
   const resultCount = products?.length;
+  const categoryCount = categoryData?.data?.length;
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
@@ -180,6 +177,7 @@ const ProductCategoryList = () => {
             drawerOpen={filterOpen}
             onDrawerClose={() => setFilterOpen(false)}
             resultCount={resultCount}
+            categoryCount={categoryCount}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}

@@ -110,6 +110,7 @@ function ProductCategoriesFilter({
   drawerOpen = false,
   onDrawerClose,
   resultCount,
+  categoryCount,
   minPrice,
   maxPrice,
   setMinPrice,
@@ -191,10 +192,9 @@ function ProductCategoriesFilter({
               const subcategories = category?.subcategories ?? [];
               const hasSubcategories = subcategories?.length > 0;
 
-              const categoryCount =
-                isCategoryActive && !activeSubCategorySlug
-                  ? resultCount
-                  : undefined;
+              const displayCategoryCount = isCategoryActive
+                ? categoryCount
+                : undefined;
 
               return (
                 <li
@@ -204,7 +204,7 @@ function ProductCategoriesFilter({
                   <CategoryCheckbox
                     slug={category?.slug}
                     name={category?.name}
-                    count={categoryCount}
+                    count={displayCategoryCount}
                     isChecked={isCategoryActive}
                     href={`/product-category/${category?.slug}`}
                   />
