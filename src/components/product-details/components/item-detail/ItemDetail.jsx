@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import Image from "next/image";
 import styles from "@/components/product-details/components/item-detail/ItemDetail.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,7 +43,12 @@ const ItemDetail = ({ productDetails }) => {
   const [autoplayKey, setAutoplayKey] = useState(0);
   const [isZooming, setIsZooming] = useState(false);
   const [canZoom, setCanZoom] = useState(false);
-  const [lensStyle, setLensStyle] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const [lensStyle, setLensStyle] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  });
   const [zoomBgStyle, setZoomBgStyle] = useState({
     backgroundSize: "0px 0px",
     backgroundPosition: "0px 0px",
@@ -258,12 +269,20 @@ const ItemDetail = ({ productDetails }) => {
               onMouseLeave={handleImageMouseLeave}
               onMouseMove={handleImageMouseMove}
             >
-              <Image
+              {/* <Image
                 src={gallery[selectedIndex]}
                 alt={gallery[selectedIndex]?.alt}
                 className={styles.mainImage}
                 width={100}
                 height={100}
+              /> */}
+              <Image
+                src={gallery[selectedIndex]}
+                alt={gallery[selectedIndex]?.alt}
+                className={styles.mainImage}
+                width={800}
+                height={800}
+                quality={100}
               />
               {isZooming && (
                 <div
@@ -276,44 +295,44 @@ const ItemDetail = ({ productDetails }) => {
                   }}
                 />
               )}
-            <div className={`${styles.quickActions}`}>
-              <button
-                type="button"
-                className={`${styles.quickActionBtn1}`}
-                aria-label="Share product"
-                onClick={handleShare}
-              >
-                <FaShareAlt />
-              </button>
-              <button
-                onClick={() => {
-                  if (getIsLoggedIn()) {
-                    handleWishlist(productDetails?.data?.id);
-                  } else {
-                    openLoginPopup();
-                  }
-                }}
-                type="button"
-                className={`${styles.quickActionBtn}`}
-                aria-label="Wishlist"
-                disabled={isAddToWishlistLoading}
-              >
-                {productDetails?.data?.is_wishlist ? (
-                  <FaHeart color="#e0334b " />
-                ) : (
-                  <FiHeart />
-                )}
-              </button>
-            </div>
-            {productDetails?.data?.video_url && (
-              <button
-                className={`${styles.watchVideoBtn}`}
-                onClick={() => setIsPopupVisible("video")}
-              >
-                <IoPlay />
-                <span>Watch Video</span>
-              </button>
-            )}
+              <div className={`${styles.quickActions}`}>
+                <button
+                  type="button"
+                  className={`${styles.quickActionBtn1}`}
+                  aria-label="Share product"
+                  onClick={handleShare}
+                >
+                  <FaShareAlt />
+                </button>
+                <button
+                  onClick={() => {
+                    if (getIsLoggedIn()) {
+                      handleWishlist(productDetails?.data?.id);
+                    } else {
+                      openLoginPopup();
+                    }
+                  }}
+                  type="button"
+                  className={`${styles.quickActionBtn}`}
+                  aria-label="Wishlist"
+                  disabled={isAddToWishlistLoading}
+                >
+                  {productDetails?.data?.is_wishlist ? (
+                    <FaHeart color="#e0334b " />
+                  ) : (
+                    <FiHeart />
+                  )}
+                </button>
+              </div>
+              {productDetails?.data?.video_url && (
+                <button
+                  className={`${styles.watchVideoBtn}`}
+                  onClick={() => setIsPopupVisible("video")}
+                >
+                  <IoPlay />
+                  <span>Watch Video</span>
+                </button>
+              )}
             </div>
             {isZooming && currentImageSrc && (
               <div
@@ -708,7 +727,6 @@ const ItemDetail = ({ productDetails }) => {
                 </div>
               )}
             </div>
-
           </div>
         </CustomPopup>
       )}
