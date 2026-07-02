@@ -148,7 +148,7 @@ const ProductCategoryList = () => {
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/" prefetch={true}>Products</Link>
+                <Link href="/product-category/agriculture-sprayers" prefetch={true}>Products</Link>
               </li>
               {categorySlug && (
                 <>

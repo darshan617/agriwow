@@ -113,6 +113,7 @@
 @media (max-width: 768px) {
   .title {
     font-size: 24px;
+    margin: 10px;
   }
 }
 

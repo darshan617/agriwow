@@ -1,10 +1,10 @@
 
 
 .page404 {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 32px 48px;
   padding: 48px 0 72px;
   height: 100vh;
 }
@@ -178,12 +178,7 @@
 }
 
 @media (max-width: 991px) {
-  .page404 {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 36px 0 56px;
-    text-align: center;
-  }
+ 
 
   .contentCol {
     max-width: none;
@@ -215,5 +210,10 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+  }
+  .page404 {
+    grid-template-columns: 1fr;
+    gap: 0;
+    text-align: center;
   }
 }
