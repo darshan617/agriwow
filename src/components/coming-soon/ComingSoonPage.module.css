@@ -1,0 +1,113 @@
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 18px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(35, 102, 34, 0.16), transparent 38%),
+    radial-gradient(circle at 85% 80%, rgba(144, 196, 112, 0.24), transparent 35%),
+    linear-gradient(135deg, #f5f9f2 0%, #edf5ea 50%, #e4f0e0 100%);
+}
+
+.card {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(35, 102, 34, 0.14);
+  border-radius: 24px;
+  padding: 44px 28px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 22px 50px rgba(22, 64, 25, 0.12);
+}
+
+.logoWrap {
+  display: inline-flex;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2ecdd;
+  margin-bottom: 18px;
+}
+
+.kicker {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #236622;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  color: #162a16;
+  margin-bottom: 16px;
+}
+
+.description {
+  color: #4b5563;
+  font-size: clamp(1rem, 2.4vw, 1.1rem);
+  line-height: 1.8;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  border-radius: 999px;
+  padding: 0 22px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.primaryBtn {
+  background: #236622;
+  color: #ffffff;
+  border: 1px solid #236622;
+}
+
+.primaryBtn:hover {
+  background: #1c521c;
+}
+
+.secondaryBtn {
+  background: #ffffff;
+  color: #236622;
+  border: 1px solid #bcd2b6;
+}
+
+.secondaryBtn:hover {
+  background: #f2f8ef;
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 34px 18px;
+    border-radius: 18px;
+  }
+
+  .actions {
+    margin-top: 24px;
+    gap: 10px;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+}

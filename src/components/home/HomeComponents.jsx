@@ -2,14 +2,8 @@ import React from "react";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import dynamic from "next/dynamic";
 import SiteHeaderShimmer from "@/components/layout/top-header/SiteHeaderShimmer";
+import Layout from "../layout/Layout";
 
-const DynamicTopHeader = dynamic(
-  () => import("@/components/layout/top-header/TopHeader"),
-  {
-    ssr: false,
-    loading: () => <SiteHeaderShimmer />,
-  },
-);
 const DynamicTopBanner = dynamic(
   () => import("@/components/layout/top-banner/TopBanner"),
   {
@@ -102,12 +96,7 @@ const DynamicInsightsBlog = dynamic(
     ssr: false,
   },
 );
-const DynamicFooter = dynamic(
-  () => import("@/components/layout/footer/Footer"),
-  {
-    ssr: false,
-  },
-);
+
 const DynamicProductsItem = dynamic(
   () => import("@/common-components/products/ProductsItem"),
   {
@@ -139,9 +128,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
   const banners = homeData?.data?.banners;
 
   return (
-    <>
-    
-      <DynamicTopHeader />
+    <Layout>
       <DynamicTopBanner categoriesData={categoriesData} />
       <DynamicHomeBanner />
       <DynamicMarquee />
@@ -199,8 +186,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
       />
       <DynamicVideoSection />
       <DynamicInsightsBlog insightsBlogData={insightsBlogData} />
-      <DynamicFooter />
-    </>
+    </Layout>
   );
 };
 

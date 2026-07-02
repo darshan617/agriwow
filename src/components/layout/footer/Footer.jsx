@@ -17,8 +17,10 @@ import {
   getIsLoggedIn,
   useLoginPopup,
 } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useRouter } from "next/router";
 
 const Footer = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
@@ -50,7 +52,13 @@ const Footer = () => {
 
   return (
     <footer className={`${styles.footer}`}>
-      <div className="container">
+      <div
+        className="container"
+        style={{
+          paddingBottom:
+            router.pathname === "/product-details/[slug]" && "30px",
+        }}
+      >
         <div className={`${styles.footerTop}`}>
           <div className="row">
             <div className="col-md-6">
@@ -100,8 +108,13 @@ const Footer = () => {
                 </form>
                 <p className={`${styles.footerFormPara}`}>
                   By subscribing you agree to the{" "}
-                  <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link> and{" "}
-                  <Link href="/terms-of-use" prefetch={true}>Terms and Conditions.</Link>
+                  <Link href="/privacy-policy" prefetch={true}>
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="/terms-of-use" prefetch={true}>
+                    Terms and Conditions.
+                  </Link>
                 </p>
               </div>
             </div>
@@ -111,7 +124,11 @@ const Footer = () => {
           <div className={`${styles.footerMain}`}>
             <div className={styles.footerMainGrid}>
               <div className={`${styles.footerBrand} `}>
-                <Link href="/" className={styles.footerLogoLink} prefetch={true}>
+                <Link
+                  href="/"
+                  className={styles.footerLogoLink}
+                  prefetch={true}
+                >
                   <Image src={logo} alt="Agriwow" width={170} priority />
                 </Link>
                 <p className={`${styles.footerBrandText}`}>
@@ -139,11 +156,15 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Agriwow</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/" prefetch={true}>Home</Link>
+                      <Link href="/" prefetch={true}>
+                        Home
+                      </Link>
                     </li>
                     {isLoggedIn ? (
                       <li>
-                        <Link href="/my-profile" prefetch={true}>My Profile</Link>
+                        <Link href="/my-profile" prefetch={true}>
+                          My Profile
+                        </Link>
                       </li>
                     ) : (
                       <li onClick={openLoginPopup}>
@@ -153,7 +174,9 @@ const Footer = () => {
                       </li>
                     )}
                     <li>
-                      <Link href="/about-us" prefetch={true}>About Us</Link>
+                      <Link href="/about-us" prefetch={true}>
+                        About Us
+                      </Link>
                     </li>
                     <li>
                       <Link
@@ -165,7 +188,9 @@ const Footer = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/blog?category=all" prefetch={true}>Blog</Link>
+                      <Link href="/blog?category=all" prefetch={true}>
+                        Blog
+                      </Link>
                     </li>
                   </ul>
                 </nav>
@@ -173,22 +198,31 @@ const Footer = () => {
                   <h3 className={styles.footerNavHeading}>Help</h3>
                   <ul className={styles.footerNavList}>
                     <li>
-                      <Link href="/contact-us" prefetch={true}>Contact Us</Link>
+                      <Link href="/contact-us" prefetch={true}>
+                        Contact Us
+                      </Link>
                     </li>
 
                     {isLoggedIn ? (
                       <li>
-                        <Link href="/my-order" prefetch={true}>Track My Order</Link>
+                        <Link href="/my-order" prefetch={true}>
+                          Track My Order
+                        </Link>
                       </li>
                     ) : (
                       <li>
-                        <button className={styles.footerNavBtn} onClick={openLoginPopup}>
+                        <button
+                          className={styles.footerNavBtn}
+                          onClick={openLoginPopup}
+                        >
                           Track My Order
                         </button>
                       </li>
                     )}
                     <li>
-                      <Link href="/buying-guide" prefetch={true}>Buying Guide</Link>
+                      <Link href="/buying-guide" prefetch={true}>
+                        Buying Guide
+                      </Link>
                     </li>
                   </ul>
                 </nav>
@@ -276,8 +310,12 @@ const Footer = () => {
             </div>
             <div className="col-lg-6">
               <nav className={`${styles.footerLegal}`} aria-label="Legal">
-                <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link>
-                <Link href="/terms-of-use" prefetch={true}>Terms of Use</Link>
+                <Link href="/privacy-policy" prefetch={true}>
+                  Privacy Policy
+                </Link>
+                <Link href="/terms-of-use" prefetch={true}>
+                  Terms of Use
+                </Link>
               </nav>
             </div>
           </div>
