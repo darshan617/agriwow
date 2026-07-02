@@ -266,7 +266,7 @@ const Footer = () => {
                       <FaFacebookF />
                     </Link>
                     <Link
-                      href=" https://www.youtube.com/@agriwow"
+                      href="https://www.youtube.com/@agriwow"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.footerSocialBtn}
