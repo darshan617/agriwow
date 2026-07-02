@@ -127,7 +127,7 @@ export default function App({ Component, pageProps, ...rest }) {
             <ProgressBar />
             <AppContent Component={Component} pageProps={pageProps} />
 
-            {/* <style jsx global>{`
+            <style jsx global>{`
               .whatsapp-float-btn {
                 bottom: 100px;
                 right: 32px;
@@ -147,7 +147,7 @@ export default function App({ Component, pageProps, ...rest }) {
                 }
               }
             `}</style>
-            <FloatingWhatsAppButton /> */}
+            <FloatingWhatsAppButton />
 
             <style jsx global>{`
               .back-to-top-btn {
