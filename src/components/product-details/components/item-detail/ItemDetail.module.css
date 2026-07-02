@@ -778,7 +778,7 @@
 
   .mainImage {
     max-height: 400px;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .thumbSwiper {
@@ -1042,6 +1042,7 @@
     width: 27px;
     height: 24px;
   }
+
   .productInfoPopupTab {
     font-size: 11px;
   }

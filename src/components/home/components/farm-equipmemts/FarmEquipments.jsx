@@ -26,10 +26,11 @@ const FarmEquipments = ({
           <Image
             src={bannersLink?.image || bannerImage}
             alt={bannersLink?.name || bannerAlt}
-            className={`${styles.bannerImage}`}
+            className={styles.bannerImage}
             priority
-            width={100}
-            height={100}
+            quality={100}
+            width={1920}
+            height={700}
           />
 
           <div className={`${styles.content}`}>
