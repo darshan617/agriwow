@@ -70,7 +70,7 @@ export const TopHeaderSocial = () => (
       <FaFacebookF className={styles.topHeaderRightIcon} />
     </Link>
     <Link
-      href=" https://www.youtube.com/@agriwow"
+      href="https://www.youtube.com/@agriwow"
       target="_blank"
       rel="noopener noreferrer"
       prefetch={true}
