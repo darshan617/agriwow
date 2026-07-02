@@ -226,6 +226,7 @@
 @media (max-width: 768px) {
   .heroRow {
     margin-bottom: 1.5rem;
+    flex-direction: column-reverse;
   }
 
   .contactUsTitle {
@@ -260,6 +261,10 @@
   .contactUsDetail p,
   .contactUsDetail span {
     font-size: 14px;
+  }
+  .contactUsContent {
+    padding: 0;
+    text-align: center;
   }
 }
 

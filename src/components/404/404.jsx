@@ -17,22 +17,11 @@ const Page404Component = () => {
             </span>
             <span className={styles.codeDigit}>4</span>
           </div>
-
-          <div className={styles.imageWrap}>
-            <Image
-              src={farmImage}
-              alt="Agricultural equipment"
-              width={380}
-              height={300}
-              className={styles.heroImage}
-              priority
-            />
-          </div>
         </div>
 
         <div className={styles.contentCol}>
           <p className={styles.eyebrow}>Error 404</p>
-          <h1 className={styles.title}>This field is empty</h1>
+          <h1 className={styles.title}>Page Not Found</h1>
           <p className={styles.description}>
             The page you&apos;re looking for may have been moved, removed, or
             never existed. Let&apos;s get you back to growing your farm with the
