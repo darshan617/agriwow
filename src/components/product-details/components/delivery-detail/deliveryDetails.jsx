@@ -209,7 +209,7 @@ export default function DeliveryDetails({ productDetails }) {
         <button
           className={`${styles.ddBtnWhatsapp} ${styles.ddMobileHidden}`}
           onClick={() => {
-            const phoneNumber = "919082681149";
+            const phoneNumber = "919229297668";
             const productName = productDetails?.data?.name || "Product";
             const text = encodeURIComponent(
               `Hi, I'm interested in ordering: ${productName}`,
