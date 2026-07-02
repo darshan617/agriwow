@@ -122,7 +122,7 @@
   gap: 1.25rem;
 }
 
-.stepList > li {
+.stepList>li {
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -530,18 +530,23 @@
 .blogContent h1 {
   font-size: 32px;
 }
+
 .blogContent h2 {
   font-size: 28px;
 }
+
 .blogContent h3 {
   font-size: 24px;
 }
+
 .blogContent h4 {
   font-size: 20px;
 }
+
 .blogContent h5 {
   font-size: 18px;
 }
+
 .blogContent h6 {
   font-size: 16px;
 }
@@ -665,8 +670,8 @@
   line-height: 1.75;
 }
 
-.blogContent li > ul,
-.blogContent li > ol {
+.blogContent li>ul,
+.blogContent li>ol {
   margin-top: 8px;
   margin-bottom: 0;
 }
@@ -869,12 +874,15 @@
   .blogContent h1 {
     font-size: 28px;
   }
+
   .blogContent h2 {
     font-size: 24px;
   }
+
   .blogContent h3 {
     font-size: 21px;
   }
+
   .blogContent h4 {
     font-size: 18px;
   }
@@ -895,6 +903,7 @@
   .relatedGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .relatedBody {
     padding: 20px;
   }
@@ -923,18 +932,23 @@
   .blogContent h1 {
     font-size: 22px;
   }
+
   .blogContent h2 {
     font-size: 20px;
   }
+
   .blogContent h3 {
     font-size: 18px;
   }
+
   .blogContent h4 {
     font-size: 17px;
   }
+
   .blogContent h5 {
     font-size: 16px;
   }
+
   .blogContent h6 {
     font-size: 15px;
   }
@@ -1007,9 +1021,11 @@
   .blogContent h1 {
     font-size: 18px;
   }
+
   .blogContent h2 {
     font-size: 17px;
   }
+
   .blogContent h3,
   .blogContent h4,
   .blogContent h5,

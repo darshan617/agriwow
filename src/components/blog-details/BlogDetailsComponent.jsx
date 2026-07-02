@@ -4,12 +4,10 @@ import Link from "next/link";
 import { MdWatchLater } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { LuCalendarDays } from "react-icons/lu";
-import { FaFacebook, FaWhatsappSquare  } from "react-icons/fa";
+import { FaFacebook, FaWhatsappSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import styles from "@/components/blog-details/BlogDetailsComponemt.module.css";
-import {
-  useGetRelatedBlogsQuery,
-} from "@/redux/apis/blogApi";
+import { useGetRelatedBlogsQuery } from "@/redux/apis/blogApi";
 import { useRouter } from "next/router";
 
 const RELATED_BLOGS_LIMIT = 6;
@@ -45,7 +43,10 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
     { skip: !router?.query?.slug },
   );
   const stripHtml = (html) => html?.replace(/<[^>]*>/g, "") ?? "";
-  const relatedBlogs = (relatedBlogsData?.data ?? []).slice(0, RELATED_BLOGS_LIMIT);
+  const relatedBlogs = (relatedBlogsData?.data ?? []).slice(
+    0,
+    RELATED_BLOGS_LIMIT,
+  );
 
   const tags = blogDetailsData?.data?.blog?.tags;
   const fullUrl =
@@ -57,11 +58,15 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
       <div className={styles.breadcrumb}>
         <ul>
           <li>
-            <Link href="/" prefetch={true}>Home</Link>
+            <Link href="/" prefetch={true}>
+              Home
+            </Link>
           </li>
           <li className={styles.breadcrumbSep}>/</li>
           <li>
-            <Link href="/blog" prefetch={true}>Blogs</Link>
+            <Link href="/blog" prefetch={true}>
+              Blogs
+            </Link>
           </li>
           <li className={styles.breadcrumbSep}>/</li>
           <li className={styles.breadcrumbCurrent}>{title}</li>
@@ -91,7 +96,11 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
           <div className={styles.socialShare}>
             <h2 className={styles.socialShareTitle}>Share:</h2>
             {SOCIAL_SHARE_LINKS?.map((item) => (
-              <Link href={`${item?.url}${fullUrl}`} target="_blank" prefetch={true}>
+              <Link
+                href={`${item?.url}${fullUrl}`}
+                target="_blank"
+                prefetch={true}
+              >
                 {item?.icon}
               </Link>
             ))}
@@ -132,7 +141,6 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
       </article>
 
       <section className={styles.relatedSection}>
-
         <h2 className={styles.relatedTitle}>Related Articles</h2>
         <div className={styles.relatedGrid}>
           {relatedBlogs?.length > 0 ? (

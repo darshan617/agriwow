@@ -14,8 +14,8 @@ import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
-import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { FaWhatsapp } from "react-icons/fa";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useCheckPincodeMutation } from "@/redux/apis/pincodeApi";
 
 const deliveryIcons = {
@@ -209,7 +209,7 @@ export default function DeliveryDetails({ productDetails }) {
         <button
           className={`${styles.ddBtnWhatsapp} ${styles.ddMobileHidden}`}
           onClick={() => {
-            const phoneNumber = "919082681149";
+            const phoneNumber = "919229297668";
             const productName = productDetails?.data?.name || "Product";
             const text = encodeURIComponent(
               `Hi, I'm interested in ordering: ${productName}`,
