@@ -102,7 +102,7 @@
 
 .introImageWrap {
     position: relative;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
     /* width: 100%; */
@@ -757,13 +757,16 @@
     .tabList {
         flex-wrap: nowrap;
     }
+
     .indiaSection {
         margin-top: 0;
         padding-bottom: 0;
     }
+
     .storySection {
         padding-bottom: 0;
     }
+
     .chooseSection {
         padding-bottom: 0;
     }

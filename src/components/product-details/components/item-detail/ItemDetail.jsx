@@ -38,7 +38,12 @@ const getGalleryImageSrc = (item) =>
 
 const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
-  const gallery = productDetails?.data?.gallery ?? [];
+  // const gallery = productDetails?.data?.gallery ?? [];
+  const gallery =
+    [
+      productDetails?.data?.thumbnail,
+      ...(productDetails?.data?.gallery ?? []),
+    ] ?? [];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [autoplayKey, setAutoplayKey] = useState(0);
   const [isZooming, setIsZooming] = useState(false);
@@ -283,6 +288,7 @@ const ItemDetail = ({ productDetails }) => {
                 width={800}
                 height={800}
                 quality={100}
+                sizes="100vw"
               />
               {isZooming && (
                 <div
