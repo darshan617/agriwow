@@ -18,6 +18,7 @@ import ProgressBar from "@/custom-hooks/progress-bar/ProgressBar";
 import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
+import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 
 function AppContent({ Component, pageProps }) {
   useEffect(() => {
@@ -99,6 +100,19 @@ export default function App({ Component, pageProps, ...rest }) {
   const router = useRouter();
   const staticSeo = getStaticSeoForPath(router.pathname);
   const seo = { ...staticSeo, ...pageProps.seo };
+  const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
+
+  if (isComingSoonMode) {
+    return (
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="robots" content="noindex, nofollow" />
+        </Head>
+        <ComingSoonPage />
+      </>
+    );
+  }
 
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>

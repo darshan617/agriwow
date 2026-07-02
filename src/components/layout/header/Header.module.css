@@ -1565,7 +1565,9 @@
     font-size: 7px;
     top: -1px;
     right: -2px;
+    line-height: 0;
   }
+
   .wishlistBadge {
     min-width: 4px;
     height: 11px;
