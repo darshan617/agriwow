@@ -245,7 +245,6 @@
     opacity: 1 !important;
 }
 
-/* ── Story ── */
 .storySection {
     background: #f8f9fa;
     padding-bottom: 70px;
@@ -760,6 +759,12 @@
     }
     .indiaSection {
         margin-top: 0;
+        padding-bottom: 0;
+    }
+    .storySection {
+        padding-bottom: 0;
+    }
+    .chooseSection {
         padding-bottom: 0;
     }
 }

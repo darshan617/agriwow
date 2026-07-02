@@ -301,7 +301,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.25rem;
-  font-size: 0.925rem;
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a2e;
   cursor: pointer;
@@ -527,6 +527,7 @@
   .guideContent p,
   .guideContent li {
     font-size: 0.85rem;
+    margin: 0;
   }
 
   .guideContent blockquote {
@@ -553,5 +554,11 @@
     float: none;
     max-width: 100%;
     margin: 0.85rem 0;
+  }
+  .faqTitle {
+    font-size: 18px;
+  }
+  .guideDetailsContent {
+    padding: 0;
   }
 }
