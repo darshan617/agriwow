@@ -9,7 +9,7 @@ import { HiOutlineMapPin, HiOutlinePower } from "react-icons/hi2";
 import { PiPackageThin } from "react-icons/pi";
 import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useGetMyProfileDetailsQuery } from "@/redux/apis/myProfileApi";
 
 const MENU_ITEMS = [
@@ -41,15 +41,11 @@ const CustomerInfo = () => {
   const [displayName, setDisplayName] = useState(GUEST_DISPLAY_NAME);
   const [userInitial, setUserInitial] = useState(GUEST_USER_INITIAL);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useLoginPopup();
 
   const { data: myProfileDetails } = useGetMyProfileDetailsQuery(undefined, {
     skip: !isLoggedIn,
   });
-
-  useEffect(() => {
-    setIsLoggedIn(getIsLoggedIn());
-  }, []);
 
   useEffect(() => {
     const profileName = myProfileDetails?.user?.name;

@@ -35,8 +35,27 @@ export const LoginPopupProvider = ({ children }) => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    setIsLoggedIn(getIsLoggedIn());
-  }, []);
+    const syncAuthState = () => setIsLoggedIn(getIsLoggedIn());
+    syncAuthState();
+
+    const handleRouteChange = () => syncAuthState();
+    const handleWindowFocus = () => syncAuthState();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        syncAuthState();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+    window.addEventListener("focus", handleWindowFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      window.removeEventListener("focus", handleWindowFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [router.events]);
 
   const openLoginPopup = () => setShowPopup("login");
 
@@ -91,7 +110,6 @@ export const LoginPopupProvider = ({ children }) => {
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
           closeLoginPopup();
-          router?.reload();
         } else {
           console.error("OTP verification failed", res?.error);
         }
