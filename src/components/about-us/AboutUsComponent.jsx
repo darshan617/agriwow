@@ -139,7 +139,9 @@ const AboutUsComponent = () => {
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <ul>
               <li>
-                <Link href="/" prefetch={true}>Home</Link>
+                <Link href="/" prefetch={true}>
+                  Home
+                </Link>
               </li>
               <li className={styles.breadcrumbSep} aria-hidden="true">
                 /
@@ -159,7 +161,7 @@ const AboutUsComponent = () => {
                   src={aboutImage}
                   alt="Agriwow agriculture solutions"
                   fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
+                  sizes="100vw"
                   className={styles.introImage}
                 />
                 {storyTags.length > 0 && (
@@ -208,43 +210,43 @@ const AboutUsComponent = () => {
 
       {storyTags.length > 0 && (
         <div className="sectionSpace">
-        <section className={`${styles.statsBar}`}>
-          <div className="container">
-            {isMobile ? (
-              <Swiper
-                modules={[Pagination]}
-                pagination={{ clickable: true }}
-                spaceBetween={16}
-                slidesPerView={1}
-                className={styles.statsSwiper}
-              >
-                {storyTags.map((tag, index) => (
-                  <SwiperSlide key={tag}>
-                    <div className={styles.statItem}>
-                      <span className={styles.statIcon}>
-                        {getStatIcon(index)}
-                      </span>
-                      <h3>{tag}</h3>
-                      <p>Committed to excellence</p>
+          <section className={`${styles.statsBar}`}>
+            <div className="container">
+              {isMobile ? (
+                <Swiper
+                  modules={[Pagination]}
+                  pagination={{ clickable: true }}
+                  spaceBetween={16}
+                  slidesPerView={1}
+                  className={styles.statsSwiper}
+                >
+                  {storyTags.map((tag, index) => (
+                    <SwiperSlide key={tag}>
+                      <div className={styles.statItem}>
+                        <span className={styles.statIcon}>
+                          {getStatIcon(index)}
+                        </span>
+                        <h3>{tag}</h3>
+                        <p>Committed to excellence</p>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : (
+                <div className="row g-4">
+                  {storyTags.map((tag, index) => (
+                    <div key={tag} className="col-lg-4 col-md-4">
+                      <div className={styles.statItem}>
+                        <span className={styles.statIcon}>
+                          {getStatIcon(index)}
+                        </span>
+                        <h3>{tag}</h3>
+                        <p>Committed to excellence</p>
+                      </div>
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            ) : (
-              <div className="row g-4">
-                {storyTags.map((tag, index) => (
-                  <div key={tag} className="col-lg-4 col-md-4">
-                    <div className={styles.statItem}>
-                      <span className={styles.statIcon}>
-                        {getStatIcon(index)}
-                      </span>
-                      <h3>{tag}</h3>
-                      <p>Committed to excellence</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         </div>
