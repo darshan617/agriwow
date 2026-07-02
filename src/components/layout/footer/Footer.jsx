@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import logo from "@/assets/images/logo.png";
+import Image from "next/image";
 import styles from "@/components/layout/footer/Footer.module.css";
 import { CiMail } from "react-icons/ci";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -13,21 +13,17 @@ import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import paypal from "@/assets/icon/paypal.png";
 import mastercard from "@/assets/icon/smartcard.png";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import {
-  getIsLoggedIn,
-  useLoginPopup,
-} from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useRouter } from "next/router";
 
 const Footer = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [subscribeEmail, { isLoading: isSubscribeEmailLoading }] =
     useSubscribeEmailMutation();
   const { showToast } = useToast();
 
-  const { openLoginPopup } = useLoginPopup();
+  const { openLoginPopup, isLoggedIn } = useLoginPopup();
 
   const handleSubscribe = async () => {
     if (isSubscribeEmailLoading) return;
@@ -45,10 +41,6 @@ const Footer = () => {
       showToast(error?.message || "Something went wrong", "error");
     }
   };
-
-  useEffect(() => {
-    setIsLoggedIn(getIsLoggedIn());
-  }, []);
 
   return (
     <footer className={`${styles.footer}`}>

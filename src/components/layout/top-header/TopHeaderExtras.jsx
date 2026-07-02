@@ -1,19 +1,12 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
 import {
-  getIsLoggedIn,
   useLoginPopup,
 } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 export const TopHeaderLeftLinks = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { openLoginPopup } = useLoginPopup();
-
-  useEffect(() => {
-    setIsLoggedIn(getIsLoggedIn());
-  }, []);
+  const { openLoginPopup, isLoggedIn } = useLoginPopup();
   return (
     <div className={styles.topHeaderLeft}>
       <ul className="d-flex gap-3">
