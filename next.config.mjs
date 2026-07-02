@@ -4,17 +4,20 @@ const imageHostname = rawImageBaseUrl
   .replace(/^https?:\/\//, "")
   .split("/")[0]
   .trim();
+const remotePatterns = imageHostname
+  ? [
+      {
+        hostname: imageHostname,
+      },
+    ]
+  : [];
 
 const nextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
   images: {
-    remotePatterns: [
-      {
-        hostname: imageHostname,
-      },
-    ],
+    remotePatterns,
     unoptimized: false,
   },
 };
