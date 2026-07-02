@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import logo from "@/assets/images/logo.png";
+import Image from "next/image";
 import styles from "@/components/layout/footer/Footer.module.css";
 import { CiMail } from "react-icons/ci";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -13,9 +13,7 @@ import { useSubscribeEmailMutation } from "@/redux/apis/subscribeEmailApi";
 import paypal from "@/assets/icon/paypal.png";
 import mastercard from "@/assets/icon/smartcard.png";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import {
-  useLoginPopup,
-} from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useRouter } from "next/router";
 
 const Footer = () => {
