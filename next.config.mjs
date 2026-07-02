@@ -9,7 +9,7 @@ const nextConfig = {
         hostname: "goyalinfotech.in",
       },
     ],
-    unoptimized: true,
+    unoptimized: false,
   },
 };
 

@@ -6,7 +6,7 @@
 
 .page main {
   flex: 1;
-  padding-top: 130px;
+  padding-top: 120px;
 }
 
 @media (max-width: 768px) {
