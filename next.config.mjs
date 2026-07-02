@@ -6,7 +6,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "goyalinfotech.in",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
       },
     ],
     unoptimized: false,
