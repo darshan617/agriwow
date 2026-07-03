@@ -77,7 +77,7 @@ const ContactUs = ({ contactDetailsData }) => {
                           Agriwow is here to help you
                         </p>
                         <Link
-                          href="https://wa.me/919229297668?text=Hello, I am interested in your products"
+                          href="https://wa.me/919770501981?text=Hello, I am interested in your products"
                           target="_blank"
                           rel="noopener noreferrer"
                           className={styles.actionButton}

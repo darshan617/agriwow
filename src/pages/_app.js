@@ -31,7 +31,7 @@ function AppContent({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
 
-const whatsappHref = `https://wa.me/919229297668?text=${encodeURIComponent(
+const whatsappHref = `https://wa.me/9770501981?text=${encodeURIComponent(
   "Hello! I want to know more about Agriwow.",
 )}`;
 
