@@ -86,7 +86,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
 
   return (
     <div className="container">
-      <div className={styles.title}>
+      <div className={styles.titleContainer}>
         <h2 className={styles.title}>Similar Products</h2>
       </div>
 
