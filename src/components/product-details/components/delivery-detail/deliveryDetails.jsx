@@ -122,12 +122,13 @@ export default function DeliveryDetails({ productDetails }) {
           )}
 
           <div className={styles.priceRow}>
-            <span className={styles.currentPrice}>
+            <div className={styles.currentPrice}>
               ₹ {totalSellingPrice.toLocaleString()}
               <span className={styles.oldPrice}>
                 {" "}
                 ₹ {totalPrice.toLocaleString()}
               </span> <br />
+            </div>
               <div className={`${styles.discountRow}`}>
                 {unitPrice > 0 && unitSellingPrice < unitPrice && (
                   <>
@@ -137,7 +138,6 @@ export default function DeliveryDetails({ productDetails }) {
                   </>
                 )}
               </div>
-            </span>
 
           </div>
           {productDetails?.data?.discount > 0 && (

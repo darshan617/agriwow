@@ -110,6 +110,7 @@
 
 .thumbButton {
   width: 100%;
+  height: 100px;
   border: 1px solid #e3e3e3;
   border-radius: 6px;
   background: #fff;
@@ -124,13 +125,13 @@
 .thumbImage {
   object-fit: contain;
   border-radius: 4px;
-  width: 90px;
-  height: 90px;
+  width: 100%;
+  height: 100%;
 }
 
 .thumbNavBtn {
-  width: 30px;
-  height: 30px;
+  /* width: 30px;  */
+  max-height: 30px;
   border: 1px solid #e0e0e0;
   border-radius: 50%;
   background: #fff;
@@ -400,6 +401,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  margin-bottom: 0;
 }
 
 .policies {
@@ -450,6 +452,9 @@
 .aboutProductList li {
   font-size: 14px;
   line-height: 1.6;
+}
+.aboutProductList ul{
+  margin-bottom: 0 !important;
 }
 
 .watchVideoBtn {
@@ -523,6 +528,7 @@
 
   .thumbButton {
     width: 100%;
+    height: auto;
   }
 
   .thumbImage {
