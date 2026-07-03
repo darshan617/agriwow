@@ -598,7 +598,7 @@ const ItemDetail = ({ productDetails }) => {
             <div className={`${styles.aboutProductContent}`}>
               <p className={`${styles.aboutProductSubTitle}`}>Key Features</p>
 
-              <ul className={`${styles.aboutProductList}`}>
+              <ul className={`${styles.aboutProductList} mb-0`}>
                 {productDetails?.data?.key_features
                   ?.slice(0, 3)
                   .map((feature, index) => (

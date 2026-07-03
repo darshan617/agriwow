@@ -130,7 +130,7 @@
 }
 
 .thumbNavBtn {
-  width: 30px;
+  /* width: 30px; */
   max-height: 30px;
   border: 1px solid #e0e0e0;
   border-radius: 50%;
@@ -401,6 +401,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  margin-bottom: 0;
 }
 
 .policies {
@@ -451,6 +452,9 @@
 .aboutProductList li {
   font-size: 14px;
   line-height: 1.6;
+}
+.aboutProductList ul{
+  margin-bottom: 0 !important;
 }
 
 .watchVideoBtn {

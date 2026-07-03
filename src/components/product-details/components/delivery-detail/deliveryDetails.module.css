@@ -68,7 +68,7 @@
 .priceRow {
   display: flex;
   /* align-items: center; */
-  flex-direction: column;
+  /* flex-direction: column; */
   /* flex-wrap: nowrap; */
   gap: 8px;
   bottom: 0;
@@ -348,8 +348,8 @@
 }
 
 @media (max-width: 1440px) {
-  .priceRow br {
-    display: block;
+  .priceRow {
+    flex-direction: column;
   }
 }
 
