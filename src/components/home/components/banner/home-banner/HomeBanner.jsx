@@ -54,21 +54,25 @@ const HomeBanner = () => {
         >
           {slides?.map((slide, index) => (
             <SwiperSlide key={slide.id ?? index}>
-              <Link prefetch={true}
+              <Link
+                prefetch={true}
                 href={slide.link}
                 {...(slide.link?.startsWith("http") && {
                   target: "_blank",
                   rel: "noopener noreferrer",
                 })}
               >
-                <Image
-                  src={slide.backgroundImage}
-                  alt="Farm background banner"
-                  className={`${styles.bannerBackground}`}
-                  priority={index === 0}
-                  width={1920}
-                  height={600}
-                />
+                <div>
+                  <Image
+                    src={slide.backgroundImage}
+                    alt="Farm background banner"
+                    className={`${styles.bannerBackground}`}
+                    priority={index === 0}
+                    sizes="100vw"
+                    width={1920}
+                    height={600}
+                  />
+                </div>
               </Link>
             </SwiperSlide>
           ))}
