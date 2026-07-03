@@ -561,7 +561,7 @@
   }
 
   .productImg {
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
   }
   .buyNowBtn {

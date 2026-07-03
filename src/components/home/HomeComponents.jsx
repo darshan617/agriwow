@@ -132,6 +132,13 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
       <DynamicTopBanner categoriesData={categoriesData} />
       <DynamicHomeBanner />
       <DynamicMarquee />
+      <DynamicBestSelling
+        bestSellingData={bestSellingData}
+        viewAllLink="/product-category/best-selling"
+        bannersLink={banners?.best_selling}
+      />
+      <DynamicDetail />
+
       <DynamicProductsItem
         agricultureProductsData={agricultureProductsData}
         title="Agriculture Sprayers"
@@ -144,7 +151,6 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
         bannersLink={banners?.agriculture_sprayers}
         isHomeDataLoading={isHomeDataLoading}
       />
-      <DynamicDetail />
       <DynamicFarmEquipments
         farmEquipmentsData={farmEquipmentsData}
         categoriesData={categoriesData}
@@ -173,11 +179,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
         viewAllLink="/product-category/fogging-machines"
         bannersLink={banners?.fogging_machines}
       />
-      <DynamicBestSelling
-        bestSellingData={bestSellingData}
-        viewAllLink="/product-category/best-selling"
-        bannersLink={banners?.best_selling}
-      />
+      
       <DynamicExclusiveDeal bannersLink={banners?.exclusive_deals} />
       <DynamicTopRating
         topRatedData={topRatedData}
