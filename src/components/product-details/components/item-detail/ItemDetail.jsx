@@ -379,7 +379,7 @@ const ItemDetail = ({ productDetails }) => {
               }}
             >
               {gallery.map((item, index) => (
-                <SwiperSlide key={item.id ?? index}>
+                <SwiperSlide key={item?.id ?? index}>
                   <button
                     type="button"
                     className={`${styles.thumbButton} ${
@@ -389,7 +389,7 @@ const ItemDetail = ({ productDetails }) => {
                       setSelectedIndex(index);
                       resetAutoplay();
                     }}
-                    aria-label={`Show image ${item.id}`}
+                    aria-label={`Show image ${item?.id}`}
                   >
                     <Image
                       src={item}

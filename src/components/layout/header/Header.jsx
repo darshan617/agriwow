@@ -94,7 +94,7 @@ const renderMenuProductColumns = (
   { linkClassName, onLinkClick } = {},
 ) => (
   <>
-    {menuProductData?.data?.AllCategory?.slice(0, 5)?.map((item) => (
+    {menuProductData?.data?.AllCategory?.slice(0, 8)?.map((item) => (
       <div
         key={item?.name}
         className={`${styles.megaColumn} ${item?.name === "Top Rating" ? styles.megaColumnTopRating : ""}`}
@@ -122,7 +122,7 @@ const renderMenuProductColumns = (
         </ul>
       </div>
     ))}
-    <div className={`${styles.megaColumn}`}>
+    {/* <div className={`${styles.megaColumn}`}>
       <h2 className={`${styles.megaColumnTitle}`}>New Arrivals</h2>
       <ul className={`${styles.megaList}`}>
         {menuProductData?.data?.Product?.map((prd) => (
@@ -157,7 +157,7 @@ const renderMenuProductColumns = (
           </li>
         ))}
       </ul>
-    </div>
+    </div> */}
   </>
 );
 
@@ -561,18 +561,26 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                 : "#";
                             return (
                               <li key={product?.id ?? product?.slug}>
-                                <Link
-                                  href={href}
-                                  className={`${styles.searchResultItem}`}
-                                  onClick={handleResultClick}
-                                  role="option"
-                                >
-                                  <div className={`${styles.searchResultInfo}`}>
-                                    <p className={`${styles.searchResultName}`}>
-                                      {product?.name}
-                                    </p>
-                                  </div>
-                                </Link>
+                                <div className={`${styles.searchResultItem}`}>
+                                  <Image
+                                    src={product?.thumbnail}
+                                    alt={product?.name}
+                                    width={50}
+                                    height={50}
+                                  />
+                                  <Link
+                                    href={href}
+                                    className={`${styles.searchResultItem}`}
+                                    onClick={handleResultClick}
+                                    role="option"
+                                  >
+                                    <div className={`${styles.searchResultInfo}`}>
+                                      <p className={`${styles.searchResultName}`}>
+                                        {product?.name}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                </div>
                               </li>
                             );
                           })}
@@ -779,7 +787,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             </div>
 
             {isLoggedIn ? (
-              <Link href="/wishlist" className={`${styles.iconBtn}`} prefetch={true}>
+              <Link
+                href="/wishlist"
+                className={`${styles.iconBtn}`}
+                prefetch={true}
+              >
                 <FaHeart size={21} />
                 {wishlistCount > 0 && (
                   <span className={styles.badge}>{wishlistCount}</span>
@@ -829,7 +841,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 {renderMenuProductColumns(menuProductData)}
               </div>
               <div className={`${styles.megaViewAllWrap}`}>
-                <Link href="#" className={`${styles.megaViewAllBtn}`} prefetch={true}>
+                <Link
+                  href="#"
+                  className={`${styles.megaViewAllBtn}`}
+                  prefetch={true}
+                >
                   View All Product
                 </Link>
               </div>
