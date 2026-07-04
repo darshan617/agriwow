@@ -86,8 +86,8 @@
 
 @media (max-width: 480px) {
     .categoryImgWrapper {
-        height: 50px;
-        width: 50px;
+        height: 60px;
+        width: 60px;
     }
 
     .categoryImgWrapper {
@@ -105,7 +105,7 @@
 
 @media (max-width: 375px) {
     .categoryLabel {
-        font-size: 7px;
+        font-size: 10px;
     }
 
     /* .topBannerWrapper {

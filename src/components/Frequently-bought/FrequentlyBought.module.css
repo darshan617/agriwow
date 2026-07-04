@@ -1,0 +1,494 @@
+.frequentlyBought {
+    padding: 50px 0;
+  }
+   
+  .frequentlyBoughtCard {
+    background: #f5f5f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+  }
+   
+  .header {
+    margin-bottom: 28px;
+  }
+   
+  .title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+   
+  .subtitle {
+    font-size: 15px;
+    font-weight: 400;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+   
+  .gallery {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+   
+  .galleryCard {
+    width: 110px;
+    height: 110px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+   
+  .galleryImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+  }
+   
+  .galleryPlaceholder {
+    width: 60%;
+    height: 60%;
+    background: #f3f4f6;
+    border-radius: 4px;
+  }
+   
+  .plusSign {
+    font-size: 22px;
+    font-weight: 400;
+    color: #9ca3af;
+    line-height: 1;
+    user-select: none;
+  }
+   
+  .content {
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+  }
+   
+  .productList {
+    list-style: none;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    column-gap: 16px;
+    row-gap: 18px;
+    align-items: center;
+    min-width: 0;
+  }
+   
+  .productRow {
+    display: contents;
+  }
+   
+  .checkboxLabel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+   
+  .checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+   
+  .checkboxCustom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+   
+  .checkbox:checked + .checkboxCustom {
+    background: #239c3d;
+    border-color: #239c3d;
+  }
+   
+  .checkbox:checked + .checkboxCustom::after {
+    content: "";
+    width: 5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+  }
+   
+  .productName {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+   
+  .productPrice {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    white-space: nowrap;
+    justify-self: end;
+  }
+   
+  .oldPrice {
+    font-size: 14px;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+   
+  .currentPrice {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a202c;
+  }
+   
+  .summary {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 200px;
+  }
+   
+  .totalLabel {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a202c;
+  }
+   
+  .totalPrices {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+   
+  .totalCurrent {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.2;
+  }
+   
+  .totalOriginal {
+    font-size: 16px;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+   
+  .addToCartBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 28px;
+    background: #239c3d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: opacity 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+  }
+   
+  .addToCartBtn:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+   
+  .addToCartBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+   
+  .btnIcon {
+    font-size: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .frequentlyBought {
+      padding: 40px 0 0;
+    }
+  
+    .frequentlyBoughtCard {
+      padding: 18px;
+    }
+  
+    .title {
+      font-size: 26px;
+    }
+  
+    .content {
+      gap: 24px;
+    }
+  
+    .galleryCard {
+      width: 90px;
+      height: 90px;
+    }
+  
+    .summary {
+      min-width: 170px;
+    }
+  
+    .totalCurrent {
+      font-size: 24px;
+    }
+  
+    .addToCartBtn {
+      padding: 12px 22px;
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .frequentlyBought {
+      padding: 32px 0 0;
+    }
+  
+    .frequentlyBoughtCard {
+      padding: 16px;
+    }
+  
+    .header {
+      margin-bottom: 20px;
+    }
+  
+    .title {
+      font-size: 22px;
+    }
+  
+    .subtitle {
+      font-size: 14px;
+    }
+  
+    .gallery {
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+  
+    .galleryCard {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+    }
+  
+    .productList {
+      grid-template-columns: 24px minmax(0, 1fr) auto;
+      column-gap: 12px;
+      row-gap: 14px;
+    }
+  
+    .productName {
+      font-size: 13px;
+    }
+  
+    .currentPrice {
+      font-size: 14px;
+    }
+  
+    .oldPrice {
+      font-size: 13px;
+    }
+  
+    .summary {
+      width: 100%;
+      align-items: flex-start;
+      min-width: 0;
+    }
+  
+    .totalCurrent {
+      font-size: 22px;
+    }
+  
+    .addToCartBtn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px 20px;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .frequentlyBought {
+      padding: 24px 0 0;
+    }
+  
+    .frequentlyBoughtCard {
+      padding: 14px;
+      border-radius: 8px;
+    }
+  
+    .header {
+      margin-bottom: 16px;
+    }
+  
+    .title {
+      font-size: 19px;
+    }
+  
+    .subtitle {
+      font-size: 13px;
+    }
+  
+    .gallery {
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+  
+    .galleryCard {
+      width: 64px;
+      height: 64px;
+      border-radius: 6px;
+    }
+  
+    .plusSign {
+      font-size: 18px;
+    }
+  
+    .productList {
+      grid-template-columns: 20px minmax(0, 1fr) auto;
+      column-gap: 8px;
+      row-gap: 12px;
+    }
+  
+    .checkboxCustom {
+      width: 17px;
+      height: 17px;
+    }
+  
+    .productName {
+      font-size: 12px;
+      white-space: normal;
+    }
+  
+    .productPrice {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+  
+    .oldPrice {
+      font-size: 11px;
+    }
+  
+    .currentPrice {
+      font-size: 13px;
+    }
+  
+    .totalLabel {
+      font-size: 13px;
+    }
+  
+    .totalCurrent {
+      font-size: 20px;
+    }
+  
+    .addToCartBtn {
+      padding: 11px 16px;
+      font-size: 12px;
+    }
+  
+    .btnIcon {
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 425px) {
+    .frequentlyBought {
+      padding: 20px 0 0;
+    }
+  
+    .frequentlyBoughtCard {
+      padding: 12px;
+    }
+  
+    .title {
+      font-size: 17px;
+    }
+  
+    .subtitle {
+      font-size: 12px;
+    }
+  
+    .gallery {
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+  
+    .galleryCard {
+      width: 54px;
+      height: 54px;
+    }
+  
+    .galleryImage {
+      padding: 5px;
+    }
+  
+    .plusSign {
+      font-size: 15px;
+    }
+  
+    .productList {
+      grid-template-columns: 18px minmax(0, 1fr) auto;
+      column-gap: 6px;
+      row-gap: 10px;
+    }
+  
+    .productName {
+      font-size: 11px;
+    }
+  
+    .oldPrice {
+      font-size: 10px;
+    }
+  
+    .currentPrice {
+      font-size: 12px;
+    }
+  
+    .summary {
+      gap: 4px;
+    }
+  
+    .totalCurrent {
+      font-size: 18px;
+    }
+  
+    .addToCartBtn {
+      padding: 10px 14px;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+    }
+  
+    .btnIcon {
+      font-size: 16px;
+    }
+  }
+   
