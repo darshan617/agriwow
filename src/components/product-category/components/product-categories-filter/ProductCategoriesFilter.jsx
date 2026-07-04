@@ -7,8 +7,8 @@ import style from "@/components/product-category/components/product-categories-f
 import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 import Cookies from "js-cookie";
 
-const PRICE_MIN_BOUND = 1000;
-const PRICE_STEP = 1000;
+const PRICE_MIN_BOUND = 0;
+const PRICE_STEP = 0;
 
 function formatPrice(value) {
   return new Intl.NumberFormat("en-IN").format(value);
