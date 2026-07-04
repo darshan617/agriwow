@@ -30,7 +30,7 @@ const ProductCategoryList = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [minPrice, setMinPrice] = useState(
-    Number(Cookies.get("minPrice")) || 1000,
+    Number(Cookies.get("minPrice")) || 0,
   );
   const [maxPrice, setMaxPrice] = useState(Number(Cookies.get("maxPrice")));
   const [debouncedPriceFilter, setDebouncedPriceFilter] = useState(() => ({

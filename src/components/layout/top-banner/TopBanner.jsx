@@ -27,7 +27,7 @@ const TopBanner = () => {
           speed={1000}
           breakpoints={{
             0: { slidesPerView: 3 },
-            375: { slidesPerView: 4 },
+            375: { slidesPerView: 3 },
             425: { slidesPerView: 4 },
             576: { slidesPerView: 5 },
             768: { slidesPerView: 6 },
