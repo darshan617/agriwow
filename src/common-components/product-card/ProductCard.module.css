@@ -625,9 +625,22 @@
   .cardActions{
     display: flex;
   }
+  .productCard {
+    min-height: 300px;
+    height: 280px;
+    padding: 6px;
+  }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 425px) {
+  .productCard {
+    min-height: 320px;
+    height: 280px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 375px) {
   .productCard {
     min-height: 300px;
     height: 280px;
