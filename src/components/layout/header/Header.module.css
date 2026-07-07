@@ -104,6 +104,8 @@
   top: 130px;
   left: 0;
   width: 100vw;
+  min-height: 550px;
+  overflow-y: scroll;
   background: #ffffff;
   border-top: 2px solid #7ac043;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);

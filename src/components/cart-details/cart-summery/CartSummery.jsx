@@ -164,6 +164,7 @@ const CartSummery = ({
           address_id: address_id,
         },
       });
+      
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         const razorpay = res?.data?.razorpay;
@@ -216,7 +217,10 @@ const CartSummery = ({
         });
 
         rzp.open();
-      } else {
+      }else if(res?.error?.data?.serviceable === false){
+        showToast('This address is not serviceable for this product', "error");
+      }
+       else {
         showToast(res?.data?.message, "error");
       }
     } catch (error) {

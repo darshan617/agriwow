@@ -36,9 +36,25 @@ const LENS_RATIO = 0.4;
 const getGalleryImageSrc = (item) =>
   typeof item === "string" ? item : item?.url || item?.src || "";
 
+// Extracts an 11-character YouTube video ID from common URL shapes
+// (watch?v=, shorts/, embed/, live/, youtu.be/), or a bare ID if that's
+// what was passed in. Returns null if nothing valid is found.
+const getYoutubeId = (url) => {
+  if (!url) return null;
+
+  const regExp =
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regExp);
+  if (match) return match[1];
+
+  // Handle case where a bare 11-char video ID was passed directly
+  if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+
+  return null;
+};
+
 const ItemDetail = ({ productDetails }) => {
   const productData = productDetails?.data;
-  // const gallery = productDetails?.data?.gallery ?? [];
   const gallery =
     [
       productDetails?.data?.thumbnail,
@@ -168,6 +184,12 @@ const ItemDetail = ({ productDetails }) => {
     SPECIFICATIONS_PREVIEW_COUNT,
   );
 
+  // Prefer the YouTube link for the embedded player; fall back to the
+  // directly-uploaded mp4 (video_url) if no YouTube link is present.
+  const youtubeVideoId = getYoutubeId(productDetails?.data?.youtube_link);
+  const directVideoUrl = productDetails?.data?.video_url;
+  const hasPlayableVideo = Boolean(youtubeVideoId || directVideoUrl);
+
   const openProductPopup = (tab = "specifications") => {
     setActivePopupTab(tab);
     setIsPopupVisible("prdInfo");
@@ -248,14 +270,6 @@ const ItemDetail = ({ productDetails }) => {
     });
   };
 
-  const getYoutubeId = (url) => {
-    const regExp =
-      /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^?&/]+)/;
-
-    const match = url?.match(regExp);
-    return match ? match[1] : url;
-  };
-
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -274,13 +288,6 @@ const ItemDetail = ({ productDetails }) => {
               onMouseLeave={handleImageMouseLeave}
               onMouseMove={handleImageMouseMove}
             >
-              {/* <Image
-                src={gallery[selectedIndex]}
-                alt={gallery[selectedIndex]?.alt}
-                className={styles.mainImage}
-                width={100}
-                height={100}
-              /> */}
               <Image
                 src={gallery[selectedIndex]}
                 alt={gallery[selectedIndex]?.alt}
@@ -330,7 +337,7 @@ const ItemDetail = ({ productDetails }) => {
                   )}
                 </button>
               </div>
-              {productDetails?.data?.video_url && (
+              {hasPlayableVideo && (
                 <button
                   className={`${styles.watchVideoBtn}`}
                   onClick={() => setIsPopupVisible("video")}
@@ -478,7 +485,7 @@ const ItemDetail = ({ productDetails }) => {
                 )}
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
                   <span className={`${styles.productReviewCountValue}`}>
-                    {productDetails?.data?.rating_summary?.average_rating}
+                    {/* {productDetails?.data?.rating_summary?.average_rating} */}
                   </span>
                 )}
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
@@ -743,15 +750,27 @@ const ItemDetail = ({ productDetails }) => {
           maxWidth="600px"
         >
           <div className={`${styles.videoPopup}`}>
-            <iframe
-              src={`https://www.youtube.com/embed/${getYoutubeId(productDetails?.data?.video_url)}`}
-              title="YouTube video player"
-              className={`${styles.videoPopupVideo}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            {youtubeVideoId ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                title="YouTube video player"
+                className={`${styles.videoPopupVideo}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            ) : directVideoUrl ? (
+              <video
+                className={`${styles.videoPopupVideo}`}
+                controls
+                autoPlay
+                playsInline
+                src={directVideoUrl}
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : null}
           </div>
         </CustomPopup>
       )}

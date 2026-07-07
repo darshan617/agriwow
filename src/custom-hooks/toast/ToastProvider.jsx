@@ -4,6 +4,8 @@ import {
   IoIosCloseCircleOutline,
   IoMdCheckmarkCircleOutline,
 } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+
 import { IoWarningOutline } from "react-icons/io5";
 
 const ToastContext = createContext();
@@ -48,7 +50,7 @@ export const ToastProvider = ({ children }) => {
                 setToasts((prev) => prev.filter((t) => t.id !== toast.id))
               }
             >
-              <IoIosCloseCircleOutline color="white" size={20} />
+              <RxCross2 color="white" size={20} />
             </button>
           </div>
         ))}
