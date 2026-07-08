@@ -7,10 +7,11 @@ import SimilarProduct from "./components/similar-product/SimilarProduct";
 import ReviewsRating from "./components/reviews-rating/ReviewsRating";
 import Faqs from "./components/faqs/Faqs";
 import OrderInformation from "../product-category/components/order-information/OrderInformation";
-// import FrequentlyBought from "../Frequently-bought/FrequentlyBought";
+import FrequentlyBought from "../Frequently-bought/FrequentlyBought";
 const ProductDetailsComponent = ({ productDetails }) => {
   const similarProducts = productDetails?.data?.similar_products ?? [];
   const categorySlug = productDetails?.data?.category?.slug;
+  const frequentlyBoughtProducts = productDetails?.data?.addons ?? [];
 
   return (
     <Layout>
@@ -25,7 +26,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
           </div>
         </div>
       </div>
-      {/* <FrequentlyBought productDetails={productDetails} /> */}
+      <FrequentlyBought productDetails={productDetails} frequentlyBoughtProducts={frequentlyBoughtProducts} />
       <SimilarProduct
         similarProducts={similarProducts}
         categorySlug={categorySlug}
