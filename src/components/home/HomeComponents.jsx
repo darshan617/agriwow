@@ -134,7 +134,7 @@ const HomeComponents = ({ homeData: ssrHomeData }) => {
       <DynamicMarquee />
       <DynamicBestSelling
         bestSellingData={bestSellingData}
-        viewAllLink="/product-category/best-selling"
+        viewAllLink="/product-category/agriculture-sprayers"
         bannersLink={banners?.best_selling}
       />
       <DynamicDetail />
