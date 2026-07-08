@@ -1,211 +1,184 @@
-// import React, { useEffect, useMemo, useState } from "react";
-// import Image from "next/image";
-// import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-// import styles from "./FrequentlyBought.module.css";
-// import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
-// import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import React, { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import styles from "./FrequentlyBought.module.css";
+import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
+import { useToast } from "@/custom-hooks/toast/ToastProvider";
 
-// const BUNDLE_DISCOUNT_PERCENT = 20;
+const getGalleryImageSrc = (src) =>
+  typeof src === "string" ? src : src?.url || src?.src || "";
 
-// const getGalleryImageSrc = (src) =>
-//   typeof src === "string" ? src : src?.url || src?.src || "";
+const FrequentlyBought = ({frequentlyBoughtProducts }) => {
+  const { showToast } = useToast();
+  const [addToCart, { isLoading }] = useAddToCartMutation();
 
-// const FrequentlyBought = ({ productDetails }) => {
-//   const { showToast } = useToast();
-//   const [addToCart, { isLoading }] = useAddToCartMutation();
+  const bundleProducts = useMemo(() => {
+    const products = Array.isArray(frequentlyBoughtProducts)
+      ? frequentlyBoughtProducts
+      : [];
 
-//   const bundleProducts = useMemo(() => {
-//     const current = productDetails?.data;
-//     const similar = productDetails?.data?.similar_products ?? [];
-//     if (!current) return [];
+    return products.map((product) => ({
+        id: product?.product_id ?? product?.id,
+        name: product?.product_name ?? product?.name ?? "",
+        thumbnail: getGalleryImageSrc(
+          product?.product_thumbnail ?? product?.thumbnail ?? ""),
+        price: Number(product?.product_price ?? product?.price ?? 0),
+        sellingPrice: Number(
+          product?.sellingPrice ?? product?.selling_price ?? 0,
+        ),
+      }))
+      .filter((product) => product.id);
+  }, [frequentlyBoughtProducts]);
 
-//     return [current, ...similar.slice(0, 2)].map((product) => ({
-//       id: product.id,
-//       name: product.name,
-//       thumbnail: getGalleryImageSrc(product.thumbnail),
-//       price: Number(product.price || 0),
-//       sellingPrice: Number(product.selling_price || 0),
-//     }));
-//   }, [productDetails]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
-//   const [selectedIds, setSelectedIds] = useState([]);
+  useEffect(() => {
+    setSelectedIds((prev) =>
+      prev.filter((id) => bundleProducts.some((product) => product.id === id)),
+    );
+  }, [bundleProducts]);
 
-//   useEffect(() => {
-//     if (bundleProducts.length) {
-//       setSelectedIds(bundleProducts.map((product) => product.id));
-//     }
-//   }, [bundleProducts]);
+  const selectedProducts = bundleProducts.filter((product) =>
+    selectedIds.includes(product.id),
+  );
 
-//   const selectedProducts = bundleProducts.filter((product) =>
-//     selectedIds.includes(product.id),
-//   );
+  const originalTotal = selectedProducts.reduce(
+    (sum, product) => sum + product.sellingPrice,
+    0,
+  );
 
-//   const originalTotal = selectedProducts.reduce(
-//     (sum, product) => sum + product.sellingPrice,
-//     0,
-//   );
+  const toggleProduct = (productId) => {
+    setSelectedIds((prev) => {
+      if (prev.includes(productId)) {
+        return prev.filter((id) => id !== productId);
+      }
+      return [...prev, productId];
+    });
+  };
 
-//   const allSelected =
-//     bundleProducts.length > 0 &&
-//     selectedProducts.length === bundleProducts.length;
+  const handleAddToCart = async () => {
+    if (!selectedProducts.length) {
+      showToast("Please select at least one product", "error");
+      return;
+    }
 
-//   const discountedTotal = allSelected
-//     ? originalTotal * (1 - BUNDLE_DISCOUNT_PERCENT / 100)
-//     : originalTotal;
+    try {
+      for (const product of selectedProducts) {
+        const res = await addToCart({
+          body: {
+            product_id: product.id,
+            quantity: 1,
+          },
+        });
 
-//   const toggleProduct = (productId) => {
-//     setSelectedIds((prev) => {
-//       if (prev.includes(productId)) {
-//         if (prev.length === 1) return prev;
-//         return prev.filter((id) => id !== productId);
-//       }
-//       return [...prev, productId];
-//     });
-//   };
+        if (!res?.data?.success && !res?.data?.status) {
+          showToast(
+            res?.data?.message || "Failed to add some products to cart",
+            "error",
+          );
+          return;
+        }
+      }
 
-//   const handleAddToCart = async () => {
-//     if (!selectedProducts.length) {
-//       showToast("Please select at least one product", "error");
-//       return;
-//     }
+      showToast("Products added to cart successfully", "success");
+    } catch (error) {
+      showToast(
+        error?.data?.message || "Failed to add products to cart",
+        "error",
+      );
+    }
+  };
 
-//     try {
-//       for (const product of selectedProducts) {
-//         const res = await addToCart({
-//           body: {
-//             product_id: product.id,
-//             quantity: 1,
-//           },
-//         });
+  if (bundleProducts.length < 2) return null;
 
-//         if (!res?.data?.success && !res?.data?.status) {
-//           showToast(
-//             res?.data?.message || "Failed to add some products to cart",
-//             "error",
-//           );
-//           return;
-//         }
-//       }
+  return (
+    <section className="container">
+      <div className="row">
+        <div className="col-lg-6 col-md-6">
+          <div className={styles.frequentlyBought}>
+            <div className={styles.frequentlyBoughtCard}>
+              <div className={styles.header}>
+                <h2 className={styles.title}>Frequently Bought Together</h2>
+                {/* <p className={styles.subtitle}>
+                Get {BUNDLE_DISCOUNT_PERCENT}% discount on purchasing all these
+                products together
+              </p> */}
+              </div>
 
-//       showToast("Products added to cart successfully", "success");
-//     } catch (error) {
-//       showToast(
-//         error?.data?.message || "Failed to add products to cart",
-//         "error",
-//       );
-//     }
-//   };
+              <div className={styles.content}>
+                <ul className={styles.productList}>
+                  {bundleProducts.map((product) => {
+                    const isChecked = selectedIds.includes(product.id);
+                    const hasDiscount = product.price > product.sellingPrice;
 
-//   if (bundleProducts.length < 2) return null;
+                    return (
+                      <li key={product.id} className={styles.productRow}>
+                        <label className={styles.checkboxLabel}>
+                          <input
+                            type="checkbox"
+                            className={styles.checkbox}
+                            checked={isChecked}
+                            onChange={() => toggleProduct(product.id)}
+                          />
+                          <span className={styles.checkboxCustom} />
+                        </label>
 
-//   return (
-//     <section className="container">
-//       <div className="row">
-//         <div className="col-lg-6 col-md-6">
-//           <div className={styles.frequentlyBought}>
-//             <div className={styles.frequentlyBoughtCard}>
-//               <div className={styles.header}>
-//                 <h2 className={styles.title}>Frequently Bought Together</h2>
-//                 {/* <p className={styles.subtitle}>
-//                 Get {BUNDLE_DISCOUNT_PERCENT}% discount on purchasing all these
-//                 products together
-//               </p> */}
-//               </div>
+                        <div className={styles.productImageWrap}>
+                          {product.thumbnail ? (
+                            <Image
+                              src={product.thumbnail}
+                              alt={product.name}
+                              width={72}
+                              height={72}
+                              className={styles.productImage}
+                            />
+                          ) : (
+                            <div className={styles.productImagePlaceholder} />
+                          )}
+                        </div>
 
-//               <div className={styles.gallery}>
-//                 {bundleProducts?.map((product, index) => (
-//                   <React.Fragment key={product.id}>
-//                     <div className={styles.galleryCard}>
-//                       {product.thumbnail ? (
-//                         <Image
-//                           src={product.thumbnail}
-//                           alt={product.name}
-//                           width={120}
-//                           height={120}
-//                           className={styles.galleryImage}
-//                         />
-//                       ) : (
-//                         <div className={styles.galleryPlaceholder} />
-//                       )}
-//                     </div>
-//                     {index < bundleProducts.length - 1 && (
-//                       <span className={styles.plusSign} aria-hidden="true">
-//                         +
-//                       </span>
-//                     )}
-//                   </React.Fragment>
-//                 ))}
-//               </div>
+                        <span className={styles.productName}>{product.name}</span>
+                        <div className={styles.productPrice}>
+                          {hasDiscount && (
+                            <span className={styles.oldPrice}>
+                              ₹ {product.price.toLocaleString("en-IN")}
+                            </span>
+                          )}
+                          <span className={styles.currentPrice}>
+                            ₹ {product.sellingPrice.toLocaleString("en-IN")}
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
 
-//               <div className={styles.content}>
-//                 <ul className={styles.productList}>
-//                   {bundleProducts.map((product) => {
-//                     const isChecked = selectedIds.includes(product.id);
-//                     const hasDiscount = product.price > product.sellingPrice;
+                <div className={styles.summary}>
+                  <p className={styles.totalLabel}>Total price:</p>
+                  <div className={styles.totalPrices}>
+                    <span className={styles.totalCurrent}>
+                      ₹ {originalTotal.toLocaleString("en-IN", {})}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.addToCartBtn}
+                    onClick={handleAddToCart}
+                    disabled={isLoading || !selectedProducts.length}
+                  >
+                    ADD TO CART
+                    <MdOutlineKeyboardArrowRight className={styles.btnIcon} />
+                  </button>
+                </div>
+              </div>
 
-//                     return (
-//                       <li key={product.id} className={styles.productRow}>
-//                         <label className={styles.checkboxLabel}>
-//                           <input
-//                             type="checkbox"
-//                             className={styles.checkbox}
-//                             checked={isChecked}
-//                             onChange={() => toggleProduct(product.id)}
-//                           />
-//                           <span className={styles.checkboxCustom} />
-//                         </label>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-//                         <span className={styles.productName}>
-//                           {product.name}
-//                         </span>
-//                         <div className={styles.productPrice}>
-//                           {hasDiscount && (
-//                             <span className={styles.oldPrice}>
-//                               ₹ {product.price.toLocaleString("en-IN")}
-//                             </span>
-//                           )}
-//                           <span className={styles.currentPrice}>
-//                             ₹ {product.sellingPrice.toLocaleString("en-IN")}
-//                           </span>
-//                         </div>
-//                       </li>
-//                     );
-//                   })}
-//                 </ul>
-
-//                 <div className={styles.summary}>
-//                   <p className={styles.totalLabel}>Total price:</p>
-//                   <div className={styles.totalPrices}>
-//                     <span className={styles.totalCurrent}>
-//                       ₹ {originalTotal.toLocaleString("en-IN", {})}
-//                     </span>
-//                     {/* {allSelected && originalTotal > discountedTotal && (
-//                     <span className={styles.totalOriginal}>
-//                       ₹{" "}
-//                       {originalTotal.toLocaleString("en-IN", {
-//                         minimumFractionDigits: 2,
-//                         maximumFractionDigits: 2,
-//                       })}
-//                     </span>
-//                   )} */}
-//                   </div>
-//                   <button
-//                     type="button"
-//                     className={styles.addToCartBtn}
-//                     onClick={handleAddToCart}
-//                     disabled={isLoading || !selectedProducts.length}
-//                   >
-//                     ADD TO CART
-//                     <MdOutlineKeyboardArrowRight className={styles.btnIcon} />
-//                   </button>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default FrequentlyBought;
+export default FrequentlyBought;
