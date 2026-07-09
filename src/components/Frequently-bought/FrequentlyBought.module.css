@@ -1,4 +1,4 @@
-/* .frequentlyBought {
+.frequentlyBought {
     padding: 50px 0;
   }
    
@@ -28,52 +28,9 @@
     line-height: 1.5;
   }
    
-  .gallery {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
-   
-  .galleryCard {
-    width: 110px;
-    height: 110px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  }
-   
-  .galleryImage {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 8px;
-  }
-   
-  .galleryPlaceholder {
-    width: 60%;
-    height: 60%;
-    background: #f3f4f6;
-    border-radius: 4px;
-  }
-   
-  .plusSign {
-    font-size: 22px;
-    font-weight: 400;
-    color: #9ca3af;
-    line-height: 1;
-    user-select: none;
-  }
-   
   .content {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 40px;
   }
    
@@ -81,11 +38,13 @@
     list-style: none;
     flex: 1;
     display: grid;
-    grid-template-columns: 28px minmax(0, 1fr) auto;
-    column-gap: 16px;
+    grid-template-columns: 28px 72px minmax(0, 1fr) auto;
+    column-gap: 14px;
     row-gap: 18px;
     align-items: center;
     min-width: 0;
+    margin: 0;
+    padding: 0;
   }
    
   .productRow {
@@ -132,10 +91,38 @@
     transform: rotate(45deg);
     margin-bottom: 2px;
   }
+
+  .productImageWrap {
+    width: 72px;
+    height: 72px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .productImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+  }
+
+  .productImagePlaceholder {
+    width: 60%;
+    height: 60%;
+    background: #f3f4f6;
+    border-radius: 4px;
+  }
    
   .productName {
     font-size: 14px;
-    color: #6b7280;
+    color: #1a202c;
+    font-weight: 500;
     line-height: 1.4;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -244,11 +231,6 @@
       gap: 24px;
     }
   
-    .galleryCard {
-      width: 90px;
-      height: 90px;
-    }
-  
     .summary {
       min-width: 170px;
     }
@@ -284,16 +266,6 @@
       font-size: 14px;
     }
   
-    .gallery {
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-  
-    .galleryCard {
-      width: 80px;
-      height: 80px;
-    }
-  
     .content {
       flex-direction: column;
       align-items: stretch;
@@ -301,9 +273,14 @@
     }
   
     .productList {
-      grid-template-columns: 24px minmax(0, 1fr) auto;
+      grid-template-columns: 24px 64px minmax(0, 1fr) auto;
       column-gap: 12px;
       row-gap: 14px;
+    }
+
+    .productImageWrap {
+      width: 64px;
+      height: 64px;
     }
   
     .productName {
@@ -357,25 +334,16 @@
       font-size: 13px;
     }
   
-    .gallery {
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-  
-    .galleryCard {
-      width: 64px;
-      height: 64px;
-      border-radius: 6px;
-    }
-  
-    .plusSign {
-      font-size: 18px;
-    }
-  
     .productList {
-      grid-template-columns: 20px minmax(0, 1fr) auto;
+      grid-template-columns: 20px 56px minmax(0, 1fr) auto;
       column-gap: 8px;
       row-gap: 12px;
+    }
+
+    .productImageWrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 6px;
     }
   
     .checkboxCustom {
@@ -437,28 +405,19 @@
       font-size: 12px;
     }
   
-    .gallery {
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-  
-    .galleryCard {
-      width: 54px;
-      height: 54px;
-    }
-  
-    .galleryImage {
-      padding: 5px;
-    }
-  
-    .plusSign {
-      font-size: 15px;
-    }
-  
     .productList {
-      grid-template-columns: 18px minmax(0, 1fr) auto;
+      grid-template-columns: 18px 48px minmax(0, 1fr) auto;
       column-gap: 6px;
       row-gap: 10px;
+    }
+
+    .productImageWrap {
+      width: 48px;
+      height: 48px;
+    }
+
+    .productImage {
+      padding: 4px;
     }
   
     .productName {
@@ -491,4 +450,4 @@
       font-size: 16px;
     }
   }
-    */
+   
