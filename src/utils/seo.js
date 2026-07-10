@@ -3,8 +3,24 @@ import { DEFAULT_SEO, SITE_NAME } from "@/config/seo";
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://agriwow.com";
 
+const DEFAULT_OG_IMAGE_PATH = "/og-image.jpg";
+const DEFAULT_OG_IMAGE_WIDTH = "1922";
+const DEFAULT_OG_IMAGE_HEIGHT = "758";
+
 export function getSiteUrl() {
   return SITE_URL;
+}
+
+export function getDefaultOgImage() {
+  return `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`;
+}
+
+export function getDefaultOgImageDimensions() {
+  return {
+    width: DEFAULT_OG_IMAGE_WIDTH,
+    height: DEFAULT_OG_IMAGE_HEIGHT,
+    type: "image/jpeg",
+  };
 }
 
 export function stripHtml(html = "") {
@@ -18,8 +34,8 @@ export function truncateText(text = "", maxLength = 160) {
 }
 
 export function buildPageTitle(title) {
-  if (!title || title === SITE_NAME) return SITE_NAME;
-  return `${title} | ${SITE_NAME}`;
+  if (!title) return SITE_NAME;
+  return `${title} - ${SITE_NAME}`;
 }
 
 export function getCanonicalUrl(asPath = "/") {
@@ -38,6 +54,49 @@ export function resolveImageUrl(image) {
   return url.startsWith("http") ? url : `${SITE_URL}${url}`;
 }
 
+export function getImageMimeType(imageUrl = "") {
+  const extension = imageUrl.split("?")[0].split(".").pop()?.toLowerCase();
+
+  switch (extension) {
+    case "webp":
+      return "image/webp";
+    case "png":
+      return "image/png";
+    case "gif":
+      return "image/gif";
+    case "jpg":
+    case "jpeg":
+    default:
+      return "image/jpeg";
+  }
+}
+
+export function toIsoDate(value) {
+  if (!value) return undefined;
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return undefined;
+
+  return date.toISOString();
+}
+
+export function estimateReadTime(text = "") {
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} minute${minutes === 1 ? "" : "s"}`;
+}
+
+export function formatInrPrice(amount) {
+  const value = Number(amount);
+  if (Number.isNaN(value)) return undefined;
+
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(value);
+}
+
 export function getProductImage(product) {
   const gallery = product?.gallery ?? [];
   const first = gallery[0];
@@ -47,28 +106,55 @@ export function getProductImage(product) {
 export function buildProductSeo(product) {
   if (!product) return null;
 
+  const image = getProductImage(product);
+
   return {
     title: product.name,
     description: truncateText(
       stripHtml(product.short_description || product.description) ||
         DEFAULT_SEO.description,
     ),
-    image: getProductImage(product),
+    image,
+    imageAlt: product.name,
     type: "product",
+    price: product.selling_price,
+    currency: "INR",
+    availability: product.in_stock ? "instock" : "outofstock",
+    updatedTime: toIsoDate(product.updated_at),
+    twitterLabel1: "Price",
+    twitterData1: formatInrPrice(product.selling_price),
+    twitterLabel2: "Availability",
+    twitterData2: product.in_stock ? "In Stock" : "Out of Stock",
   };
 }
 
 export function buildBlogSeo(blog) {
   if (!blog) return null;
 
+  const description = truncateText(
+    stripHtml(blog.short_description || blog.description) ||
+      DEFAULT_SEO.description,
+  );
+  const image = resolveImageUrl(blog.image);
+  const readTime = estimateReadTime(stripHtml(blog.description));
+
   return {
     title: blog.title,
-    description: truncateText(
-      stripHtml(blog.short_description || blog.description) ||
-        DEFAULT_SEO.description,
-    ),
-    image: resolveImageUrl(blog.image),
+    description,
+    image,
+    imageAlt: blog.title,
     type: "article",
+    author: blog.author,
+    section: blog.category?.name,
+    tags: blog.tags,
+    publishedTime: toIsoDate(blog.blog_date),
+    modifiedTime: toIsoDate(blog.updated_at || blog.blog_date),
+    updatedTime: toIsoDate(blog.updated_at || blog.blog_date),
+    readTime,
+    twitterLabel1: "Written by",
+    twitterData1: blog.author,
+    twitterLabel2: "Time to read",
+    twitterData2: readTime,
   };
 }
 
@@ -83,7 +169,7 @@ export function buildCategorySeo({ categoryName, subCategoryName }) {
   return {
     title: label,
     description: truncateText(
-      `Shop ${name} online at AgriWow. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
+      `Shop ${name} online at Agriwow. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
     ),
   };
 }
@@ -98,8 +184,112 @@ export function buildBuyingGuideSeo(guide) {
     title: `${guide.name} Buying Guide`,
     description: truncateText(
       stripHtml(guide.description || guide.short_description) ||
-        `Read the ${guide.name} buying guide on AgriWow to choose the right agricultural equipment.`,
+        `Read the ${guide.name} buying guide on Agriwow to choose the right agricultural equipment.`,
     ),
     image: resolveImageUrl(heroImage),
+    imageAlt: `${guide.name} Buying Guide`,
+  };
+}
+
+export function buildJsonLd({
+  pageTitle,
+  description,
+  canonicalUrl,
+  type = "website",
+  image,
+  publishedTime,
+  modifiedTime,
+  author,
+  price,
+  currency = "INR",
+  availability,
+}) {
+  const organization = {
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/favicon.ico`,
+    },
+  };
+
+  const website = {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: SITE_NAME,
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    inLanguage: "en-US",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_URL}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const webpage = {
+    "@type": "WebPage",
+    "@id": `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: pageTitle,
+    description,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${SITE_URL}/#organization` },
+    inLanguage: "en-US",
+  };
+
+  if (image) {
+    webpage.primaryImageOfPage = { "@type": "ImageObject", url: image };
+  }
+
+  if (publishedTime) {
+    webpage.datePublished = publishedTime;
+  }
+
+  if (modifiedTime) {
+    webpage.dateModified = modifiedTime;
+  }
+
+  const graph = [organization, website, webpage];
+
+  if (type === "article") {
+    graph.push({
+      "@type": "Article",
+      headline: pageTitle,
+      description,
+      datePublished: publishedTime,
+      dateModified: modifiedTime || publishedTime,
+      author: {
+        "@type": "Person",
+        name: author || SITE_NAME,
+      },
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      image: image ? [image] : undefined,
+      mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+      inLanguage: "en-US",
+    });
+  }
+
+  if (type === "product" && price) {
+    graph.push({
+      "@type": "Product",
+      name: pageTitle.replace(` - ${SITE_NAME}`, ""),
+      description,
+      image: image ? [image] : undefined,
+      offers: {
+        "@type": "Offer",
+        url: canonicalUrl,
+        priceCurrency: currency,
+        price: String(price),
+        availability: `https://schema.org/${availability === "instock" ? "InStock" : "OutOfStock"}`,
+      },
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": graph,
   };
 }
