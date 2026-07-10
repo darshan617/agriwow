@@ -1,16 +1,25 @@
-export const SITE_NAME = "AgriWow";
+export const SITE_NAME = "Agriwow";
 
 export const DEFAULT_SEO = {
-  title: "AgriWow",
+  title: "Agriwow",
   description:
-    "Shop quality agricultural equipment, sprayers, farm tools, and gardening products at the best prices. Shop smart, farm better with AgriWow.",
+    "Get top-quality agricultural machinery at unbeatable prices. Shop smart, farm better with Agriwow.",
 };
 
 export const ROUTE_SEO = {
   "/": {
     title: "Home",
     description:
-      "Discover top-rated agricultural equipment, sprayers, fogging machines, and farm tools at AgriWow. Quality products with fast delivery across India.",
+      "Every farmer and gardener understands one simple truth: a successful harvest begins with proper seed planting. However, planting seeds by hand can be time-consuming, physically exhausting, and often results in uneven distribution.",
+    publishedTime: "2023-02-17T05:59:48+00:00",
+    modifiedTime: "2026-07-08T10:04:23+00:00",
+    updatedTime: "2026-07-08T10:04:23+00:00",
+    author: "admin",
+    readTime: "7 minutes",
+    twitterLabel1: "Written by",
+    twitterData1: "admin",
+    twitterLabel2: "Time to read",
+    twitterData2: "7 minutes",
   },
   "/about-us": {
     title: "About Us",
@@ -20,7 +29,7 @@ export const ROUTE_SEO = {
   "/blog": {
     title: "Blog",
     description:
-      "Read the latest farming tips, product guides, and agricultural insights from the AgriWow blog.",
+      "Every farmer and gardener understands one simple truth: a successful harvest begins with proper seed planting. However, planting seeds by hand can be time-consuming, physically exhausting, and often results in uneven distribution.",
   },
   "/buying-guide": {
     title: "Buying Guide",
