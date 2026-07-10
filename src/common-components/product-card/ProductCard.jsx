@@ -192,7 +192,7 @@ const ProductCard = ({
  
   const getTags = () => {
 if(isBestSeller){
-  return 'Best Selling'
+  return 'Best Seller'
 }if(isTrending){
   return 'Trending'
 }if(isFeatured){
