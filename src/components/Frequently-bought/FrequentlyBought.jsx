@@ -107,27 +107,27 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
 
               <div className={styles.content}>
                 <ul className={styles.productList}>
-                  {bundleProducts.map((product) => {
-                    const isChecked = selectedIds.includes(product.id);
-                    const hasDiscount = product.price > product.sellingPrice;
+                  {bundleProducts?.map((product) => {
+                    const isChecked = selectedIds.includes(product?.id);
+                    const hasDiscount = product?.price > product?.sellingPrice;
 
                     return (
-                      <li key={product.id} className={styles.productRow}>
+                      <li key={product?.id} className={styles.productRow}>
                         <label className={styles.checkboxLabel}>
                           <input
                             type="checkbox"
                             className={styles.checkbox}
                             checked={isChecked}
-                            onChange={() => toggleProduct(product.id)}
+                            onChange={() => toggleProduct(product?.id)}
                           />
                           <span className={styles.checkboxCustom} />
                         </label>
 
                         <div className={styles.productImageWrap}>
-                          {product.thumbnail ? (
+                          {product?.thumbnail ? (
                             <Image
-                              src={product.thumbnail}
-                              alt={product.name}
+                              src={product?.thumbnail}
+                              alt={product?.name}
                               width={72}
                               height={72}
                               className={styles.productImage}
@@ -137,15 +137,15 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                           )}
                         </div>
 
-                        <span className={styles.productName}>{product.name}</span>
+                        <span className={styles.productName}>{product?.name}</span>
                         <div className={styles.productPrice}>
                           {hasDiscount && (
                             <span className={styles.oldPrice}>
-                              ₹ {product.price.toLocaleString("en-IN")}
+                              ₹ {product?.price?.toLocaleString("en-IN")}
                             </span>
                           )}
                           <span className={styles.currentPrice}>
-                            ₹ {product.sellingPrice.toLocaleString("en-IN")}
+                            ₹ {product?.sellingPrice?.toLocaleString("en-IN")}
                           </span>
                         </div>
                       </li>

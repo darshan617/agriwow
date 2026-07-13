@@ -220,8 +220,8 @@ const LatestBlog = () => {
                   <div className={styles.featuredCard}>
                     <div className={styles.featuredMedia}>
                       <Image
-                        src={featuredPost.image}
-                        alt={featuredPost.title}
+                        src={featuredPost?.image}
+                        alt={featuredPost?.title}
                         fill
                         className={styles.featuredImage}
                         sizes="(max-width: 768px) 100vw, 42vw"
@@ -230,13 +230,13 @@ const LatestBlog = () => {
                     </div>
                     <div className={styles.featuredBody}>
                       <span className={styles.featuredCategory}>
-                        {featuredPost.category?.name}
+                        {featuredPost?.category?.name}
                       </span>
                       <h2 className={styles.featuredTitle}>
-                        {featuredPost.title}
+                        {featuredPost?.title}
                       </h2>
                       <p className={styles.featuredExcerpt}>
-                        {featuredPost.short_description}
+                        {featuredPost?.short_description}
                       </p>
                       <div className={styles.featuredFooter}>
                         <div className={styles.featuredMeta}>
@@ -245,18 +245,18 @@ const LatestBlog = () => {
                               className={styles.metaIcon}
                               aria-hidden
                             />
-                            {featuredPost.author}
+                            {featuredPost?.author}
                           </span>
                           <span className={styles.metaItem}>
                             <LuCalendarDays
                               className={styles.metaIcon}
                               aria-hidden
                             />
-                            {featuredPost.blog_date}
+                            {featuredPost?.blog_date}
                           </span>
                         </div>
                         <Link
-                          href={`/blog/${featuredPost.slug}`}
+                          href={`/blog/${featuredPost?.slug}`}
                           className={styles.readMoreBtn}
                           prefetch={true}
                         >
@@ -271,17 +271,17 @@ const LatestBlog = () => {
                   <div className={styles.blogList}>
                     <h2 className={styles.blogListTitle}>Latest Blogs</h2>
                     <div className={styles.blogListGrid}>
-                      {paginatedBlogs.map((post) => (
+                      {paginatedBlogs?.map((post) => (
                         <Link
-                          key={post.id}
+                          key={post?.id}
                           href={`/blog/${post?.slug}`}
                           className={styles.blogCard}
                           prefetch={true}
                         >
                           <div className={styles.blogCardMedia}>
                             <Image
-                              src={post.image}
-                              alt={post.title}
+                              src={post?.image}
+                              alt={post?.title}
                               fill
                               className={styles.blogCardImage}
                               sizes="(max-width: 768px) 100vw, 33vw"
@@ -289,13 +289,13 @@ const LatestBlog = () => {
                           </div>
                           <div className={styles.blogCardBody}>
                             <span className={styles.blogCardCategory}>
-                              {post.category?.name}
+                              {post?.category?.name}
                             </span>
                             <h3 className={styles.blogCardTitle}>
-                              {post.title}
+                              {post?.title}
                             </h3>
                             <p className={styles.blogCardExcerpt}>
-                              {post.short_description}
+                              {post?.short_description}
                             </p>
                             <div className={styles.blogCardMeta}>
                               <span className={styles.blogCardMetaItem}>
@@ -303,14 +303,14 @@ const LatestBlog = () => {
                                   className={styles.blogCardMetaIcon}
                                   aria-hidden
                                 />
-                                {post.author}
+                                {post?.author}
                               </span>
                               <span className={styles.blogCardMetaItem}>
                                 <LuCalendarDays
                                   className={styles.blogCardMetaIcon}
                                   aria-hidden
                                 />
-                                {post.blog_date}
+                                {post?.blog_date}
                               </span>
                             </div>
                             <span className={styles.blogCardReadMore}>

@@ -8,12 +8,20 @@ import "swiper/css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import TopBannerShimmer from "./TopBannerShimmer";
 
-const TopBanner = () => {
-  const { data: homeData, isLoading: isHomeDataLoading } =
-    useGetHomeDataQuery();
-  const categoriesData = homeData?.data?.categories;
+const TopBanner = ({ categoriesData: categoriesDataProp }) => {
+  // Home already fetches /home (SSR + client). Only hit the API when no props
+  // were passed — preserves the original self-contained usage.
+  const { data: homeData, isLoading: isHomeDataLoading } = useGetHomeDataQuery(
+    undefined,
+    { skip: Boolean(categoriesDataProp) },
+  );
+  const categoriesData =
+    categoriesDataProp ?? homeData?.data?.categories;
 
-  return isHomeDataLoading ? (
+  const showShimmer =
+    !categoriesDataProp && isHomeDataLoading && !categoriesData;
+
+  return showShimmer ? (
     <TopBannerShimmer />
   ) : (
     <div className="container">
@@ -43,7 +51,7 @@ const TopBanner = () => {
                 <div className={`${styles.categoryItem}`}>
                   <div className={`${styles.categoryImgWrapper}`}>
                     <Image
-                      src={category?.image}
+                      src={category?.image ?? ""}
                       alt={category?.name}
                       className={`${styles.categoryImg}`}
                       width={100}

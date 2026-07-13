@@ -32,7 +32,7 @@ const PostCard = ({ post }) => (
       <div className={`${styles.media}`}>
         <Image
           src={post?.image || blogImage}
-          alt={post?.title || "Blog post"}
+          alt={post?.title || "blog-post"}
           fill
           className={styles.mediaImage}
         />

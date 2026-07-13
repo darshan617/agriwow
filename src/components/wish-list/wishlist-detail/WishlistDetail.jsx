@@ -107,7 +107,7 @@ const WishlistDetail = ({
           <div className={styles.emptyVisual}>
             <Image
               src={emptyWishlistImg}
-              alt=""
+              alt="empty-wishlist"
               className={styles.emptyImage}
               width={420}
               height={320}
@@ -137,7 +137,7 @@ const WishlistDetail = ({
         hasItems && (
           <div className={styles.productsSection}>
             <div className={styles.productsGrid}>
-              {wishlistItems.map((item) => {
+              {wishlistItems?.map((item) => {
                 const product = item?.product ?? item;
                 return (
                   <ProductCard
@@ -171,16 +171,16 @@ const WishlistDetail = ({
       <div className={styles.trendingSection}>
         <h2 className={styles.trendingTitle}>Trending Categories</h2>
         <div className={styles.categoryGrid}>
-          {trendingCategories.map((category) => (
+          {trendingCategories?.map((category) => (
             <Link
               key={category?.slug ?? category?.name}
-              href={category?.slug ? `/product-category/${category.slug}` : "#"}
+              href={category?.slug ? `/product-category/${category?.slug}` : "#"}
               className={styles.categoryCard}
               prefetch={true}
             >
               <div className={styles.categoryImageWrap}>
                 <Image
-                  src={category?.image}
+                  src={category?.image ?? ""}
                   alt={category?.name ?? "Category"}
                   width={80}
                   height={80}

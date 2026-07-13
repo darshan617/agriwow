@@ -9,7 +9,6 @@ import "@/styles/globals.css";
 import { Provider } from "react-redux";
 import { useEffect, useState } from "react";
 import Aos from "aos";
-import "aos/dist/aos.css";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { LoginPopupProvider } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -22,10 +21,22 @@ import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 
 function AppContent({ Component, pageProps }) {
   useEffect(() => {
-    Aos.init({
-      duration: 1000,
-      once: true,
-    });
+    // Defer AOS so it does not compete with hydration / long tasks (TBT).
+    // Sections still use data-aos; animations just start after the main thread is free.
+    const initAos = () => {
+      Aos.init({
+        duration: 1000,
+        once: true,
+      });
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(initAos, { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    }
+
+    const timer = window.setTimeout(initAos, 1);
+    return () => window.clearTimeout(timer);
   }, []);
 
   return <Component {...pageProps} />;
@@ -125,9 +136,20 @@ export default function App({ Component, pageProps, ...rest }) {
         <SeoHead {...seo} />
         <ToastProvider>
           <LoginPopupProvider>
-            <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+            {/* Razorpay is loaded on cart/checkout only — see CartSummery */}
             <ProgressBar />
             <AppContent Component={Component} pageProps={pageProps} />
+            <Script
+              id="gtm"
+              strategy="lazyOnload"
+              dangerouslySetInnerHTML={{
+                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID || "GTM-T374B69C"}');`,
+              }}
+            />
 
             <style jsx global>{`
               .whatsapp-float-btn {

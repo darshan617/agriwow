@@ -14,10 +14,7 @@ import { MdHistory } from "react-icons/md";
 import menu from "@/assets/icon/menu.png";
 import TopHeaderExtras from "@/components/layout/top-header/TopHeaderExtras";
 import styles from "@/components/layout/header/Header.module.css";
-import {
-  useGetHomeDataQuery,
-  useLazySearchProductsQuery,
-} from "@/redux/apis/homeApi";
+import { useLazySearchProductsQuery } from "@/redux/apis/homeApi";
 import { useGetMenuProductDataQuery } from "@/redux/apis/categoryApi";
 import { useLogoutMutation } from "@/redux/apis/authApi";
 import Cookies from "js-cookie";
@@ -27,12 +24,19 @@ import {
   getWishlistItems,
   useGetWishlistQuery,
 } from "@/redux/apis/addToWishlist";
-import {
-  useGetCartDataQuery,
-  useMergeCartMutation,
-} from "@/redux/apis/addToCartApi";
+import { useGetCartDataQuery } from "@/redux/apis/addToCartApi";
 
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+
+const readUserDataFromCookie = () => {
+  const raw = Cookies?.get("userData");
+  if (!raw) return {};
+  try {
+    return JSON.parse(decodeURIComponent(raw));
+  } catch {
+    return {};
+  }
+};
 
 const TRENDING_SEARCHES = [
   { label: "Fogging Machines", href: "/product-category/fogging-machines" },
@@ -122,42 +126,6 @@ const renderMenuProductColumns = (
         </ul>
       </div>
     ))}
-    {/* <div className={`${styles.megaColumn}`}>
-      <h2 className={`${styles.megaColumnTitle}`}>New Arrivals</h2>
-      <ul className={`${styles.megaList}`}>
-        {menuProductData?.data?.Product?.map((prd) => (
-          <li key={prd?.id ?? prd?.slug ?? prd?.name}>
-            <Link
-              href={prd?.slug ?? "#"}
-              className={`${styles.megaProductCard}`}
-              onClick={onLinkClick}
-              prefetch={true}
-            >
-              <div className={`${styles.megaProductImage}`}>
-                <Image
-                  src={prd.thumbnail}
-                  alt={prd.name ?? prd.subcategory_name ?? "Product"}
-                  width={72}
-                  height={72}
-                />
-              </div>
-              <div className={`${styles.megaProductInfo}`}>
-                {prd.name && (
-                  <p className={`${styles.megaProductName}`}>{prd.name}</p>
-                )}
-                <span className={`${styles.megaProductRating}`}>
-                  <IoMdStar aria-hidden />
-                  {prd.total_reviews}
-                </span>
-                <p className={`${styles.megaProductPrice}`}>
-                  ₹ {prd.selling_price}
-                </p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div> */}
   </>
 );
 
@@ -178,10 +146,14 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const userMenuRef = useRef(null);
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
-  const userData = Cookies?.get("userData")
-    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
-    : {};
   const { data: menuProductData } = useGetMenuProductDataQuery();
+  const { openLoginPopup, isLoggedIn } = useLoginPopup();
+  // Derive from login flag (false on SSR + first client paint) so cookie reads
+  // never hydrate-mismatch — same intent as the old TopHeader isMounted gate.
+  const userData = useMemo(
+    () => (isLoggedIn ? readUserDataFromCookie() : {}),
+    [isLoggedIn],
+  );
   const { data: wishlistData } = useGetWishlistQuery(userData?.id, {
     skip: !userData?.id,
   });
@@ -190,7 +162,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     [wishlistData],
   );
   const { data: cartData, isLoading: isCartLoading } = useGetCartDataQuery();
-  const { data: homeData } = useGetHomeDataQuery();
   const [triggerSearch, { data: searchData, isFetching: isSearching }] =
     useLazySearchProductsQuery();
   const closeMenu = () => setMenuOpen(false);
@@ -203,7 +174,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
-  const { openLoginPopup, isLoggedIn } = useLoginPopup();
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -299,15 +270,9 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const hasQuery = debouncedQuery.length > 0;
   const showSearchPanel = searchOpen;
   const showResultsView = hasQuery;
+  // Menu API already supplies categories for search shortcuts; avoid a second
+  // /home fetch from the header (home page hydrates that data separately).
   const topCategories = useMemo(() => {
-    const fromHome = homeData?.data?.categories;
-    if (Array.isArray(fromHome) && fromHome.length > 0) {
-      return fromHome.slice(0, 6).map((cat) => ({
-        name: cat?.name,
-        slug: cat?.slug,
-        image: cat?.image,
-      }));
-    }
     const fromMenu = menuProductData?.data?.AllCategory;
     if (Array.isArray(fromMenu)) {
       return fromMenu?.slice(0, 6)?.map((cat) => ({
@@ -317,7 +282,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       }));
     }
     return [];
-  }, [homeData, menuProductData]);
+  }, [menuProductData]);
 
   const trendingToShow = trendingExpanded
     ? TRENDING_SEARCHES
@@ -553,18 +518,18 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                     ) : (
                       <>
                         <ul className={`${styles.searchResultsList}`}>
-                          {searchResults.slice(0, 6).map((product) => {
+                          {searchResults?.slice(0, 6)?.map((product) => {
                             const categorySlug = product?.category?.slug;
                             const href =
                               categorySlug && product?.slug
-                                ? `/product-details/${product.slug}`
+                                ? `/product-details/${product?.slug}`
                                 : "#";
                             return (
                               <li key={product?.id ?? product?.slug}>
                                 <div className={`${styles.searchResultItem}`}>
                                   <Image
-                                    src={product?.thumbnail}
-                                    alt={product?.name}
+                                    src={product?.thumbnail ?? ""}
+                                    alt={product?.name ?? "product"}
                                     width={50}
                                     height={50}
                                   />
@@ -636,7 +601,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                 key={cat?.slug ?? cat?.name}
                                 href={
                                   cat?.slug
-                                    ? `/product-category/${cat.slug}`
+                                    ? `/product-category/${cat?.slug}`
                                     : "#"
                                 }
                                 className={`${styles.topCategoryCard}`}
@@ -645,7 +610,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                 <div className={`${styles.topCategoryImage}`}>
                                   {cat?.image && (
                                     <Image
-                                      src={cat.image}
+                                      src={cat?.image ?? ""}
                                       alt={cat?.name ?? "Category"}
                                       width={44}
                                       height={44}
@@ -826,7 +791,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               onClick={() => setMenuOpen((open) => !open)}
             >
-              <Image src={menu} alt="" width={17} height={17} />
+              <Image src={menu} alt="menu" width={17} height={17} />
             </button>
           </div>
 
@@ -863,7 +828,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
         className={`${styles.navDrawer} ${menuOpen ? `${styles.open}` : ""}`}
       >
         <div className={`${styles.drawerHeader}`}>
-          <Image src={logo} alt="Agriwow logo" width={120} priority />
+          <Image src={logo} alt="logo" width={120} priority />
           <button
             type="button"
             className={`${styles.drawerClose}`}

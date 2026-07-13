@@ -31,7 +31,7 @@ const BuyingGuide = () => {
               <span className={styles.iconWrap}>
                 {category?.svgIconData?.url ? (
                   <Image
-                    src={category.svgIconData.url}
+                    src={category?.svgIconData?.url}
                     alt={category?.name}
                     width={28}
                     height={28}
@@ -39,7 +39,7 @@ const BuyingGuide = () => {
                   />
                 ) : category?.image ? (
                   <Image
-                    src={category.image}
+                    src={category?.image}
                     alt={category?.name}
                     width={28}
                     height={28}

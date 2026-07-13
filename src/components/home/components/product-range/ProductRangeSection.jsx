@@ -19,7 +19,7 @@ const ProductRangeSection = () => {
           <div className={`${styles.visual}`}>
             <Image
               src={sprayerImg}
-              alt="Agriculture sprayer equipment"
+              alt="agriculture-sprayer"
               width={360}
               height={360}
               className={`${styles.img}`}
@@ -49,7 +49,7 @@ const ProductRangeSection = () => {
           <div className={`${styles.visual}`}>
             <Image
               src={pumpImg}
-              alt="Portable gasoline water pump"
+              alt="portable-gasoline-water-pump"
               width={360}
               height={360}
               className={`${styles.img}`}

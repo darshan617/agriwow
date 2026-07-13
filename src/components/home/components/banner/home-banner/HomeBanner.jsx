@@ -56,15 +56,15 @@ const HomeBanner = () => {
             <SwiperSlide key={slide.id ?? index}>
               <Link
                 prefetch={true}
-                href={slide.link}
-                {...(slide.link?.startsWith("http") && {
+                href={slide?.link}
+                {...(slide?.link?.startsWith("http") && {
                   target: "_blank",
                   rel: "noopener noreferrer",
                 })}
               >
                 <div>
                   <Image
-                    src={slide.backgroundImage}
+                    src={slide?.backgroundImage}
                     alt="Farm background banner"
                     className={`${styles.bannerBackground}`}
                     priority={index === 0}
