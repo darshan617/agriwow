@@ -84,6 +84,7 @@ const Footer = () => {
                     className={`${styles.inputIconRight}`}
                     onClick={handleSubscribe}
                     type="button"
+                    aria-label="Subscribe to newsletter"
                     disabled={isSubscribeEmailLoading}
                     style={{
                       opacity: isSubscribeEmailLoading ? 0.5 : 1,

@@ -23,7 +23,7 @@
 }
 
 .footerShortPara {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 14px;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .footerBrandText {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     line-height: 1.6;
     margin: 0 0 24px;
@@ -178,7 +178,7 @@
 
 .footerNavList a,
 .footerNavList button {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 14px;
     line-height: 1.4;
     text-decoration: none;
@@ -257,7 +257,7 @@
 }
 
 .footerCopyright {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 14px;
     line-height: 1.5;
     margin: 0;
@@ -288,7 +288,7 @@
 }
 
 .footerLegal a {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 14px;
     text-decoration: none;
     white-space: nowrap;

@@ -50,25 +50,28 @@ export const TopHeaderSocial = () => (
       href="https://www.instagram.com/agriwow_"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Instagram"
       prefetch={true}
     >
-      <FaInstagram className={styles.topHeaderRightIcon} />
+      <FaInstagram className={styles.topHeaderRightIcon} aria-hidden />
     </Link>
     <Link
       href="https://www.facebook.com/share/1D562vca71/"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Facebook"
       prefetch={true}
     >
-      <FaFacebookF className={styles.topHeaderRightIcon} />
+      <FaFacebookF className={styles.topHeaderRightIcon} aria-hidden />
     </Link>
     <Link
       href="https://www.youtube.com/@agriwow"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="YouTube"
       prefetch={true}
     >
-      <FaYoutube className={styles.topHeaderRightIcon} />
+      <FaYoutube className={styles.topHeaderRightIcon} aria-hidden />
     </Link>
   </div>
 );

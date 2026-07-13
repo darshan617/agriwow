@@ -89,7 +89,7 @@
 }
 
 .navLinksDesktop a:hover {
-  color: #7ac043;
+  color: #1a7a30;
 }
 
 .navItemWithMegaMenu {
@@ -1072,11 +1072,11 @@
 
 .drawerLinks>a.navLinkActive,
 .drawerProductsToggle.navLinkActive {
-  color: #7ac043;
+  color: #1a7a30;
 }
 
 .drawerLinks>a:hover {
-  color: #7ac043;
+  color: #1a7a30;
   background: #fafafa;
 }
 
@@ -1114,12 +1114,12 @@
 }
 
 .drawerProductsToggle:hover {
-  color: #7ac043;
+  color: #1a7a30;
   background: #fafafa;
 }
 
 .drawerProductsToggleOpen {
-  color: #7ac043;
+  color: #1a7a30;
   background: #fafafa;
   z-index: 2;
 }

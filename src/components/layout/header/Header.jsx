@@ -486,8 +486,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onFocus={handleSearchFocus}
-                  aria-haspopup="listbox"
-                  aria-expanded={showSearchPanel}
+                  aria-label="Search Product, Category, Brands"
                 />
                 {searchQuery && (
                   <button
@@ -762,11 +761,18 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <Link
                 href="/wishlist"
                 className={`${styles.iconBtn}`}
+                aria-label={
+                  wishlistCount > 0
+                    ? `Wishlist, ${wishlistCount} items`
+                    : "Wishlist"
+                }
                 prefetch={true}
               >
-                <FaHeart size={21} />
+                <FaHeart size={21} aria-hidden />
                 {wishlistCount > 0 && (
-                  <span className={styles.badge}>{wishlistCount}</span>
+                  <span className={styles.badge} aria-hidden>
+                    {wishlistCount}
+                  </span>
                 )}
               </Link>
             ) : (
@@ -776,22 +782,27 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                 className={`${styles.iconBtn}`}
                 aria-label="Wishlist"
               >
-                <FaHeart size={21} />
+                <FaHeart size={21} aria-hidden />
               </button>
             )}
 
-            <button
-              type="button"
+            <Link
+              href="/cart"
               className={`${styles.iconBtn}`}
-              aria-label="Cart"
+              aria-label={
+                cartItems?.length > 0
+                  ? `Cart, ${cartItems.length} items`
+                  : "Cart"
+              }
+              prefetch={true}
             >
-              <Link href="/cart" prefetch={true}>
-                <FaShoppingCart size={21} />
-              </Link>
+              <FaShoppingCart size={21} aria-hidden />
               {cartItems?.length > 0 && (
-                <span className={`${styles.badge}`}>{cartItems?.length}</span>
+                <span className={`${styles.badge}`} aria-hidden>
+                  {cartItems?.length}
+                </span>
               )}
-            </button>
+            </Link>
             <button
               type="button"
               className={`${styles.menuToggle}`}

@@ -46,7 +46,7 @@
 }
 
 .topHeaderLeft a:hover {
-  color: #239c3d;
+  color: #1a7a30;
 }
 
 .topHeaderCenter {
@@ -98,7 +98,7 @@
 }
 
 .topHeaderRight a {
-  color: #239c3d;
+  color: #1a7a30;
   margin-bottom: 0;
   font-size: 15px;
   font-weight: 600;
@@ -107,10 +107,10 @@
 }
 
 .topHeaderRightIcon {
-  color: #239c3d;
+  color: #1a7a30;
   cursor: pointer;
   box-sizing: content-box;
-  border: 1px solid #239c3d;
+  border: 1px solid #1a7a30;
   border-radius: 2px;
   padding: 2px;
   font-size: 17px;
