@@ -16,7 +16,7 @@
   --color-bar-track: #eee;
   --color-hover-bg: #fafbfd;
   --color-summary-bg: #fafbfc;
-  --font-display: "Sora", sans-serif;
+  --font-display: var(--font-sora), sans-serif;
   --font-body: "DM Sans", sans-serif;
   background: var(--color-surface);
   border-radius: 12px;

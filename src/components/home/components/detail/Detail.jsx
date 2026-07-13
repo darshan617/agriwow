@@ -14,19 +14,47 @@ const Detail = () => {
                 <div className={styles.detailCardWrapper}>
                     <div className={styles.detailGrid}>
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="100">
-                            <Image src={delivery} alt="delivery" className={styles.delivery} />
+                            <Image
+                                src={delivery}
+                                alt="across-india"
+                                width={1744}
+                                height={902}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                className={styles.delivery}
+                            />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="200">
-                            <Image src={paymentSecureIcon} alt="payment secure" className={styles.delivery} />
+                            <Image
+                                src={paymentSecureIcon}
+                                alt="checkout"
+                                width={412}
+                                height={213}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                className={styles.delivery}
+                            />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="300">
-                            <Image src={supportIcon} alt="delivery" className={styles.delivery} />
+                            <Image
+                                src={supportIcon}
+                                alt="dedicated"
+                                width={412}
+                                height={213}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                className={styles.delivery}
+                            />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="400">
-                            <Image src={warrantyIcon} alt="delivery" className={styles.delivery} />
+                            <Image
+                                src={warrantyIcon}
+                                alt="guaranteed"
+                                width={412}
+                                height={213}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                className={styles.delivery}
+                            />
                         </div>
                     </div>
                 </div>

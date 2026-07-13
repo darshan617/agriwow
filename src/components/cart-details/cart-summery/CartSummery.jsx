@@ -19,6 +19,38 @@ import {
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import { BiX } from "react-icons/bi";
+import Script from "next/script";
+
+const RAZORPAY_SCRIPT_SRC = "https://checkout.razorpay.com/v1/checkout.js";
+
+const ensureRazorpayLoaded = () => {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Razorpay requires a browser"));
+  }
+  if (window.Razorpay) {
+    return Promise.resolve(window.Razorpay);
+  }
+
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(
+      `script[src="${RAZORPAY_SCRIPT_SRC}"]`,
+    );
+    if (existing) {
+      existing.addEventListener("load", () => resolve(window.Razorpay));
+      existing.addEventListener("error", () =>
+        reject(new Error("Failed to load Razorpay")),
+      );
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = RAZORPAY_SCRIPT_SRC;
+    script.async = true;
+    script.onload = () => resolve(window.Razorpay);
+    script.onerror = () => reject(new Error("Failed to load Razorpay"));
+    document.body.appendChild(script);
+  });
+};
 
 const CartSummery = ({
   cartItems: cartItemsProp,
@@ -210,7 +242,8 @@ const CartSummery = ({
           },
         };
 
-        const rzp = new window.Razorpay(options);
+        const RazorpayCheckout = await ensureRazorpayLoaded();
+        const rzp = new RazorpayCheckout(options);
 
         rzp.on("payment.failed", function (response) {
           showToast(response.error.description, "error");
@@ -240,6 +273,8 @@ const CartSummery = ({
 
   return (
     <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
+      {/* Prefetch on cart only; place-order still awaits ensureRazorpayLoaded */}
+      <Script src={RAZORPAY_SCRIPT_SRC} strategy="lazyOnload" />
       <div className={`${styles.summaryCard}`}>
         <div className={`${styles.summaryHeader}`}>
           <h3>Cart Summary</h3>
@@ -555,7 +590,7 @@ const CartSummery = ({
             <div className={`${styles.emptyCouponBox}`}>
               <Image
                 src={NoCoupon}
-                alt="product-img"
+                alt="no-coupon"
                 className={`${styles.productImg}`}
               />
             </div>

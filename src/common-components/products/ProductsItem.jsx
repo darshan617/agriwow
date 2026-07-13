@@ -8,9 +8,9 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import ProductCardShimmer from "../product-card/ProductCardShimmer";
-import { useEffect, useState } from "react";
+
+const SHIMMER_COUNT = 4;
 
 const ProductsItem = ({
   isHomeDataLoading,
@@ -34,7 +34,6 @@ const ProductsItem = ({
   viewAllLink = "/product-category/agriculture-sprayers",
   bannersLink,
 }) => {
-  const [shimmerCount, setShimmerCount] = useState(4);
   const {
     className: bannerImageClassName,
     style: bannerImageStyle,
@@ -44,7 +43,6 @@ const ProductsItem = ({
   const isIndustrialOverlay = overlayVariant === "industrial";
   const isPostHarvestOverlay = overlayVariant === "postHarvest";
   const isBestSellingOverlay = overlayVariant === "bestSelling";
-  const router = useRouter();
   const productsSectionClassNames = [
     styles.productsSection,
     isEquipment && styles.productsSectionEquipment,
@@ -53,28 +51,12 @@ const ProductsItem = ({
     .filter(Boolean)
     .join(" ");
 
-  useEffect(() => {
-    const updateCount = () => {
-      if (window.innerWidth <= 425) {
-        setShimmerCount(2);
-      } else if (window.innerWidth <= 575) {
-        setShimmerCount(3);
-      } else if (window.innerWidth <= 768) {
-        setShimmerCount(3);
-      } else {
-        setShimmerCount(4);
-      }
-    };
-
-    updateCount();
-    window.addEventListener("resize", updateCount);
-
-    return () => window.removeEventListener("resize", updateCount);
-  }, []);
+  const hasProducts = agricultureProductsData?.length > 0;
+  const showSection = isHomeDataLoading || hasProducts;
 
   return (
     <section className={sectionClassName}>
-      {agricultureProductsData?.length > 0 ? (
+      {showSection ? (
         <div className="container">
           <div className={productsSectionClassNames}>
             <div className="row g-3 align-items-stretch">
@@ -169,79 +151,75 @@ const ProductsItem = ({
                 }
               >
                 <div className={`${styles.swiperWrapper}`}>
-                  <Swiper
-                    modules={[Navigation, Autoplay]}
-                    navigation={{
-                      prevEl: ".swiper-btn-prev",
-                      nextEl: ".swiper-btn-next",
-                    }}
-                    autoplay={{
-                      delay: 9000,
-                      disableOnInteraction: false,
-                    }}
-                    breakpoints={{
-                      0: {
-                        slidesPerView: isEquipment ? 2 : 2,
-                        spaceBetween: 5,
-                      },
-                      425: {
-                        slidesPerView: isEquipment ? 2 : 2,
-                        spaceBetween: 5,
-                      },
-                      575: {
-                        slidesPerView: isEquipment ? 3 : 3,
-                        spaceBetween: 14,
-                      },
-                      767: {
-                        slidesPerView: isEquipment ? 3 : 3,
-                        spaceBetween: 16,
-                      },
-                      1024: {
-                        slidesPerView: isEquipment ? 4 : 4,
-                        spaceBetween: 18,
-                      },
-                      1200: {
-                        slidesPerView: isEquipment ? 4 : 4,
-                        spaceBetween: 20,
-                      },
-                    }}
-                    className={styles.cardsRow}
-                  >
-                    {isHomeDataLoading ? (
-                      <div className={styles.productsShimmer}>
-                        {Array.from({ length: shimmerCount }).map(
-                          (_, index) => (
-                            <ProductCardShimmer key={index} />
-                          ),
-                        )}
-                      </div>
-                    ) : (
-                      agricultureProductsData?.map((item) => {
-                        return (
-                          <SwiperSlide key={item.id}>
-                            <ProductCard
-                              type="home"
-                              image={item?.thumbnail}
-                              imageHover={item?.gallery[0]}
-                              discount={item?.discount}
-                              isBestSeller={item?.is_best_selling}
-                              name={item?.name}
-                              price={item?.selling_price}
-                              oldPrice={item?.price}
-                              reviews={item?.total_reviews}
-                              average_rating={item?.average_rating}
-                              isTrending={item?.is_trending}
-                              isFeatured={item?.is_featured}
-                              isTopRated={item?.is_top_rated}
-                              slug={item?.slug}
-                              productId={item?.id}
-                              isWishlist={item?.is_wishlist}
-                            />
-                          </SwiperSlide>
-                        );
-                      })
-                    )}
-                  </Swiper>
+                  {isHomeDataLoading ? (
+                    <div className={styles.productsShimmer}>
+                      {Array.from({ length: SHIMMER_COUNT }).map((_, index) => (
+                        <ProductCardShimmer key={index} />
+                      ))}
+                    </div>
+                  ) : (
+                    <Swiper
+                      modules={[Navigation, Autoplay]}
+                      navigation={{
+                        prevEl: ".swiper-btn-prev",
+                        nextEl: ".swiper-btn-next",
+                      }}
+                      autoplay={{
+                        delay: 9000,
+                        disableOnInteraction: false,
+                      }}
+                      breakpoints={{
+                        0: {
+                          slidesPerView: isEquipment ? 2 : 2,
+                          spaceBetween: 5,
+                        },
+                        425: {
+                          slidesPerView: isEquipment ? 2 : 2,
+                          spaceBetween: 5,
+                        },
+                        575: {
+                          slidesPerView: isEquipment ? 3 : 3,
+                          spaceBetween: 14,
+                        },
+                        767: {
+                          slidesPerView: isEquipment ? 3 : 3,
+                          spaceBetween: 16,
+                        },
+                        1024: {
+                          slidesPerView: isEquipment ? 4 : 4,
+                          spaceBetween: 18,
+                        },
+                        1200: {
+                          slidesPerView: isEquipment ? 4 : 4,
+                          spaceBetween: 20,
+                        },
+                      }}
+                      className={styles.cardsRow}
+                    >
+                      {agricultureProductsData?.map((item) => (
+                        <SwiperSlide key={item.id}>
+                          <ProductCard
+                            type="home"
+                            image={item?.thumbnail}
+                            imageHover={item?.gallery[0]}
+                            discount={item?.discount}
+                            isBestSeller={item?.is_best_selling}
+                            name={item?.name}
+                            price={item?.selling_price}
+                            oldPrice={item?.price}
+                            reviews={item?.total_reviews}
+                            average_rating={item?.average_rating}
+                            isTrending={item?.is_trending}
+                            isFeatured={item?.is_featured}
+                            isTopRated={item?.is_top_rated}
+                            slug={item?.slug}
+                            productId={item?.id}
+                            isWishlist={item?.is_wishlist}
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  )}
 
                   {!isEquipment && agricultureProductsData?.length > 0 && (
                     <div className={`${styles.swiperNav}`}>

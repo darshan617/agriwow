@@ -5,20 +5,16 @@ import {
   TopHeaderHelp,
   TopHeaderSocial,
 } from "@/components/layout/top-header/TopHeaderExtras";
-import TopHeaderShimmer from "@/components/layout/top-header/TopHeaderShimmer";
-import HeaderShimmer from "@/components/layout/header/HeaderShimmer";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
 import Link from "next/link";
 
 const SCROLL_THRESHOLD = 20;
 
 const TopHeader = () => {
+  // scrolled starts false on server + client to avoid hydration mismatch.
+  // Cookie/auth UI is handled inside Header after mount (same intent as the
+  // previous isMounted shimmer gate, without blocking the whole header SSR).
   const [scrolled, setScrolled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -37,18 +33,11 @@ const TopHeader = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (!isMounted) {
-    return (
-      <div className={styles.siteHeader}>
-        <TopHeaderShimmer />
-        <HeaderShimmer />
-      </div>
-    );
-  }
-
   return (
     <div className={styles.siteHeader}>
-      <div className={`${styles.topHeaderBar} ${scrolled ? styles.collapsed : ""}`}>
+      <div
+        className={`${styles.topHeaderBar} ${scrolled ? styles.collapsed : ""}`}
+      >
         <div className="container">
           <div className={styles.TopHeader}>
             <div className="col-md-4">
@@ -63,7 +52,13 @@ const TopHeader = () => {
                     Sale Up to <span>60% Off</span> on Everything*
                   </p>
                 </div>
-                <Link href="/product-category/agriculture-sprayers" className={styles.shopNowButton} prefetch={true}>Shop Now</Link>
+                <Link
+                  href="/product-category/agriculture-sprayers"
+                  className={styles.shopNowButton}
+                  prefetch={true}
+                >
+                  Shop Now
+                </Link>
               </div>
             </div>
             <div

@@ -56,14 +56,27 @@ export default function SeoHead({
   const resolvedImageType =
     imageType ||
     (isDefaultImage ? defaultImageDimensions.type : getImageMimeType(ogImage));
+  const hasCustomTwitterMeta =
+    twitterLabel1 != null ||
+    twitterData1 != null ||
+    twitterLabel2 != null ||
+    twitterData2 != null;
   const resolvedTwitterLabel1 =
-    twitterLabel1 || (type === "product" ? undefined : "Written by");
+    twitterLabel1 ||
+    (!hasCustomTwitterMeta && type !== "product" ? "Written by" : undefined);
   const resolvedTwitterData1 =
-    twitterData1 || (type === "product" ? undefined : author || "admin");
+    twitterData1 ||
+    (!hasCustomTwitterMeta && type !== "product"
+      ? author || "admin"
+      : undefined);
   const resolvedTwitterLabel2 =
-    twitterLabel2 || (type === "product" ? undefined : "Time to read");
+    twitterLabel2 ||
+    (!hasCustomTwitterMeta && type !== "product" ? "Time to read" : undefined);
   const resolvedTwitterData2 =
-    twitterData2 || (type === "product" ? undefined : readTime || "7 minutes");
+    twitterData2 ||
+    (!hasCustomTwitterMeta && type !== "product"
+      ? readTime || "7 minutes"
+      : undefined);
   const jsonLd = buildJsonLd({
     pageTitle,
     description: metaDescription,

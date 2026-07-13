@@ -1,6 +1,6 @@
 .aboutPage {
     overflow: hidden;
-    font-family: "Sora", sans-serif;
+    font-family: var(--font-sora), sans-serif;
 }
 
 .hero {

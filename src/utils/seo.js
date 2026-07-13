@@ -103,17 +103,19 @@ export function getProductImage(product) {
   return resolveImageUrl(first);
 }
 
-export function buildProductSeo(product) {
+export function buildProductSeo(product, { path } = {}) {
   if (!product) return null;
 
   const image = getProductImage(product);
+  const description = truncateText(
+    stripHtml(product.short_description || product.description) ||
+      DEFAULT_SEO.description,
+  );
 
   return {
     title: product.name,
-    description: truncateText(
-      stripHtml(product.short_description || product.description) ||
-        DEFAULT_SEO.description,
-    ),
+    description,
+    url: path ? getCanonicalUrl(path) : undefined,
     image,
     imageAlt: product.name,
     type: "product",

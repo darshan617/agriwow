@@ -203,8 +203,8 @@ const OrderDetailsComponent = ({ orderId }) => {
                             <div className={styles.productInfo}>
                               {product?.product_image ? (
                                 <Image
-                                  src={product.product_image}
-                                  alt={product.product_name || "Product"}
+                                  src={product?.product_image ?? ""}
+                                  alt={product?.product_name || "product"}
                                   width={62}
                                   height={62}
                                   className={styles.productImage}
@@ -219,10 +219,10 @@ const OrderDetailsComponent = ({ orderId }) => {
                               <h3 className={styles.productName}>
                                 {product?.slug ? (
                                   <Link
-                                    href={`/product-details/${product.slug}`}
+                                    href={`/product-details/${product?.slug}`}
                                     prefetch={true}
                                   >
-                                    {product.product_name}
+                                    {product?.product_name}
                                   </Link>
                                 ) : (
                                   product?.product_name || "—"

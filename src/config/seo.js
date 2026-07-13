@@ -38,28 +38,56 @@ export const ROUTE_SEO = {
   },
   "/contact-us": {
     title: "Contact Us",
-    description:
-      "Get in touch with AgriWow for product enquiries, order support, and farming equipment assistance.",
+    description: "8, Mohan Nagar Indore 452001 Madhya Pradesh",
+    type: "article",
+    publishedTime: "2023-02-17T11:17:08+00:00",
+    modifiedTime: "2025-02-07T10:47:00+00:00",
+    updatedTime: "2025-02-07T10:47:00+00:00",
+    twitterLabel1: "Time to read",
+    twitterData1: "Less than a minute",
   },
   "/privacy-policy": {
     title: "Privacy Policy",
     description:
-      "Read the AgriWow privacy policy to understand how we collect, use, and protect your personal information.",
+      "This privacy policy sets out how Snap Exports Pvt Ltd uses and protects any information that you give Snap Exports Pvt Ltd when you use this website.",
+    type: "article",
+    publishedTime: "2023-02-14T05:51:37+00:00",
+    modifiedTime: "2024-06-27T10:23:10+00:00",
+    updatedTime: "2024-06-27T10:23:10+00:00",
+    twitterLabel1: "Time to read",
+    twitterData1: "4 minutes",
   },
   "/terms-of-use": {
     title: "Terms of Use",
     description:
-      "Review the terms and conditions for using the AgriWow website and purchasing agricultural products.",
+      "The term “Snap Exports Pvt. Ltd.” or ‘us’ or ‘we’ refers to the owner company of the website whose registered office is Snap Exports Pvt. Ltd. 3/2,",
+    type: "article",
+    publishedTime: "2024-06-12T10:20:37+00:00",
+    modifiedTime: "2024-06-12T10:23:17+00:00",
+    updatedTime: "2024-06-12T10:23:17+00:00",
+    twitterLabel1: "Time to read",
+    twitterData1: "2 minutes",
   },
   "/shipping-return": {
-    title: "Shipping & Return",
+    title: "Shipping & Delivery Policy",
     description:
-      "Learn about AgriWow shipping, delivery timelines, and return policies for agricultural equipment orders.",
+      "1) To ensure that your order reaches you in our standard time (6 to 12 working days) and in good condition, we will ship through standard courier agencies",
+    type: "article",
+    publishedTime: "2024-06-12T07:23:02+00:00",
+    modifiedTime: "2024-06-27T10:24:48+00:00",
+    updatedTime: "2024-06-27T10:24:48+00:00",
+    twitterLabel1: "Time to read",
+    twitterData1: "1 minute",
   },
   "/cancellation-return-policy": {
-    title: "Cancellation & Return Policy",
-    description:
-      "Understand AgriWow order cancellation and return policies for a hassle-free shopping experience.",
+    title: "Cancellation / Return Policy",
+    description: "Cancellation Policy:",
+    type: "article",
+    publishedTime: "2024-06-12T09:38:50+00:00",
+    modifiedTime: "2024-06-27T10:28:09+00:00",
+    updatedTime: "2024-06-27T10:28:09+00:00",
+    twitterLabel1: "Time to read",
+    twitterData1: "2 minutes",
   },
   "/cart": {
     title: "Shopping Cart",
@@ -104,9 +132,7 @@ export const ROUTE_SEO = {
 
 export const DYNAMIC_ROUTE_SEO = {
   "/product-details/[slug]": {
-    title: "Product Details",
-    description:
-      "View product details, specifications, reviews, and pricing on AgriWow.",
+    type: "product",
   },
   "/product-category/[categorySlug]": {
     title: "Products",

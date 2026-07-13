@@ -212,7 +212,7 @@ const CartDetails = ({
             <div className={styles.emptyVisual}>
               <Image
                 src={emptyCartImg}
-                alt=""
+                alt="empty-cart"
                 className={styles.emptyImage}
                 width={420}
                 height={320}
