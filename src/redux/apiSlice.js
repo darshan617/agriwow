@@ -6,8 +6,6 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BACKEND_BASE_URL,
   }),
-  // Transfer SSR RTK Query cache (e.g. getHomeData from getServerSideProps)
-  // into the client store so hooks do not immediately refetch.
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];

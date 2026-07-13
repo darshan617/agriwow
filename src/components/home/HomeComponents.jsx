@@ -60,12 +60,9 @@ const DynamicProductsItem = dynamic(
   { ssr: false },
 );
 
-const HomeComponents = ({ homeData: ssrHomeData }) => {
-  const { data: cachedHomeData, isLoading: isHomeDataLoading } =
-    useGetHomeDataQuery(undefined, {
-      skip: false,
-    });
-  const homeData = cachedHomeData ?? ssrHomeData;
+const HomeComponents = () => {
+  const { data: homeData, isLoading: isHomeDataLoading } =
+    useGetHomeDataQuery(undefined);
 
   const categoriesData = homeData?.data?.categories;
   const agricultureProductsData =

@@ -7,6 +7,7 @@ import pumpImage from "@/assets/images/selling-2.png";
 const BestSelling = ({
   bestSellingData,
   bannersLink,
+  isHomeDataLoading = false,
   viewAllLink = "/product-category/best-selling",
 }) => {
   return (
@@ -18,6 +19,7 @@ const BestSelling = ({
         bannersLink={bannersLink}
         viewAllLink={viewAllLink}
         agricultureProductsData={bestSellingData}
+        isHomeDataLoading={isHomeDataLoading}
         variant="bestSelling"
         overlayVariant="bestSelling"
         overlayHeading={<>Product Range</>}

@@ -61,7 +61,7 @@
 
 .guideDetailsLayout {
   padding: 40px 0;
-  font-family: 'Sora', sans-serif;
+  font-family: var(--font-sora), sans-serif;
 }
 
 /* .sidebar {
