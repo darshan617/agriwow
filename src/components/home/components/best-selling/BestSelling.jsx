@@ -14,7 +14,7 @@ const BestSelling = ({
     <div className="sectionSpace">
       <ProductsItem
         sectionClassName=""
-        title="Best Sellerrrr"
+        title="Best Seller"
         bannerImage={bannerImage}
         bannersLink={bannersLink}
         viewAllLink={viewAllLink}

@@ -37,9 +37,12 @@ function AppContent({ Component, pageProps }) {
     };
 
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(() => {
-        void initAos();
-      }, { timeout: 2000 });
+      const id = window.requestIdleCallback(
+        () => {
+          void initAos();
+        },
+        { timeout: 2000 },
+      );
       return () => window.cancelIdleCallback(id);
     }
 
@@ -55,8 +58,6 @@ function AppContent({ Component, pageProps }) {
 const whatsappHref = `https://wa.me/+919770501981?text=${encodeURIComponent(
   "Hello! I want to know more about Agriwow.",
 )}`;
-
-
 
 const whatsappBtnStyle = {
   position: "fixed",
@@ -143,7 +144,10 @@ export default function App({ Component, pageProps, ...rest }) {
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
         <Provider store={store}>
           <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
           </Head>
           <SeoHead {...seo} />
           <ToastProvider>
