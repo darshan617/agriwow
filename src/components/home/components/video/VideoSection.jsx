@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import Image from "next/image";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -25,9 +26,11 @@ const buildYoutubeEmbedUrl = (videoId, autoplay = false) => {
   return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
 };
 
+// hqdefault (~480p) is always available and far smaller than maxresdefault;
+// next/image resizes/compresses and serves from our origin with a long cache TTL.
 const buildYoutubeThumbnailUrl = (videoId) => {
   if (!videoId) return null;
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 };
 
 const getYoutubeVideoId = (url) => {
@@ -121,9 +124,12 @@ const VideoSection = () => {
                     onClick={() => setActiveVideo(video)}
                     aria-label={`Play video ${index + 1}`}
                   >
-                    <img
+                    <Image
                       src={video.thumbnailUrl}
                       alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 960px"
+                      quality={70}
                       className={styles.thumbnail}
                     />
                     <span className={styles.thumbnailOverlay} />
