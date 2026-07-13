@@ -425,7 +425,14 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       <div className={`container`}>
         <div className={`${styles.headerContainer}`}>
           <Link href="/" className={`${styles.logoWrap}`}>
-            <Image src={logo} alt="Agriwow logo" width={800} priority />
+            <Image
+              src={logo}
+              alt="Agriwow logo"
+              width={243}
+              height={55}
+              priority
+              style={{ width: "auto", height: "auto" }}
+            />
           </Link>
 
           <nav className={`${styles.navLinksDesktop}`}>

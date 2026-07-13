@@ -11,15 +11,19 @@ import TopBannerShimmer from "./TopBannerShimmer";
 const TopBanner = ({ categoriesData: categoriesDataProp }) => {
   // Home already fetches /home (SSR + client). Only hit the API when no props
   // were passed — preserves the original self-contained usage.
-  const { data: homeData, isLoading: isHomeDataLoading } = useGetHomeDataQuery(
-    undefined,
-    { skip: Boolean(categoriesDataProp) },
-  );
+  const {
+    data: homeData,
+    isLoading: isHomeDataLoading,
+    isUninitialized,
+  } = useGetHomeDataQuery(undefined, { skip: Boolean(categoriesDataProp) });
   const categoriesData =
     categoriesDataProp ?? homeData?.data?.categories;
 
   const showShimmer =
-    !categoriesDataProp && isHomeDataLoading && !categoriesData;
+    !categoriesData?.length &&
+    (categoriesDataProp === undefined
+      ? isHomeDataLoading || isUninitialized || homeData === undefined
+      : false);
 
   return showShimmer ? (
     <TopBannerShimmer />

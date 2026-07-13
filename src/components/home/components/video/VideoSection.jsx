@@ -73,7 +73,7 @@ const getYoutubeVideoId = (url) => {
 };
 
 const VideoSection = () => {
-  const { data: homeData } = useGetHomeDataQuery();
+  const { data: homeData, isLoading, isUninitialized } = useGetHomeDataQuery();
   const video_banner = homeData?.data?.banners?.video_banner;
   const [activeVideo, setActiveVideo] = useState(null);
 
@@ -92,6 +92,18 @@ const VideoSection = () => {
         thumbnailUrl: buildYoutubeThumbnailUrl(video.videoId),
       }));
   }, [video_banner?.youtube_links]);
+
+  if (isLoading || isUninitialized || !homeData) {
+    return (
+      <section className={`${styles.VideoContainer} sectionSpace`} aria-hidden>
+        <div className="container">
+          <div className={`${styles.carousel}`}>
+            <div className={`${styles.card} shimmerEffect`} />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (embedVideos.length === 0) {
     return null;
