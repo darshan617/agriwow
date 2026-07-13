@@ -10,7 +10,7 @@ const Benefit = () => {
       <section className={`${styles.wrapper}`} data-aos="zoom-in">
         <Image
           src={benefitImage}
-          alt="Digital payment benefit background"
+          alt="pay-back"
           fill
           priority
           sizes="100vw"

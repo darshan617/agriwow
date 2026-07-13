@@ -14,19 +14,19 @@ const Detail = () => {
                 <div className={styles.detailCardWrapper}>
                     <div className={styles.detailGrid}>
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="100">
-                            <Image src={delivery} alt="delivery" className={styles.delivery} />
+                            <Image src={delivery} alt="across-india" className={styles.delivery} />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="200">
-                            <Image src={paymentSecureIcon} alt="payment secure" className={styles.delivery} />
+                            <Image src={paymentSecureIcon} alt="checkout" className={styles.delivery} />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="300">
-                            <Image src={supportIcon} alt="delivery" className={styles.delivery} />
+                            <Image src={supportIcon} alt="dedicated" className={styles.delivery} />
                         </div>
 
                         <div className={styles.detailCard} data-aos="zoom-in" data-aos-delay="400">
-                            <Image src={warrantyIcon} alt="delivery" className={styles.delivery} />
+                            <Image src={warrantyIcon} alt="guaranteed" className={styles.delivery} />
                         </div>
                     </div>
                 </div>

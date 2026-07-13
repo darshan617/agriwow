@@ -14,7 +14,7 @@ const ExclusiveDeal = () => {
         <div className="container">
           <div className={`${styles.exclusiveDeal}`}>
             <div className={`${styles.exclusiveDealBanner}`}>
-              <Image src={exclusiveDeal} alt="Exclusive Deal" fill />
+              <Image src={exclusiveDeal} alt="deal" fill />
             </div>
             <div className={`${styles.exclusiveDealContent}`}>
               <div className={`${styles.exclusiveDealRow} row`}>
@@ -29,7 +29,7 @@ const ExclusiveDeal = () => {
                   <div
                     className={`${styles.exclusiveDealItem} d-flex flex-row gap-2`}
                   >
-                    <Image src={accurate} alt="Accurate" />
+                    <Image src={accurate} alt="accurate" />
                     <div>
                       <h3 className={`${styles.exclusiveDealItemTitle}`}>
                         Precision Results
@@ -54,7 +54,7 @@ const ExclusiveDeal = () => {
                   <div
                     className={`${styles.exclusiveDealItem} d-flex flex-row gap-2`}
                   >
-                    <Image src={quality} alt="Quality" />
+                    <Image src={quality} alt="quality" />
                     <div>
                       <h3 className={`${styles.exclusiveDealItemTitle}`}>
                         Strong Build Quality
@@ -72,7 +72,7 @@ const ExclusiveDeal = () => {
                   <div
                     className={`${styles.exclusiveDealItem} d-flex flex-row gap-2 `}
                   >
-                    <Image src={shield} alt="Shield" />
+                    <Image src={shield} alt="shield" />
                     <div>
                       <h3 className={`${styles.exclusiveDealItemTitle}`}>
                         Trusted Service Network

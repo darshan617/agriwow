@@ -21,7 +21,7 @@ const Solution = () => {
               <div className={`${styles.imageTextWrapper}`}>
                 <Image
                   src={trackImage}
-                  alt="track"
+                  alt="order-tracking"
                   className={`${styles.trackImageBg}`}
                 />
                 <div className={`${styles.textOverlay}`}>

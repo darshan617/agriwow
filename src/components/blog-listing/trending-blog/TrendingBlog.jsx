@@ -85,7 +85,7 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
         <div className={styles.illustration}>
           <Image
             src={mailIllustration}
-            alt=""
+            alt="trending-blogs"
             width={160}
             height={120}
             className={styles.illustrationImage}

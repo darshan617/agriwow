@@ -323,21 +323,6 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
       </div>
 
       <div className={styles.reviewTitle}>{review?.review}</div>
-      {/* <div className={styles.reviewBody}>{review?.review}</div> */}
-      {/* {review?.image_urls?.length > 0 && (
-        <div className={styles.reviewImages}>
-          {review.image_urls.map((img, idx) => (
-            <button
-              key={idx}
-              type="button"
-              className={styles.reviewImg}
-              onClick={() => onImageClick(review.image_urls, idx)}
-            >
-              <Image src={img} alt="review" width={100} height={100} />
-            </button>
-          ))}
-        </div>
-      )} */}
       {review?.attachment_urls?.length > 0 && (
         <div className={styles.reviewImages}>
           {review?.attachment_urls?.map((attachment, idx) => (
@@ -747,9 +732,9 @@ const ReviewsRating = ({
         <div>
           {productReviewMedia.length > 0 && (
             <div className={styles.productReviewMediaRow}>
-              {productReviewMedia.slice(0, 5).map((media, idx) => (
+              {productReviewMedia?.slice(0, 5)?.map((media, idx) => (
                 <button
-                  key={`${media.url}-${idx}`}
+                  key={`${media?.url}-${idx}`}
                   type="button"
                   className={styles.reviewImg}
                   onClick={() => openLightbox(productReviewMedia, idx)}
@@ -757,14 +742,14 @@ const ReviewsRating = ({
                 >
                   {media.type === "image" ? (
                     <Image
-                      src={media.url}
+                      src={media?.url ?? ""}
                       alt="product review media"
                       width={100}
                       height={100}
                     />
                   ) : (
                     <video
-                      src={media.url}
+                      src={media?.url ?? ""}
                       width={100}
                       height={100}
                       muted

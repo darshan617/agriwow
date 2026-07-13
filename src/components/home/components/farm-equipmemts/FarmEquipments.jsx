@@ -12,7 +12,6 @@ const FarmEquipments = ({
   farmEquipmentsData,
   bannerImage = farmEquipments,
   title = "Farm Equipment's",
-  bannerAlt = "Farm Equipments",
   categorySlug,
   subCategorySlug,
   categoriesData,
@@ -25,7 +24,7 @@ const FarmEquipments = ({
         <div className={`${styles.card}`}>
           <Image
             src={bannersLink?.image || bannerImage}
-            alt={bannersLink?.name || bannerAlt}
+            alt={bannersLink?.name || "farm-equipments"}
             className={styles.bannerImage}
             priority
             quality={100}

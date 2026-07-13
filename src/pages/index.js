@@ -5,15 +5,19 @@ import { homeApi } from "@/redux/apis/homeApi";
 export const getServerSideProps = storeWrapper.getServerSideProps(
   (store) => async (context) => {
     const userToken = context.req?.cookies?.userToken;
-    const result = await store.dispatch(
-      homeApi.endpoints.getHomeData.initiate(
-        userToken ? { userToken } : undefined,
-      ),
+    const queryArg = userToken ? { userToken } : undefined;
+
+    await store.dispatch(homeApi.endpoints.getHomeData.initiate(queryArg));
+    // Ensure the query settles so next-redux-wrapper can HYDRATE the cache.
+    await Promise.all(store.dispatch(homeApi.util.getRunningQueriesThunk()));
+
+    const homeState = homeApi.endpoints.getHomeData.select(queryArg)(
+      store.getState(),
     );
 
     return {
       props: {
-        homeData: result.data || null,
+        homeData: homeState.data || null,
       },
     };
   },
