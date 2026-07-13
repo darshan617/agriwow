@@ -1,5 +1,4 @@
 import React from "react";
-import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import dynamic from "next/dynamic";
 import Layout from "../layout/Layout";
 import Marquee from "@/components/home/components/marquee/Marquee";
@@ -7,16 +6,24 @@ import Detail from "@/components/home/components/detail/Detail";
 import Benefit from "@/components/home/components/benifit/Benefit";
 import ExclusiveDeal from "@/components/home/components/deal/ExclusiveDeal";
 import Solution from "@/components/home/components/solution/Solution";
+import TopBannerShimmer from "@/components/layout/top-banner/TopBannerShimmer";
+import homeBannerStyles from "@/components/home/components/banner/home-banner/HomeBanner.module.css";
+import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 
 // Swiper + window-dependent sections stay client-only to avoid hydration
-// mismatches (original reason for ssr: false).
+// mismatches. loading: reuses existing shimmers to reserve space (CLS).
 const DynamicTopBanner = dynamic(
   () => import("@/components/layout/top-banner/TopBanner"),
-  { ssr: false },
+  { ssr: false, loading: () => <TopBannerShimmer /> },
 );
 const DynamicHomeBanner = dynamic(
   () => import("@/components/home/components/banner/home-banner/HomeBanner"),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => (
+      <div className={`${homeBannerStyles.bannerShimmer} shimmerEffect`} />
+    ),
+  },
 );
 const DynamicFarmEquipments = dynamic(
   () => import("@/components/home/components/farm-equipmemts/FarmEquipments"),
@@ -86,6 +93,7 @@ const HomeComponents = () => {
         bestSellingData={bestSellingData}
         viewAllLink="/product-category/agriculture-sprayers"
         bannersLink={banners?.best_selling}
+        isHomeDataLoading={isHomeDataLoading && !homeData}
       />
       <Detail />
 
