@@ -7,7 +7,6 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        {/* GTM noscript fallback — JS snippet is deferred via next/script in _app */}
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}

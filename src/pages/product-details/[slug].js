@@ -20,7 +20,9 @@ const ProductDetails = () => {
   const isProductsPending =
     !slug || isLoading || (isFetching && !productDetails);
 
-  const productSeo = buildProductSeo(productDetails?.data);
+  const productSeo = buildProductSeo(productDetails?.data, {
+    path: slug ? `/product-details/${slug}` : undefined,
+  });
 
   if (isProductsPending) {
     return <ProductDetailsShimmer />;
@@ -33,5 +35,41 @@ const ProductDetails = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const slug = context.params?.slug;
+
+  if (!slug) {
+    return { props: {} };
+  }
+
+  const baseUrl = (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "")
+    .trim()
+    .replace(/\/$/, "");
+  const path = `/product-details/${slug}`;
+
+  try {
+    const response = await fetch(`${baseUrl}/product/${slug}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return { props: {} };
+    }
+
+    const json = await response.json();
+    const seo = buildProductSeo(json?.data, { path });
+
+    return {
+      props: {
+        seo: seo || null,
+      },
+    };
+  } catch {
+    return { props: {} };
+  }
+}
 
 export default ProductDetails;
