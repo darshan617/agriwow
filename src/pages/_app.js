@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
 import { getStaticSeoForPath } from "@/config/seo";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "aos/dist/aos.css";
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
 import { useEffect, useState } from "react";
-import Aos from "aos";
+import { Sora } from "next/font/google";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { LoginPopupProvider } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -19,11 +18,18 @@ import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 
+const sora = Sora({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sora",
+  weight: ["400", "500", "600", "700"],
+});
+
 function AppContent({ Component, pageProps }) {
   useEffect(() => {
-    // Defer AOS so it does not compete with hydration / long tasks (TBT).
-    // Sections still use data-aos; animations just start after the main thread is free.
-    const initAos = () => {
+    const initAos = async () => {
+      await import("aos/dist/aos.css");
+      const Aos = (await import("aos")).default;
       Aos.init({
         duration: 1000,
         once: true,
@@ -31,11 +37,15 @@ function AppContent({ Component, pageProps }) {
     };
 
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(initAos, { timeout: 2000 });
+      const id = window.requestIdleCallback(() => {
+        void initAos();
+      }, { timeout: 2000 });
       return () => window.cancelIdleCallback(id);
     }
 
-    const timer = window.setTimeout(initAos, 1);
+    const timer = window.setTimeout(() => {
+      void initAos();
+    }, 1);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -114,105 +124,108 @@ export default function App({ Component, pageProps, ...rest }) {
   const staticSeo = getStaticSeoForPath(router.pathname);
   const seo = { ...staticSeo, ...pageProps.seo };
   const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
+  const fontClassName = `${sora.variable} ${sora.className}`;
 
   if (isComingSoonMode) {
     return (
-      <>
+      <div className={fontClassName}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="robots" content="noindex, nofollow" />
         </Head>
         <ComingSoonPage />
-      </>
+      </div>
     );
   }
 
   return (
-    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
-      <Provider store={store}>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-        <SeoHead {...seo} />
-        <ToastProvider>
-          <LoginPopupProvider>
-            {/* Razorpay is loaded on cart/checkout only — see CartSummery */}
-            <ProgressBar />
-            <AppContent Component={Component} pageProps={pageProps} />
-            <Script
-              id="gtm"
-              strategy="lazyOnload"
-              dangerouslySetInnerHTML={{
-                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <div className={fontClassName}>
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+        <Provider store={store}>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+          </Head>
+          <SeoHead {...seo} />
+          <ToastProvider>
+            <LoginPopupProvider>
+              {/* Razorpay is loaded on cart/checkout only — see CartSummery */}
+              <ProgressBar />
+              <AppContent Component={Component} pageProps={pageProps} />
+              <Script
+                id="gtm"
+                strategy="lazyOnload"
+                dangerouslySetInnerHTML={{
+                  __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID || "GTM-T374B69C"}');`,
-              }}
-            />
+                }}
+              />
 
-            <style jsx global>{`
-              .whatsapp-float-btn {
-                bottom: 100px;
-                right: 32px;
-                padding: 13px;
-                font-size: 28px;
-                width: 50px;
-                height: 50px;
-              }
-              @media (max-width: 500px) {
+              <style jsx global>{`
                 .whatsapp-float-btn {
-                  bottom: 80px;
-                  right: 18px;
-                  padding: 10px 13px;
-                  font-size: 20px;
-                  width: 45px;
-                  height: 45px;
+                  bottom: 100px;
+                  right: 32px;
+                  padding: 13px;
+                  font-size: 28px;
+                  width: 50px;
+                  height: 50px;
                 }
-              }
-            `}</style>
-            <FloatingWhatsAppButton />
+                @media (max-width: 500px) {
+                  .whatsapp-float-btn {
+                    bottom: 80px;
+                    right: 18px;
+                    padding: 10px 13px;
+                    font-size: 20px;
+                    width: 45px;
+                    height: 45px;
+                  }
+                }
+              `}</style>
+              <FloatingWhatsAppButton />
 
-            <style jsx global>{`
-              .back-to-top-btn {
-                position: fixed;
-                bottom: 32px;
-                right: 32px;
-                z-index: 9999;
-                background: black;
-                color: #fff;
-                border: none;
-                outline: none;
-                padding: 12px 16px;
-                border-radius: 50%;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-                cursor: pointer;
-                transition: background 0.2s;
-                font-size: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 50px;
-                height: 50px;
-              }
-              .back-to-top-btn:hover {
-                background: #236622;
-              }
-              @media (max-width: 500px) {
+              <style jsx global>{`
                 .back-to-top-btn {
-                  bottom: 18px;
-                  right: 18px;
-                  padding: 10px 13px;
-                  font-size: 20px;
-                  height: 45px;
-                  width: 45px;
+                  position: fixed;
+                  bottom: 32px;
+                  right: 32px;
+                  z-index: 9999;
+                  background: black;
+                  color: #fff;
+                  border: none;
+                  outline: none;
+                  padding: 12px 16px;
+                  border-radius: 50%;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+                  cursor: pointer;
+                  transition: background 0.2s;
+                  font-size: 24px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 50px;
+                  height: 50px;
                 }
-              }
-            `}</style>
-            <BackToTopButton />
-          </LoginPopupProvider>
-        </ToastProvider>
-      </Provider>
-    </GoogleOAuthProvider>
+                .back-to-top-btn:hover {
+                  background: #236622;
+                }
+                @media (max-width: 500px) {
+                  .back-to-top-btn {
+                    bottom: 18px;
+                    right: 18px;
+                    padding: 10px 13px;
+                    font-size: 20px;
+                    height: 45px;
+                    width: 45px;
+                  }
+                }
+              `}</style>
+              <BackToTopButton />
+            </LoginPopupProvider>
+          </ToastProvider>
+        </Provider>
+      </GoogleOAuthProvider>
+    </div>
   );
 }

@@ -72,9 +72,12 @@ const ProductsItem = ({
     return () => window.removeEventListener("resize", updateCount);
   }, []);
 
+  const hasProducts = agricultureProductsData?.length > 0;
+  const showSection = isHomeDataLoading || hasProducts;
+
   return (
     <section className={sectionClassName}>
-      {agricultureProductsData?.length > 0 ? (
+      {showSection ? (
         <div className="container">
           <div className={productsSectionClassNames}>
             <div className="row g-3 align-items-stretch">
