@@ -11,7 +11,6 @@ import { Sora } from "next/font/google";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { LoginPopupProvider } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Script from "next/script";
 import ProgressBar from "@/custom-hooks/progress-bar/ProgressBar";
 import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
@@ -152,20 +151,8 @@ export default function App({ Component, pageProps, ...rest }) {
           <SeoHead {...seo} />
           <ToastProvider>
             <LoginPopupProvider>
-              {/* Razorpay is loaded on cart/checkout only — see CartSummery */}
               <ProgressBar />
               <AppContent Component={Component} pageProps={pageProps} />
-              <Script
-                id="gtm"
-                strategy="lazyOnload"
-                dangerouslySetInnerHTML={{
-                  __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID || "GTM-T374B69C"}');`,
-                }}
-              />
 
               <style jsx global>{`
                 .whatsapp-float-btn {
