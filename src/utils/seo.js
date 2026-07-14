@@ -25,7 +25,10 @@ export function getDefaultOgImageDimensions() {
 
 export function stripHtml(html = "") {
   if (!html) return "";
-  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function truncateText(text = "", maxLength = 160) {
@@ -160,13 +163,15 @@ export function buildBlogSeo(blog) {
   };
 }
 
-export function buildCategorySeo({ categoryName, subCategoryName, customTitle }) {
+export function buildCategorySeo({
+  categoryName,
+  subCategoryName,
+  customTitle,
+}) {
   const name = subCategoryName || categoryName;
   if (!name) return null;
 
-  const label = subCategoryName
-    ? `${subCategoryName}`
-    : categoryName;
+  const label = subCategoryName ? `${subCategoryName}` : categoryName;
 
   return {
     title: label,
@@ -207,6 +212,15 @@ export function buildJsonLd({
   availability,
 }) {
   const organization = {
+    // "@type": "Organization",
+    // "@id": `${SITE_URL}/#organization`,
+    // name: SITE_NAME,
+    // url: SITE_URL,
+    // logo: {
+    //   "@type": "ImageObject",
+    //   url: `${SITE_URL}/favicon.ico`,
+    // },
+
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
@@ -214,6 +228,26 @@ export function buildJsonLd({
     logo: {
       "@type": "ImageObject",
       url: `${SITE_URL}/favicon.ico`,
+      "@id": `${SITE_URL}/#logo`,
+      contentUrl: `${SITE_URL}/favicon.ico`,
+      width: 512,
+      height: 512,
+      caption: SITE_NAME,
+      inLanguage: "en-US",
+    },
+    description:
+      "AgriWow provides quality agricultural products and solutions.",
+    sameAs: [
+      "https://www.instagram.com/agriwow_",
+      "https://www.facebook.com/agriwow",
+      "https://www.youtube.com/@agriwow",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+919770501981",
+      contactType: "customer support",
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi"],
     },
   };
 
@@ -225,25 +259,38 @@ export function buildJsonLd({
     publisher: { "@id": `${SITE_URL}/#organization` },
     inLanguage: "en-US",
     potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/?s={search_term_string}`,
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/search?s={search_term_string}`,
+      target: `${SITE_URL}/search?s={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
+  };
+  const logo = {
+    "@type": "ImageObject",
+    "@id": `${SITE_URL}/#logo`,
+    url: `${SITE_URL}/favicon.ico`,
+    width: "512",
+    height: "512",
+    inLanguage: "en-US",
   };
 
   const webpage = {
     "@type": "WebPage",
-    "@id": `${canonicalUrl}#webpage`,
+    "@id": `${canonicalUrl}/#webpage`,
     url: canonicalUrl,
     name: pageTitle,
     description,
     isPartOf: { "@id": `${SITE_URL}/#website` },
     about: { "@id": `${SITE_URL}/#organization` },
     inLanguage: "en-US",
+    publisher: { "@id": `${SITE_URL}/#organization` },
   };
-
   if (image) {
-    webpage.primaryImageOfPage = { "@type": "ImageObject", url: image };
+    webpage.primaryImageOfPage = {
+      "@type": "ImageObject",
+      "@id": `${SITE_URL}/ #${pageTitle}-image`,
+      url: image,
+    };
   }
 
   if (publishedTime) {
@@ -254,7 +301,7 @@ export function buildJsonLd({
     webpage.dateModified = modifiedTime;
   }
 
-  const graph = [organization, website, webpage];
+  const graph = [organization, website, webpage, logo];
 
   if (type === "article") {
     graph.push({
@@ -271,6 +318,9 @@ export function buildJsonLd({
       image: image ? [image] : undefined,
       mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
       inLanguage: "en-US",
+      description:
+        "AgriWow provides quality agricultural products and solutions.",
+      name: "AgriWow | Agriculture Products Online",
     });
   }
 
