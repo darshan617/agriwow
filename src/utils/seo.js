@@ -160,12 +160,12 @@ export function buildBlogSeo(blog) {
   };
 }
 
-export function buildCategorySeo({ categoryName, subCategoryName }) {
+export function buildCategorySeo({ categoryName, subCategoryName, customTitle }) {
   const name = subCategoryName || categoryName;
   if (!name) return null;
 
   const label = subCategoryName
-    ? `${subCategoryName} - ${categoryName}`
+    ? `${subCategoryName}`
     : categoryName;
 
   return {

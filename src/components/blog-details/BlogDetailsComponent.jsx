@@ -71,73 +71,82 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
           <li className={styles.breadcrumbSep}>/</li>
           <li className={styles.breadcrumbCurrent}>{title}</li>
         </ul>
-      </div>
+      </div>  
 
       <article className={styles.article}>
-        <span className={styles.categoryTag}>{category}</span>
+        {blogDetailsData?.data?.blog ? (
+          <div className={styles.blogDetailsHeader}>
+            <span className={styles.categoryTag}>{category}</span>
 
-        <h1 className={styles.title}>{title}</h1>
+            <h1 className={styles.title}>{title}</h1>
 
-        <div className={styles.metaRow}>
-          <div className={styles.metaLeft}>
-            <span className={styles.metaItem}>
-              <FaRegUser className={styles.metaIcon} aria-hidden />
-              {author}
-            </span>
-            <span className={styles.metaItem}>
-              <LuCalendarDays className={styles.metaIcon} aria-hidden />
-              {date}
-            </span>
-            <span className={styles.metaItem}>
-              <MdWatchLater className={styles.metaIcon} aria-hidden />5 mins
-              read
-            </span>
-          </div>
-          <div className={styles.socialShare}>
-            <h2 className={styles.socialShareTitle}>Share:</h2>
-            {SOCIAL_SHARE_LINKS?.map((item) => (
-              <Link
-                href={`${item?.url}${fullUrl}`}
-                target="_blank"
-                prefetch={true}
-              >
-                {item?.icon}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.heroMedia}>
-          <Image
-            src={heroSrc}
-            alt={title}
-            fill
-            className={styles.heroImage}
-            sizes="(max-width: 768px) 100vw, 900px"
-            priority
-          />
-        </div>
-
-        <div
-          className={styles.blogContent}
-          dangerouslySetInnerHTML={{
-            __html: blogDetailsData?.data?.blog?.description,
-          }}
-        ></div>
-        <div className={styles.tags}>
-          <p className={styles.tagsTitle}>Tags:</p>
-          {tags?.length > 0 ? (
-            <>
-              {tags?.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
+            <div className={styles.metaRow}>
+              <div className={styles.metaLeft}>
+                <span className={styles.metaItem}>
+                  <FaRegUser className={styles.metaIcon} aria-hidden />
+                  {author}
                 </span>
-              ))}
-            </>
-          ) : (
-            <p className={styles.noTags}>No tags found</p>
-          )}
-        </div>
+                <span className={styles.metaItem}>
+                  <LuCalendarDays className={styles.metaIcon} aria-hidden />
+                  {date}
+                </span>
+                <span className={styles.metaItem}>
+                  <MdWatchLater className={styles.metaIcon} aria-hidden />5 mins
+                  read
+                </span>
+              </div>
+              <div className={styles.socialShare}>
+                <h2 className={styles.socialShareTitle}>Share:</h2>
+                {SOCIAL_SHARE_LINKS?.map((item) => (
+                  <Link
+                    key={item.alt}
+                    href={`${item?.url}${fullUrl}`}
+                    target="_blank"
+                    prefetch={true}
+                  >
+                    {item?.icon}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.heroMedia}>
+              <Image
+                src={heroSrc}
+                alt={title}
+                fill
+                className={styles.heroImage}
+                sizes="(max-width: 768px) 100vw, 900px"
+                priority
+              />
+            </div>
+
+            <div
+              className={styles.blogContent}
+              dangerouslySetInnerHTML={{
+                __html: blogDetailsData?.data?.blog?.description,
+              }}
+            ></div>
+            <div className={styles.tags}>
+              <p className={styles.tagsTitle}>Tags:</p>
+              {tags?.length > 0 ? (
+                <>
+                  {tags?.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </>
+              ) : (
+                <p className={styles.noTags}>No tags found</p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className={styles.blogDetailsHeader}>
+            <h1 className={styles.title}>No blog found</h1>
+          </div>
+        )}
       </article>
 
       <section className={styles.relatedSection}>

@@ -99,6 +99,7 @@ const ProductCategoryList = () => {
 
   const resultCount = products?.length;
   const categoryCount = categoryData?.data?.length;
+console.log(products, "products........................");
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
