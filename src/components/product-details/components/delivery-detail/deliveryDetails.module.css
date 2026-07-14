@@ -410,7 +410,7 @@
   }
 
   .ddDeliveryPanel {
-    padding: 10px;
+    padding: 15px;
   }
 
   .ddPincodeRow {
@@ -426,6 +426,7 @@
     font-size: 12px;
     font-weight: 600;
   }
+
   .ddCard {
     margin-left: 0;
     padding: 0;
@@ -541,6 +542,7 @@
     font-weight: 600;
     font-size: 11px;
   }
+
   .ddStickyActions {
     padding: 5px;
     gap: 5px;

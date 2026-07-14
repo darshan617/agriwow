@@ -99,11 +99,21 @@ const ProductCategoryList = () => {
 
   const resultCount = products?.length;
   const categoryCount = categoryData?.data?.length;
+  console.log(products, "products........................");
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
+  const categoryNameForSeo =
+    products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
     products?.[0]?.subcategory?.name || humanize(subCategory);
-  const categorySeo = buildCategorySeo({ categoryName, subCategoryName });
+  const subCategoryNameForSeo =
+    products?.[0]?.subcategory?.meta_title ||
+    products?.[0]?.subcategory?.name ||
+    humanize(subCategory);
+  const categorySeo = buildCategorySeo({
+    categoryName: categoryNameForSeo,
+    subCategoryName: subCategoryNameForSeo,
+  });
 
   function openSort() {
     setFilterOpen(false);
@@ -144,17 +154,27 @@ const ProductCategoryList = () => {
           <div>
             <ul>
               <li>
-                <Link href="/" prefetch={true}>Home</Link>
+                <Link href="/" prefetch={true}>
+                  Home
+                </Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/product-category/agriculture-sprayers" prefetch={true}>Products</Link>
+                <Link
+                  href="/product-category/agriculture-sprayers"
+                  prefetch={true}
+                >
+                  Products
+                </Link>
               </li>
               {categorySlug && (
                 <>
                   <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
                   <li>
-                    <Link href={`/product-category/${categorySlug}`} prefetch={true}>
+                    <Link
+                      href={`/product-category/${categorySlug}`}
+                      prefetch={true}
+                    >
                       {categoryName}
                     </Link>
                   </li>
