@@ -36,9 +36,27 @@ export function truncateText(text = "", maxLength = 160) {
   return `${text.slice(0, maxLength - 3).trim()}...`;
 }
 
+export function stripSiteNameSuffix(title = "") {
+  const trimmed = title.trim();
+  if (!trimmed || trimmed === SITE_NAME) return "";
+
+  const suffixes = [` - ${SITE_NAME}`, ` | ${SITE_NAME}`];
+  for (const suffix of suffixes) {
+    if (trimmed.endsWith(suffix)) {
+      return trimmed.slice(0, -suffix.length).trim();
+    }
+  }
+
+  return trimmed;
+}
+
 export function buildPageTitle(title) {
   if (!title) return SITE_NAME;
-  return `${title} - ${SITE_NAME}`;
+
+  const cleaned = stripSiteNameSuffix(title);
+  if (!cleaned || cleaned === SITE_NAME) return SITE_NAME;
+
+  return `${cleaned} - ${SITE_NAME}`;
 }
 
 export function getCanonicalUrl(asPath = "/") {
@@ -163,22 +181,52 @@ export function buildBlogSeo(blog) {
   };
 }
 
+function humanizeSlug(slug = "") {
+  return slug
+    .toString()
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export function buildCategorySeo({
   categoryName,
   subCategoryName,
   customTitle,
 }) {
   const name = subCategoryName || categoryName;
-  if (!name) return null;
+  if (!name && !customTitle) return null;
 
-  const label = subCategoryName ? `${subCategoryName}` : categoryName;
+  const displayName = stripSiteNameSuffix(name || customTitle);
 
   return {
-    title: label,
+    title: stripSiteNameSuffix(customTitle || name),
     description: truncateText(
-      `Shop ${name} online at Agriwow. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
+      `Shop ${displayName} online at ${SITE_NAME}. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
     ),
   };
+}
+
+/** Build category/subcategory SEO from a products API response (SSR + client). */
+export function buildCategorySeoFromProducts(
+  products,
+  { categorySlug, subCategorySlug } = {},
+) {
+  const first = products?.[0];
+  const categoryName = first?.category?.name || humanizeSlug(categorySlug);
+  const subCategoryName = subCategorySlug
+    ? first?.subcategory?.name || humanizeSlug(subCategorySlug)
+    : undefined;
+  const customTitle = subCategorySlug
+    ? first?.subcategory?.meta_title || undefined
+    : first?.category?.meta_title || undefined;
+
+  return buildCategorySeo({
+    categoryName,
+    subCategoryName,
+    customTitle,
+  });
 }
 
 export function buildBuyingGuideSeo(guide) {
@@ -327,7 +375,7 @@ export function buildJsonLd({
   if (type === "product" && price) {
     graph.push({
       "@type": "Product",
-      name: pageTitle.replace(` - ${SITE_NAME}`, ""),
+      name: stripSiteNameSuffix(pageTitle) || pageTitle,
       description,
       image: image ? [image] : undefined,
       offers: {

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
-import { buildCategorySeo } from "@/utils/seo";
+import { buildCategorySeoFromProducts } from "@/utils/seo";
 import { IoClose } from "react-icons/io5";
 import styles from "@/components/product-category/components/ProductCategoryList/ProductCategoryList.module.css";
 import ProductCategoriesFilter from "@/components/product-category/components/product-categories-filter/ProductCategoriesFilter";
@@ -14,6 +14,7 @@ import {
   useGetProductsBySubCategoryQuery,
 } from "@/redux/apis/categoryApi";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const humanize = (slug = "") =>
   slug
@@ -38,7 +39,7 @@ const ProductCategoryList = () => {
     maxPrice: Number(Cookies.get("maxPrice")) || undefined,
   }));
   const [priceMaxBound, setPriceMaxBound] = useState(50000);
-
+  const categories = useSelector((state) => state.category.categories);
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedPriceFilter({ minPrice, maxPrice });
@@ -102,18 +103,16 @@ const ProductCategoryList = () => {
   console.log(products, "products........................");
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
-  const categoryNameForSeo =
-    products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
     products?.[0]?.subcategory?.name || humanize(subCategory);
-  const subCategoryNameForSeo =
-    products?.[0]?.subcategory?.meta_title ||
-    products?.[0]?.subcategory?.name ||
-    humanize(subCategory);
-  const categorySeo = buildCategorySeo({
-    categoryName: categoryNameForSeo,
-    subCategoryName: subCategoryNameForSeo,
-  });
+  // Only override once product data is available so SSR title from pageProps stays in the HTML.
+  const categorySeo =
+    products.length > 0
+      ? buildCategorySeoFromProducts(products, {
+          categorySlug,
+          subCategorySlug: subCategory,
+        })
+      : null;
 
   function openSort() {
     setFilterOpen(false);
@@ -161,7 +160,7 @@ const ProductCategoryList = () => {
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
                 <Link
-                  href="/product-category/agriculture-sprayers"
+                  href={`/product-category/${categories?.[0]?.slug}`}
                   prefetch={true}
                 >
                   Products

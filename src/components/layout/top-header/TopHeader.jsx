@@ -7,6 +7,7 @@ import {
 } from "@/components/layout/top-header/TopHeaderExtras";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const SCROLL_THRESHOLD = 20;
 
@@ -15,7 +16,7 @@ const TopHeader = () => {
   // Cookie/auth UI is handled inside Header after mount (same intent as the
   // previous isMounted shimmer gate, without blocking the whole header SSR).
   const [scrolled, setScrolled] = useState(false);
-
+  const categories = useSelector((state) => state.category.categories);
   useEffect(() => {
     let ticking = false;
 
@@ -46,14 +47,16 @@ const TopHeader = () => {
               </div>
             </div>
             <div className="col-md-4 d-flex flex-row justify-content-center">
-              <div className={`${styles.topHeaderCenter} d-flex flex-row gap-2`}>
+              <div
+                className={`${styles.topHeaderCenter} d-flex flex-row gap-2`}
+              >
                 <div className={styles.topHeaderTicker}>
                   <p className="text-center m-0 ">
                     Sale Up to <span>60% Off</span> on Everything*
                   </p>
                 </div>
                 <Link
-                  href="/product-category/agriculture-sprayers"
+                  href={`/product-category/${categories?.[0]?.slug}`}
                   className={styles.shopNowButton}
                   prefetch={true}
                 >

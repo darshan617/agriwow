@@ -15,6 +15,7 @@ const GOOGLE_SITE_VERIFICATION = "NX-2B-1N5Q2WX0_9_C173QHCKgNqZ33WMRsOm8JjYoU";
 
 export default function SeoHead({
   title,
+  customTitle,
   description,
   image,
   imageWidth,

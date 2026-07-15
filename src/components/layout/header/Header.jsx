@@ -27,6 +27,8 @@ import {
 import { useGetCartDataQuery } from "@/redux/apis/addToCartApi";
 
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { setCategories } from "@/redux/slices/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const readUserDataFromCookie = () => {
   const raw = Cookies?.get("userData");
@@ -64,7 +66,7 @@ const USER_MENU_ITEMS = [
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/product-category/agriculture-sprayers", label: "Products" },
+  { href: "/product-category", label: "Products" },
   { href: "/blog?category=all", label: "Blogs" },
   { href: "/contact-us", label: "Contact us" },
 ];
@@ -131,6 +133,8 @@ const renderMenuProductColumns = (
 
 const Header = ({ scrolled: scrolledFromParent }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.category.categories);
   const [menuOpen, setMenuOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
   const [scrolledLocal, setScrolledLocal] = useState(false);
@@ -174,18 +178,6 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const { showToast } = useToast();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const userInitial = userData?.name?.charAt(0)?.toUpperCase() ?? "";
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const stored = window.localStorage.getItem(SEARCH_HISTORY_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed))
-          setSearchHistory(parsed.slice(0, SEARCH_HISTORY_MAX));
-      }
-    } catch {}
-  }, []);
 
   const persistHistory = (next) => {
     setSearchHistory(next);
@@ -265,6 +257,24 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   useEffect(() => {
     if (!searchOpen) setTrendingExpanded(false);
   }, [searchOpen]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = window.localStorage.getItem(SEARCH_HISTORY_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed))
+          setSearchHistory(parsed.slice(0, SEARCH_HISTORY_MAX));
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (menuProductData?.data?.AllCategory && router.isReady) {
+      dispatch(setCategories(menuProductData?.data?.AllCategory));
+    }
+  }, [menuProductData, router.isReady]);
 
   const searchResults = Array.isArray(searchData?.data) ? searchData.data : [];
   const hasQuery = debouncedQuery.length > 0;
@@ -438,10 +448,14 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           <nav className={`${styles.navLinksDesktop}`}>
             {NAV_LINKS.map((item) => {
               const isActive = isNavLinkActive(item, router.asPath);
+              const href =
+                item?.label === "Products"
+                  ? `/product-category/${categories?.[0]?.slug}`
+                  : item?.href || "#";
               return item?.label === "Products" ? (
                 <div key={item?.label} className={styles.navItemWithMegaMenu}>
                   <Link
-                    href={item?.href || "#"}
+                    href={href}
                     className={isActive ? styles.navLinkActive : ""}
                   >
                     {item?.label}
@@ -450,7 +464,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               ) : (
                 <Link
                   key={item?.label}
-                  href={item?.href || "#"}
+                  href={href}
                   className={isActive ? styles.navLinkActive : ""}
                 >
                   {item?.label}
@@ -545,8 +559,12 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                     onClick={handleResultClick}
                                     role="option"
                                   >
-                                    <div className={`${styles.searchResultInfo}`}>
-                                      <p className={`${styles.searchResultName}`}>
+                                    <div
+                                      className={`${styles.searchResultInfo}`}
+                                    >
+                                      <p
+                                        className={`${styles.searchResultName}`}
+                                      >
                                         {product?.name}
                                       </p>
                                     </div>

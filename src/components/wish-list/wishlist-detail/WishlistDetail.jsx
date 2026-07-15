@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useGetWishlistQuery } from "@/redux/apis/addToWishlist";
 import ProductCard from "@/common-components/product-card/ProductCard";
@@ -43,10 +44,11 @@ const WishlistDetail = ({
   emptyTitle = "Your Wishlist is empty!",
   emptyText = "Explore more & shortlist your favourite items. Review them anytime and add to cart",
   shopBtnText = "START SHOPPING",
-  shopBtnHref = "/product-category/agriculture-sprayers",
+  shopBtnHref,
 }) => {
   const [userId, setUserId] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const categories = useSelector((state) => state.category.categories);
 
   useEffect(() => {
     const raw = Cookies.get("userData");
@@ -118,7 +120,14 @@ const WishlistDetail = ({
           <div className={styles.emptyContent}>
             <h2 className={styles.emptyTitle}>{emptyTitle}</h2>
             <p className={styles.emptyText}>{emptyText}</p>
-            <Link href={shopBtnHref} className={styles.shopBtn} prefetch={true}>
+            <Link
+              href={
+                shopBtnHref ||
+                `/product-category/${categories?.[0]?.slug}`
+              }
+              className={styles.shopBtn}
+              prefetch={true}
+            >
               {shopBtnText}
             </Link>
           </div>
@@ -174,7 +183,9 @@ const WishlistDetail = ({
           {trendingCategories?.map((category) => (
             <Link
               key={category?.slug ?? category?.name}
-              href={category?.slug ? `/product-category/${category?.slug}` : "#"}
+              href={
+                category?.slug ? `/product-category/${category?.slug}` : "#"
+              }
               className={styles.categoryCard}
               prefetch={true}
             >

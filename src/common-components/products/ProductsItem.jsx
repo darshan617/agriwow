@@ -9,6 +9,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import Link from "next/link";
 import ProductCardShimmer from "../product-card/ProductCardShimmer";
+import { useSelector } from "react-redux";
 
 const SHIMMER_COUNT = 4;
 
@@ -53,6 +54,8 @@ const ProductsItem = ({
 
   const hasProducts = agricultureProductsData?.length > 0;
   const showSection = isHomeDataLoading || hasProducts;
+  const categories = useSelector((state) => state.category.categories);
+  console.log(categories, "categories");
 
   return (
     <section className={sectionClassName}>
