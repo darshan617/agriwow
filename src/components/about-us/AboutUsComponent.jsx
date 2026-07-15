@@ -12,6 +12,7 @@ import aboutImage from "@/assets/images/agri-equipments.jpg";
 import missionImage from "@/assets/images/contact-us.png";
 import indiaImage from "@/assets/images/Across-India.png";
 import styles from "@/components/about-us/AboutUsComponent.module.css";
+import { useSelector } from "react-redux";
 
 const formatPageTitle = (title, fallback = "About Us") => {
   if (!title || typeof title !== "string") return fallback;
@@ -82,6 +83,8 @@ const AboutUsComponent = () => {
   const { data, isLoading, isFetching, error } = useGetAboutUsDataQuery();
   const [activeTab, setActiveTab] = useState("mission");
   const [isMobile, setIsMobile] = useState(false);
+
+  const categories = useSelector((state) => state.category.categories);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 680px)");
@@ -196,7 +199,7 @@ const AboutUsComponent = () => {
                   </ul>
                 )}
                 <Link
-                  href="/product-category/agriculture-sprayers"
+                  href={`/product-category/${categories?.[0]?.slug}`}
                   className={styles.primaryBtn}
                   prefetch={true}
                 >
@@ -456,7 +459,7 @@ const AboutUsComponent = () => {
                 </div>
               )}
               <Link
-                href="/product-category/agriculture-sprayers"
+                href={`/product-category/${categories?.[0]?.slug}`}
                 className={styles.ctaBtn}
                 prefetch={true}
               >

@@ -17,6 +17,7 @@ import Login from "@/components/auth/login/Login";
 import VerifyOtp from "@/components/auth/verify-otp/VerifyOtp";
 import emptyCartImg from "@/assets/images/empty-cart.jpg";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import {
   useRemoveBuyNowMutation,
   useUpdateBuyNowMutation,
@@ -71,6 +72,7 @@ const CartDetails = ({
   const isCartPage = router?.pathname === "/cart";
   const isCheckoutPage = router?.pathname === "/checkout";
   const hasSelectedAddress = Boolean(cartData?.selected_address?.id);
+  const categories = useSelector((state) => state.category.categories);
 
   const cartTotal = cartItems?.reduce(
     (acc, item) =>
@@ -89,7 +91,7 @@ const CartDetails = ({
           phone: phone,
         },
       });
-      
+
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
       }
@@ -224,7 +226,7 @@ const CartDetails = ({
               <h2 className={styles.emptyTitle}>Your Cart is empty!</h2>
               <p className={styles.emptyText}>Add product and proceed</p>
               <Link
-                href="/product-category/agriculture-sprayers"
+                href={`/product-category/${categories?.[0]?.slug}`}
                 className={styles.shopBtn}
                 prefetch={true}
               >
@@ -242,7 +244,6 @@ const CartDetails = ({
             <div>Subtotal</div>
           </div>
         )}
-
 
         {isLoadingData ? (
           <div
@@ -272,7 +273,10 @@ const CartDetails = ({
 
                     <div className={styles.productCartContent}>
                       <h4 className={styles.productCartName}>
-                        <Link href={`/product-details/${item?.product?.slug}`} prefetch={true}>
+                        <Link
+                          href={`/product-details/${item?.product?.slug}`}
+                          prefetch={true}
+                        >
                           {item?.product?.name}
                         </Link>{" "}
                       </h4>
@@ -380,7 +384,11 @@ const CartDetails = ({
                 </button>
               </div>
             ) : isCartPage ? (
-              <Link href="/checkout" className={styles.checkoutSection} prefetch={true}>
+              <Link
+                href="/checkout"
+                className={styles.checkoutSection}
+                prefetch={true}
+              >
                 <button type="button" className={styles.checkoutBtn}>
                   <div>
                     <div>

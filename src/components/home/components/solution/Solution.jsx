@@ -5,9 +5,11 @@ import solutionImage from "@/assets/images/solution.png";
 import styles from "@/components/home/components/solution/Solution.module.css";
 import Link from "next/link";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useSelector } from "react-redux";
 
 const Solution = () => {
   const { isLoggedIn, openLoginPopup } = useLoginPopup();
+  const categories = useSelector((state) => state.category.categories);
   return (
     <div className="sectionSpace">
       <div className="container">
@@ -34,7 +36,11 @@ const Solution = () => {
                     from dispatch to doorstep
                   </p>
                   {isLoggedIn && (
-                    <Link href="/my-order" className={`${styles.btn}`} prefetch={true}>
+                    <Link
+                      href="/my-order"
+                      className={`${styles.btn}`}
+                      prefetch={true}
+                    >
                       Track Now
                     </Link>
                   )}
@@ -72,7 +78,7 @@ const Solution = () => {
                     you need for modern farming in one place.
                   </p>
                   <Link
-                    href="/product-category/agriculture-sprayers"
+                    href={`/product-category/${categories?.[0]?.slug}`}
                     className={`${styles.btn}`}
                     prefetch={true}
                   >
