@@ -6,8 +6,10 @@ import quality from "@/assets/icon/high-quality.png";
 import shield from "@/assets/icon/shield.png";
 import styles from "@/components/home/components/deal/ExclusiveDeal.module.css";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const ExclusiveDeal = () => {
+  const categories = useSelector((state) => state.category.categories);
   return (
     <section className={`${styles.ExclusiveDealSection}`}>
       <div className="sectionSpace">
@@ -39,7 +41,7 @@ const ExclusiveDeal = () => {
                         better sorting and processing.
                       </p>
                       <Link
-                        href="/product-category/agriculture-sprayers"
+                        href={`/product-category/${categories?.[0]?.slug}`}
                         className={`${styles.bannerBtn} ${styles.bannerBtnDesktop}`}
                         prefetch={true}
                       >
@@ -86,7 +88,7 @@ const ExclusiveDeal = () => {
                 </div>
                 <div className={styles.exclusiveDealBtnWrapper}>
                   <Link
-                    href="/product-category/agriculture-sprayers"
+                    href={`/product-category/${categories?.[0]?.slug}`}
                     className={`${styles.bannerBtn} ${styles.bannerBtnTablet}`}
                     prefetch={true}
                   >

@@ -90,8 +90,8 @@ export const ROUTE_SEO = {
     twitterData1: "2 minutes",
   },
   "/cart": {
-    title: "Shopping Cart",
-    description: "Review items in your AgriWow shopping cart before checkout.",
+    title: "Cart",
+    description: "Review items in your AgriWow cart before checkout.",
     noindex: true,
   },
   "/checkout": {
@@ -105,7 +105,7 @@ export const ROUTE_SEO = {
     noindex: true,
   },
   "/wishlist": {
-    title: "My Wishlist",
+    title: "Wishlist",
     description: "View and manage your saved agricultural products on AgriWow.",
     noindex: true,
   },
@@ -121,7 +121,8 @@ export const ROUTE_SEO = {
   },
   "/track-order": {
     title: "Track Order",
-    description: "Track your AgriWow order status and delivery updates in real time.",
+    description:
+      "Track your AgriWow order status and delivery updates in real time.",
   },
   "/404": {
     title: "Page Not Found",
@@ -146,7 +147,8 @@ export const DYNAMIC_ROUTE_SEO = {
   },
   "/blog/[slug]": {
     title: "Blog",
-    description: "Read farming insights and product guides on the AgriWow blog.",
+    description:
+      "Read farming insights and product guides on the AgriWow blog.",
     type: "article",
   },
   "/buying-guide/[slug]": {

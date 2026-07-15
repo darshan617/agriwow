@@ -16,6 +16,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
+import { buildPageTitle } from "@/utils/seo";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -137,6 +138,7 @@ export default function App({ Component, pageProps, ...rest }) {
       </div>
     );
   }
+  console.log(buildPageTitle(seo.title), "sssssssss");
 
   return (
     <div className={fontClassName}>
@@ -147,6 +149,7 @@ export default function App({ Component, pageProps, ...rest }) {
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
+            {/* <title>{buildPageTitle(seo.title)}</title> */}
           </Head>
           <SeoHead {...seo} />
           <ToastProvider>

@@ -6,6 +6,7 @@ import styles from "@/components/my-order/OrderHistory.module.css";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRouter } from "next/router";
 import { FaEye, FaShippingFast } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const formatPrice = (price) => {
   const num = Number(price);
@@ -65,6 +66,7 @@ const OrderHistory = () => {
   const orderCount = orders?.length;
   const orderLabel = orderCount === 1 ? "Order" : "Orders";
   const showEmpty = !isLoading && !isFetching && orderCount === 0;
+  const categories = useSelector((state) => state.category.categories);
 
   return (
     <div className="container">
@@ -91,7 +93,11 @@ const OrderHistory = () => {
                   You haven&apos;t placed any orders. Browse our products and
                   find something you love.
                 </p>
-                <Link href="/" className={styles.shopBtn} prefetch={true}>
+                <Link
+                  href={`/product-category/${categories?.[0]?.slug}`}
+                  className={styles.shopBtn}
+                  prefetch={true}
+                >
                   START SHOPPING
                 </Link>
               </div>
@@ -146,10 +152,14 @@ const OrderHistory = () => {
                             ₹ {formatPrice(order?.grand_total)}
                           </span>
                         </div>
-                        <div className={`d-flex gap-2 justify-content-end ${styles.orderActions}`}>
+                        <div
+                          className={`d-flex gap-2 justify-content-end ${styles.orderActions}`}
+                        >
                           <button
                             onClick={() =>
-                              router.push(`/track-order?orderId=${order?.order_id}`)
+                              router.push(
+                                `/track-order?orderId=${order?.order_id}`,
+                              )
                             }
                             className={styles.invoiceDownload}
                           >

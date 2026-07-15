@@ -9,6 +9,7 @@ import Solution from "@/components/home/components/solution/Solution";
 import TopBannerShimmer from "@/components/layout/top-banner/TopBannerShimmer";
 import homeBannerStyles from "@/components/home/components/banner/home-banner/HomeBanner.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
+import { useSelector } from "react-redux";
 
 // Swiper + window-dependent sections stay client-only to avoid hydration
 // mismatches. loading: reuses existing shimmers to reserve space (CLS).
@@ -83,6 +84,7 @@ const HomeComponents = () => {
   const bestSellingData = homeData?.data?.products?.best_selling;
   const topRatedData = homeData?.data?.products?.top_rated;
   const banners = homeData?.data?.banners;
+  const categories = useSelector((state) => state.category.categories);
 
   return (
     <Layout>
@@ -91,7 +93,7 @@ const HomeComponents = () => {
       <Marquee />
       <DynamicBestSelling
         bestSellingData={bestSellingData}
-        viewAllLink="/product-category/agriculture-sprayers"
+        viewAllLink={`/product-category/${categories?.[0]?.slug}`}
         bannersLink={banners?.best_selling}
         isHomeDataLoading={isHomeDataLoading && !homeData}
       />
