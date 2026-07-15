@@ -97,7 +97,11 @@ export default function SeoHead({
       <title key="title">{pageTitle}</title>
       <meta key="description" name="description" content={metaDescription} />
       {keywords ? (
-        <meta key="keywords" name="keywords" content={keywords} />
+        <meta
+          key="keywords"
+          name="keywords"
+          content={Array.isArray(keywords) ? keywords.join(", ") : keywords}
+        />
       ) : null}
       {noindex ? (
         <meta key="robots" name="robots" content="noindex, nofollow" />
