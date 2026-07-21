@@ -15,7 +15,7 @@ const FarmEquipments = ({
   categorySlug,
   subCategorySlug,
   categoriesData,
-  viewAllLink = "/product-category/farm-mechanization-equipments",
+  viewAllLink = "/product-category/farm-equipments",
   bannersLink,
 }) => {
   return (

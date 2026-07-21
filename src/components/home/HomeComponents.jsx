@@ -115,7 +115,7 @@ const HomeComponents = () => {
         farmEquipmentsData={farmEquipmentsData}
         categoriesData={categoriesData}
         viewAllLink="/product-category/farm-mechanization-equipments"
-        bannersLink={banners?.farm_equipments}
+        bannersLink={banners?.farm_mechanization_equipments}
       />
       <Benefit />
       <DynamicIndustrialProduct
