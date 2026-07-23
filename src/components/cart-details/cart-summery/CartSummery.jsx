@@ -108,7 +108,6 @@ const CartSummery = ({
     selectedPaymentMethod === "full" ? totalAmount * 0.05 : 0;
   const payableAmount = totalAmount - fullPaymentDiscount;
 
-
   const VISIBLE_COUPONS_COUNT = 3;
   const coupons = availableCoupons?.data ?? [];
   const visibleCoupons = showAllCoupons
@@ -196,7 +195,7 @@ const CartSummery = ({
           address_id: address_id,
         },
       });
-      
+
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         const razorpay = res?.data?.razorpay;
@@ -250,10 +249,9 @@ const CartSummery = ({
         });
 
         rzp.open();
-      }else if(res?.error?.data?.serviceable === false){
-        showToast('This address is not serviceable for this product', "error");
-      }
-       else {
+      } else if (res?.error?.data?.serviceable === false) {
+        showToast("This address is not serviceable for this product", "error");
+      } else {
         showToast(res?.data?.message, "error");
       }
     } catch (error) {
@@ -290,13 +288,10 @@ const CartSummery = ({
               <div className={`${styles.discountRow}`}>
                 <span>Discount</span>
                 <div className={`${styles.discountCode}`}>
-                  <p>
-                    {cartData?.coupon?.code && `(${cartData.coupon.code})`}
-                  </p>
+                  <p>{cartData?.coupon?.code && `(${cartData.coupon.code})`}</p>
                   <button onClick={() => handleRemoveCoupon()}>
                     <BiX size={18} />
                   </button>
-             
                 </div>
               </div>
 
@@ -340,14 +335,11 @@ const CartSummery = ({
               <h4>Total Amount</h4>
               <p>(Inclusive of all taxes)</p>
             </div>
-            {
-              router?.pathname === "/cart" ? (
-                <h4>₹ {totalAmount.toFixed(2)}</h4>
-                )  : (
-                <h4>₹ {payableAmount.toFixed(2)}</h4>
-              )
-            }
-
+            {router?.pathname === "/cart" ? (
+              <h4>₹ {totalAmount.toFixed(2)}</h4>
+            ) : (
+              <h4>₹ {payableAmount.toFixed(2)}</h4>
+            )}
           </div>
           {selectedPaymentMethod === "partial" && (
             <>
@@ -397,7 +389,7 @@ const CartSummery = ({
                         <>
                           <span className={`${styles.paymentWrapperText}`}>
                             Balance 70% Cash on Delivery (₹{" "}
-                            {(totalAmount - (totalAmount * 0.3)).toFixed(2)})
+                            {(totalAmount - totalAmount * 0.3).toFixed(2)})
                           </span>
                         </>
                       )}
@@ -561,7 +553,7 @@ const CartSummery = ({
                       {coupon?.applicability?.apply_on_text}
                     </p>
                   </div>
-                  
+
                   <button
                     onClick={() => {
                       if (!getIsLoggedIn()) {
@@ -607,9 +599,10 @@ const CartSummery = ({
                 </span>
               </div>
             </div>
-            <p className="text-center m-0 fs-4">
+            <p className="text-center m-0 fs-5">
               {" "}
-              Verifying Your Payment. Please wait...{" "}
+              Verifying your payment. <br /> Please wait and do not refresh the
+              page.{" "}
             </p>
           </div>
         </CustomPopup>
