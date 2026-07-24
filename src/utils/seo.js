@@ -208,7 +208,7 @@ export function buildCategorySeo({
       description ||
         `Shop ${displayName} online at ${SITE_NAME}. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
     ),
-    keywords,
+    keywords: keywords || DEFAULT_SEO.keywords,
   };
 }
 
@@ -232,8 +232,6 @@ export function buildCategorySeoFromProducts(
     customTitle,
     description:
       first?.category?.meta_description || first?.subcategory?.meta_description,
-    keywords:
-      first?.category?.meta_keywords || first?.subcategory?.meta_keywords,
   });
 }
 
