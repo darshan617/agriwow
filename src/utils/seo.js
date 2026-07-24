@@ -194,6 +194,8 @@ export function buildCategorySeo({
   categoryName,
   subCategoryName,
   customTitle,
+  description,
+  keywords = DEFAULT_SEO.keywords,
 }) {
   const name = subCategoryName || categoryName;
   if (!name && !customTitle) return null;
@@ -203,8 +205,10 @@ export function buildCategorySeo({
   return {
     title: stripSiteNameSuffix(customTitle || name),
     description: truncateText(
-      `Shop ${displayName} online at ${SITE_NAME}. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
+      description ||
+        `Shop ${displayName} online at ${SITE_NAME}. Explore quality agricultural equipment and farm tools with fast delivery across India.`,
     ),
+    keywords,
   };
 }
 
@@ -226,6 +230,10 @@ export function buildCategorySeoFromProducts(
     categoryName,
     subCategoryName,
     customTitle,
+    description:
+      first?.category?.meta_description || first?.subcategory?.meta_description,
+    keywords:
+      first?.category?.meta_keywords || first?.subcategory?.meta_keywords,
   });
 }
 
