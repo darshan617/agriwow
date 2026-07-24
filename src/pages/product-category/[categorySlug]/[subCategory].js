@@ -19,14 +19,11 @@ export async function getServerSideProps(context) {
     .replace(/\/$/, "");
 
   try {
-    const response = await fetch(
-      `${baseUrl}/${categorySlug}/${subCategory}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(`${baseUrl}/${categorySlug}/${subCategory}`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
 
     if (!response.ok) {
       return { props: {} };
@@ -36,6 +33,12 @@ export async function getServerSideProps(context) {
     const seo = buildCategorySeoFromProducts(json?.data, {
       categorySlug,
       subCategorySlug: subCategory,
+      description:
+        json?.data?.[0]?.category?.meta_description ||
+        json?.data?.[0]?.subcategory?.meta_description,
+      keywords:
+        json?.data?.[0]?.category?.meta_keywords ||
+        json?.data?.[0]?.subcategory?.meta_keywords,
     });
 
     return {

@@ -100,7 +100,6 @@ const ProductCategoryList = () => {
 
   const resultCount = products?.length;
   const categoryCount = categoryData?.data?.length;
-  console.log(products, "products........................");
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
@@ -111,6 +110,12 @@ const ProductCategoryList = () => {
       ? buildCategorySeoFromProducts(products, {
           categorySlug,
           subCategorySlug: subCategory,
+          description:
+            products?.[0]?.category?.meta_description ||
+            products?.[0]?.subcategory?.meta_description,
+          keywords:
+            products?.[0]?.category?.meta_keywords ||
+            products?.[0]?.subcategory?.meta_keywords,
         })
       : null;
 

@@ -4,6 +4,8 @@ export const DEFAULT_SEO = {
   title: "Agriwow",
   description:
     "Get top-quality agricultural machinery at unbeatable prices. Shop smart, farm better with Agriwow.",
+  keywords:
+    "agriwow, agriwow.in ,agricultural equipment, farm tools, gardening solutions, fogging machines, agriculture sprayers, garden tools, garden and lawn care, industrial products, post harvest, garden tools, garden lawn care",
 };
 const KEYWORDS =
   "agriwow, agriwow.in ,agricultural equipment, farm tools, gardening solutions, fogging machines, agriculture sprayers, garden tools, garden and lawn care, industrial products, post harvest, garden tools, garden lawn care";
