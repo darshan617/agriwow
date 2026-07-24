@@ -31,6 +31,12 @@ export async function getServerSideProps(context) {
     const json = await response.json();
     const seo = buildCategorySeoFromProducts(json?.data, {
       categorySlug,
+      description:
+        json?.data?.[0]?.category?.meta_description ||
+        json?.data?.[0]?.subcategory?.meta_description,
+      keywords:
+        json?.data?.[0]?.category?.meta_keywords ||
+        json?.data?.[0]?.subcategory?.meta_keywords,
     });
 
     return {
