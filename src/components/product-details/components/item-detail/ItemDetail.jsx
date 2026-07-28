@@ -505,9 +505,7 @@ const ItemDetail = ({ productDetails }) => {
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
                     <span className={styles.gsttPriceSmall}>
                       +₹
-                      {(productDetails?.data?.selling_price * 0.18)
-                        .toFixed(2)
-                        .toLocaleString()}{" "}
+                      {Math.round(productDetails?.data?.selling_price * 0.18)} {" " }
                       GST
                     </span>
                   </span>
