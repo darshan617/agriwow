@@ -91,16 +91,16 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
     }
   };
 
-  if (bundleProducts.length < 2) return null;
+  if (bundleProducts.length < 0) return null;
 
   return (
     <section className="container">
       <div className="row">
-        <div className="col-lg-6 col-md-6">
+        <div className="col-lg-6 col-md-12">
           <div className={styles.frequentlyBought}>
             <div className={styles.frequentlyBoughtCard}>
               <div className={styles.header}>
-                <h2 className={styles.title}>Frequently Bought Together</h2>
+                <h2 className={styles.title}>Related Accessories</h2>
                 {/* <p className={styles.subtitle}>
                 Get {BUNDLE_DISCOUNT_PERCENT}% discount on purchasing all these
                 products together

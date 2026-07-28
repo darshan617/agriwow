@@ -4,19 +4,18 @@ import SeoHead from "@/components/seo/SeoHead";
 import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
 import { buildProductSeo } from "@/utils/seo";
 import { useRouter } from "next/router";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const ProductDetails = () => {
   const router = useRouter();
   const slug = router?.query?.slug;
-  const { data: productDetails, isLoading, isFetching, isError ,error} =
+  const { data: productDetails, isLoading, isFetching, isError, error } =
     useGetProductDetailsQuery(
       {
         slug: slug,
       },
       { skip: !slug },
     );
-
 
   const isProductsPending =
     !slug || isLoading || (isFetching && !productDetails);
@@ -25,15 +24,16 @@ const ProductDetails = () => {
     path: slug ? `/product-details/${slug}` : undefined,
   });
 
+  useEffect(() => {
+    if (!router?.isReady || isProductsPending) return;
+    if (isError && error?.status === 404) {
+      router.push("/404");
+    }
+  }, [router?.isReady, isProductsPending, isError, error, router]);
+
   if (isProductsPending) {
     return <ProductDetailsShimmer />;
   }
-  
-  useEffect(() => {
-    if (isError && error?.status === 404) {
-      router.push("/404");
-    } 
-  }, [isError, error])
 
   return (
     <div>
