@@ -267,7 +267,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         <div className={styles.reviewerInfo}>
           <Stars count={rating} />
           <div className={styles.reviewerMeta}>
-            <span className={styles.reviewerName}>{review.user?.name || "Customer"}</span>
+            <span className={styles.reviewerName}>{review.user?.name || "Happy Customer"}</span>
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
