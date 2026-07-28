@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
 import BlogDetailsComponent from "@/components/blog-details/BlogDetailsComponent";
@@ -13,12 +13,18 @@ import { buildBlogSeo } from "@/utils/seo";
 const BlogDetails = () => {
   const router = useRouter();
   const slug = router?.query?.slug;
-  const { data: blogDetailsData } = useGetBlogDetailsQuery(
+  const { data: blogDetailsData, isError, error } = useGetBlogDetailsQuery(
     { slug: router?.query?.slug },
     { skip: !router?.query?.slug },
   );
   const trendingBlogs = blogDetailsData?.data?.trending;
   const blogSeo = buildBlogSeo(blogDetailsData?.data?.blog);
+
+  useEffect(() => {
+    if (isError && error?.status === 404) {
+      router.push("/404");
+    } 
+  }, [isError, error])
 
   return (
     <Layout>

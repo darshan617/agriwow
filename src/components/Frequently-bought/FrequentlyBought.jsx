@@ -9,6 +9,7 @@ const getGalleryImageSrc = (src) =>
   typeof src === "string" ? src : src?.url || src?.src || "";
 
 const FrequentlyBought = ({frequentlyBoughtProducts }) => {
+  console.log("frequentlyBoughtProductssssssssssssssssssssssssssssssssssss", frequentlyBoughtProducts);
   const { showToast } = useToast();
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
@@ -29,6 +30,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
       }))
       .filter((product) => product.id);
   }, [frequentlyBoughtProducts]);
+  console.log("bundleProducts", bundleProducts);
 
   const [selectedIds, setSelectedIds] = useState([]);
 
