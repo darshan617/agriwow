@@ -310,6 +310,23 @@
   transform: skewX(-20deg) translateX(400%);
 }
 
+.addToCartBtn:disabled,
+.buyNowBtn:disabled,
+.btnOutOfStock {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.addToCartBtn:disabled,
+.buyNowBtn:disabled {
+  pointer-events: none;
+}
+
+.addToCartBtn.btnOutOfStock:hover::before,
+.buyNowBtn.btnOutOfStock:hover::before {
+  transform: skewX(-20deg) translateX(-100%);
+}
+
 .btnIcon {
   display: none;
   font-size: 14px;

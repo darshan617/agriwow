@@ -91,7 +91,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
     }
   };
 
-  if (bundleProducts.length < 0) return null;
+  if (bundleProducts.length <= 1) return null;
 
   return (
     <section className="container">

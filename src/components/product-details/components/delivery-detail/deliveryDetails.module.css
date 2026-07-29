@@ -209,6 +209,11 @@
   letter-spacing: 0.3px;
 }
 
+.ddBtnOutOfStock {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .ddBtnWhatsapp {
   background: #e8c31c;
   border: none;
