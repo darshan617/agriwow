@@ -352,6 +352,11 @@
   right: 10px;
 }
 
+.outOfStock {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .wishlistBtn {
   background: #f2f2f2;
   padding: 5px;

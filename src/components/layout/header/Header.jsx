@@ -29,6 +29,7 @@ import { useGetCartDataQuery } from "@/redux/apis/addToCartApi";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { setCategories } from "@/redux/slices/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useGetAccessoriesQuery } from "@/redux/apis/accessoryApi";
 
 const readUserDataFromCookie = () => {
   const raw = Cookies?.get("userData");
@@ -428,6 +429,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
 
   const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
 
+  const { data: accessories, isLoading } = useGetAccessoriesQuery();
+  const accessoriesSubcategories =
+    accessories?.data?.subcategories ??
+    accessories?.data?.category?.subcategories ??
+    [];
   return (
     <header
       className={`${styles.headerOuter} ${scrolled ? styles.scrolled : ""}`}
@@ -840,6 +846,12 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             <div className={`${styles.megaInner}`}>
               <div className={styles.megaGrid}>
                 {renderMenuProductColumns(menuProductData)}
+                <div className={`${styles.megaGridItem}`}>
+                  <Link href="/accessories" className={`${styles.megaColumnTitle}`}>Accessories</Link>
+                  {/* {accessoriesSubcategories?.map((subcategory) => (
+                    <Link href={`/accessories/${subcategory.slug}`} className={`${styles.megaList}`} key={subcategory.id}>{subcategory.name}</Link>
+                  ))} */}
+                </div>
               </div>
               <div className={`${styles.megaViewAllWrap}`}>
                 <Link
