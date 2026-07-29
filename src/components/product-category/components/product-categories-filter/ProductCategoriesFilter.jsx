@@ -258,6 +258,18 @@ function ProductCategoriesFilter({
             })}
           </ul>
         )}
+        
+        <div className={`${style.categorySection}`} style={{ borderTop: "1px solid #e8e8e8" }}>
+          <button
+            type="button"
+            className={style.header}
+            onClick={() => router.push("/accessories")}
+          >
+            <h3 className={`${style.title}`}
+            
+            >Accessories</h3>
+          </button>
+        </div>
 
         <div className={style.priceSection}>
           <button
