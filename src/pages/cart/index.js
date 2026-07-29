@@ -217,6 +217,7 @@ const Cart = () => {
                     productId={item?.id}
                     isWishlist={item?.is_wishlist}
                     similarProductData={item}
+                    quantity={item?.quantity}
                   />
                 </SwiperSlide>
               ))}

@@ -44,7 +44,11 @@ const ProductCard = ({
   isWishlist = false,
   isSimilarProduct = false,
   similarProductData = null,
+  quantity = null,
 }) => {
+  const isOutOfStock =
+    quantity != null && quantity !== "" && Number(quantity) <= 0;
+
   const router = useRouter();
   const isHomeOrProductPage = ["productPage", "homePage", "home"].includes(
     type,
@@ -83,6 +87,10 @@ const ProductCard = ({
 
   const handleAddToCart = async () => {
     try {
+      if (isOutOfStock) {
+        showToast("Product is out of stock", "error");
+        return;
+      }
       const res = await addToCart({
         body: {
           user_id: userData?.id,
@@ -104,6 +112,11 @@ const ProductCard = ({
   };
 
   const handleBuyProduct = () => {
+    if (isOutOfStock) {
+      showToast("Product is out of stock", "error");
+      return;
+    }
+
     if (!getIsLoggedIn()) {
       openLoginPopup();
       return;
@@ -322,23 +335,29 @@ return
       <div className={`${styles.cardActions}`}>
         <button
           type="button"
-          className={`${styles.addToCartBtn}`}
+          className={`${styles.addToCartBtn} ${isOutOfStock ? styles.btnOutOfStock : ""}`}
           onClick={handleAddToCart}
           disabled={isLoading}
+          aria-disabled={isOutOfStock}
         >
           <span className={styles.addToCartContent}>
-            <span className={styles.addToCartText}>Add to Cart</span>
-            <span className={styles.addToCartIcon}>
-              <MdAddShoppingCart className={styles.btnIcon} />
+            <span className={styles.addToCartText}>
+              {isOutOfStock ? "Out of Stock" : "Add to Cart"}
             </span>
+            {!isOutOfStock && (
+              <span className={styles.addToCartIcon}>
+                <MdAddShoppingCart className={styles.btnIcon} />
+              </span>
+            )}
           </span>
         </button>
 
         <button
           type="button"
-          className={`${styles.buyNowBtn}`}
+          className={`${styles.buyNowBtn} ${isOutOfStock ? styles.btnOutOfStock : ""}`}
           onClick={handleBuyProduct}
           disabled={isBuyProductLoading}
+          aria-disabled={isOutOfStock}
         >
           <span>Buy Now</span>
         </button>

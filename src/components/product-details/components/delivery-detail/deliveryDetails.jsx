@@ -64,7 +64,19 @@ export default function DeliveryDetails({ productDetails }) {
   const [addToCart] = useAddToCartMutation();
   const { showToast } = useToast();
   const { openLoginPopup } = useLoginPopup();
+  const isInStock = Boolean(productDetails?.data?.in_stock);
+  const outOfStockMessage =
+    productDetails?.data?.message || "Product is out of stock";
+
+  const showOutOfStockToast = () => {
+    showToast(outOfStockMessage, "error");
+  };
+
   const handleAddToCart = async (productId) => {
+    if (!isInStock) {
+      showOutOfStockToast();
+      return;
+    }
     try {
       const res = await addToCart({
         body: {
@@ -174,15 +186,21 @@ export default function DeliveryDetails({ productDetails }) {
 
         <div className={styles.ddStickyActions}>
           <button
-            className={styles.ddBtnCart}
+            type="button"
+            className={`${styles.ddBtnCart} ${!isInStock ? styles.ddBtnOutOfStock : ""}`}
             onClick={() => handleAddToCart(productDetails?.data?.id)}
           >
-            Add to Cart
+            {isInStock ? "Add to Cart" : "Out of Stock"}
           </button>
 
           <button
-            className={styles.ddBtnBuy}
+            type="button"
+            className={`${styles.ddBtnBuy} ${!isInStock ? styles.ddBtnOutOfStock : ""}`}
             onClick={() => {
+              if (!isInStock) {
+                showOutOfStockToast();
+                return;
+              }
               if (!getIsLoggedIn()) {
                 openLoginPopup();
                 return;

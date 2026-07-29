@@ -230,6 +230,7 @@ function ProductListingToolbar({
             average_rating={item?.average_rating}
             slug={item?.slug}
             productId={item?.id}
+            quantity={item?.quantity}
           />
           ))
         ) : (
