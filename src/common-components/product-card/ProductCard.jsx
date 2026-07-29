@@ -87,7 +87,7 @@ const ProductCard = ({
   const { showToast } = useToast();
   const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
-  const isOutOfStock = quantity != null && Number(quantity) <= 0;
+  // const isOutOfStock = quantity != null && Number(quantity) <= 0;
 
   const handleAddToCart = async () => {
     if (isOutOfStock) {
