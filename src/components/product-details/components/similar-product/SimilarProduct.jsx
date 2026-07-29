@@ -158,6 +158,7 @@ const SimilarProduct = ({ similarProducts = [], categorySlug }) => {
                     }
                     average_rating={product?.average_rating}
                     productId={product?.id}
+                    quantity={product?.quantity}
                   />
                 </div>
               );

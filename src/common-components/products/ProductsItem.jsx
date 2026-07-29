@@ -218,6 +218,7 @@ const ProductsItem = ({
                             slug={item?.slug}
                             productId={item?.id}
                             isWishlist={item?.is_wishlist}
+                            quantity={item?.quantity}
                           />
                         </SwiperSlide>
                       ))}

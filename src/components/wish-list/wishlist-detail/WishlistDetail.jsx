@@ -169,6 +169,7 @@ const WishlistDetail = ({
                     slug={product?.slug}
                     productId={product?.id}
                     path="/wishlist"
+                    quantity={product?.quantity}
                   />
                 );
               })}

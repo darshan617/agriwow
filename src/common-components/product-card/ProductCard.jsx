@@ -24,6 +24,8 @@ import {
 } from "@/redux/apis/buyProductApi";
 
 const ProductCard = ({
+  products = [],
+
   discount = "0",
   isBestSeller = true,
   name = "-",
@@ -44,7 +46,11 @@ const ProductCard = ({
   isWishlist = false,
   isSimilarProduct = false,
   similarProductData = null,
+  quantity = null,
 }) => {
+  const isOutOfStock =
+    quantity != null && quantity !== "" && Number(quantity) <= 0;
+
   const router = useRouter();
   const isHomeOrProductPage = ["productPage", "homePage", "home"].includes(
     type,
@@ -81,8 +87,18 @@ const ProductCard = ({
   const { showToast } = useToast();
   const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
+  // const isOutOfStock = quantity != null && Number(quantity) <= 0;
+
   const handleAddToCart = async () => {
+    if (isOutOfStock) {
+      showToast("Product is out of stock", "error");
+      return;
+    }
     try {
+      if (isOutOfStock) {
+        showToast("Product is out of stock", "error");
+        return;
+      }
       const res = await addToCart({
         body: {
           user_id: userData?.id,
@@ -103,7 +119,14 @@ const ProductCard = ({
     }
   };
 
+
+
   const handleBuyProduct = () => {
+    if (isOutOfStock) {
+      showToast("Product is out of stock", "error");
+      return;
+    }
+
     if (!getIsLoggedIn()) {
       openLoginPopup();
       return;
@@ -189,19 +212,22 @@ const ProductCard = ({
       );
     }
   };
- 
+
   const getTags = () => {
-if(isBestSeller){
-  return 'Best Seller'
-}if(isTrending){
-  return 'Trending'
-}if(isFeatured){
-  return 'Featured'
-}if(isTopRated){
-  return 'Top Rated'
-}
-return 
-  }
+    if (isBestSeller) {
+      return "Best Seller";
+    }
+    if (isTrending) {
+      return "Trending";
+    }
+    if (isFeatured) {
+      return "Featured";
+    }
+    if (isTopRated) {
+      return "Top Rated";
+    }
+    return;
+  };
 
   return (
     <div
@@ -220,13 +246,9 @@ return
         >
           {isHomeOrProductPage ? (
             <>
-           
-              {
-                getTags() && (
-                  <span className={`${styles.bestsellerTag}`}>{getTags()}</span>
-                )
-              }
-              
+              {getTags() && (
+                <span className={`${styles.bestsellerTag}`}>{getTags()}</span>
+              )}
             </>
           ) : (
             <>
@@ -290,7 +312,7 @@ return
           </div>
         )}
 
-        {average_rating > 0 &&  (
+        {average_rating > 0 && (
           <div className={`${styles.ratingLine}`}>
             <span className={`${styles.ratingBadge}`}>
               <IoMdStar style={{ marginRight: 2, verticalAlign: "middle" }} />
@@ -313,32 +335,36 @@ return
           {discount > 0 && (
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
           )}
-          {oldPrice > 0 && (
-            <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>
-          )}
+          {oldPrice > 0 && <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>}
         </div>
       </Link>
 
       <div className={`${styles.cardActions}`}>
         <button
           type="button"
-          className={`${styles.addToCartBtn}`}
+          className={`${styles.addToCartBtn} ${isOutOfStock ? styles.btnOutOfStock : ""}`}
           onClick={handleAddToCart}
           disabled={isLoading}
+          aria-disabled={isOutOfStock}
         >
           <span className={styles.addToCartContent}>
-            <span className={styles.addToCartText}>Add to Cart</span>
-            <span className={styles.addToCartIcon}>
-              <MdAddShoppingCart className={styles.btnIcon} />
+            <span className={styles.addToCartText}>
+              {isOutOfStock ? "Out of Stock" : "Add to Cart"}
             </span>
+            {!isOutOfStock && (
+              <span className={styles.addToCartIcon}>
+                <MdAddShoppingCart className={styles.btnIcon} />
+              </span>
+            )}
           </span>
         </button>
 
         <button
           type="button"
-          className={`${styles.buyNowBtn}`}
+          className={`${styles.buyNowBtn} ${isOutOfStock ? styles.btnOutOfStock : ""}`}
           onClick={handleBuyProduct}
           disabled={isBuyProductLoading}
+          aria-disabled={isOutOfStock}
         >
           <span>Buy Now</span>
         </button>
