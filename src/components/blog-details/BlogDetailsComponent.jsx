@@ -155,7 +155,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
           {relatedBlogs?.length > 0 ? (
             relatedBlogs.map((post) => (
               <article key={post?.id} className={styles.relatedCard}>
-                <div className={styles.relatedMedia}>
+                <Link href={`/blog/${post?.slug}`} className={styles.relatedMedia}>
                   <Image
                     src={post?.image}
                     alt={post?.title}
@@ -163,8 +163,8 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
                     className={styles.relatedImage}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                </div>
-                <div className={styles.relatedBody}>
+                </Link>
+                <Link href={`/blog/${post?.slug}`} className={styles.relatedBody}>
                   {post?.category?.name && (
                     <span className={styles.relatedCategory}>
                       {post?.category?.name}
@@ -191,7 +191,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
                   >
                     Read more
                   </Link>
-                </div>
+                </Link>
               </article>
             ))
           ) : (

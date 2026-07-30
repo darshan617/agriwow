@@ -96,7 +96,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
   return (
     <section className="container">
       <div className="row">
-        <div className="col-lg-6 col-md-12">
+        <div className="col-xl-7 col-lg-12 col-md-12">
           <div className={styles.frequentlyBought}>
             <div className={styles.frequentlyBoughtCard}>
               <div className={styles.header}>
