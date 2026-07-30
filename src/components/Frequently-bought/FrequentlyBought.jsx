@@ -9,7 +9,6 @@ const getGalleryImageSrc = (src) =>
   typeof src === "string" ? src : src?.url || src?.src || "";
 
 const FrequentlyBought = ({frequentlyBoughtProducts }) => {
-  console.log("frequentlyBoughtProductssssssssssssssssssssssssssssssssssss", frequentlyBoughtProducts);
   const { showToast } = useToast();
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
@@ -27,21 +26,25 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
         sellingPrice: Number(
           product?.sellingPrice ?? product?.selling_price ?? 0,
         ),
+        quantity: Number(product?.quantity ?? 0),
       }))
       .filter((product) => product.id);
   }, [frequentlyBoughtProducts]);
-  console.log("bundleProducts", bundleProducts);
 
   const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     setSelectedIds((prev) =>
-      prev.filter((id) => bundleProducts.some((product) => product.id === id)),
+      prev.filter((id) =>
+        bundleProducts.some(
+          (product) => product.id === id && product.quantity > 0,
+        ),
+      ),
     );
   }, [bundleProducts]);
 
-  const selectedProducts = bundleProducts.filter((product) =>
-    selectedIds.includes(product.id),
+  const selectedProducts = bundleProducts.filter(
+    (product) => selectedIds.includes(product.id) && product.quantity > 0,
   );
 
   const originalTotal = selectedProducts.reduce(
@@ -50,6 +53,9 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
   );
 
   const toggleProduct = (productId) => {
+    const product = bundleProducts.find((item) => item.id === productId);
+    if (!product || product.quantity <= 0) return;
+
     setSelectedIds((prev) => {
       if (prev.includes(productId)) {
         return prev.filter((id) => id !== productId);
@@ -96,42 +102,44 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
   return (
     <section className="container">
       <div className="row">
-        <div className="col-xl-7 col-lg-12 col-md-12">
+        <div className="col-12">
           <div className={styles.frequentlyBought}>
             <div className={styles.frequentlyBoughtCard}>
               <div className={styles.header}>
                 <h2 className={styles.title}>Related Accessories</h2>
-                {/* <p className={styles.subtitle}>
-                Get {BUNDLE_DISCOUNT_PERCENT}% discount on purchasing all these
-                products together
-              </p> */}
               </div>
 
               <div className={styles.content}>
-                <ul className={styles.productList}>
-                  {bundleProducts?.map((product) => {
-                    const isChecked = selectedIds.includes(product?.id);
-                    const hasDiscount = product?.price > product?.sellingPrice;
+                {bundleProducts?.map((product, index) => {
+                  const isChecked = selectedIds.includes(product?.id);
+                  const hasDiscount = product?.price > product?.sellingPrice;
+                  const isOutOfStock = product?.quantity <= 0;
 
-                    return (
-                      <li key={product?.id} className={styles.productRow}>
-                        <label className={styles.checkboxLabel}>
-                          <input
-                            type="checkbox"
-                            className={styles.checkbox}
-                            checked={isChecked}
-                            onChange={() => toggleProduct(product?.id)}
-                          />
-                          <span className={styles.checkboxCustom} />
-                        </label>
-
+                  return (
+                    <React.Fragment key={product?.id}>
+                      <div className={styles.productRow}>
                         <div className={styles.productImageWrap}>
-                          {product?.thumbnail ? (
+                          <label
+                            className={`${styles.checkboxLabel}${
+                              isOutOfStock ? ` ${styles.checkboxDisabled}` : ""
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              className={styles.checkbox}
+                              checked={isChecked && !isOutOfStock}
+                              disabled={isOutOfStock}
+                              onChange={() => toggleProduct(product?.id)}
+                            />
+                            <span className={styles.checkboxCustom} />
+                          </label>
+
+                          {product?.thumbnail ?  (
                             <Image
                               src={product?.thumbnail}
                               alt={product?.name}
-                              width={72}
-                              height={72}
+                              width={140}
+                              height={140}
                               className={styles.productImage}
                             />
                           ) : (
@@ -139,7 +147,10 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                           )}
                         </div>
 
-                        <span className={styles.productName}>{product?.name}</span>
+                        <span className={styles.productName}>
+                          {product?.name}
+                        </span>
+
                         <div className={styles.productPrice}>
                           {hasDiscount && (
                             <span className={styles.oldPrice}>
@@ -149,11 +160,20 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                           <span className={styles.currentPrice}>
                             ₹ {product?.sellingPrice?.toLocaleString("en-IN")}
                           </span>
+                          {isOutOfStock && (
+                            <p className={styles.outOfStock}>Out of stock</p>
+                          )}
                         </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+                      </div>
+
+                      {index < bundleProducts.length - 1 && (
+                        <span className={styles.plusSeparator} aria-hidden="true">
+                          +
+                        </span>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
 
                 <div className={styles.summary}>
                   <p className={styles.totalLabel}>Total price:</p>
@@ -162,6 +182,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                       ₹ {originalTotal.toLocaleString("en-IN", {})}
                     </span>
                   </div>
+
                   <button
                     type="button"
                     className={styles.addToCartBtn}
