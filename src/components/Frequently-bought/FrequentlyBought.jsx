@@ -4,6 +4,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import styles from "./FrequentlyBought.module.css";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
+import Link from "next/link";
 
 const getGalleryImageSrc = (src) =>
   typeof src === "string" ? src : src?.url || src?.src || "";
@@ -20,6 +21,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
     return products.map((product) => ({
         id: product?.product_id ?? product?.id,
         name: product?.product_name ?? product?.name ?? "",
+        slug: product?.product_slug ?? product?.slug ?? "",
         thumbnail: getGalleryImageSrc(
           product?.product_thumbnail ?? product?.thumbnail ?? ""),
         price: Number(product?.product_price ?? product?.price ?? 0),
@@ -135,21 +137,24 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                           </label>
 
                           {product?.thumbnail ?  (
+                            <Link href={`/product-details/${product?.slug}`}>
                             <Image
                               src={product?.thumbnail}
                               alt={product?.name}
                               width={140}
-                              height={140}
-                              className={styles.productImage}
-                            />
+                                height={140}
+                                className={styles.productImage}
+                              />
+                            </Link>
                           ) : (
                             <div className={styles.productImagePlaceholder} />
                           )}
                         </div>
-
+                          <Link href={`/product-details/${product?.slug}`}>
                         <span className={styles.productName}>
                           {product?.name}
                         </span>
+                        </Link>
 
                         <div className={styles.productPrice}>
                           {hasDiscount && (
