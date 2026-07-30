@@ -335,7 +335,7 @@ const ProductCard = ({
           {discount > 0 && (
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
           )}
-          {oldPrice > 0 && <span>Save ₹ {(oldPrice || 0) - (price || 0)}</span>}
+          {oldPrice > 0 && <span>Save ₹ {Math.ceil((oldPrice - price) || 0)}</span>}
         </div>
       </Link>
 
