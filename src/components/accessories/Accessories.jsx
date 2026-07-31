@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "@/components/accessories/Accessories.module.css";
 import { useGetAccessoriesQuery } from "@/redux/apis/accessoryApi";
+import noImage from "@/assets/images/no_product.png";
 import router from "next/router";
 import Link from "next/link";
 
@@ -10,25 +11,29 @@ const Accessories = () => {
   const data = accessories?.data;
   const subcategories = Array.isArray(data)
     ? data?.flatMap((item) =>
-        Array.isArray(item?.subcategories) ? item.subcategories : []
+        Array.isArray(item?.subcategories) ? item.subcategories : [],
       )
     : Array.isArray(data?.subcategories)
-    ? data?.subcategories
-    : [];
+      ? data?.subcategories
+      : [];
 
   return (
-    <section className={`${styles.accessories} mt-4`}>
+    <section className={`${styles.accessories}`}>
       <div className="container">
         <div className="row align-items-center mb-4">
           <div className={`${styles.breadcrumb} `}>
             <div style={{ margin: "16px 0" }}>
               <ul>
                 <li>
-                  <Link href="/" prefetch={true}>Home</Link>
+                  <Link href="/" prefetch={true}>
+                    Home
+                  </Link>
                 </li>
                 <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
                 <li>
-                  <Link href="/accessories" prefetch={true}>Accessories</Link>
+                  <Link href="/accessories" prefetch={true}>
+                    Accessories
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -46,17 +51,33 @@ const Accessories = () => {
           )}
 
           {subcategories?.map((subcategory) => (
-            <div className="col-6 col-md-4 col-lg-2" key={subcategory?.id} onClick={() => router.push(`/accessories/${subcategory?.slug}`)}>
+            <div
+              className="col-6 col-md-4 col-lg-2"
+              key={subcategory?.id}
+              onClick={() => router.push(`/accessories/${subcategory?.slug}`)}
+            >
               <div className={styles.card} style={{ cursor: "pointer" }}>
                 <div className={styles.imageWrapper}>
-                  <Image
-                    src={subcategory?.image}
-                    alt={subcategory?.name}
-                    width={160}
-                    height={160}
-                    className={styles.image}
-                  />
+                  {subcategory?.image ? (
+                    <Image
+                      src={subcategory.image}
+                      alt={subcategory?.name || "Category Image"}
+                      width={160}
+                      height={160}
+                      className={styles.image}
+                    />
+                  ) : (
+                    <div className={styles.imagePlaceholder}>
+                      <Image
+                        src={noImage}
+                        alt="No Image"
+                        width={110}
+                        height={110}
+                      />
+                    </div>
+                  )}
                 </div>
+
                 <p className={styles.name}>{subcategory?.name}</p>
               </div>
             </div>
