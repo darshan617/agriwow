@@ -267,7 +267,9 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         <div className={styles.reviewerInfo}>
           <Stars count={rating} />
           <div className={styles.reviewerMeta}>
-            <span className={styles.reviewerName}>{review.user?.name || "Happy Customer"}</span>
+            <span className={styles.reviewerName}>
+              {review.user?.name || "Happy Customer"}
+            </span>
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
@@ -731,46 +733,51 @@ const ReviewsRating = ({
 
         <div>
           {productReviewMedia.length > 0 && (
-            <div className={styles.productReviewMediaRow}>
-              {productReviewMedia?.slice(0, 5)?.map((media, idx) => (
-                <button
-                  key={`${media?.url}-${idx}`}
-                  type="button"
-                  className={styles.reviewImg}
-                  onClick={() => openLightbox(productReviewMedia, idx)}
-                  aria-label={`Open review ${media.type} ${idx + 1}`}
-                >
-                  {media.type === "image" ? (
-                    <Image
-                      src={media?.url ?? ""}
-                      alt="product review media"
-                      width={100}
-                      height={100}
-                    />
-                  ) : (
-                    <video
-                      src={media?.url ?? ""}
-                      width={100}
-                      height={100}
-                      muted
-                      playsInline
-                    />
-                  )}
-                </button>
-              ))}
-
-              {productReviewMedia.length > 5 && (
-                <button
-                  type="button"
-                  className={styles.viewMoreMedia}
-                  onClick={openMediaPopup}
-                >
-                  View {productReviewMedia.length - 5} more
-                  <span className={styles.arrowCircle}>
-                    <FaChevronRight />
-                  </span>
-                </button>
-              )}
+            <div className={styles.productReviewMediaWrapper}>
+              <h3>All Review Media</h3>
+              <div />
+              <div
+                className={`${styles.productReviewMediaRow} ${styles.productReviewMediaRowMobile}`}
+              >
+                {productReviewMedia?.slice(0, 5)?.map((media, idx) => (
+                  <button
+                    key={`${media?.url}-${idx}`}
+                    type="button"
+                    className={styles.reviewImg}
+                    onClick={() => openLightbox(productReviewMedia, idx)}
+                    aria-label={`Open review ${media.type} ${idx + 1}`}
+                  >
+                    {media.type === "image" ? (
+                      <Image
+                        src={media?.url ?? ""}
+                        alt="product review media"
+                        width={100}
+                        height={100}
+                      />
+                    ) : (
+                      <video
+                        src={media?.url ?? ""}
+                        width={100}
+                        height={100}
+                        muted
+                        playsInline
+                      />
+                    )}
+                  </button>
+                ))}
+                {productReviewMedia.length > 5 && (
+                  <button
+                    type="button"
+                    className={styles.viewMoreMedia}
+                    onClick={openMediaPopup}
+                  >
+                    View {productReviewMedia.length - 5} more
+                    <span className={styles.arrowCircle}>
+                      <FaChevronRight />
+                    </span>
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>

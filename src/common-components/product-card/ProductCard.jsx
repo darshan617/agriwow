@@ -22,6 +22,7 @@ import {
   markBuyNowAddPending,
   useBuyProductMutation,
 } from "@/redux/apis/buyProductApi";
+import noImage from "@/assets/images/no_product.png";
 
 const ProductCard = ({
   products = [],
@@ -291,6 +292,7 @@ const ProductCard = ({
       </div>
 
       <Link href={`/product-details/${slug}`} className={`${styles.imageWrap}`}>
+        {image ? (
         <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
           <Image
             src={image}
@@ -300,7 +302,12 @@ const ProductCard = ({
             className={`${styles.productImg}`}
           />
         </div>
-        {showHoverImage && (
+        ) : (
+          <div className={styles.imagePlaceholder}>
+            <Image src={noImage} alt="No Image" width={220} height={220} />
+          </div>
+        )}
+        {showHoverImage ? (
           <div className={`${styles.imageLayer} ${styles.imageLayerHover}`}>
             <Image
               src={hoverImage}
@@ -309,6 +316,10 @@ const ProductCard = ({
               sizes="(max-width: 575px) 45vw, (max-width: 1199px) 25vw, 20vw"
               className={`${styles.productImg}`}
             />
+          </div>
+        ) : (
+          <div className={styles.imagePlaceholder}>
+            <Image src={noImage} alt="No Image" width={160} height={160} />
           </div>
         )}
 

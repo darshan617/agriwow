@@ -503,11 +503,11 @@ const ItemDetail = ({ productDetails }) => {
                 <div className={styles.priceRow}>
                   <span className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
-                    <span className={styles.gsttPriceSmall}>
+                    {/* <span className={styles.gsttPriceSmall}>
                       +₹
                       {Math.round(productDetails?.data?.selling_price * 0.18)} {" " }
                       GST
-                    </span>
+                    </span> */}
                   </span>
 
                   <span className={styles.mrpText}>
