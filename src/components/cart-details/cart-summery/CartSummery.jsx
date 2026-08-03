@@ -103,7 +103,7 @@ const CartSummery = ({
 
   const shippingAmount =
     cartSummary.shipping_charge ?? cartData?.summary?.shipping_charge ?? 0;
-  const totalAmount = subtotal - discountAmount;
+  const totalAmount = subtotal - discountAmount + shippingAmount;
   const fullPaymentDiscount =
     selectedPaymentMethod === "full" ? totalAmount * 0.05 : 0;
   const payableAmount = totalAmount - fullPaymentDiscount;
@@ -326,8 +326,11 @@ const CartSummery = ({
                 </span>
               </div>
             )}
-          {shippingAmount < 0 && (
-            <div className={`${styles.freeShipping}`}>Free shipping</div>
+          {shippingAmount > 0 && (
+            <div className={`${styles.summaryRow}`}>
+              <span>Shipping Charge</span>
+              <span>₹ {shippingAmount.toFixed(2)}</span>
+            </div>
           )}
           <hr className={`${styles.divider}`} />
           <div className={`${styles.totalRow}`}>
