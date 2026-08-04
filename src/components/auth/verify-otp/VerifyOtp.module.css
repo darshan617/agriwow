@@ -5,8 +5,8 @@
   border-radius: 16px;
   overflow: hidden;
   width: 100%;
-  max-width: 640px;
-  min-height: 420px;
+  width: 800px;
+  min-height: 550px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
 }
 
@@ -21,6 +21,7 @@
   padding: 80px 30px 0;
   position: relative;
   overflow: hidden;
+  width: 350px;
 }
 
 .leftContent {
