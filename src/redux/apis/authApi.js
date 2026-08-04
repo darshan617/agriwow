@@ -6,7 +6,18 @@ const authApi = apiSlice.injectEndpoints({
     auth: builder.mutation({
       query: ({ body }) => {
         return {
-          url: "/auth",
+          url: "/login",
+          method: "POST",
+          body: body,
+        };
+      },
+      invalidatesTags: ["auth"],
+    }),
+
+    signup: builder.mutation({
+      query: ({ body }) => {
+        return {
+          url: "/register",
           method: "POST",
           body: body,
         };
@@ -66,6 +77,7 @@ const authApi = apiSlice.injectEndpoints({
 });
 export const {
   useAuthMutation,
+  useSignupMutation,
   useVerifyOtpMutation, useLogoutMutation,
   useGoogleLoginMutation,
   useResendOtpMutation,
