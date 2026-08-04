@@ -16,7 +16,7 @@
 .popup {
   position: relative;
   width: 100%;
-  max-width: fit-content;
+  /* max-width: 800px !important; */
   min-height: 300px;
   background: #fff;
   border-radius: 16px;

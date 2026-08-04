@@ -64,6 +64,8 @@ export const LoginPopupProvider = ({ children }) => {
     setPhone("");
   };
 
+  const goToVerifyOtp = () => setShowPopup("verify-otp");
+
   const handleLogin = async () => {
     if (phone.length !== 10) {
       showToast("Please enter a valid phone number", "error");
@@ -129,7 +131,7 @@ export const LoginPopupProvider = ({ children }) => {
 
   return (
     <LoginPopupContext.Provider
-      value={{ openLoginPopup, getIsLoggedIn, isLoggedIn }}
+      value={{ openLoginPopup, getIsLoggedIn, isLoggedIn, goToVerifyOtp }}
     >
       {children}
       {showPopup === "login" && (
