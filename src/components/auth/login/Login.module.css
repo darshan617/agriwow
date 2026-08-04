@@ -232,6 +232,8 @@
 
 @media (max-width: 768px) {
   .modal {
+    flex-direction: column;
+    width: 100%;
     min-height: auto;
   }
 
@@ -240,6 +242,15 @@
   }
 
   .rightPanel {
+    width: 100%;
     padding: 20px;
+  }
+
+  .formTitle {
+    margin-top: 20px;
+  }
+
+  .toggleRow {
+    margin-top: 12px;
   }
 }
