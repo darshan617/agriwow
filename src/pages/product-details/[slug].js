@@ -2,20 +2,27 @@ import ProductDetailsComponent from "@/components/product-details/ProductDetails
 import ProductDetailsShimmer from "@/components/product-details/ProductDetailsShimmer";
 import SeoHead from "@/components/seo/SeoHead";
 import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
+import { pushDataLayer } from "@/utils/gtm";
 import { buildProductSeo } from "@/utils/seo";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 const ProductDetails = () => {
   const router = useRouter();
+  const eventSent = useRef(false);
   const slug = router?.query?.slug;
-  const { data: productDetails, isLoading, isFetching, isError, error } =
-    useGetProductDetailsQuery(
-      {
-        slug: slug,
-      },
-      { skip: !slug },
-    );
+  const {
+    data: productDetails,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGetProductDetailsQuery(
+    {
+      slug: slug,
+    },
+    { skip: !slug },
+  );
 
   const isProductsPending =
     !slug || isLoading || (isFetching && !productDetails);
@@ -23,6 +30,29 @@ const ProductDetails = () => {
   const productSeo = buildProductSeo(productDetails?.data, {
     path: slug ? `/product-details/${slug}` : undefined,
   });
+  useEffect(() => {
+    const product = productDetails?.data;
+
+    if (!product) return;
+
+    pushDataLayer({
+      event: "view_item",
+      ecommerce: {
+        currency: "INR",
+        value: Number(product?.price),
+        items: [
+          {
+            item_id: product?.id,
+            item_name: product?.name,
+            item_category: product?.category_names?.[0] || "",
+            price: Number(product?.price),
+            quantity: 1,
+          },
+        ],
+      },
+    });
+  }, [productDetails]);
+  console.log(productDetails?.data);
 
   useEffect(() => {
     if (!router?.isReady || isProductsPending) return;
