@@ -79,9 +79,11 @@ export const LoginPopupProvider = ({ children }) => {
       });
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
+      }else{
+        showToast(res?.error?.data?.message || res?.error?.message || "Something went wrong", "error");
       }
     } catch (error) {
-      console.log(error, "error");
+      showToast(error?.data?.message || error?.message || "Something went wrong", "error");
     }
   };
 
