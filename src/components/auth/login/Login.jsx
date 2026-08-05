@@ -24,28 +24,27 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
 
   if (!isMounted) return null;
   const sessionId = getCartSessionId();
- 
+
   const handleSubmit = async () => {
     if (mode === "signup") {
       await handleSignup();
     } else {
-      await handleLogin();
+       await handleLogin();
+
     }
   };
-
   const handleSignup = async () => {
     const body = {
       name,
       email,
       phone,
     };
-    const response = await signup({body});
-    console.log(response, 'response');
+    const response = await signup({ body });
+    console.log(response, "response");
     if (response?.data?.success || response?.data?.status) {
       goToVerifyOtp();
     } else {
-      showToast(response?.error?.data?.message, "error" ,);
-
+      showToast(response?.error?.data?.message, "error");
     }
   };
 
@@ -55,35 +54,35 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
         <div className={`${styles.leftPanel}`}>
           <div className={`${styles.leftContent}`}>
             {mode === "login" && (
-            <div>
-            <h2 className={`${styles.leftHeading}`}>
-              Login for a better
-              <span className={`${styles.highlight}`}>
-                {" "}
-                shopping experience
-              </span>
-            </h2>
-            <p className={`${styles.leftSubtext}`}>
-              Find the right farming &amp; <br /> gardening tools, <br /> faster
-              and easier.
-            </p>
-            </div>
+              <div>
+                <h2 className={`${styles.leftHeading}`}>
+                  Login for a better
+                  <span className={`${styles.highlight}`}>
+                    {" "}
+                    shopping experience
+                  </span>
+                </h2>
+                <p className={`${styles.leftSubtext}`}>
+                  Find the right farming &amp; <br /> gardening tools, <br />{" "}
+                  faster and easier.
+                </p>
+              </div>
             )}
             {mode === "signup" && (
               <div>
-              <h2 className={`${styles.leftHeading}`}>
-                Sign up for a better
-                <span className={`${styles.highlight}`}>
-                  {" "}
-                  shopping experience
-                </span>
-              </h2>
-              <div>
-                <p className={`${styles.leftSubtext}`}>
-                  Find the right farming &amp; <br /> gardening tools, <br /> faster
-                  and easier.
-                </p>
-              </div>
+                <h2 className={`${styles.leftHeading}`}>
+                  Sign up for a better
+                  <span className={`${styles.highlight}`}>
+                    {" "}
+                    shopping experience
+                  </span>
+                </h2>
+                <div>
+                  <p className={`${styles.leftSubtext}`}>
+                    Find the right farming &amp; <br /> gardening tools, <br />{" "}
+                    faster and easier.
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -113,7 +112,7 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
               </button>
             </div>
           </div>
-          
+
           <div>
             {mode === "login" && (
               <h3 className={`${styles.formTitle}`}>Welcome Back 👋</h3>
@@ -124,10 +123,15 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
                 <div className={styles.inputRow}>
                   <input
                     className={styles.textInput}
-                    type="text"
+                    type="text" 
+                    pattern="[a-zA-Z]+"
+                    required
                     placeholder="Enter your name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+                      setName(value);
+                    }}  
                   />
                 </div>
 
