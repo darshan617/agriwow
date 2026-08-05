@@ -10,6 +10,8 @@ import TopBannerShimmer from "@/components/layout/top-banner/TopBannerShimmer";
 import homeBannerStyles from "@/components/home/components/banner/home-banner/HomeBanner.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import { pushDataLayer } from "@/utils/gtm";
 
 // Swiper + window-dependent sections stay client-only to avoid hydration
 // mismatches. loading: reuses existing shimmers to reserve space (CLS).
@@ -86,6 +88,47 @@ const HomeComponents = () => {
   const banners = homeData?.data?.banners;
   const categories = useSelector((state) => state.category.categories);
 
+  const firedLists = useRef(new Set());
+  const sendViewItemList = (listName, products) => {
+    if (!products?.length) return;
+
+    if (firedLists.current.has(listName)) return;
+
+    firedLists.current.add(listName);
+
+    pushDataLayer({
+      event: "view_item_list",
+      ecommerce: {
+        item_list_name: listName,
+        items: products?.map((product, index) => ({
+          item_id: product.id,
+          item_name: product.name,
+          price: Number(product.sale_price || product.price),
+          item_category: product.category?.name,
+          index: index + 1,
+        })),
+      },
+    });
+  };
+  useEffect(() => {
+    sendViewItemList("Best Selling", bestSellingData);
+    sendViewItemList("Agriculture Sprayers", agricultureProductsData);
+    sendViewItemList("Farm Equipments", farmEquipmentsData);
+    sendViewItemList("Industrial Products", industrialProductsData);
+    sendViewItemList("Garden Tools", gardeningToolsData);
+    sendViewItemList("Post Harvest", postHarvestData);
+    sendViewItemList("Fogging Machines", foogingMachineData);
+    sendViewItemList("Top Rated", topRatedData);
+  }, [
+    bestSellingData,
+    agricultureProductsData,
+    farmEquipmentsData,
+    industrialProductsData,
+    gardeningToolsData,
+    postHarvestData,
+    foogingMachineData,
+    topRatedData,
+  ]);
   return (
     <Layout>
       <DynamicTopBanner categoriesData={categoriesData} />

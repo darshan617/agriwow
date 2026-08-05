@@ -18,6 +18,8 @@ import ProductCard from "@/common-components/product-card/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
+import { useRef } from "react";
+import { pushDataLayer } from "@/utils/gtm";
 
 const Cart = () => {
   const { showToast } = useToast();
@@ -26,6 +28,7 @@ const Cart = () => {
   const [quantities, setQuantities] = useState({});
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState("");
+  const cartViewed = useRef(false);
 
   const [updateCart, { isLoading: isUpdateCartLoading }] =
     useUpdateCartMutation();
@@ -40,7 +43,26 @@ const Cart = () => {
   const [cachedTrendingProducts, setCachedTrendingProducts] = useState([]);
 
   const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
+  useEffect(() => {
+    if (!cartItems.length || cartViewed.current) return;
 
+    cartViewed.current = true;
+
+    pushDataLayer({
+      event: "view_cart",
+      ecommerce: {
+        currency: "INR",
+        value: Number(cartData?.total || cartData?.grand_total || 0),
+        items: cartItems?.map((item) => ({
+          item_id: item?.id,
+          item_name: item?.name,
+          price: Number(item.selling_price),
+          quantity: item?.quantity,
+          item_category: item?.category_names?.[0] || "",
+        })),
+      },
+    });
+  }, [cartData, cartItems]);
   useEffect(() => {
     if (cartData?.trending_products?.length > 0) {
       setCachedTrendingProducts(cartData.trending_products);
