@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import Image from "next/image";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa6";
 import styles from "@/components/product-details/components/reviews-rating/ReviewsRating.module.css";
 import {
