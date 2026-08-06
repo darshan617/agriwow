@@ -28,6 +28,7 @@ import { useGetCartDataQuery } from "@/redux/apis/addToCartApi";
 
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { setCategories } from "@/redux/slices/categorySlice";
+import { trackSearch, trackSelectItem } from "@/utils/gtm";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAccessoriesQuery } from "@/redux/apis/accessoryApi";
 
@@ -308,7 +309,10 @@ const Header = ({ scrolled: scrolledFromParent }) => {
   const handleSearchFocus = () => {
     setSearchOpen(true);
   };
-  const handleResultClick = () => {
+  const handleResultClick = (product) => {
+    if (product) {
+      trackSelectItem(product, "Search Results");
+    }
     addToHistory(debouncedQuery || searchQuery);
     setSearchOpen(false);
     setMobileSearchOpen(false);
@@ -335,6 +339,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     setDebouncedQuery(term.trim());
     setSearchOpen(true);
     addToHistory(term);
+    trackSearch(term);
     searchInputRef.current?.focus();
   };
   const handleSearchSubmit = (e) => {
@@ -344,6 +349,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
     addToHistory(trimmed);
     setDebouncedQuery(trimmed);
     setSearchOpen(true);
+    trackSearch(trimmed);
   };
   const removeHistoryItem = (term) => {
     const next = searchHistory.filter((item) => item !== term);
@@ -562,7 +568,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                   <Link
                                     href={href}
                                     className={`${styles.searchResultItem}`}
-                                    onClick={handleResultClick}
+                                    onClick={() => handleResultClick(product)}
                                     role="option"
                                   >
                                     <div

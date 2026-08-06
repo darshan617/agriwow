@@ -17,6 +17,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 import { buildPageTitle } from "@/utils/seo";
+import { trackPageView } from "@/utils/gtm";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -26,6 +27,8 @@ const sora = Sora({
 });
 
 function AppContent({ Component, pageProps }) {
+  const router = useRouter();
+
   useEffect(() => {
     const initAos = async () => {
       await import("aos/dist/aos.css");
@@ -51,6 +54,29 @@ function AppContent({ Component, pageProps }) {
     }, 1);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const sendPageView = (url) => {
+      trackPageView({
+        page_path: url,
+        page_title:
+          typeof document !== "undefined" ? document.title : undefined,
+        page_location:
+          typeof window !== "undefined"
+            ? window.location.origin + url
+            : undefined,
+      });
+    };
+
+    sendPageView(router.asPath);
+
+    router.events.on("routeChangeComplete", sendPageView);
+    return () => {
+      router.events.off("routeChangeComplete", sendPageView);
+    };
+    // Initial page_view + SPA navigations only; avoid re-binding on asPath changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.events]);
 
   return <Component {...pageProps} />;
 }

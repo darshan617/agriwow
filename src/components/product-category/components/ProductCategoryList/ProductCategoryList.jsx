@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
@@ -15,6 +15,7 @@ import {
 } from "@/redux/apis/categoryApi";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import { trackViewItemList } from "@/utils/gtm";
 
 const humanize = (slug = "") =>
   slug
@@ -27,6 +28,7 @@ const humanize = (slug = "") =>
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router?.query;
+  const listTrackedKey = useRef("");
   const [sortBy, setSortBy] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -149,6 +151,21 @@ const ProductCategoryList = () => {
       setPriceMaxBound(apiMax);
     }
   }, [categoryData, subCategoryData]);
+
+  useEffect(() => {
+    if (!products?.length) return;
+
+    const listName = subCategory
+      ? `${categoryName} / ${subCategoryName}`
+      : categoryName || "Products";
+    const trackKey = `${listName}:${products.map((p) => p?.id).join(",")}`;
+
+    if (listTrackedKey.current === trackKey) return;
+    listTrackedKey.current = trackKey;
+
+    trackViewItemList(listName, products, categorySlug);
+  }, [products, categorySlug, subCategory, categoryName, subCategoryName]);
+
   return (
     <div>
       {categorySeo ? <SeoHead {...categorySeo} /> : null}

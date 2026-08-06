@@ -10,6 +10,7 @@ import {
 } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
+import { trackLogin } from "@/utils/gtm";
 
 const LoginPopupContext = createContext();
 
@@ -113,6 +114,7 @@ export const LoginPopupProvider = ({ children }) => {
 
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
+          trackLogin("otp");
           closeLoginPopup();
         } else {
           console.error("OTP verification failed", res?.error);

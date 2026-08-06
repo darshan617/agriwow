@@ -5,6 +5,7 @@ import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useMergeCartMutation } from "@/redux/apis/addToCartApi";
+import { trackLogin } from "@/utils/gtm";
 
 const GoogleLoginBtn = () => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const GoogleLoginBtn = () => {
       });
 
       if (response?.data?.status) {
+        trackLogin("google");
         showToast("Login successful!", "success");
         Cookies.set("userData", JSON.stringify(response?.data?.user));
         Cookies.set("userToken", response?.data?.token);

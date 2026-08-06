@@ -22,6 +22,7 @@ import {
   useRemoveBuyNowMutation,
   useUpdateBuyNowMutation,
 } from "@/redux/apis/buyProductApi";
+import { trackLogin, trackRemoveFromCart } from "@/utils/gtm";
 
 const CartDetails = ({
   similar_products = [],
@@ -125,6 +126,7 @@ const CartDetails = ({
           }
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
+          trackLogin("otp");
           setShowPopup("");
           setPhone("");
           if (isCartPage) {
@@ -140,12 +142,16 @@ const CartDetails = ({
   };
 
   const handleRemoveFromCart = async (cartId) => {
+    const removedItem = cartItems.find((item) => item?.id === cartId);
     const res = await removeFromCart({
       body: {
         cart_id: cartId,
       },
     });
     if (res?.data?.success || res?.data?.status) {
+      if (removedItem) {
+        trackRemoveFromCart(removedItem);
+      }
       showToast(res?.data?.message, "success");
     } else {
       showToast(res?.data?.message, "error");

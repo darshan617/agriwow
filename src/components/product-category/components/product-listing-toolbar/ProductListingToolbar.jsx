@@ -212,7 +212,7 @@ function ProductListingToolbar({
            ))}
           </>
         ) : paginatedProducts?.length > 0 ? (
-          paginatedProducts.map((item) => (
+          paginatedProducts.map((item, index) => (
             <ProductCard
             key={item?.id ?? item?.slug ?? item?.name}
             type="productPage"
@@ -231,6 +231,9 @@ function ProductListingToolbar({
             slug={item?.slug}
             productId={item?.id}
             quantity={item?.quantity}
+            similarProductData={item}
+            itemListName="Category Listing"
+            itemIndex={index}
           />
           ))
         ) : (
