@@ -196,22 +196,25 @@ const CartDetails = ({
   };
 
   useEffect(() => {
-    if (cartItems.length > 0 && !router.query.buy_now_id) {
-      const itemKey = getItemKey(cartItems[0]);
+    if (!cartItems.length || router.query.buy_now_id) return;
 
-      router.replace(
-        {
-          pathname: router.pathname,
-          query: {
-            ...router.query,
-            buy_now_id: itemKey,
-          },
+    const itemKey = getItemKey(cartItems[0]);
+    if (itemKey == null || itemKey === "") return;
+
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          buy_now_id: String(itemKey),
         },
-        undefined,
-        { shallow: true },
-      );
-    }
-  }, [cartItems, router]);
+      },
+      undefined,
+      { shallow: true },
+    );
+    // Depend on query/path primitives — not the whole `router` object.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartItems, router.pathname, router.query.buy_now_id]);
   return (
     <>
       <div className={styles.productInfo}>
