@@ -165,7 +165,7 @@ export default function App({ Component, pageProps, ...rest }) {
     );
   }
 
-  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-T374B69C";
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5JS2PX23";
   return (
     <div className={fontClassName}>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
