@@ -221,7 +221,7 @@ const LatestBlog = () => {
                     <div className={styles.featuredMedia}>
                       <Image
                         src={featuredPost?.image}
-                        alt={featuredPost?.title}
+                        alt="Featured Blog Image"
                         fill
                         className={styles.featuredImage}
                         sizes="(max-width: 768px) 100vw, 42vw"
@@ -281,7 +281,7 @@ const LatestBlog = () => {
                           <div className={styles.blogCardMedia}>
                             <Image
                               src={post?.image}
-                              alt={post?.title}
+                              alt="Latest Blog Image"
                               fill
                               className={styles.blogCardImage}
                               sizes="(max-width: 768px) 100vw, 33vw"

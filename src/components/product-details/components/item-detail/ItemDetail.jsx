@@ -402,7 +402,7 @@ const ItemDetail = ({ productDetails }) => {
                   >
                     <Image
                       src={item}
-                      alt={`Product thumbnail ${item}`}
+                      alt="Product Image"
                       className={styles.thumbImage}
                       width={100}
                       height={100}

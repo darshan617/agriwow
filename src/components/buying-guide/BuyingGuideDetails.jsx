@@ -39,7 +39,7 @@ const BuyingGuideDetails = () => {
         {heroImage ? (
           <Image
             src={heroImage}
-            alt={`${guide?.name} Buying Guide`}
+            alt="Buying Guide Image"
             fill
             className={styles.heroImage}
             sizes="100vw"

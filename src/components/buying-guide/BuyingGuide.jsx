@@ -32,7 +32,7 @@ const BuyingGuide = () => {
                 {category?.svgIconData?.url ? (
                   <Image
                     src={category?.svgIconData?.url}
-                    alt={category?.name}
+                    alt="Buying Guide Image"
                     width={28}
                     height={28}
                     className={styles.icon}
@@ -40,7 +40,7 @@ const BuyingGuide = () => {
                 ) : category?.image ? (
                   <Image
                     src={category?.image}
-                    alt={category?.name}
+                    alt="Buying Guide Image"
                     width={28}
                     height={28}
                     className={styles.icon}

@@ -138,7 +138,7 @@ const VideoSection = () => {
                   >
                     <Image
                       src={video.thumbnailUrl}
-                      alt=""
+                      alt="video thumbnail"
                       fill
                       sizes="(max-width: 768px) 100vw, 960px"
                       quality={70}

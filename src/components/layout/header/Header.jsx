@@ -449,7 +449,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
           <Link href="/" className={`${styles.logoWrap}`}>
             <Image
               src={logo}
-              alt="Agriwow logo"
+              alt="Logo"
               width={243}
               height={55}
               priority
@@ -561,7 +561,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                 <div className={`${styles.searchResultItem}`}>
                                   <Image
                                     src={product?.thumbnail ?? ""}
-                                    alt={product?.name ?? "product"}
+                                    alt="Product Image"
                                     width={50}
                                     height={50}
                                   />
@@ -647,7 +647,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                                   {cat?.image && (
                                     <Image
                                       src={cat?.image ?? ""}
-                                      alt={cat?.name ?? "Category"}
+                                      alt="Category Image"
                                       width={44}
                                       height={44}
                                     />

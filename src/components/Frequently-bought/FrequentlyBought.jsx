@@ -151,7 +151,7 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
                             <Link href={`/product-details/${product?.slug}`}>
                             <Image
                               src={product?.thumbnail}
-                              alt={product?.name}
+                              alt="Product Image"
                               width={140}
                                 height={140}
                                 className={styles.productImage}
