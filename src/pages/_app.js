@@ -165,7 +165,7 @@ export default function App({ Component, pageProps, ...rest }) {
     );
   }
 
-  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5JS2PX23";
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
   return (
     <div className={fontClassName}>
       <Script id="gtm-base" strategy="afterInteractive">{`
