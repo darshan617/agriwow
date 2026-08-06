@@ -1,6 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5JS2PX23";
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 export default function Document() {
   return (
