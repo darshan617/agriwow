@@ -1,23 +1,39 @@
 import Layout from "@/components/layout/Layout";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useGetAccessoriesSubcategoriesQuery } from "@/redux/apis/accessoryApi";
 import ProductCard from "@/common-components/product-card/ProductCard";
 import ProductCardShimmer from "@/common-components/product-card/ProductCardShimmer";
 import styles from "@/components/accessories/Accessories.module.css";
 import Link from "next/link";
+import { trackViewItemList } from "@/utils/gtm";
 
 const SubcategoryAccessory = () => {
   const router = useRouter();
   const { slug } = router.query;
+  const listTrackedKey = useRef("");
   const { data: accessoriesSubcategories, isLoading } =
     useGetAccessoriesSubcategoriesQuery(slug, { skip: !slug });
 
-  const products = Array.isArray(accessoriesSubcategories?.data)
-    ? accessoriesSubcategories.data
-    : (accessoriesSubcategories?.data?.products ?? []);
+  const products = useMemo(() => {
+    if (Array.isArray(accessoriesSubcategories?.data)) {
+      return accessoriesSubcategories.data;
+    }
+    return accessoriesSubcategories?.data?.products ?? [];
+  }, [accessoriesSubcategories?.data]);
 
-  const subcategory = products?.subcategory;
+  const listName =
+    router.query.slug?.replace(/-/g, " ") || "Accessories";
+
+  useEffect(() => {
+    if (!Array.isArray(products) || !products.length) return;
+
+    const trackKey = `${slug}:${products.map((p) => p?.id).join(",")}`;
+    if (listTrackedKey.current === trackKey) return;
+    listTrackedKey.current = trackKey;
+
+    trackViewItemList(listName, products, slug);
+  }, [products, slug, listName]);
 
   return (
     <Layout>
@@ -56,7 +72,7 @@ const SubcategoryAccessory = () => {
             )}
 
             {!isLoading &&
-              products.map((item) => (
+              products.map((item, index) => (
                 <ProductCard
                   key={item?.id ?? item?.slug}
                   type="productPage"
@@ -76,6 +92,9 @@ const SubcategoryAccessory = () => {
                   productId={item?.id}
                   isWishlist={item?.is_wishlist}
                   quantity={item?.quantity}
+                  similarProductData={item}
+                  itemListName={listName}
+                  itemIndex={index}
                 />
               ))}
           </div>

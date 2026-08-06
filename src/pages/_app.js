@@ -1,5 +1,6 @@
 import { storeWrapper } from "@/redux/store";
 import Head from "next/head";
+import Script from "next/script";
 import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
 import { getStaticSeoForPath } from "@/config/seo";
@@ -16,7 +17,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
-import { buildPageTitle } from "@/utils/seo";
+import { trackPageView } from "@/utils/gtm";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -26,6 +27,8 @@ const sora = Sora({
 });
 
 function AppContent({ Component, pageProps }) {
+  const router = useRouter();
+
   useEffect(() => {
     const initAos = async () => {
       await import("aos/dist/aos.css");
@@ -51,6 +54,29 @@ function AppContent({ Component, pageProps }) {
     }, 1);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const sendPageView = (url) => {
+      trackPageView({
+        page_path: url,
+        page_title:
+          typeof document !== "undefined" ? document.title : undefined,
+        page_location:
+          typeof window !== "undefined"
+            ? window.location.origin + url
+            : undefined,
+      });
+    };
+
+    sendPageView(router.asPath);
+
+    router.events.on("routeChangeComplete", sendPageView);
+    return () => {
+      router.events.off("routeChangeComplete", sendPageView);
+    };
+    // Initial page_view + SPA navigations only; avoid re-binding on asPath changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.events]);
 
   return <Component {...pageProps} />;
 }
@@ -139,9 +165,16 @@ export default function App({ Component, pageProps, ...rest }) {
     );
   }
 
-  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-T374B69C";
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
   return (
     <div className={fontClassName}>
+      <Script id="gtm-base" strategy="afterInteractive">{`
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','${GTM_ID}');
+      `}</Script>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
         <Provider store={store}>
           <Head>
@@ -149,16 +182,6 @@ export default function App({ Component, pageProps, ...rest }) {
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
-              }}
-            />
-            {/* <title>{buildPageTitle(seo.title)}</title> */}
           </Head>
           <SeoHead {...seo} />
           <ToastProvider>

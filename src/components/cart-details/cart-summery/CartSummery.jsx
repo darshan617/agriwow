@@ -20,6 +20,11 @@ import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
 import { BiX } from "react-icons/bi";
 import Script from "next/script";
+import {
+  trackAddPaymentInfo,
+  trackAddShippingInfo,
+  trackPurchase,
+} from "@/utils/gtm";
 
 const RAZORPAY_SCRIPT_SRC = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -199,6 +204,20 @@ const CartSummery = ({
       if (res?.data?.success || res?.data?.status) {
         showToast(res?.data?.message, "success");
         const razorpay = res?.data?.razorpay;
+        const orderId = res?.data?.order_id;
+        const purchaseValue = payableAmount;
+        const purchaseItems = cartItems;
+        const shippingAmountForPurchase =
+          cartSummary.shipping_amount ?? shippingAmount ?? 0;
+        const couponForPurchase =
+          appliedCoupon?.code || couponCode || undefined;
+
+        trackAddShippingInfo(purchaseItems, purchaseValue);
+        trackAddPaymentInfo(
+          purchaseItems,
+          purchaseValue,
+          type === "partial" ? "partial_payment" : "full_payment",
+        );
 
         const options = {
           key: razorpay.key,
@@ -213,7 +232,7 @@ const CartSummery = ({
             const verifyPaymentRes = await verifyPayment({
               body: {
                 razorpay_payment_id: response.razorpay_payment_id,
-                order_id: res?.data?.order_id,
+                order_id: orderId,
                 razorpay_order_id: razorpay.order_id,
                 razorpay_signature: response.razorpay_signature,
               },
@@ -223,6 +242,16 @@ const CartSummery = ({
               verifyPaymentRes?.data?.success ||
               verifyPaymentRes?.data?.status
             ) {
+              trackPurchase({
+                transactionId:
+                  verifyPaymentRes?.data?.order_id ||
+                  orderId ||
+                  response.razorpay_payment_id,
+                cartItems: purchaseItems,
+                value: purchaseValue,
+                shipping: shippingAmountForPurchase,
+                coupon: couponForPurchase,
+              });
               showToast(
                 "Payment Successful" || verifyPaymentRes?.data?.message,
                 "success",

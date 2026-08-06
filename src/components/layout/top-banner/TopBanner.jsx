@@ -56,7 +56,7 @@ const TopBanner = ({ categoriesData: categoriesDataProp }) => {
                   <div className={`${styles.categoryImgWrapper}`}>
                     <Image
                       src={category?.image ?? ""}
-                      alt={category?.name}
+                      alt="Category Image"
                       className={`${styles.categoryImg}`}
                       width={100}
                       height={100}

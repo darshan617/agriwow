@@ -56,7 +56,7 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
                   <span className={styles.thumb}>
                     <Image
                       src={topic?.image}
-                      alt={topic?.title}
+                      alt="Trending Blog Image"
                       fill
                       className={styles.thumbImage}
                       sizes="56px"

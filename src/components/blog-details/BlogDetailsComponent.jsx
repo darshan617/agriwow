@@ -113,7 +113,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
             <div className={styles.heroMedia}>
               <Image
                 src={heroSrc}
-                alt={title}
+                alt="Blog Image"
                 fill
                 className={styles.heroImage}
                 sizes="(max-width: 768px) 100vw, 900px"
@@ -158,7 +158,7 @@ const BlogDetailsComponent = ({ blogDetailsData }) => {
                 <Link href={`/blog/${post?.slug}`} className={styles.relatedMedia}>
                   <Image
                     src={post?.image}
-                    alt={post?.title}
+                    alt="Related Blog Image"
                     fill
                     className={styles.relatedImage}
                     sizes="(max-width: 768px) 100vw, 33vw"

@@ -23,6 +23,12 @@ import {
   useBuyProductMutation,
 } from "@/redux/apis/buyProductApi";
 import noImage from "@/assets/images/no_product.png";
+import {
+  trackAddToCart,
+  trackAddToWishlist,
+  trackRemoveFromWishlist,
+  trackSelectItem,
+} from "@/utils/gtm";
 
 const ProductCard = ({
   products = [],
@@ -48,6 +54,8 @@ const ProductCard = ({
   isSimilarProduct = false,
   similarProductData = null,
   quantity = null,
+  itemListName = null,
+  itemIndex = null,
 }) => {
   const isOutOfStock =
     quantity != null && quantity !== "" && Number(quantity) <= 0;
@@ -90,6 +98,18 @@ const ProductCard = ({
 
   // const isOutOfStock = quantity != null && Number(quantity) <= 0;
 
+  const trackingProduct = similarProductData || {
+    id: productId,
+    name,
+    selling_price: price,
+    price: oldPrice,
+    slug,
+  };
+
+  const handleSelectItem = () => {
+    trackSelectItem(trackingProduct, itemListName, itemIndex);
+  };
+
   const handleAddToCart = async () => {
     if (isOutOfStock) {
       showToast("Product is out of stock", "error");
@@ -108,6 +128,7 @@ const ProductCard = ({
         },
       });
       if (res?.data?.success || res?.data?.status) {
+        trackAddToCart(trackingProduct, 1);
         showToast(res?.data?.message, "success");
         if (router?.pathname === "/wishlist") {
           handleRemoveFromWishlist();
@@ -178,6 +199,7 @@ const ProductCard = ({
     }
 
     if (res?.data?.success || res?.data?.status) {
+      trackAddToWishlist(trackingProduct);
       showToast(res?.data?.message || "Added to wishlist", "success");
     } else {
       showToast(res?.data?.message || "Failed to add to wishlist", "error");
@@ -205,6 +227,7 @@ const ProductCard = ({
     });
 
     if (res?.data?.success || res?.data?.status) {
+      trackRemoveFromWishlist(trackingProduct);
       showToast(res?.data?.message || "Removed from wishlist", "success");
     } else {
       showToast(
@@ -291,7 +314,11 @@ const ProductCard = ({
           ))}
       </div>
 
-      <Link href={`/product-details/${slug}`} className={`${styles.imageWrap}`}>
+      <Link
+        href={`/product-details/${slug}`}
+        className={`${styles.imageWrap}`}
+        onClick={handleSelectItem}
+      >
         {image ? (
         <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
           <Image
@@ -334,7 +361,11 @@ const ProductCard = ({
         )}
       </Link>
 
-      <Link href={`/product-details/${slug}`} className={`${styles.cardInfo}`}>
+      <Link
+        href={`/product-details/${slug}`}
+        className={`${styles.cardInfo}`}
+        onClick={handleSelectItem}
+      >
         <h3 className={`${styles.productName}`}>{name}</h3>
 
         <div className={`${styles.priceRow}`}>

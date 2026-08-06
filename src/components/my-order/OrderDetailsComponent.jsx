@@ -204,7 +204,7 @@ const OrderDetailsComponent = ({ orderId }) => {
                               {product?.product_image ? (
                                 <Image
                                   src={product?.product_image ?? ""}
-                                  alt={product?.product_name || "product"}
+                                  alt="Product Image"
                                   width={62}
                                   height={62}
                                   className={styles.productImage}
