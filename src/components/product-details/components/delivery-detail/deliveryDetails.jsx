@@ -17,6 +17,7 @@ import { getIsLoggedIn } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { FaWhatsapp } from "react-icons/fa";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useCheckPincodeMutation } from "@/redux/apis/pincodeApi";
+import { trackAddToCart } from "@/utils/gtm";
 
 const deliveryIcons = {
   pincode: <Image src={noEntry} alt="no entry" width={20} height={20} />,
@@ -85,6 +86,7 @@ export default function DeliveryDetails({ productDetails }) {
         },
       });
       if (res?.data?.success || res?.data?.status) {
+        trackAddToCart(productDetails?.data, qty);
         showToast(res?.data?.message, "success");
       } else {
         showToast(res?.data?.message, "error");

@@ -26,6 +26,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import styles from "@/components/cart-details/cart-summery/CartSummery.module.css";
+import { trackBeginCheckout } from "@/utils/gtm";
 
 const Checkout = () => {
   const router = useRouter();
@@ -41,6 +42,7 @@ const Checkout = () => {
     useBuyProductMutation();
   const buyNowAddedRef = useRef(false);
   const [buyNowSynced, setBuyNowSynced] = useState(false);
+  const checkoutTracked = useRef(false);
 
   const shouldAddBuyNowProduct = useMemo(
     () =>
@@ -235,6 +237,17 @@ const Checkout = () => {
       setCachedTrendingProducts(cartData.trending_products);
     }
   }, [cartData?.trending_products]);
+
+  useEffect(() => {
+    if (!cartItems.length || checkoutTracked.current) return;
+
+    checkoutTracked.current = true;
+    const checkoutValue =
+      activeCartData?.cart_summary?.grand_total ??
+      activeCartData?.cart_summary?.subtotal;
+
+    trackBeginCheckout(cartItems, checkoutValue);
+  }, [cartItems, activeCartData]);
 
   const homeTrendingFallback =
     homeData?.data?.products?.best_selling ??

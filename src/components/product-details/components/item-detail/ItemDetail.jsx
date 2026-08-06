@@ -27,6 +27,7 @@ import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { AiOutlineRise } from "react-icons/ai";
 import { FaRegCreditCard } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { trackAddToWishlist } from "@/utils/gtm";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
 const AUTOPLAY_DELAY = 3000;
@@ -256,6 +257,7 @@ const ItemDetail = ({ productDetails }) => {
     });
 
     if (res?.data?.success || res?.data?.status) {
+      trackAddToWishlist(productDetails?.data);
       showToast(res?.data?.message, "success");
     } else {
       showToast(res?.data?.message || "Failed to add to wishlist", "error");

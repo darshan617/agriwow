@@ -2,7 +2,7 @@ import ProductDetailsComponent from "@/components/product-details/ProductDetails
 import ProductDetailsShimmer from "@/components/product-details/ProductDetailsShimmer";
 import SeoHead from "@/components/seo/SeoHead";
 import { useGetProductDetailsQuery } from "@/redux/apis/productApi";
-import { pushDataLayer } from "@/utils/gtm";
+import { trackViewItem } from "@/utils/gtm";
 import { buildProductSeo } from "@/utils/seo";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef } from "react";
@@ -31,28 +31,16 @@ const ProductDetails = () => {
     path: slug ? `/product-details/${slug}` : undefined,
   });
   useEffect(() => {
+    eventSent.current = false;
+  }, [slug]);
+
+  useEffect(() => {
     const product = productDetails?.data;
+    if (!product?.id || eventSent.current) return;
 
-    if (!product) return;
-
-    pushDataLayer({
-      event: "view_item",
-      ecommerce: {
-        currency: "INR",
-        value: Number(product?.price),
-        items: [
-          {
-            item_id: product?.id,
-            item_name: product?.name,
-            item_category: product?.category_names?.[0] || "",
-            price: Number(product?.price),
-            quantity: 1,
-          },
-        ],
-      },
-    });
+    eventSent.current = true;
+    trackViewItem(product);
   }, [productDetails]);
-  console.log(productDetails?.data);
 
   useEffect(() => {
     if (!router?.isReady || isProductsPending) return;

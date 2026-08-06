@@ -5,6 +5,7 @@ import styles from "./FrequentlyBought.module.css";
 import { useAddToCartMutation } from "@/redux/apis/addToCartApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Link from "next/link";
+import { trackAddToCart } from "@/utils/gtm";
 
 const getGalleryImageSrc = (src) =>
   typeof src === "string" ? src : src?.url || src?.src || "";
@@ -88,6 +89,16 @@ const FrequentlyBought = ({frequentlyBoughtProducts }) => {
           );
           return;
         }
+
+        trackAddToCart(
+          {
+            id: product.id,
+            name: product.name,
+            selling_price: product.sellingPrice,
+            price: product.price,
+          },
+          1,
+        );
       }
 
       showToast("Products added to cart successfully", "success");

@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { useRef } from "react";
-import { pushDataLayer } from "@/utils/gtm";
+import { trackViewCart } from "@/utils/gtm";
 
 const Cart = () => {
   const { showToast } = useToast();
@@ -48,20 +48,13 @@ const Cart = () => {
 
     cartViewed.current = true;
 
-    pushDataLayer({
-      event: "view_cart",
-      ecommerce: {
-        currency: "INR",
-        value: Number(cartData?.total || cartData?.grand_total || 0),
-        items: cartItems?.map((item) => ({
-          item_id: item?.id,
-          item_name: item?.name,
-          price: Number(item.selling_price),
-          quantity: item?.quantity,
-          item_category: item?.category_names?.[0] || "",
-        })),
-      },
-    });
+    const cartValue =
+      cartData?.cart_summary?.grand_total ??
+      cartData?.cart_summary?.subtotal ??
+      cartData?.grand_total ??
+      cartData?.total;
+
+    trackViewCart(cartItems, cartValue);
   }, [cartData, cartItems]);
   useEffect(() => {
     if (cartData?.trending_products?.length > 0) {
