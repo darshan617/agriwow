@@ -17,7 +17,7 @@ const OrderInformation = () => {
                     <div className={`${styles.orderInformationContent}`}>
                       <Image
                         src={item?.icon}
-                        alt="Shipping"
+                        alt="Icon"
                         width={60}
                         height={60}
                       />

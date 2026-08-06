@@ -193,7 +193,7 @@ const WishlistDetail = ({
               <div className={styles.categoryImageWrap}>
                 <Image
                   src={category?.image ?? ""}
-                  alt={category?.name ?? "Category"}
+                  alt="Category Image"
                   width={80}
                   height={80}
                   className={styles.categoryImage}

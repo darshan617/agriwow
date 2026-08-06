@@ -65,7 +65,7 @@ const HomeBanner = () => {
                 <div>
                   <Image
                     src={slide?.backgroundImage}
-                    alt="Farm background banner"
+                    alt="Banner Image"
                     className={`${styles.bannerBackground}`}
                     priority={index === 0}
                     sizes="100vw"
