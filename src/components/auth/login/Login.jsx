@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
-import { useRouter } from "next/router";
 import { getCartSessionId } from "@/redux/apis/addToCartApi";
 import Link from "next/link";
 import { useSignupMutation } from "@/redux/apis/authApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
-import CustomPopup from "@/components/custom-popup/CustomPopup";
 
 const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
   const { goToVerifyOtp } = useLoginPopup();
@@ -29,8 +27,7 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
     if (mode === "signup") {
       await handleSignup();
     } else {
-       await handleLogin();
-
+      await handleLogin();
     }
   };
   const handleSignup = async () => {
@@ -123,15 +120,16 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
                 <div className={styles.inputRow}>
                   <input
                     className={styles.textInput}
-                    type="text" 
+                    type="text"
                     pattern="[a-zA-Z]+"
                     required
                     placeholder="Enter your name"
                     value={name}
+                    autoFocus
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
                       setName(value);
-                    }}  
+                    }}
                   />
                 </div>
 
@@ -165,6 +163,7 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/, ""))}
                 maxLength={10}
+                autoFocus
               />
             </div>
           </div>
@@ -181,6 +180,19 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
                   ? "CONTINUE"
                   : "SIGN UP"}
             </button>
+
+            <p className={styles.accountToggle}>
+              {mode === "signup"
+                ? "Already have an account? "
+                : "Don't have an account? "}
+              <Link
+                href="#"
+                onClick={() => setMode(mode === "signup" ? "login" : "signup")}
+                className={styles.accountToggleLink}
+              >
+                {mode === "signup" ? "Login" : "Sign Up"}
+              </Link>
+            </p>
 
             <p className={`${styles.terms}`}>
               By continuing, you agree to our{" "}
