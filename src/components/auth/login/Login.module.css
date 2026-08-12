@@ -160,12 +160,22 @@
 }
 
 .terms {
-  padding-top: 16px;
-  font-size: 11px;
+  font-size: 12px;
   color: #888;
   text-align: center;
 }
 
+.accountToggle {
+  padding-top: 16px;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+.accountToggleLink {
+  color: #43a047;
+  text-decoration: none;
+  font-weight: 500;
+}
 .link {
   color: rgb(62, 62, 255);
   text-decoration: underline;
