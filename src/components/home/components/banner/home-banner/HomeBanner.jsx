@@ -58,7 +58,6 @@ const HomeBanner = () => {
                 prefetch={true}
                 href={slide?.link}
                 {...(slide?.link?.startsWith("http") && {
-                  target: "_blank",
                   rel: "noopener noreferrer",
                 })}
               >
