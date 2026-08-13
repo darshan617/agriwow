@@ -196,6 +196,7 @@
   color: #101010;
   font-size: 18px;
   font-weight: 700;
+  display: flex;
 }
 
 .oldPrice {
@@ -206,19 +207,29 @@
 
 .discountText {
   color: #239c3d;
+  font-size: 16px;
+  margin-left: 5px;
 }
 
-.boughtPeopleRow {
+/* .boughtPeopleRow {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 8px 0 0;
   background: #fff3e7;
   border: 1px solid #fd8a01;
   padding: 6px;
   width: fit-content;
   color: #d13a44;
   font-size: 14px;
+  font-weight: 600;
+} */
+.boughtPeopleRow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: -10px;
+  color: #d13a44;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -485,6 +496,31 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.productReviewCountValueRate{
+  margin-left: 5px;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.productReviewCountText{
+  color: #0060afc0;
+}
+
+.productReviewCountValue{
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.couponCode{
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  background: #fe9216;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: fit-content;
+  cursor: pointer;
 }
 
 @media (max-width: 1440px) {
