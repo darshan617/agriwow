@@ -272,6 +272,16 @@ const ItemDetail = ({ productDetails }) => {
     });
   };
 
+
+  const handleCopy = async (code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      showToast("Coupon code copied", "success");
+    } catch {
+      showToast("Failed to copy coupon code", "error");
+    }
+  };
+
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -430,10 +440,16 @@ const ItemDetail = ({ productDetails }) => {
             <div className={`${styles.productPrice}`}>
               <div className={`${styles.productReviewCount}`}>
                 {productDetails?.data?.rating_summary?.average_rating > 0 && (
+                  <span className={`${styles.productReviewCountValue}`}>
+                    {productDetails?.data?.rating_summary?.average_rating}
+                  </span>
+                )}
+                {productDetails?.data?.rating_summary?.average_rating > 0 && (
                   <span
                     className={`${styles.productReviewCountStar} d-inline-flex gap-1`}
                   >
                     <FaStar
+                      size={14}
                       style={{
                         color:
                           productDetails?.data?.rating_summary
@@ -444,6 +460,7 @@ const ItemDetail = ({ productDetails }) => {
                       className={`${styles.productReviewCountStarIcon}`}
                     />
                     <FaStar
+                      size={14}
                       style={{
                         color:
                           productDetails?.data?.rating_summary
@@ -454,6 +471,7 @@ const ItemDetail = ({ productDetails }) => {
                       className={`${styles.productReviewCountStarIcon}`}
                     />
                     <FaStar
+                      size={14}
                       style={{
                         color:
                           productDetails?.data?.rating_summary
@@ -464,6 +482,7 @@ const ItemDetail = ({ productDetails }) => {
                       className={`${styles.productReviewCountStarIcon}`}
                     />
                     <FaStar
+                      size={14}
                       style={{
                         color:
                           productDetails?.data?.rating_summary
@@ -474,6 +493,7 @@ const ItemDetail = ({ productDetails }) => {
                       className={`${styles.productReviewCountStarIcon}`}
                     />
                     <FaStar
+                      size={14}
                       style={{
                         color:
                           productDetails?.data?.rating_summary
@@ -485,39 +505,27 @@ const ItemDetail = ({ productDetails }) => {
                     />
                   </span>
                 )}
-                {productDetails?.data?.rating_summary?.average_rating > 0 && (
-                  <span className={`${styles.productReviewCountValue}`}>
-                    {/* {productDetails?.data?.rating_summary?.average_rating} */}
-                  </span>
-                )}
+
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
                   <span className={`${styles.productReviewCountText}`}>
                     <Link
                       href={`#review-card`}
-                      className={`${styles.productReviewCountValue}`}
+                      className={`${styles.productReviewCountValueRate}`}
                       prefetch={true}
                     >
-                      ({productDetails?.data?.rating_summary?.total_reviews}{" "}
-                      reviews)
+                      ({productDetails?.data?.rating_summary?.total_reviews})
                     </Link>
                   </span>
                 )}
+                <div className={styles.couponCode}
+                onClick={() => handleCopy(productDetails?.data?.available_coupons?.[0]?.code)}
+                >
+                  {productDetails?.data?.available_coupons?.length > 0 &&
+                    productDetails?.data?.available_coupons?.[0]?.code}
+                </div>
                 <div className={styles.priceRow}>
-                  <span className={styles.currentPrice}>
+                  <div className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
-                    {/* <span className={styles.gsttPriceSmall}>
-                      +₹
-                      {Math.round(productDetails?.data?.selling_price * 0.18)} {" " }
-                      GST
-                    </span> */}
-                  </span>
-
-                  <span className={styles.mrpText}>
-                    MRP
-                    <span className={styles.oldPrice}>
-                      {" "}
-                      ₹ {productDetails?.data?.price.toLocaleString()}
-                    </span>
                     <div className={`${styles.discountRow}`}>
                       {productDetails?.data?.price > 0 &&
                         productDetails?.data?.selling_price <
@@ -529,6 +537,14 @@ const ItemDetail = ({ productDetails }) => {
                           </>
                         )}
                     </div>
+                  </div>
+
+                  <span className={styles.mrpText}>
+                    MRP
+                    <span className={styles.oldPrice}>
+                      {" "}
+                      ₹ {productDetails?.data?.price.toLocaleString()}
+                    </span>
                   </span>
                 </div>
                 <div
