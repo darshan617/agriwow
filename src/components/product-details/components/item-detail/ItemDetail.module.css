@@ -511,12 +511,12 @@
 }
 
 .productReviewCountValueRate{
-  margin-left: 5px;
   font-size: 14px;
   text-decoration: underline;
 }
 .productReviewCountText{
   color: #0060afc0;
+  margin-left: 5px;
 }
 
 .productReviewCountValue{
@@ -743,7 +743,7 @@
   .discountRow,
   .boughtPeopleRow {
     font-size: 13px;
-    margin-top: 4px;
+    /* margin-top: 4px; */
   }
 
   .coupon {
@@ -815,6 +815,10 @@
     border-radius: 0;
     border: none;
   }
+  .discountRow{
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (max-width: 575px) {
@@ -822,6 +826,10 @@
   /* .itemDetail {
       padding: 10px;
     } */
+
+    .productReviewCountValueRate{
+      font-size: 11px;
+    }
   .imageDetail {
     position: relative;
     top: 0;
