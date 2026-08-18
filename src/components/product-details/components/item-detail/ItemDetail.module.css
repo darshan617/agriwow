@@ -633,8 +633,8 @@
   }
 
   .policyIcon img {
-    width: 22px;
-    height: auto;
+    height: 24px;
+    width: auto;
   }
 
   .policyLabel {
@@ -1101,8 +1101,8 @@
   }
 
   .policyIcon img {
-    width: 27px;
-    height: 24px;
+    width: auto;
+    height: 22px;
   }
 
   .productInfoPopupTab {
