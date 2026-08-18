@@ -147,10 +147,10 @@
 }
 
 .productName {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.5;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   border-bottom: 1.5px solid #eaebeb;
 }
 
@@ -182,9 +182,14 @@
   color: #7d7d7d;
   font-weight: 500;
 }
+.currentPrice{
+  display: flex;
+  gap: 5px;
+}
 
 .priceRow .currentPrice {
   font-size: 25px;
+  margin-bottom: 4px;
 }
 
 .currentPrice,
@@ -203,6 +208,13 @@
   color: #7d7d7d;
   font-size: 14px;
   text-decoration: line-through;
+  font-weight: 500;
+}
+
+.productPrice{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .discountText {
@@ -244,7 +256,7 @@
 }
 
 .productDescription {
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
   border-bottom: 1.5px solid #eaebeb;
 }
 
@@ -499,12 +511,12 @@
 }
 
 .productReviewCountValueRate{
-  margin-left: 5px;
   font-size: 14px;
   text-decoration: underline;
 }
 .productReviewCountText{
   color: #0060afc0;
+  margin-left: 5px;
 }
 
 .productReviewCountValue{
@@ -621,8 +633,8 @@
   }
 
   .policyIcon img {
-    width: 22px;
-    height: auto;
+    height: 24px;
+    width: auto;
   }
 
   .policyLabel {
@@ -731,7 +743,7 @@
   .discountRow,
   .boughtPeopleRow {
     font-size: 13px;
-    margin-top: 4px;
+    /* margin-top: 4px; */
   }
 
   .coupon {
@@ -803,6 +815,10 @@
     border-radius: 0;
     border: none;
   }
+  .discountRow{
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (max-width: 575px) {
@@ -810,6 +826,10 @@
   /* .itemDetail {
       padding: 10px;
     } */
+
+    .productReviewCountValueRate{
+      font-size: 11px;
+    }
   .imageDetail {
     position: relative;
     top: 0;
@@ -1081,8 +1101,8 @@
   }
 
   .policyIcon img {
-    width: 27px;
-    height: 24px;
+    width: auto;
+    height: 22px;
   }
 
   .productInfoPopupTab {

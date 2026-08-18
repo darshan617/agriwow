@@ -272,7 +272,6 @@ const ItemDetail = ({ productDetails }) => {
     });
   };
 
-
   const handleCopy = async (code) => {
     try {
       await navigator.clipboard.writeText(code);
@@ -508,21 +507,16 @@ const ItemDetail = ({ productDetails }) => {
 
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
                   <span className={`${styles.productReviewCountText}`}>
-                    <Link
+                    (<Link
                       href={`#review-card`}
                       className={`${styles.productReviewCountValueRate}`}
                       prefetch={true}
                     >
-                      ({productDetails?.data?.rating_summary?.total_reviews})
-                    </Link>
+                      {productDetails?.data?.rating_summary?.total_reviews || 0}
+                    </Link>)
                   </span>
                 )}
-                <div className={styles.couponCode}
-                onClick={() => handleCopy(productDetails?.data?.available_coupons?.[0]?.code)}
-                >
-                  {productDetails?.data?.available_coupons?.length > 0 &&
-                    productDetails?.data?.available_coupons?.[0]?.code}
-                </div>
+
                 <div className={styles.priceRow}>
                   <div className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
@@ -531,6 +525,12 @@ const ItemDetail = ({ productDetails }) => {
                         productDetails?.data?.selling_price <
                           productDetails?.data?.price && (
                           <>
+                            <span className={styles.mrpText}>
+                              <span className={styles.oldPrice}>
+                                {" "}
+                                ₹ {productDetails?.data?.price.toLocaleString()}
+                              </span>
+                            </span>
                             <span className={`${styles.discountText}`}>
                               {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
                             </span>
@@ -538,15 +538,19 @@ const ItemDetail = ({ productDetails }) => {
                         )}
                     </div>
                   </div>
-
-                  <span className={styles.mrpText}>
-                    MRP
-                    <span className={styles.oldPrice}>
-                      {" "}
-                      ₹ {productDetails?.data?.price.toLocaleString()}
-                    </span>
-                  </span>
                 </div>
+                {productDetails?.data?.available_coupons?.length > 0 && (
+                  <div
+                    className={styles.couponCode}
+                    onClick={() =>
+                      handleCopy(
+                        productDetails?.data?.available_coupons?.[0]?.code,
+                      )
+                    }
+                  >
+                    {productDetails?.data?.available_coupons?.[0]?.code}
+                  </div>
+                )}
                 <div
                   className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
                 >
