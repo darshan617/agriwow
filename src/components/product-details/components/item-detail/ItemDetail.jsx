@@ -453,7 +453,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 1
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -464,7 +464,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 2
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -475,7 +475,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 3
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -486,7 +486,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 4
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -497,7 +497,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 5
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}

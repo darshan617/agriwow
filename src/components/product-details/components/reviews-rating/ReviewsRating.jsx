@@ -54,7 +54,13 @@ const RatingPicker = ({ rating, onChange }) => (
   </div>
 );
 
-const RatingSummary = ({ average, totalRatings, totalReviews, ratingData }) => (
+const RatingSummary = ({
+  average,
+  totalRatings,
+  totalReviews,
+  ratingData,
+  productDetails,
+}) => (
   <>
     {ratingData?.total_reviews > 0 && (
       <div className={styles.ratingSummary}>
@@ -267,6 +273,11 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         <div className={styles.reviewerInfo}>
           <Stars count={rating} />
           <div className={styles.reviewerMeta}>
+            <span className={styles.reviewerProfile}>
+              <span className={`${styles.userAvatar}`} aria-hidden>
+                {review?.user?.name?.charAt(0)}
+              </span>
+            </span>
             <span className={styles.reviewerName}>
               {review?.name || review?.user?.name || "Happy Customer"}
             </span>
@@ -324,7 +335,18 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         </div>
       </div>
 
+      {/* <div className={styles.reviewContent}>
+        <span className={styles.reviewContentText}>
+          Reviewed in india on 22 july 2026
+        </span>
+      </div> */}
+      {/* <div className={styles.reviewProductName}>{ review?.product_name}</div> */}
       <div className={styles.reviewTitle}>{review?.review}</div>
+      {/* <div className={styles.helpfulCount}>1 people found this helpful</div> */}
+      {/* <div className={styles.reviewHelpfulBtn}>
+        <button className={styles.helpfulBtn}>Helpful</button>
+        <button className={styles.helpfulBtn}>Report</button>
+      </div> */}
       {review?.attachment_urls?.length > 0 && (
         <div className={styles.reviewImages}>
           {review?.attachment_urls?.map((attachment, idx) => (
