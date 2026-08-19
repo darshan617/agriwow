@@ -453,7 +453,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 1
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -464,7 +464,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 2
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -475,7 +475,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 3
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -486,7 +486,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 4
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -497,7 +497,7 @@ const ItemDetail = ({ productDetails }) => {
                         color:
                           productDetails?.data?.rating_summary
                             ?.average_rating >= 5
-                            ? "#ffc107"
+                            ? "#ff6201"
                             : "#ccc",
                       }}
                       className={`${styles.productReviewCountStarIcon}`}
@@ -507,37 +507,38 @@ const ItemDetail = ({ productDetails }) => {
 
                 {productDetails?.data?.rating_summary?.total_reviews > 0 && (
                   <span className={`${styles.productReviewCountText}`}>
-                    (<Link
+                    (
+                    <Link
                       href={`#review-card`}
                       className={`${styles.productReviewCountValueRate}`}
                       prefetch={true}
                     >
                       {productDetails?.data?.rating_summary?.total_reviews || 0}
-                    </Link>)
+                    </Link>
+                    )
                   </span>
                 )}
 
                 <div className={styles.priceRow}>
                   <div className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
+                    <span className={`${styles.discountText}`}>
+                    {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                  </span>
                     <div className={`${styles.discountRow}`}>
                       {productDetails?.data?.price > 0 &&
                         productDetails?.data?.selling_price <
-                          productDetails?.data?.price && (
-                          <>
-                            <span className={styles.mrpText}>
-                              <span className={styles.oldPrice}>
-                                {" "}
-                                ₹ {productDetails?.data?.price.toLocaleString()}
-                              </span>
-                            </span>
-                            <span className={`${styles.discountText}`}>
-                              {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
-                            </span>
-                          </>
-                        )}
+                          productDetails?.data?.price && <></>}
                     </div>
                   </div>
+                  <span className={styles.mrpText}>
+                    <span className={styles.oldPrice}>
+                      {" "}
+                      ₹ {productDetails?.data?.price.toLocaleString()}
+                    </span>
+                    
+                  </span>
+                  
                 </div>
                 {productDetails?.data?.available_coupons?.length > 0 && (
                   <div
