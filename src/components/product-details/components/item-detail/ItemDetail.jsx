@@ -522,6 +522,9 @@ const ItemDetail = ({ productDetails }) => {
                 <div className={styles.priceRow}>
                   <div className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
+                    <span className={`${styles.discountText}`}>
+                    {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                  </span>
                     <div className={`${styles.discountRow}`}>
                       {productDetails?.data?.price > 0 &&
                         productDetails?.data?.selling_price <
@@ -533,9 +536,7 @@ const ItemDetail = ({ productDetails }) => {
                       {" "}
                       ₹ {productDetails?.data?.price.toLocaleString()}
                     </span>
-                    <span className={`${styles.discountText}`}>
-                    {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
-                  </span>
+                    
                   </span>
                   
                 </div>
