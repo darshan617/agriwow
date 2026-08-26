@@ -523,8 +523,15 @@ const ItemDetail = ({ productDetails }) => {
                   <div className={styles.currentPrice}>
                     ₹ {productDetails?.data?.selling_price.toLocaleString()}
                     <span className={`${styles.discountText}`}>
-                    {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
-                  </span>
+                      {`${Math.round(((productDetails?.data?.price - productDetails?.data?.selling_price) / productDetails?.data?.price) * 100)}% OFF`}
+                    </span>
+                    <span className={styles.saveRupeeText}>
+                      You Save ₹
+                      {(
+                        productDetails?.data?.price -
+                        productDetails?.data?.selling_price
+                      ).toLocaleString()}
+                    </span>
                     <div className={`${styles.discountRow}`}>
                       {productDetails?.data?.price > 0 &&
                         productDetails?.data?.selling_price <
@@ -536,45 +543,46 @@ const ItemDetail = ({ productDetails }) => {
                       {" "}
                       ₹ {productDetails?.data?.price.toLocaleString()}
                     </span>
-                    
                   </span>
-                  
                 </div>
                 {productDetails?.data?.available_coupons?.length > 0 && (
                   <div
                     className={styles.couponCode}
                     onClick={() =>
                       handleCopy(
-                        productDetails?.data?.available_coupons?.[0]?.code,
+                        productDetails?.data?.available_coupons?.[0]?.code?.trim(),
                       )
                     }
                   >
-                    {productDetails?.data?.available_coupons?.[0]?.code}
+                    {productDetails?.data?.available_coupons?.[0]?.code?.trim()}
                   </div>
                 )}
-                <div
-                  className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
-                >
-                  {productDetails?.data?.discount > 0 && (
-                    <div className={`${styles.discountImg}`}>
-                      <Image
-                        src={DiscountImg}
-                        alt="discount"
-                        width={18}
-                        height={18}
-                        fetchPriority="high"
-                        priority={true}
-                      />
-                    </div>
-                  )}
-                  {productDetails?.data?.discount > 0 && (
-                    <span className={`${styles.discountText}`}>
-                      Save ₹{" "}
-                      {productDetails?.data?.selling_price -
-                        productDetails?.data?.price}
-                    </span>
-                  )}
-                </div>
+                {productDetails?.data?.discount > 0 && (
+                  <div
+                    className={`${styles.discountRow} d-inline-flex gap-2 align-items-center`}
+                  >
+                    {productDetails?.data?.discount > 0 && (
+                      <div className={`${styles.discountImg}`}>
+                        <Image
+                          src={DiscountImg}
+                          alt="discount"
+                          width={18}
+                          height={18}
+                          fetchPriority="high"
+                          priority={true}
+                        />
+                      </div>
+                    )}
+                    {productDetails?.data?.discount > 0 && (
+                      <span className={`${styles.discountText}`}>
+                        Save ₹{" "}
+                        {productDetails?.data?.selling_price -
+                          productDetails?.data?.price}
+                      </span>
+                    )}
+                  </div>
+                )}
+
                 {productData?.recently_bought?.count > 0 && (
                   <div className={`${styles.boughtPeopleRow}`}>
                     <div
