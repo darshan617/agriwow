@@ -182,7 +182,7 @@
   color: #7d7d7d;
   font-weight: 500;
 }
-.currentPrice{
+.currentPrice {
   display: flex;
   gap: 5px;
   align-items: center;
@@ -212,16 +212,19 @@
   font-weight: 500;
 }
 
-.productPrice{
+.productPrice {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
 .discountText {
-  color: #239c3d;
-  font-size: 16px;
+  color: #ffffff;
+  font-size: 12px;
   margin-left: 5px;
+  background: #239c3d;
+  padding: 2px 5px;
+  border-radius: 5px;
 }
 
 /* .boughtPeopleRow {
@@ -240,7 +243,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-top: -10px;
+  /* margin-top: -10px; */
   color: #d13a44;
   font-size: 12px;
   font-weight: 600;
@@ -259,6 +262,7 @@
 .productDescription {
   /* padding-bottom: 20px; */
   border-bottom: 1.5px solid #eaebeb;
+  flex-wrap: wrap;
 }
 
 .coupon {
@@ -477,7 +481,7 @@
   font-size: 14px;
   line-height: 1.6;
 }
-.aboutProductList ul{
+.aboutProductList ul {
   margin-bottom: 0 !important;
 }
 
@@ -511,21 +515,21 @@
   object-fit: contain;
 }
 
-.productReviewCountValueRate{
+.productReviewCountValueRate {
   font-size: 14px;
   text-decoration: underline;
 }
-.productReviewCountText{
+.productReviewCountText {
   color: #0060afc0;
   margin-left: 5px;
 }
 
-.productReviewCountValue{
+.productReviewCountValue {
   font-size: 14px;
   margin-right: 5px;
 }
 
-.couponCode{
+.couponCode {
   color: #fff;
   font-size: 12px;
   font-weight: 600;
@@ -534,6 +538,11 @@
   border-radius: 4px;
   width: fit-content;
   cursor: pointer;
+}
+
+.saveRupeeText {
+  font-size: 12px;
+  color: #239c3d;
 }
 
 @media (max-width: 1440px) {
@@ -816,21 +825,20 @@
     border-radius: 0;
     border: none;
   }
-  .discountRow{
+  .discountRow {
     display: flex;
     align-items: center;
   }
 }
 
 @media (max-width: 575px) {
-
   /* .itemDetail {
       padding: 10px;
     } */
 
-    .productReviewCountValueRate{
-      font-size: 11px;
-    }
+  .productReviewCountValueRate {
+    font-size: 11px;
+  }
   .imageDetail {
     position: relative;
     top: 0;
@@ -928,12 +936,11 @@
   }
 
   .stockStatusText {
-    margin-top: 10px;
+    margin: 10px 0;
   }
 }
 
 @media (max-width: 480px) {
-
   .imageDetail,
   .productInfo {
     width: 100%;
