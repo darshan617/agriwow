@@ -275,7 +275,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
           <div className={styles.reviewerMeta}>
             <span className={styles.reviewerProfile}>
               <span className={`${styles.userAvatar}`} aria-hidden>
-                {review?.user?.name?.charAt(0)}
+                {review?.user?.name?.charAt(0) || "-"}
               </span>
             </span>
             <span className={styles.reviewerName}>
