@@ -232,6 +232,14 @@ const Footer = () => {
                         Cancellation / Return Policy
                       </Link>
                     </li>
+                    <li>
+                      <Link
+                        href="/warranty-terms-and-conditions"
+                        prefetch={true}
+                      >
+                        Warranty Terms and Conditions
+                      </Link>
+                    </li>
                   </ul>
                 </nav>
               </div>

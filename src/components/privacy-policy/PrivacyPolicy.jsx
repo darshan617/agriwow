@@ -3,20 +3,24 @@ import Link from "next/link";
 import styles from "@/components/privacy-policy/PrivacyPolicy.module.css";
 import { useGetPrivacyPolicyQuery } from "@/redux/apis/privacyPolicyApi";
 const PrivacyPolicy = () => {
-  const { data: privacyPolicyData } = useGetPrivacyPolicyQuery();
+  const { data: privacyPolicyData, isLoading } = useGetPrivacyPolicyQuery();
   const privacyPolicy = privacyPolicyData?.data?.content || [];
-  
+
   return (
     <div className="container">
       <div className={`${styles.breadcrumb} `}>
         <div style={{ margin: "16px 0" }}>
           <ul>
             <li>
-              <Link href="/" prefetch={true}>Home</Link>
+              <Link href="/" prefetch={true}>
+                Home
+              </Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
             <li>
-              <Link href="/privacy-policy" prefetch={true}>Privacy Policy</Link>
+              <Link href="/privacy-policy" prefetch={true}>
+                Privacy Policy
+              </Link>
             </li>
           </ul>
         </div>
@@ -26,17 +30,21 @@ const PrivacyPolicy = () => {
           <h1>Privacy Policy</h1>
         </div>
         <div className={`${styles.privacyPolicyContent} `}>
-          <div className={`${styles.privacyPolicyContentItem} `}>
-            {privacyPolicy?.length > 0 && (
-              <ul>
-                {privacyPolicy.map((item) => (
-                  <li key={item?.id} >
-                    <p>{item?.content}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          {isLoading ? (
+            <p className="text-center m-3">Loading...</p>
+          ) : (
+            <div className={`${styles.privacyPolicyContentItem} `}>
+              {privacyPolicy?.length > 0 && (
+                <ul>
+                  {privacyPolicy.map((item) => (
+                    <li key={item?.id}>
+                      <p>{item?.content}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
