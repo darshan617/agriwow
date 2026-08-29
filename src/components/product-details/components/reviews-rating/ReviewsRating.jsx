@@ -10,6 +10,7 @@ import {
   useDeleteReviewMutation,
   useReviewLikeMutation,
   useReviewDislikeMutation,
+  useReviewHelpfulMutation,
 } from "@/redux/apis/reviewApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import {
@@ -235,6 +236,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   const [reviewDislike, { isLoading: isReviewDislikeLoading }] =
     useReviewDislikeMutation();
 
+  const [reviewHelpful, { isLoading }] = useReviewHelpfulMutation();
+
   const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
   const handleReviewLike = async (reviewId) => {
@@ -264,6 +267,25 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
       }
     } catch (error) {
       console.log(error, "review dislike error");
+    }
+  };
+
+  const handleReviewHelpful = async (review) => {
+    try {
+      const res = await reviewHelpful({
+        body: {
+          user_id: userData?.id,
+          review_id: review?.id,
+        },
+      });
+      if (res?.data?.status) {
+        showToast(res?.data?.message, "success");
+      } else {
+        showToast(res?.error?.message, "error");
+        console.log("error in handleReviewHelpful");
+      }
+    } catch (error) {
+      console.log(error, "error in handleReviewHelpful");
     }
   };
 
@@ -335,18 +357,29 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
         </div>
       </div>
 
-      {/* <div className={styles.reviewContent}>
+      <div className={styles.reviewContent}>
         <span className={styles.reviewContentText}>
           Reviewed in india on 22 july 2026
         </span>
-      </div> */}
-      {/* <div className={styles.reviewProductName}>{ review?.product_name}</div> */}
+      </div>
+      <div className={styles.reviewProductName}>{review?.product_name}</div>
       <div className={styles.reviewTitle}>{review?.review}</div>
-      {/* <div className={styles.helpfulCount}>1 people found this helpful</div> */}
-      {/* <div className={styles.reviewHelpfulBtn}>
-        <button className={styles.helpfulBtn}>Helpful</button>
-        <button className={styles.helpfulBtn}>Report</button>
-      </div> */}
+      <div className={styles.helpfulCount}>
+        {review?.helpful_count || 0} people found this helpful
+      </div>
+      <div className={styles.reviewHelpfulBtn}>
+        <button
+          className={
+            review?.user_reaction === "helpful"
+              ? styles.activeHelpfulBtn
+              : styles.helpfulBtn
+          }
+          onClick={() => handleReviewHelpful(review)}
+        >
+          Helpful
+        </button>
+        {/* <button className={styles.helpfulBtn}>Report</button> */}
+      </div>
       {review?.attachment_urls?.length > 0 && (
         <div className={styles.reviewImages}>
           {review?.attachment_urls?.map((attachment, idx) => (

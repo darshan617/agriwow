@@ -77,6 +77,20 @@ const reviewApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["reviews", "product"],
     }),
+    reviewHelpful: builder.mutation({
+      query: ({ body }) => {
+        const userToken = Cookies.get("userToken");
+        return {
+          url: `/review-helpful`,
+          method: "POST",
+          headers: {
+            ...(userToken && { Authorization: `Bearer ${userToken}` }),
+          },
+          body: body,
+        };
+      },
+      invalidatesTags: ["reviews", "product"],
+    }),
   }),
 });
 
@@ -86,4 +100,5 @@ export const {
   useDeleteReviewMutation,
   useReviewLikeMutation,
   useReviewDislikeMutation,
+  useReviewHelpfulMutation,
 } = reviewApi;
