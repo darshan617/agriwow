@@ -394,38 +394,41 @@ const CartSummery = ({
                     <p className="mb-0 fw-semibold fs-14 mb-2">
                       Payment Method
                     </p>
-                    <div
-                      className={
-                        selectedPaymentMethod === "partial"
-                          ? styles.paymentWrapper
-                          : styles.paymentWrapperTransparent
-                      }
-                    >
-                      <div className="d-flex align-items-center gap-2">
-                        <input
-                          type="radio"
-                          name="paymentMethod"
-                          id="partial-payment"
-                          checked={selectedPaymentMethod === "partial"}
-                          onChange={() => setSelectedPaymentMethod("partial")}
-                        />
-                        <label
-                          htmlFor="partial-payment"
-                          className={`${styles.paymentWrapperLabel} w-100`}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Partial Payment (30%)
-                        </label>
+                    {shippingAmount <= 0 && (
+                      <div
+                        className={
+                          selectedPaymentMethod === "partial"
+                            ? styles.paymentWrapper
+                            : styles.paymentWrapperTransparent
+                        }
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            id="partial-payment"
+                            checked={selectedPaymentMethod === "partial"}
+                            onChange={() => setSelectedPaymentMethod("partial")}
+                          />
+                          <label
+                            htmlFor="partial-payment"
+                            className={`${styles.paymentWrapperLabel} w-100`}
+                            style={{ cursor: "pointer" }}
+                          >
+                            Partial Payment (30%)
+                          </label>
+                        </div>
+                        {selectedPaymentMethod === "partial" && (
+                          <>
+                            <span className={`${styles.paymentWrapperText}`}>
+                              Balance 70% Cash on Delivery (₹{" "}
+                              {(totalAmount - totalAmount * 0.3).toFixed(2)})
+                            </span>
+                          </>
+                        )}
                       </div>
-                      {selectedPaymentMethod === "partial" && (
-                        <>
-                          <span className={`${styles.paymentWrapperText}`}>
-                            Balance 70% Cash on Delivery (₹{" "}
-                            {(totalAmount - totalAmount * 0.3).toFixed(2)})
-                          </span>
-                        </>
-                      )}
-                    </div>
+                    )}
+
                     <div
                       className={
                         selectedPaymentMethod === "full"
