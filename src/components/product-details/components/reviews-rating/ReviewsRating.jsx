@@ -236,7 +236,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   const [reviewDislike, { isLoading: isReviewDislikeLoading }] =
     useReviewDislikeMutation();
 
-  const [reviewHelpful, { isLoading }] = useReviewHelpfulMutation();
+  const [reviewHelpful, { isLoading: isHelpfulLoading }] =
+    useReviewHelpfulMutation();
 
   const { openLoginPopup, getIsLoggedIn } = useLoginPopup();
 
@@ -271,6 +272,10 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
   };
 
   const handleReviewHelpful = async (review) => {
+    if (!getIsLoggedIn()) {
+      openLoginPopup();
+      return;
+    }
     try {
       const res = await reviewHelpful({
         body: {
@@ -376,7 +381,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
           }
           onClick={() => handleReviewHelpful(review)}
         >
-          Helpful
+          {isHelpfulLoading ? "Sending Feedback..." : "Helpful"}
         </button>
         {/* <button className={styles.helpfulBtn}>Report</button> */}
       </div>
