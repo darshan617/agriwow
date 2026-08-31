@@ -303,6 +303,7 @@ const ItemDetail = ({ productDetails }) => {
           landing_page: router?.query?.landing_page || "",
         },
       });
+      console.log(res);
     } catch (error) {
       console.log(error, "error in handleUtm");
     }
