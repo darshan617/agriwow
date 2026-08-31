@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 
 const Breadcrumb = ({ productDetails, blogDetails }) => {
-  console.log(productDetails, "ss");
-
   const categories = useSelector((state) => state.category.categories);
   return (
     <div className="container">
