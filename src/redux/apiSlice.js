@@ -58,6 +58,7 @@ export const apiSlice = createApi({
     "accessoriesSubcategories",
     "signup",
     "warrantyTerms",
+    "utm",
   ],
   overrideExisting: true,
   endpoints: (builder) => ({}),
