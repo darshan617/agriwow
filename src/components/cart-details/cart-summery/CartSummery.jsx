@@ -394,7 +394,7 @@ const CartSummery = ({
                     <p className="mb-0 fw-semibold fs-14 mb-2">
                       Payment Method
                     </p>
-                    {!shippingAmount > 0 && (
+                    {shippingAmount <= 0 && (
                       <div
                         className={
                           selectedPaymentMethod === "partial"
