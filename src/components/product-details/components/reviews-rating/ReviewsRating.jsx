@@ -364,7 +364,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
 
       <div className={styles.reviewContent}>
         <span className={styles.reviewContentText}>
-          Reviewed in india on 22 july 2026
+          Reviewed in india on {review?.created_at}
         </span>
       </div>
       <div className={styles.reviewProductName}>{review?.product_name}</div>
@@ -375,7 +375,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
       <div className={styles.reviewHelpfulBtn}>
         <button
           className={
-            review?.user_reaction === "helpful"
+            review?.user_helpful 
               ? styles.activeHelpfulBtn
               : styles.helpfulBtn
           }
