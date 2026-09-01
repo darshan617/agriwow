@@ -12,6 +12,9 @@ import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { trackViewItemList } from "@/utils/gtm";
+import { useUtmStoreMutation } from "@/redux/apis/utmApi";
+import { useRouter } from "next/router";
+
 
 // Swiper + window-dependent sections stay client-only to avoid hydration
 // mismatches. loading: reuses existing shimmers to reserve space (CLS).
@@ -71,6 +74,7 @@ const DynamicProductsItem = dynamic(
 );
 
 const HomeComponents = () => {
+  const router = useRouter();
   const { data: homeData, isLoading: isHomeDataLoading } =
     useGetHomeDataQuery(undefined);
 
@@ -96,6 +100,38 @@ const HomeComponents = () => {
     firedLists.current.add(listName);
     trackViewItemList(listName, products);
   };
+  const [utmdata, { isLoading }] = useUtmStoreMutation();
+
+
+  const handleUtm = async () => {
+    try {
+      const res = await utmdata({
+        body: {
+          utm_source: router?.query?.utm_source || "",
+          utm_medium: router?.query?.utm_medium || "",
+          utm_campaign: router?.query?.utm_campaign || "",
+          utm_term: router?.query?.utm_term || "",
+          utm_content: router?.query?.utm_content || "",
+          utm_id: router?.query?.utm_id || "",
+          utm_referrer: router?.query?.utm_referrer || "",
+          utm_page_url: router?.query?.utm_page_url || "",
+          gclid: router?.query?.gclid || "",
+          referral: router?.query?.referral || "",
+          landing_page: router?.query?.landing_page || "",
+          full_url:router.asPath || "",
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error, "error in handleUtm");
+    }
+  };
+
+  useEffect(() => {
+    if (router?.query?.utm_source) {
+      handleUtm();
+    }
+  }, [router?.query?.utm_source]);
   useEffect(() => {
     sendViewItemList("Best Selling", bestSellingData);
     sendViewItemList("Agriculture Sprayers", agricultureProductsData);

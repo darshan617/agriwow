@@ -286,6 +286,7 @@ const ItemDetail = ({ productDetails }) => {
     }
   };
 
+
   const handleUtm = async () => {
     try {
       const res = await utmdata({
@@ -301,6 +302,7 @@ const ItemDetail = ({ productDetails }) => {
           gclid: router?.query?.gclid || "",
           referral: router?.query?.referral || "",
           landing_page: router?.query?.landing_page || "",
+          full_url:router.asPath || "",
         },
       });
       console.log(res);
@@ -310,10 +312,10 @@ const ItemDetail = ({ productDetails }) => {
   };
 
   useEffect(() => {
-    if (router?.query?.utm_source) {
+    if (router?.isReady && router?.query?.utm_source) {
       handleUtm();
     }
-  }, [router?.query?.utm_source]);
+  }, [ router?.isReady && router?.query?.utm_source]);
 
   return (
     <div className={`${styles.itemDetail} container`}>
