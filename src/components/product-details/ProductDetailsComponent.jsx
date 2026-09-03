@@ -32,6 +32,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
         categorySlug={categorySlug}
       />
       <ReviewsRating
+        // productName={productDetails?.data?.name}
         productId={productDetails?.data?.id}
         productName={productDetails?.data?.name}
         ratingData={productDetails?.data?.rating_summary}
