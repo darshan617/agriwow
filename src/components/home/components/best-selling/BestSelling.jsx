@@ -8,7 +8,8 @@ const BestSelling = ({
   bestSellingData,
   bannersLink,
   isHomeDataLoading = false,
-  viewAllLink = "/product-category/best-selling",
+  viewAllLink = "/best-selling",
+  type = ""
 }) => {
   return (
     <div className="sectionSpace">
@@ -42,6 +43,7 @@ const BestSelling = ({
           },
         ]}
         overlayFooter="Everything You Need for Smart Farming"
+        type={type}
       />
     </div>
   );

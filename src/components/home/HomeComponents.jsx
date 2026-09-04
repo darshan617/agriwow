@@ -158,9 +158,10 @@ const HomeComponents = () => {
       <Marquee />
       <DynamicBestSelling
         bestSellingData={bestSellingData}
-        viewAllLink={`/product-category/${categories?.[0]?.slug}`}
-        bannersLink={banners?.best_selling}
+        viewAllLink={`/best-seller`}
+        bannersLink={`/best-seller`}
         isHomeDataLoading={isHomeDataLoading && !homeData}
+        type="bestSelling"
       />
       <Detail />
 

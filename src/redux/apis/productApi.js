@@ -14,7 +14,14 @@ const productApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    getBestSellerProducts: builder.query({
+      query: () => ({
+        url: "/products/best-selling",
+        method: "GET",
+      }),
+      providesTags: ["bestSellerProducts"],
+    }),
   }),
 });
 
-export const { useGetProductDetailsQuery } = productApi;
+export const { useGetProductDetailsQuery, useGetBestSellerProductsQuery } = productApi;

@@ -575,8 +575,9 @@ const ItemDetail = ({ productDetails }) => {
                     </div>
                   </div>
                   <span className={styles.mrpText}>
+                  MRP :
                     <span className={styles.oldPrice}>
-                      {" "}
+                       {" "}
                       ₹ {productDetails?.data?.price.toLocaleString()}
                     </span>
                   </span>
