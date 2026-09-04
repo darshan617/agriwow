@@ -33,6 +33,7 @@ export const apiSlice = createApi({
     "reviews",
     "faqs",
     "product",
+    "bestSellerProducts",
     "ProductsBySubCategory",
     "reviewApi",
     "updateReview",

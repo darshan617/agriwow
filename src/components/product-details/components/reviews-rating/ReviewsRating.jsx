@@ -18,6 +18,7 @@ import {
   useLoginPopup,
 } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import CustomPopup from "@/components/custom-popup/CustomPopup";
+import { CiUser } from "react-icons/ci";
 
 const Stars = ({ count }) => (
   <div className={styles.reviewerStars}>
@@ -56,11 +57,11 @@ const RatingPicker = ({ rating, onChange }) => (
 );
 
 const RatingSummary = ({
+  productName,
   average,
   totalRatings,
   totalReviews,
   ratingData,
-  productDetails,
 }) => (
   <>
     {ratingData?.total_reviews > 0 && (
@@ -182,7 +183,7 @@ const normalizeReviewMedia = (attachmentUrls = [], imageUrls = []) =>
       type: attachment?.type || "image",
       url: attachment?.url || imageUrls?.[idx] || "",
     }))
-    .filter((item) => item.url);
+    .filter((item) => item?.url);
 
 const normalizeProductReviewMedia = (media = []) =>
   media
@@ -190,7 +191,7 @@ const normalizeProductReviewMedia = (media = []) =>
       type: item?.media_type || item?.type || "image",
       url: item?.media_url || item?.url || "",
     }))
-    .filter((item) => item.url);
+    .filter((item) => item?.url);
 
 const getAttachmentFilename = (item) =>
   item?.file || item?.url?.split("/").pop()?.split("?")[0] || "attachment";
@@ -225,10 +226,16 @@ const appendAttachmentsToFormData = async (formData, media = []) => {
   return files.length;
 };
 
-const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
+const ReviewCard = ({
+  review,
+  productName,
+  onEdit,
+  onDelete,
+  onMediaClick,
+}) => {
   const { showToast } = useToast();
-  const userData = Cookies.get("userData")
-    ? JSON.parse(decodeURIComponent(Cookies.get("userData")))
+  const userData = Cookies?.get("userData")
+    ? JSON.parse(decodeURIComponent(Cookies?.get("userData")))
     : null;
   const { date, helpful = { up: 0, down: 0 }, rating } = review;
   const [reviewLike, { isLoading: isReviewLikeLoading }] =
@@ -298,11 +305,10 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
     <div className={styles.reviewItem}>
       <div className={styles.reviewTop}>
         <div className={styles.reviewerInfo}>
-          <Stars count={rating} />
           <div className={styles.reviewerMeta}>
             <span className={styles.reviewerProfile}>
               <span className={`${styles.userAvatar}`} aria-hidden>
-                {review?.user?.name?.charAt(0) || "-"}
+                <CiUser size={20} />
               </span>
             </span>
             <span className={styles.reviewerName}>
@@ -311,6 +317,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
             <span className={styles.verifiedBadge}>Verified Purchase</span>
           </div>
           <div className={styles.reviewDate}>{date}</div>
+          <Stars count={rating} />
+          <div className={styles.reviewProductName}>{productName}</div>
         </div>
         <div className={styles.helpfulBtns}>
           <button
@@ -353,7 +361,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
               </button>
               <button
                 className={styles.helpfulBtn}
-                onClick={() => onDelete(review.id)}
+                onClick={() => onDelete(review?.id)}
               >
                 Delete
               </button>
@@ -367,7 +375,6 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
           Reviewed in india on {review?.created_at}
         </span>
       </div>
-      <div className={styles.reviewProductName}>{review?.product_name}</div>
       <div className={styles.reviewTitle}>{review?.review}</div>
       <div className={styles.helpfulCount}>
         {review?.helpful_count || 0} people found this helpful
@@ -375,9 +382,7 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
       <div className={styles.reviewHelpfulBtn}>
         <button
           className={
-            review?.user_helpful 
-              ? styles.activeHelpfulBtn
-              : styles.helpfulBtn
+            review?.user_helpful ? styles.activeHelpfulBtn : styles.helpfulBtn
           }
           onClick={() => handleReviewHelpful(review)}
         >
@@ -395,8 +400,8 @@ const ReviewCard = ({ review, onEdit, onDelete, onMediaClick }) => {
               onClick={() =>
                 onMediaClick(
                   normalizeReviewMedia(
-                    review.attachment_urls,
-                    review.image_urls,
+                    review?.attachment_urls,
+                    review?.image_urls,
                   ),
                   idx,
                 )
@@ -520,16 +525,16 @@ const ReviewsRating = ({
 
   const handleEditReview = (review) => {
     setEditingReview(review);
-    setRating(review.rating || 0);
-    setReviewText(review.review || "");
+    setRating(review?.rating || 0);
+    setReviewText(review?.review || "");
     setSelectedMedia(
-      (review.attachment_urls || [])
+      (review?.attachment_urls || [])
         .map((attachment, idx) => ({
           type: attachment?.type || "image",
           file: attachment?.file,
-          url: attachment?.url || review.image_urls?.[idx] || "",
+          url: attachment?.url || review?.image_urls?.[idx] || "",
         }))
-        .filter((item) => item.url),
+        .filter((item) => item?.url),
     );
     setShowReviewForm(true);
   };
@@ -537,7 +542,7 @@ const ReviewsRating = ({
   const handleSubmitReview = async (e) => {
     e.preventDefault();
 
-    if (!Cookies.get("userToken")) {
+    if (!Cookies?.get("userToken")) {
       showToast("Please log in to submit a review", "error");
       return;
     }
@@ -580,10 +585,10 @@ const ReviewsRating = ({
       }
 
       if (res?.data?.success || res?.data?.status) {
-        showToast(res.data.message || "Review updated successfully", "success");
+        showToast(res?.data?.message || "Review updated successfully", "success");
         setReviewsList((prev) =>
           prev.map((item) =>
-            item.id === editingReview.id
+            item?.id === editingReview?.id
               ? {
                   ...item,
                   rating,
@@ -617,13 +622,13 @@ const ReviewsRating = ({
       body: formData,
     });
 
-    if (res.error) {
-      showToast(res.error?.data?.message || "Failed to submit review", "error");
+    if (res?.error) {
+      showToast(res?.error?.data?.message || "Failed to submit review", "error");
       return;
     }
 
     if (res?.data?.success || res?.data?.status) {
-      showToast(res.data.message, "success");
+      showToast(res?.data?.message, "success");
       setReviewText("");
       setRating(0);
       setSelectedMedia([]);
@@ -845,8 +850,9 @@ const ReviewsRating = ({
         <div className={styles.reviewsList}>
           {visibleReviews.map((review) => (
             <ReviewCard
-              key={review.id}
+              key={review?.id}
               review={review}
+              productName={productName}
               onEdit={handleEditReview}
               onDelete={handleDeleteReview}
               onMediaClick={openLightbox}

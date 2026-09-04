@@ -34,6 +34,7 @@ const ProductsItem = ({
   categorySlug,
   viewAllLink = "/product-category/agriculture-sprayers",
   bannersLink,
+  type = ""
 }) => {
   const {
     className: bannerImageClassName,
@@ -75,7 +76,7 @@ const ProductsItem = ({
                 <div className={`col-lg-3 col-md-4 col-12 ${styles.promoCol}`}>
                   <Link
                     href={
-                      `/product-category/${bannersLink?.slug}` || viewAllLink
+                     type === "bestSelling" ? bannersLink :  `/product-category/${bannersLink?.slug}` || viewAllLink
                     }
                     prefetch={true}
                   >
