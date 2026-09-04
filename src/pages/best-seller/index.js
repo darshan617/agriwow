@@ -92,7 +92,7 @@ const BestSeller = () => {
               <ProductCardShimmer key={index} />
             ))
           ) : paginatedProducts.length > 0 ? (
-            paginatedProducts.map((item, index) => (
+            paginatedProducts?.map((item, index) => (
               <ProductCard
                 key={item?.id}
                 type="productPage"
