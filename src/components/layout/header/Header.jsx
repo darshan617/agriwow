@@ -852,11 +852,11 @@ const Header = ({ scrolled: scrolledFromParent }) => {
             <div className={`${styles.megaInner}`}>
               <div className={styles.megaGrid}>
                 {renderMenuProductColumns(menuProductData)}
-                <div className={`${styles.megaGridItem}`}>
+                <div className={`${styles.megaList}`}>
                   <Link href="/accessories" className={`${styles.megaColumnTitle}`}>Accessories</Link>
-                  {/* {accessoriesSubcategories?.map((subcategory) => (
+                  {accessoriesSubcategories?.slice(0, 7)?.map((subcategory) => (
                     <Link href={`/accessories/${subcategory.slug}`} className={`${styles.megaList}`} key={subcategory.id}>{subcategory.name}</Link>
-                  ))} */}
+                  ))}
                 </div>
               </div>
               <div className={`${styles.megaViewAllWrap}`}>
