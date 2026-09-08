@@ -50,7 +50,7 @@ const TrendingBlog = ({ type = "blog", trendingBlogs }) => {
 
         <ul className={styles.list}>
           {trendingBlogs?.length > 0 ? (
-            trendingBlogs.slice(0, 3).map((topic) => (
+            trendingBlogs?.slice(0, 3).map((topic) => (
               <li key={topic?.id}>
                 <Link href={`/blog/${topic?.slug}`} className={styles.listItem} prefetch={true}>
                   <span className={styles.thumb}>
