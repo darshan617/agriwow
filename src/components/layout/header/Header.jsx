@@ -853,9 +853,20 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               <div className={styles.megaGrid}>
                 {renderMenuProductColumns(menuProductData)}
                 <div className={`${styles.megaList}`}>
-                  <Link href="/accessories" className={`${styles.megaColumnTitle}`}>Accessories</Link>
+                  <Link
+                    href="/accessories"
+                    className={`${styles.megaColumnTitle}`}
+                  >
+                    Accessories
+                  </Link>
                   {accessoriesSubcategories?.slice(0, 7)?.map((subcategory) => (
-                    <Link href={`/accessories/${subcategory.slug}`} className={`${styles.megaList}`} key={subcategory.id}>{subcategory.name}</Link>
+                    <Link
+                      href={`/accessories/${subcategory.slug}`}
+                      className={`${styles.megaList}`}
+                      key={subcategory.id}
+                    >
+                      {subcategory.name}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -926,6 +937,25 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                       linkClassName: styles.drawerMegaLink,
                       onLinkClick: closeMenu,
                     })}
+                    <div className={`${styles.megaList}`}>
+                      <Link
+                        href="/accessories"
+                        className={`${styles.megaColumnTitle}`}
+                      >
+                        Accessories
+                      </Link>
+                      {accessoriesSubcategories
+                        ?.slice(0, 7)
+                        ?.map((subcategory) => (
+                          <Link
+                            href={`/accessories/${subcategory.slug}`}
+                            className={`${styles.drawerMegaLink}`}
+                            key={subcategory.id}
+                          >
+                            {subcategory.name}
+                          </Link>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>
