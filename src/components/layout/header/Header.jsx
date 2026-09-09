@@ -857,7 +857,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                     href="/accessories"
                     className={`${styles.megaColumnTitle}`}
                   >
-                    Accessories
+                    <span>Accessories</span>
                   </Link>
                   {accessoriesSubcategories?.slice(0, 7)?.map((subcategory) => (
                     <Link
@@ -865,7 +865,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                       className={`${styles.megaList}`}
                       key={subcategory.id}
                     >
-                      {subcategory.name}
+                      <span>{subcategory.name} acc</span>
                     </Link>
                   ))}
                 </div>
@@ -942,7 +942,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                         href="/accessories"
                         className={`${styles.megaColumnTitle}`}
                       >
-                        Accessories
+                        <span>Accessories</span>
                       </Link>
                       {accessoriesSubcategories
                         ?.slice(0, 7)
@@ -952,7 +952,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                             className={`${styles.drawerMegaLink}`}
                             key={subcategory.id}
                           >
-                            {subcategory.name}
+                            <span>{subcategory.name} acc</span>
                           </Link>
                         ))}
                     </div>
