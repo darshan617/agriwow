@@ -134,13 +134,13 @@ const Footer = () => {
                     aria-hidden
                   />
                   <Link
-                    href="https://wa.me/+919770501981?text=Hello, I am interested in your products"
+                    href="https://wa.me/+919238300367?text=Hello, I am interested in your products"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.footerPhoneLink}
                     prefetch={true}
                   >
-                    +91 9770501981
+                    +91 9238300367
                   </Link>
                 </p>
               </div>

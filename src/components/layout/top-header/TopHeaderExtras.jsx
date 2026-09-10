@@ -34,12 +34,12 @@ export const TopHeaderHelp = () => (
   <div className={styles.topHeaderRight}>
     <h2>Need Help?</h2>
     <Link
-      href="https://wa.me/+919770501981?text=I'm%20interested%20in%20your%20products"
+      href="https://wa.me/+919238300367?text=I'm%20interested%20in%20your%20products"
       target="_blank"
       rel="noopener noreferrer"
       prefetch={true}
     >
-      +91 97705 01981
+      +91 92383 00367
     </Link>
   </div>
 );
