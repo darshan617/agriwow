@@ -198,6 +198,15 @@ const CartSummery = ({
           source: source,
           payment_type: type,
           address_id: address_id,
+          utm_source: router?.query?.utm_source || "",
+          utm_medium: router?.query?.utm_medium || "",
+          utm_campaign: router?.query?.utm_campaign || "",
+          utm_id: router?.query?.utm_id || "",
+          campaign_id: router?.query?.campaign_id || "",
+          utm_term: router?.query?.utm_term || "",
+          utm_content: router?.query?.utm_content || "",
+          gclid: router?.query?.gclid || "",
+          landing_page: router?.query?.landing_page || "",
         },
       });
 
