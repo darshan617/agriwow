@@ -865,7 +865,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                       className={`${styles.megaList}`}
                       key={subcategory.id}
                     >
-                      <span>{subcategory.name} acc</span>
+                      <li>{subcategory.name} acc</li>
                     </Link>
                   ))}
                 </div>

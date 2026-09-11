@@ -141,8 +141,6 @@ const ProductCard = ({
     }
   };
 
-
-
   const handleBuyProduct = () => {
     if (isOutOfStock) {
       showToast("Product is out of stock", "error");
@@ -320,15 +318,15 @@ const ProductCard = ({
         onClick={handleSelectItem}
       >
         {image ? (
-        <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width: 575px) 45vw, (max-width: 1199px) 25vw, 20vw"
-            className={`${styles.productImg}`}
-          />
-        </div>
+          <div className={`${styles.imageLayer} ${styles.imageLayerPrimary}`}>
+            <Image
+              src={image}
+              alt={name}
+              fill
+              sizes="(max-width: 575px) 45vw, (max-width: 1199px) 25vw, 20vw"
+              className={`${styles.productImg}`}
+            />
+          </div>
         ) : (
           <div className={styles.imagePlaceholder}>
             <Image src={noImage} alt="No Image" width={220} height={220} />
@@ -377,7 +375,9 @@ const ProductCard = ({
           {discount > 0 && (
             <span className={`${styles.discountText}`}>{discount}% OFF</span>
           )}
-          {oldPrice > 0 && <span>Save ₹ {Math.ceil((oldPrice - price) || 0)}</span>}
+          {oldPrice > 0 && (
+            <span>Save ₹ {Math.ceil(oldPrice - price || 0)}</span>
+          )}
         </div>
       </Link>
 

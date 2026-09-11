@@ -43,7 +43,9 @@ const infoItems = (deliveryData) => [
   {
     icon: deliveryIcons.cod,
     title: deliveryData?.cod_available ? "COD Available" : "COD Not Available",
-    desc: deliveryData?.cod_available ? "You can pay at the time of delivery" : "You cannot pay at the time of delivery",
+    desc: deliveryData?.cod_available
+      ? "You can pay at the time of delivery"
+      : "You cannot pay at the time of delivery",
     colorClass: "dd-info-title--dark",
   },
   {
@@ -141,18 +143,18 @@ export default function DeliveryDetails({ productDetails }) {
               <span className={styles.oldPrice}>
                 {" "}
                 ₹ {totalPrice.toLocaleString()}
-              </span> <br />
+              </span>{" "}
+              <br />
             </div>
-              <div className={`${styles.discountRow}`}>
-                {unitPrice > 0 && unitSellingPrice < unitPrice && (
-                  <>
-                    <span className={`${styles.discountText}`}>
-                      {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
-                    </span>
-                  </>
-                )}
-              </div>
-
+            <div className={`${styles.discountRow}`}>
+              {unitPrice > 0 && unitSellingPrice < unitPrice && (
+                <>
+                  <span className={`${styles.discountText}`}>
+                    {`${Math.round(((unitPrice - unitSellingPrice) / unitPrice) * 100)}% OFF`}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
           {productDetails?.data?.discount > 0 && (
             <div className={styles.discountRow}>
@@ -218,6 +220,15 @@ export default function DeliveryDetails({ productDetails }) {
                   productId: productDetails?.data?.id,
                   quantity: qty,
                   userId: userData?.id,
+                  utm_source: router?.query?.utm_source,
+                  utm_medium: router?.query?.utm_medium,
+                  utm_campaign: router?.query?.utm_campaign,
+                  utm_id: router?.query?.utm_id,
+                  campaign_id: router?.query?.campaign_id,
+                  utm_term: router?.query?.utm_term,
+                  utm_content: router?.query?.utm_content,
+                  gclid: router?.query?.gclid,
+                  landing_page: router?.query?.landing_page,
                 },
               });
             }}
@@ -288,13 +299,14 @@ export default function DeliveryDetails({ productDetails }) {
           </button>
         </div>
 
-          
         <div className={styles.ddPincodeHint}>
-          {pincodeData ? `Pincode: ${pincodeData?.pincode} is serviceable at your location` : "Check serviceable at your location"}
+          {pincodeData
+            ? `Pincode: ${pincodeData?.pincode} is serviceable at your location`
+            : "Check serviceable at your location"}
         </div>
 
-          
-          {pincodeData && infoItems( pincodeData).map((item, index) => (
+        {pincodeData &&
+          infoItems(pincodeData).map((item, index) => (
             <div key={index} className={styles.ddInfoItem}>
               <div className={styles.ddInfoIcon}>{item.icon}</div>
 
@@ -310,8 +322,8 @@ export default function DeliveryDetails({ productDetails }) {
                 )}
               </div>
             </div>
-            ))}  
-        </div>
+          ))}
+      </div>
     </div>
   );
 }
