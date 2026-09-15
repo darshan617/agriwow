@@ -15,12 +15,11 @@ import { trackViewItemList } from "@/utils/gtm";
 import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 import { useRouter } from "next/router";
 
-
 // Swiper + window-dependent sections stay client-only to avoid hydration
 // mismatches. loading: reuses existing shimmers to reserve space (CLS).
 const DynamicTopBanner = dynamic(
   () => import("@/components/layout/top-banner/TopBanner"),
-  { ssr: false, loading: () => <TopBannerShimmer /> },
+  { ssr: true, loading: () => <TopBannerShimmer /> },
 );
 const DynamicHomeBanner = dynamic(
   () => import("@/components/home/components/banner/home-banner/HomeBanner"),
@@ -102,7 +101,6 @@ const HomeComponents = () => {
   };
   const [utmdata, { isLoading }] = useUtmStoreMutation();
 
-
   const handleUtm = async () => {
     try {
       const res = await utmdata({
@@ -118,7 +116,7 @@ const HomeComponents = () => {
           gclid: router?.query?.gclid || "",
           referral: router?.query?.referral || "",
           landing_page: router?.query?.landing_page || "",
-          full_url:router.asPath || "",
+          full_url: router.asPath || "",
         },
       });
       console.log(res);
