@@ -115,7 +115,7 @@ const renderMenuProductColumns = (
           {item?.name}
         </Link>
         <ul className={`${styles.megaList}`}>
-          {item?.subcategories?.map((link) => (
+          {item?.subcategories?.slice(0, 7)?.map((link) => (
             <li key={link?.slug ?? link?.name}>
               <Link
                 href={`/product-category/${item?.slug}/${link?.slug}`}
