@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/components/layout/top-banner/TopBanner.module.css";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
