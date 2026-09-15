@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/components/layout/top-banner/TopBanner.module.css";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -16,8 +16,7 @@ const TopBanner = ({ categoriesData: categoriesDataProp }) => {
     isLoading: isHomeDataLoading,
     isUninitialized,
   } = useGetHomeDataQuery(undefined, { skip: Boolean(categoriesDataProp) });
-  const categoriesData =
-    categoriesDataProp ?? homeData?.data?.categories;
+  const categoriesData = categoriesDataProp ?? homeData?.data?.categories;
 
   const showShimmer =
     !categoriesData?.length &&
@@ -46,10 +45,14 @@ const TopBanner = ({ categoriesData: categoriesDataProp }) => {
             992: { slidesPerView: 6 },
           }}
         >
-          {categoriesData?.map((category, idx) => (
+          {categoriesDataProp?.map((category, idx) => (
             <SwiperSlide key={idx}>
               <Link
-                href={category?.slug === 'accessories' ? '/accessories' :`/product-category/${category?.slug}`}
+                href={
+                  category?.slug === "accessories"
+                    ? "/accessories"
+                    : `/product-category/${category?.slug}`
+                }
                 prefetch={true}
               >
                 <div className={`${styles.categoryItem}`}>
