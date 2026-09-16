@@ -26,7 +26,10 @@ const ProductDetailsComponent = ({ productDetails }) => {
           </div>
         </div>
       </div>
-      <FrequentlyBought productDetails={productDetails} frequentlyBoughtProducts={frequentlyBoughtProducts} />
+      <FrequentlyBought
+        productDetails={productDetails}
+        frequentlyBoughtProducts={frequentlyBoughtProducts}
+      />
       <SimilarProduct
         similarProducts={similarProducts}
         categorySlug={categorySlug}

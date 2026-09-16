@@ -8,6 +8,7 @@ import {
   getCartSessionId,
   useMergeCartMutation,
 } from "@/redux/apis/addToCartApi";
+import { markBuyNowAddPending } from "@/redux/apis/buyProductApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
 import { trackLogin } from "@/utils/gtm";
@@ -29,17 +30,27 @@ export const LoginPopupProvider = ({ children }) => {
   const router = useRouter();
   const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
+  const [pendingBuyNow, setPendingBuyNow] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
   const [mergeCart] = useMergeCartMutation();
   const { showToast } = useToast();
 
+  const closeLoginPopup = () => {
+    setShowPopup("");
+    setPhone("");
+    setPendingBuyNow(null);
+  };
+
   useEffect(() => {
     const syncAuthState = () => setIsLoggedIn(getIsLoggedIn());
     syncAuthState();
 
-    const handleRouteChange = () => syncAuthState();
+    const handleRouteChange = () => {
+      syncAuthState();
+      closeLoginPopup();
+    };
     const handleWindowFocus = () => syncAuthState();
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
@@ -58,11 +69,9 @@ export const LoginPopupProvider = ({ children }) => {
     };
   }, [router.events]);
 
-  const openLoginPopup = () => setShowPopup("login");
-
-  const closeLoginPopup = () => {
-    setShowPopup("");
-    setPhone("");
+  const openLoginPopup = ({ buyNowData = null } = {}) => {
+    setPendingBuyNow(buyNowData);
+    setShowPopup("login");
   };
 
   const goToVerifyOtp = () => setShowPopup("verify-otp");
@@ -80,11 +89,19 @@ export const LoginPopupProvider = ({ children }) => {
       });
       if (res?.data?.success || res?.data?.status) {
         setShowPopup("verify-otp");
-      }else{
-        showToast(res?.error?.data?.message || res?.error?.message || "Something went wrong", "error");
+      } else {
+        showToast(
+          res?.error?.data?.message ||
+            res?.error?.message ||
+            "Something went wrong",
+          "error",
+        );
       }
     } catch (error) {
-      showToast(error?.data?.message || error?.message || "Something went wrong", "error");
+      showToast(
+        error?.data?.message || error?.message || "Something went wrong",
+        "error",
+      );
     }
   };
 
@@ -115,6 +132,25 @@ export const LoginPopupProvider = ({ children }) => {
           showToast(res?.data?.message, "success");
           setIsLoggedIn(true);
           trackLogin("otp");
+          if (pendingBuyNow?.productId) {
+            markBuyNowAddPending({
+              productId: pendingBuyNow.productId,
+              quantity: Number(pendingBuyNow.quantity),
+              userId: res?.data?.user?.id,
+            });
+            router.push({
+              pathname: "/checkout",
+              query: {
+                productId: pendingBuyNow.productId,
+                quantity: Number(pendingBuyNow.quantity),
+                userId: res?.data?.user?.id,
+              },
+            });
+
+            closeLoginPopup();
+            return;
+          }
+
           closeLoginPopup();
         } else {
           console.error("OTP verification failed", res?.error);
@@ -126,12 +162,6 @@ export const LoginPopupProvider = ({ children }) => {
       console.log(error, "error");
     }
   };
-
-  useEffect(() => {
-    if (router?.pathname) {
-      closeLoginPopup();
-    }
-  }, [router?.pathname]);
 
   return (
     <LoginPopupContext.Provider

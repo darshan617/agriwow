@@ -76,6 +76,7 @@ const CustomerInfo = () => {
       Cookies.remove("cartSessionId");
       Cookies.remove("minPrice");
       Cookies.remove("maxPrice");
+      Cookies.remove("PrdDts");
       showToast("Logged out successfully", "success");
       router.push("/");
     } catch (error) {
@@ -90,7 +91,9 @@ const CustomerInfo = () => {
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
           <ul>
             <li>
-              <Link href="/" prefetch={true}>Home</Link>
+              <Link href="/" prefetch={true}>
+                Home
+              </Link>
             </li>
             <li className={styles.breadcrumbSeparator} aria-hidden>
               /
