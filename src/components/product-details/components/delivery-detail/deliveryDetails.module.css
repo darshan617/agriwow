@@ -310,6 +310,7 @@
   background: #239c3d;
   color: #fff;
   border: none;
+  width: fit-content;
   border-radius: 8px;
   padding: 0 16px;
   font-weight: 800;
@@ -378,6 +379,14 @@
   .ddWhatsappText {
     font-size: 13px;
   }
+  .ddPincodeRow{
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .ddUpdateBtn{
+    padding: 10px 15px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -442,11 +451,7 @@
     padding: 8px;
   }
 
-  .ddUpdateBtn {
-    padding: 0 8px;
-    font-size: 12px;
-    font-weight: 600;
-  }
+
 
   .ddCard {
     margin-left: 0;
@@ -496,6 +501,11 @@
     border-radius: 6px;
     font-size: 14px;
     font-weight: 700;
+  }
+
+  .ddPincodeRow{
+    flex-direction: row;
+    gap: 0;
   }
 }
 
@@ -554,7 +564,6 @@
 
   .ddUpdateBtn {
     border-radius: 8px;
-    padding: 0 8px;
     font-weight: 600;
     font-size: 13px;
   }

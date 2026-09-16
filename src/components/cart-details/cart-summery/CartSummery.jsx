@@ -68,6 +68,8 @@ const CartSummery = ({
   hideCoupon = false,
   setShowAddressForm,
 }) => {
+  console.log(cartItemsProp, cartData);
+
   const router = useRouter();
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
@@ -307,6 +309,10 @@ const CartSummery = ({
     }
   }, [cartData?.coupon?.code, cartData]);
 
+  const dataa = cartData?.data?.some((item, idx) => {
+    return item?.product?.product_type === "accessory";
+  });
+
   return (
     <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
       {/* Prefetch on cart only; place-order still awaits ensureRazorpayLoaded */}
@@ -403,40 +409,44 @@ const CartSummery = ({
                     <p className="mb-0 fw-semibold fs-14 mb-2">
                       Payment Method
                     </p>
-                    {shippingAmount <= 0 && (
-                      <div
-                        className={
-                          selectedPaymentMethod === "partial"
-                            ? styles.paymentWrapper
-                            : styles.paymentWrapperTransparent
-                        }
-                      >
-                        <div className="d-flex align-items-center gap-2">
-                          <input
-                            type="radio"
-                            name="paymentMethod"
-                            id="partial-payment"
-                            checked={selectedPaymentMethod === "partial"}
-                            onChange={() => setSelectedPaymentMethod("partial")}
-                          />
-                          <label
-                            htmlFor="partial-payment"
-                            className={`${styles.paymentWrapperLabel} w-100`}
-                            style={{ cursor: "pointer" }}
-                          >
-                            Partial Payment (30%)
-                          </label>
+                    {shippingAmount <= 0 &&
+                      (cartData?.data?.product?.product_type !== "accessory" ||
+                        dataa) && (
+                        <div
+                          className={
+                            selectedPaymentMethod === "partial"
+                              ? styles.paymentWrapper
+                              : styles.paymentWrapperTransparent
+                          }
+                        >
+                          <div className="d-flex align-items-center gap-2">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              id="partial-payment"
+                              checked={selectedPaymentMethod === "partial"}
+                              onChange={() =>
+                                setSelectedPaymentMethod("partial")
+                              }
+                            />
+                            <label
+                              htmlFor="partial-payment"
+                              className={`${styles.paymentWrapperLabel} w-100`}
+                              style={{ cursor: "pointer" }}
+                            >
+                              Partial Payment (30%)
+                            </label>
+                          </div>
+                          {selectedPaymentMethod === "partial" && (
+                            <>
+                              <span className={`${styles.paymentWrapperText}`}>
+                                Balance 70% Cash on Delivery (₹{" "}
+                                {(totalAmount - totalAmount * 0.3).toFixed(2)})
+                              </span>
+                            </>
+                          )}
                         </div>
-                        {selectedPaymentMethod === "partial" && (
-                          <>
-                            <span className={`${styles.paymentWrapperText}`}>
-                              Balance 70% Cash on Delivery (₹{" "}
-                              {(totalAmount - totalAmount * 0.3).toFixed(2)})
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    )}
+                      )}
 
                     <div
                       className={

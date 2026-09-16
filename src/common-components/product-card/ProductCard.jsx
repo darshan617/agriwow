@@ -148,7 +148,13 @@ const ProductCard = ({
     }
 
     if (!getIsLoggedIn()) {
-      openLoginPopup();
+      openLoginPopup({
+        buyNowData: {
+          productId,
+          quantity: 1,
+          userId: userData?.id,
+        },
+      });
       return;
     }
 
