@@ -429,7 +429,9 @@ const ItemDetail = ({ productDetails }) => {
               slidesPerView={4}
               breakpoints={{
                 0: { slidesPerView: 3 },
-                576: { slidesPerView: 4 },
+                575: { slidesPerView: 4 },
+                1023: { slidesPerView: 3},
+                1400: { slidesPerView: 4}
               }}
             >
               {gallery.map((item, index) => (
