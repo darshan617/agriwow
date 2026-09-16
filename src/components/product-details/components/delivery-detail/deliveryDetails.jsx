@@ -206,7 +206,14 @@ export default function DeliveryDetails({ productDetails }) {
                 return;
               }
               if (!getIsLoggedIn()) {
-                openLoginPopup();
+                const buyNowData = {
+                  productId: productDetails?.data?.id,
+                  quantity: qty,
+                  userId: userData?.id,
+                };
+
+                openLoginPopup({ buyNowData });
+
                 return;
               }
               markBuyNowAddPending({

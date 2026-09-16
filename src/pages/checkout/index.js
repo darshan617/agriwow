@@ -147,11 +147,16 @@ const Checkout = () => {
 
   const handleBuyProduct = async () => {
     try {
+      const quantity = Number(
+        Array.isArray(router?.query?.quantity)
+          ? router.query.quantity[0]
+          : router?.query?.quantity,
+      );
       const res = await buyProduct({
         body: {
           user_id: router?.query?.userId,
           product_id: router?.query?.productId,
-          quantity: router?.query?.quantity,
+          quantity,
         },
       });
       if (res?.data?.success || res?.data?.status) {
@@ -318,7 +323,6 @@ const Checkout = () => {
         </div>
       </div>
 
-    
       <OrderInformation />
     </Layout>
   );
