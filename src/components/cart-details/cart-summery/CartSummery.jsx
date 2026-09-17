@@ -309,9 +309,9 @@ const CartSummery = ({
     }
   }, [cartData?.coupon?.code, cartData]);
 
-  const dataa = cartData?.data?.some((item, idx) => {
-    return item?.product?.product_type === "accessory";
-  });
+  // const dataa = cartData?.data?.some((item, idx) => {
+  //   return item?.product?.product_type === "accessory";
+  // });
 
   return (
     <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
