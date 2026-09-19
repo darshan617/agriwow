@@ -410,8 +410,7 @@ const CartSummery = ({
                       Payment Method
                     </p>
                     {shippingAmount <= 0 &&
-                      (cartData?.data?.product?.product_type !== "accessory" ||
-                        dataa) && (
+                      (cartData?.data?.product?.product_type !== "accessory") && (
                         <div
                           className={
                             selectedPaymentMethod === "partial"
