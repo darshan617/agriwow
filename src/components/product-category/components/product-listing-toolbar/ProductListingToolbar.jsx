@@ -98,8 +98,7 @@ function ProductListingToolbar({
     return sortedProducts.slice(start, start + pageSize);
   }, [sortedProducts, currentPage, pageSize]);
 
-  const rangeStart =
-    displayCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const rangeStart = displayCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const rangeEnd = Math.min(currentPage * pageSize, displayCount);
 
   const isFirstPage = currentPage <= 1;
@@ -207,34 +206,35 @@ function ProductListingToolbar({
       <div className={styles.productListWrapper}>
         {isLoading ? (
           <>
-           {Array.from({ length: 12 }).map((_, index) => (
-            <ProductCardShimmer key={index} />
-           ))}
+            {Array.from({ length: 12 }).map((_, index) => (
+              <ProductCardShimmer key={index} />
+            ))}
           </>
         ) : paginatedProducts?.length > 0 ? (
           paginatedProducts.map((item, index) => (
             <ProductCard
-            key={item?.id ?? item?.slug ?? item?.name}
-            type="productPage"
-            image={item?.thumbnail ?? item?.gallery?.[1]}
-            imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
-            discount={item?.discount}
-            isBestSeller={item?.is_best_selling}
-            isTrending={item?.is_trending}
-            isFeatured={item?.is_featured}
-            isTopRated={item?.is_top_rated}
-            name={item?.name}
-            price={item?.selling_price}
-            oldPrice={item?.price}
-            reviews={item?.total_reviews}
-            average_rating={item?.average_rating}
-            slug={item?.slug}
-            productId={item?.id}
-            quantity={item?.quantity}
-            similarProductData={item}
-            itemListName="Category Listing"
-            itemIndex={index}
-          />
+              key={item?.id ?? item?.slug ?? item?.name}
+              type="productPage"
+              image={item?.thumbnail ?? item?.gallery?.[1]}
+              imageHover={item?.gallery?.[1] ?? item?.gallery?.[0]}
+              discount={item?.discount}
+              isBestSeller={item?.is_best_selling}
+              isTrending={item?.is_trending}
+              isFeatured={item?.is_featured}
+              isTopRated={item?.is_top_rated}
+              name={item?.name}
+              price={item?.selling_price}
+              oldPrice={item?.price}
+              reviews={item?.total_reviews}
+              average_rating={item?.average_rating}
+              slug={item?.slug}
+              productId={item?.id}
+              quantity={item?.quantity}
+              similarProductData={item}
+              itemListName="Category Listing"
+              itemIndex={index}
+              passUrl={true}
+            />
           ))
         ) : (
           <p className={styles.emptyState}>No products found.</p>
