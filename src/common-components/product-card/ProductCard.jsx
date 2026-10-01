@@ -56,6 +56,7 @@ const ProductCard = ({
   quantity = null,
   itemListName = null,
   itemIndex = null,
+  passUrl = false,
 }) => {
   const isOutOfStock =
     quantity != null && quantity !== "" && Number(quantity) <= 0;
@@ -210,6 +211,32 @@ const ProductCard = ({
     }
   };
 
+  const preserveUTMParams = (url) => {
+    const currentParams = new URLSearchParams(window.location.search);
+
+    const utmParams = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_content",
+      "utm_term",
+      "utm_id",
+      "campaign_id",
+    ];
+
+    const targetUrl = new URL(url, window.location.origin);
+
+    utmParams.forEach((param) => {
+      const value = currentParams.get(param);
+
+      if (value) {
+        targetUrl.searchParams.set(param, value);
+      }
+    });
+
+    return targetUrl.pathname + targetUrl.search;
+  };
+
   const handleWishlistToggle = () => {
     if (isInWishlist) {
       handleRemoveFromWishlist();
@@ -319,7 +346,11 @@ const ProductCard = ({
       </div>
 
       <Link
-        href={`/product-details/${slug}`}
+        href={
+          passUrl
+            ? preserveUTMParams(`/product-details/${slug}`)
+            : `/product-details/${slug}`
+        }
         className={`${styles.imageWrap}`}
         onClick={handleSelectItem}
       >
@@ -366,7 +397,11 @@ const ProductCard = ({
       </Link>
 
       <Link
-        href={`/product-details/${slug}`}
+        href={
+          passUrl
+            ? preserveUTMParams(`/product-details/${slug}`)
+            : `/product-details/${slug}`
+        }
         className={`${styles.cardInfo}`}
         onClick={handleSelectItem}
       >
