@@ -7,7 +7,7 @@ import { getStaticSeoForPath } from "@/config/seo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Sora } from "next/font/google";
 import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { LoginPopupProvider } from "@/custom-hooks/login-popup/LoginPopupProvider";
@@ -18,6 +18,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 import { trackPageView } from "@/utils/gtm";
+import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -28,6 +29,59 @@ const sora = Sora({
 
 function AppContent({ Component, pageProps }) {
   const router = useRouter();
+  const [storeUtm] = useUtmStoreMutation();
+  const lastStoredPage = useRef("");
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const url = new URL(router.asPath, window.location.origin);
+    const savedParams = new URLSearchParams(
+      window.sessionStorage.getItem("agriwow:utm-params") || "",
+    );
+
+    url.searchParams.forEach((value, key) => {
+      if (
+        key.startsWith("utm_") ||
+        ["campaign_id", "gclid", "referral", "landing_page"].includes(key)
+      ) {
+        savedParams.set(key, value);
+      }
+    });
+
+    window.sessionStorage.setItem("agriwow:utm-params", savedParams.toString());
+    savedParams.forEach((value, key) => {
+      if (!url.searchParams.has(key)) url.searchParams.set(key, value);
+    });
+
+    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+    if (nextUrl !== router.asPath) {
+      router.replace(nextUrl, undefined, { shallow: true, scroll: false });
+      return;
+    }
+
+    if (lastStoredPage.current === router.asPath) return;
+    lastStoredPage.current = router.asPath;
+
+    storeUtm({
+      body: {
+        utm_source: savedParams.get("utm_source") || "",
+        utm_medium: savedParams.get("utm_medium") || "",
+        utm_campaign: savedParams.get("utm_campaign") || "",
+        utm_term: savedParams.get("utm_term") || "",
+        utm_content: savedParams.get("utm_content") || "",
+        utm_id: savedParams.get("utm_id") || "",
+        utm_referrer: savedParams.get("utm_referrer") || "",
+        utm_page_url: savedParams.get("utm_page_url") || "",
+        gclid: savedParams.get("gclid") || "",
+        referral: savedParams.get("referral") || "",
+        landing_page: savedParams.get("landing_page") || "",
+        full_url: nextUrl,
+      },
+    })
+      .unwrap()
+      .catch((error) => console.error("Failed to store UTM page visit", error));
+  }, [router, router.asPath, router.isReady, storeUtm]);
 
   useEffect(() => {
     const initAos = async () => {

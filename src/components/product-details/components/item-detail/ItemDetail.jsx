@@ -28,7 +28,6 @@ import { AiOutlineRise } from "react-icons/ai";
 import { FaRegCreditCard } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { trackAddToWishlist } from "@/utils/gtm";
-import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 import { useRouter } from "next/router";
 
 const SPECIFICATIONS_PREVIEW_COUNT = 3;
@@ -194,8 +193,6 @@ const ItemDetail = ({ productDetails }) => {
   const directVideoUrl = productDetails?.data?.video_url;
   const hasPlayableVideo = Boolean(youtubeVideoId || directVideoUrl);
 
-  const [utmdata, { isLoading }] = useUtmStoreMutation();
-
   const openProductPopup = (tab = "specifications") => {
     setActivePopupTab(tab);
     setIsPopupVisible("prdInfo");
@@ -286,36 +283,6 @@ const ItemDetail = ({ productDetails }) => {
     }
   };
 
-
-  const handleUtm = async () => {
-    try {
-      const res = await utmdata({
-        body: {
-          utm_source: router?.query?.utm_source || "",
-          utm_medium: router?.query?.utm_medium || "",
-          utm_campaign: router?.query?.utm_campaign || "",
-          utm_term: router?.query?.utm_term || "",
-          utm_content: router?.query?.utm_content || "",
-          utm_id: router?.query?.utm_id || "",
-          utm_referrer: router?.query?.utm_referrer || "",
-          utm_page_url: router?.query?.utm_page_url || "",
-          gclid: router?.query?.gclid || "",
-          referral: router?.query?.referral || "",
-          landing_page: router?.query?.landing_page || "",
-          full_url:router.asPath || "",
-        },
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error, "error in handleUtm");
-    }
-  };
-
-  useEffect(() => {
-    if (router?.isReady && router?.query?.utm_source) {
-      handleUtm();
-    }
-  }, [ router?.isReady && router?.query?.utm_source]);
 
   return (
     <div className={`${styles.itemDetail} container`}>

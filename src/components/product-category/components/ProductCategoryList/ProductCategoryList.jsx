@@ -16,7 +16,6 @@ import {
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { trackViewItemList } from "@/utils/gtm";
-import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 
 const humanize = (slug = "") =>
   slug
@@ -87,32 +86,6 @@ const ProductCategoryList = () => {
         !debouncedPriceFilter,
     },
   );
-
-  const [utmdata, { isLoading: isUtmLoading }] = useUtmStoreMutation();
-
-  const handleUtm = async () => {
-    try {
-      const res = await utmdata({
-        body: {
-          utm_source: router?.query?.utm_source || "",
-          utm_medium: router?.query?.utm_medium || "",
-          utm_campaign: router?.query?.utm_campaign || "",
-          utm_term: router?.query?.utm_term || "",
-          utm_content: router?.query?.utm_content || "",
-          utm_id: router?.query?.utm_id || "",
-          utm_referrer: router?.query?.utm_referrer || "",
-          utm_page_url: router?.query?.utm_page_url || "",
-          gclid: router?.query?.gclid || "",
-          referral: router?.query?.referral || "",
-          landing_page: router?.query?.landing_page || "",
-          full_url: router.asPath || "",
-        },
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error, "error in handleUtm");
-    }
-  };
 
   const activeQuery = subCategory ? subCategoryData : categoryData;
 
@@ -192,12 +165,6 @@ const ProductCategoryList = () => {
 
     trackViewItemList(listName, products, categorySlug);
   }, [products, categorySlug, subCategory, categoryName, subCategoryName]);
-
-  useEffect(() => {
-    if (router?.isReady && router?.query?.utm_source) {
-      handleUtm();
-    }
-  }, [router?.isReady && router?.query?.utm_source]);
 
   return (
     <div>

@@ -233,7 +233,6 @@ function ProductListingToolbar({
               similarProductData={item}
               itemListName="Category Listing"
               itemIndex={index}
-              passUrl={true}
             />
           ))
         ) : (
