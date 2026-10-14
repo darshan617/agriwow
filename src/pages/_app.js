@@ -17,7 +17,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
-import { trackPageView } from "@/utils/gtm";
+import { trackPageView, trackUserData } from "@/utils/gtm";
 import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 
 const sora = Sora({
@@ -31,6 +31,10 @@ function AppContent({ Component, pageProps }) {
   const router = useRouter();
   const [storeUtm] = useUtmStoreMutation();
   const lastStoredPage = useRef("");
+
+  useEffect(() => {
+    trackUserData();
+  }, []);
 
   useEffect(() => {
     if (!router.isReady) return;

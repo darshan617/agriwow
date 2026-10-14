@@ -28,7 +28,7 @@ import { useGetCartDataQuery } from "@/redux/apis/addToCartApi";
 
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { setCategories } from "@/redux/slices/categorySlice";
-import { trackSearch, trackSelectItem } from "@/utils/gtm";
+import { trackSearch, trackSelectItem, trackUserData } from "@/utils/gtm";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAccessoriesQuery } from "@/redux/apis/accessoryApi";
 
@@ -209,6 +209,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
       Cookies.remove("cartSessionId");
       Cookies.remove("minPrice");
       Cookies.remove("maxPrice");
+      trackUserData(null);
       showToast("Logged out successfully", "success");
       router?.reload();
     } catch (error) {

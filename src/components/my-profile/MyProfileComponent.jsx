@@ -9,6 +9,7 @@ import {
 } from "@/redux/apis/myProfileApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import Cookies from "js-cookie";
+import { trackUserData } from "@/utils/gtm";
 
 const MyProfileComponent = () => {
   const { showToast } = useToast();
@@ -54,8 +55,11 @@ const MyProfileComponent = () => {
           ...userData,
           ...res?.data?.user,
           name: res?.data?.user?.name ?? form?.fullName,
+          email: res?.data?.user?.email ?? form?.email,
+          phone: res?.data?.user?.phone ?? form?.mobile,
         };
         Cookies.set("userData", JSON.stringify(updatedUserData));
+        trackUserData(updatedUserData);
         refetchMyProfileDetails();
       }
     } catch (error) {

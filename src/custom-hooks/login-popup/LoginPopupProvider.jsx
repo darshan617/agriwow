@@ -11,7 +11,7 @@ import {
 import { markBuyNowAddPending } from "@/redux/apis/buyProductApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useRouter } from "next/router";
-import { trackLogin } from "@/utils/gtm";
+import { trackLogin, trackUserData } from "@/utils/gtm";
 
 const LoginPopupContext = createContext();
 
@@ -117,6 +117,7 @@ export const LoginPopupProvider = ({ children }) => {
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
           Cookies.set("userToken", res?.data?.token);
+          trackUserData(res?.data?.user);
 
           const sessionId = getCartSessionId();
           if (sessionId) {
