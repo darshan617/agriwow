@@ -121,7 +121,7 @@ export const mapProductToItem = (productOrItem, overrides = {}) => {
       "",
     item_category: resolveCategory(product) || resolveCategory(productOrItem),
     price,
-    sale_price: price,
+    // sale_price: price,
     quantity,
   };
 
@@ -129,7 +129,8 @@ export const mapProductToItem = (productOrItem, overrides = {}) => {
     item.index = overrides.index;
   }
   if (overrides.item_list_name || overrides.item_list_id) {
-    if (overrides.item_list_name) item.item_list_name = overrides.item_list_name;
+    if (overrides.item_list_name)
+      item.item_list_name = overrides.item_list_name;
     if (overrides.item_list_id) item.item_list_id = overrides.item_list_id;
   }
   if (product?.sku || productOrItem?.sku) {
@@ -258,7 +259,10 @@ export const trackAddToCart = (product, quantity = 1) => {
 export const trackRemoveFromCart = (productOrCartItem, quantity) => {
   const item = mapProductToItem(productOrCartItem, {
     quantity:
-      quantity ?? productOrCartItem?.quantity ?? productOrCartItem?.product?.quantity ?? 1,
+      quantity ??
+      productOrCartItem?.quantity ??
+      productOrCartItem?.product?.quantity ??
+      1,
   });
   if (!item) return;
 
