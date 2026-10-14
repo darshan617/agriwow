@@ -1,8 +1,81 @@
+import Cookies from "js-cookie";
+
 const CURRENCY = "INR";
+const CART_SESSION_COOKIE = "cartSessionId";
 
 const toNumber = (value, fallback = 0) => {
   const num = Number(value);
   return Number.isFinite(num) ? num : fallback;
+};
+
+const parseUserCookie = () => {
+  if (typeof window === "undefined") return null;
+  const raw = Cookies.get("userData");
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    try {
+      return JSON.parse(decodeURIComponent(raw));
+    } catch {
+      return null;
+    }
+  }
+};
+
+const toE164Phone = (phone) => {
+  if (phone == null || phone === "") return null;
+  const raw = String(phone).trim();
+  const digits = raw.replace(/\D/g, "");
+  if (!digits) return null;
+  if (raw.startsWith("+")) return `+${digits}`;
+  if (digits.length === 10) return `+91${digits}`;
+  if (digits.startsWith("91") && digits.length === 12) return `+${digits}`;
+  return `+${digits}`;
+};
+
+export const buildUserDataLayer = (userOverride) => {
+  if (typeof window === "undefined") {
+    return { user_id: null, cart_session_id: null, user_data: null };
+  }
+
+  const cartSessionId = Cookies.get(CART_SESSION_COOKIE) || null;
+  const user = userOverride === undefined ? parseUserCookie() : userOverride;
+
+  if (user?.id != null && user?.id !== "") {
+    const phone = user.phone || user.mobile || null;
+    const name = user.name || user.full_name || user.fullName || null;
+
+    return {
+      user_id: String(user.id),
+      cart_session_id: null,
+      user_data: {
+        id: String(user.id),
+        name,
+        email: user.email || null,
+        phone: phone != null ? String(phone) : null,
+        phone_number: toE164Phone(phone),
+        logged_in: true,
+        ...(user.role != null ? { role: user.role } : {}),
+        ...(user.status != null ? { status: user.status } : {}),
+      },
+    };
+  }
+
+  return {
+    user_id: null,
+    cart_session_id: cartSessionId,
+    user_data: {
+      id: null,
+      name: null,
+      email: null,
+      phone: null,
+      phone_number: null,
+      logged_in: false,
+      cart_session_id: cartSessionId,
+    },
+  };
 };
 
 const resolveCategory = (source = {}) =>
@@ -48,6 +121,7 @@ export const mapProductToItem = (productOrItem, overrides = {}) => {
       "",
     item_category: resolveCategory(product) || resolveCategory(productOrItem),
     price,
+    // sale_price: price,
     quantity,
   };
 
@@ -55,7 +129,8 @@ export const mapProductToItem = (productOrItem, overrides = {}) => {
     item.index = overrides.index;
   }
   if (overrides.item_list_name || overrides.item_list_id) {
-    if (overrides.item_list_name) item.item_list_name = overrides.item_list_name;
+    if (overrides.item_list_name)
+      item.item_list_name = overrides.item_list_name;
     if (overrides.item_list_id) item.item_list_id = overrides.item_list_id;
   }
   if (product?.sku || productOrItem?.sku) {
@@ -92,7 +167,19 @@ export const pushDataLayer = (eventData) => {
     window.dataLayer.push({ ecommerce: null });
   }
 
-  window.dataLayer.push(eventData);
+  const userContext = buildUserDataLayer();
+  window.dataLayer.push({
+    ...userContext,
+    ...eventData,
+  });
+};
+
+export const trackUserData = (userData) => {
+  const payload = buildUserDataLayer(userData);
+  pushDataLayer({
+    event: "user_data",
+    ...payload,
+  });
 };
 
 const pushEcommerceEvent = (event, ecommerce, extra = {}) => {
@@ -172,7 +259,10 @@ export const trackAddToCart = (product, quantity = 1) => {
 export const trackRemoveFromCart = (productOrCartItem, quantity) => {
   const item = mapProductToItem(productOrCartItem, {
     quantity:
-      quantity ?? productOrCartItem?.quantity ?? productOrCartItem?.product?.quantity ?? 1,
+      quantity ??
+      productOrCartItem?.quantity ??
+      productOrCartItem?.product?.quantity ??
+      1,
   });
   if (!item) return;
 

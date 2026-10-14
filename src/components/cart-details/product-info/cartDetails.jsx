@@ -22,7 +22,7 @@ import {
   useRemoveBuyNowMutation,
   useUpdateBuyNowMutation,
 } from "@/redux/apis/buyProductApi";
-import { trackLogin, trackRemoveFromCart } from "@/utils/gtm";
+import { trackLogin, trackRemoveFromCart, trackUserData } from "@/utils/gtm";
 
 const CartDetails = ({
   similar_products = [],
@@ -113,6 +113,7 @@ const CartDetails = ({
         if (res?.data?.token) {
           Cookies.set("userData", JSON.stringify(res?.data?.user));
           Cookies.set("userToken", res?.data?.token);
+          trackUserData(res?.data?.user);
 
           const sessionId = getCartSessionId();
           if (sessionId) {
