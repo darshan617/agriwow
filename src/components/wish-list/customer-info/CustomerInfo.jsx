@@ -11,6 +11,7 @@ import styles from "@/components/wish-list/customer-info/CustomerInfo.module.css
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useGetMyProfileDetailsQuery } from "@/redux/apis/myProfileApi";
+import { trackUserData } from "@/utils/gtm";
 
 const MENU_ITEMS = [
   {
@@ -77,6 +78,7 @@ const CustomerInfo = () => {
       Cookies.remove("minPrice");
       Cookies.remove("maxPrice");
       Cookies.remove("PrdDts");
+      trackUserData(null);
       showToast("Logged out successfully", "success");
       router.push("/");
     } catch (error) {
