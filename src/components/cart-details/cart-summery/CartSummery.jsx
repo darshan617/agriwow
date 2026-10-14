@@ -312,6 +312,19 @@ const CartSummery = ({
   // const dataa = cartData?.data?.some((item, idx) => {
   //   return item?.product?.product_type === "accessory";
   // });
+  console.log(cartData?.data, "cartData?.data?.product?.product_type");
+
+  const cartItemss = Array.isArray(cartData?.data)
+    ? cartData?.data
+    : [cartData?.data].filter(Boolean);
+
+  const isAccessory = cartItemss?.every(
+    (item) =>
+      item?.product?.product_type === "accessory" ||
+      item?.product_type === "accessory",
+  );
+
+  console.log(isAccessory, "isAccessory");
 
   return (
     <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
@@ -409,43 +422,40 @@ const CartSummery = ({
                     <p className="mb-0 fw-semibold fs-14 mb-2">
                       Payment Method
                     </p>
-                    {shippingAmount <= 0 &&
-                      (cartData?.data?.product?.product_type !== "accessory") && (
-                        <div
-                          className={
-                            selectedPaymentMethod === "partial"
-                              ? styles.paymentWrapper
-                              : styles.paymentWrapperTransparent
-                          }
-                        >
-                          <div className="d-flex align-items-center gap-2">
-                            <input
-                              type="radio"
-                              name="paymentMethod"
-                              id="partial-payment"
-                              checked={selectedPaymentMethod === "partial"}
-                              onChange={() =>
-                                setSelectedPaymentMethod("partial")
-                              }
-                            />
-                            <label
-                              htmlFor="partial-payment"
-                              className={`${styles.paymentWrapperLabel} w-100`}
-                              style={{ cursor: "pointer" }}
-                            >
-                              Partial Payment (30%)
-                            </label>
-                          </div>
-                          {selectedPaymentMethod === "partial" && (
-                            <>
-                              <span className={`${styles.paymentWrapperText}`}>
-                                Balance 70% Cash on Delivery (₹{" "}
-                                {(totalAmount - totalAmount * 0.3).toFixed(2)})
-                              </span>
-                            </>
-                          )}
+                    {!isAccessory && (
+                      <div
+                        className={
+                          selectedPaymentMethod === "partial"
+                            ? styles.paymentWrapper
+                            : styles.paymentWrapperTransparent
+                        }
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            id="partial-payment"
+                            checked={selectedPaymentMethod === "partial"}
+                            onChange={() => setSelectedPaymentMethod("partial")}
+                          />
+                          <label
+                            htmlFor="partial-payment"
+                            className={`${styles.paymentWrapperLabel} w-100`}
+                            style={{ cursor: "pointer" }}
+                          >
+                            Partial Payment (30%)
+                          </label>
                         </div>
-                      )}
+                        {selectedPaymentMethod === "partial" && (
+                          <>
+                            <span className={`${styles.paymentWrapperText}`}>
+                              Balance 70% Cash on Delivery (₹{" "}
+                              {(totalAmount - totalAmount * 0.3).toFixed(2)})
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    )}
 
                     <div
                       className={
