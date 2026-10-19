@@ -37,7 +37,6 @@ const Login = ({ handleLogin, phone, setPhone, isAuthLoading }) => {
       phone,
     };
     const response = await signup({ body });
-    console.log(response, "response");
     if (response?.data?.success || response?.data?.status) {
       goToVerifyOtp();
     } else {
