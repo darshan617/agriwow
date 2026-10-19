@@ -34,12 +34,20 @@ const Breadcrumb = ({ productDetails, blogDetails }) => {
               </Link>
             </li>
             <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
-            <li className={`${styles.breadcrumbItem1}`}>
+            {/* <li className={`${styles.breadcrumbItem1}`}>
               <Link
                 href={`/product-details/${productDetails?.data?.slug}`}
                 prefetch={true}
               >
                 {productDetails?.data?.name}
+              </Link>
+            </li> */}
+            <li className={`${styles.breadcrumbItem1}`}>
+              <Link
+                href={`/product-category/${productDetails?.data?.category?.slug}/${productDetails?.data?.subcategory?.slug}`}
+                prefetch={true}
+              >
+                {productDetails?.data?.subcategory?.name}
               </Link>
             </li>
           </ul>

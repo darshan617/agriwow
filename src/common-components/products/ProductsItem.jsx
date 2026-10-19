@@ -34,7 +34,7 @@ const ProductsItem = ({
   categorySlug,
   viewAllLink = "/product-category/agriculture-sprayers",
   bannersLink,
-  type = ""
+  type = "",
 }) => {
   const {
     className: bannerImageClassName,
@@ -56,7 +56,6 @@ const ProductsItem = ({
   const hasProducts = agricultureProductsData?.length > 0;
   const showSection = isHomeDataLoading || hasProducts;
   const categories = useSelector((state) => state.category.categories);
-  console.log(categories, "categories");
 
   return (
     <section className={sectionClassName}>
@@ -76,7 +75,10 @@ const ProductsItem = ({
                 <div className={`col-lg-3 col-md-4 col-12 ${styles.promoCol}`}>
                   <Link
                     href={
-                     type === "bestSelling" ? bannersLink :  `/product-category/${bannersLink?.slug}` || viewAllLink
+                      type === "bestSelling"
+                        ? bannersLink
+                        : `/product-category/${bannersLink?.slug}` ||
+                          viewAllLink
                     }
                     prefetch={true}
                   >

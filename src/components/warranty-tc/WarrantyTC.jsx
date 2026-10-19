@@ -5,7 +5,6 @@ import { useWarrantyTermsQuery } from "@/redux/apis/warrantyTermsApi";
 
 const WarrantyTC = () => {
   const { data: warrantyTerms, isLoading } = useWarrantyTermsQuery();
-  console.log("warrantyTerms", warrantyTerms);
 
   return (
     <div className={`${styles.page} container`}>
