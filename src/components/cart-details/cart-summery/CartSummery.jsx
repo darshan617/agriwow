@@ -68,8 +68,6 @@ const CartSummery = ({
   hideCoupon = false,
   setShowAddressForm,
 }) => {
-  console.log(cartItemsProp, cartData);
-
   const router = useRouter();
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
@@ -312,7 +310,6 @@ const CartSummery = ({
   // const dataa = cartData?.data?.some((item, idx) => {
   //   return item?.product?.product_type === "accessory";
   // });
-  console.log(cartData?.data, "cartData?.data?.product?.product_type");
 
   const cartItemss = Array.isArray(cartData?.data)
     ? cartData?.data
@@ -323,8 +320,6 @@ const CartSummery = ({
       item?.product?.product_type === "accessory" ||
       item?.product_type === "accessory",
   );
-
-  console.log(isAccessory, "isAccessory");
 
   return (
     <div className={`${styles.cartSummaryWrapper} pt-5 pb-5`}>
