@@ -5,6 +5,7 @@ import styles from "@/components/product-category/components/product-listing-too
 import ProductCard from "@/common-components/product-card/ProductCard";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import ProductCardShimmer from "@/common-components/product-card/ProductCardShimmer";
+import { useRouter } from "next/router";
 
 export const SORT_OPTIONS = [
   { value: "default", label: "Default Sorting" },
@@ -20,6 +21,11 @@ function ProductListingToolbar({
   minPrice,
   maxPrice,
   resultCount,
+  currentPage: controlledPage,
+  totalPages: controlledTotalPages,
+  rangeFrom,
+  rangeTo,
+  serverPaginated = false,
   products = [],
   sortBy: controlledSortBy,
   onSortChange,
@@ -28,6 +34,7 @@ function ProductListingToolbar({
   isFetching = false,
   isError = false,
 }) {
+  const router = useRouter();
   const [internalSortBy, setInternalSortBy] = useState("default");
   const sortBy = controlledSortBy ?? internalSortBy;
 
@@ -47,12 +54,13 @@ function ProductListingToolbar({
     setActiveFilters([]);
   }
   const filteredProducts = useMemo(() => {
+    // Server already applies price filters when paginating
+    if (serverPaginated) return products ?? [];
     return products?.filter((item) => {
       const price = item?.selling_price ?? 0;
-
       return price >= minPrice && price <= maxPrice;
     });
-  }, [products, minPrice, maxPrice]);
+  }, [products, minPrice, maxPrice, serverPaginated]);
 
   const sortedProducts = useMemo(() => {
     const list = [...filteredProducts];
@@ -78,46 +86,76 @@ function ProductListingToolbar({
     }
   }, [filteredProducts, sortBy]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(sortedProducts.length / pageSize));
+  const [internalPage, setInternalPage] = useState(1);
+  const currentPage = serverPaginated ? controlledPage : internalPage;
+  const totalPages = serverPaginated
+    ? Math.max(1, controlledTotalPages)
+    : Math.max(1, Math.ceil(sortedProducts.length / pageSize));
   const displayCount = resultCount ?? sortedProducts.length;
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [products.length, sortBy]);
+    if (!serverPaginated) {
+      setInternalPage(1);
+    }
+  }, [products.length, sortBy, serverPaginated]);
 
   useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
+    if (!serverPaginated && currentPage > totalPages) {
+      setInternalPage(totalPages);
     }
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, serverPaginated]);
 
   const paginatedProducts = useMemo(() => {
+    if (serverPaginated) return sortedProducts;
     const start = (currentPage - 1) * pageSize;
 
     return sortedProducts.slice(start, start + pageSize);
-  }, [sortedProducts, currentPage, pageSize]);
+  }, [sortedProducts, currentPage, pageSize, serverPaginated]);
 
-  const rangeStart = displayCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const rangeEnd = Math.min(currentPage * pageSize, displayCount);
+  const rangeStart =
+    displayCount === 0
+      ? 0
+      : serverPaginated && rangeFrom
+        ? rangeFrom
+        : (currentPage - 1) * pageSize + 1;
+  const rangeEnd =
+    serverPaginated && rangeTo
+      ? rangeTo
+      : Math.min(currentPage * pageSize, displayCount);
 
   const isFirstPage = currentPage <= 1;
   const isLastPage = currentPage >= totalPages;
 
+  function navigateToPage(page) {
+    const url = new URL(router.asPath, window.location.origin);
+    if (page <= 1) {
+      url.searchParams.delete("page");
+    } else {
+      url.searchParams.set("page", String(page));
+    }
+    router.push(`${url.pathname}${url.search}${url.hash}`, undefined, {
+      shallow: true,
+      scroll: true,
+    });
+  }
+
   function goToPrevPage() {
     if (isFirstPage) return;
-    setCurrentPage((page) => Math.max(1, page - 1));
+    goToPage(currentPage - 1);
   }
 
   function goToNextPage() {
     if (isLastPage) return;
-    setCurrentPage((page) => Math.min(totalPages, page + 1));
+    goToPage(currentPage + 1);
   }
 
   function goToPage(page) {
     const target = Math.min(Math.max(1, page), totalPages);
     if (target === currentPage) return;
-    setCurrentPage(target);
+    if (!serverPaginated) {
+      setInternalPage(target);
+    }
+    navigateToPage(target);
   }
 
   const pageItems = useMemo(() => {
@@ -240,14 +278,17 @@ function ProductListingToolbar({
         )}
       </div>
 
-      {products.length > 0 && totalPages > 1 && (
-        <div className={`${styles.paginationWrapper}`}>
+      {!isLoading && displayCount > 0 && totalPages > 1 && (
+        <nav
+          className={`${styles.paginationWrapper}`}
+          aria-label="Product pagination"
+        >
           <div className={`${styles.pagination}`}>
             <button
               type="button"
               className={`${styles.paginationButton}`}
               onClick={goToPrevPage}
-              disabled={isFirstPage}
+              disabled={isFirstPage || isFetching}
               aria-label="Previous page"
             >
               <FaChevronLeft />
@@ -255,7 +296,7 @@ function ProductListingToolbar({
           </div>
 
           <ul className={`${styles.pageList}`}>
-            {pageItems.map((item, index) => {
+            {pageItems?.map((item, index) => {
               if (typeof item === "string") {
                 return (
                   <li key={`${item}-${index}`}>
@@ -278,6 +319,7 @@ function ProductListingToolbar({
                       isActive ? styles.paginationButtonActive : ""
                     }`}
                     onClick={() => goToPage(item)}
+                    disabled={isFetching}
                     aria-label={`Go to page ${item}`}
                     aria-current={isActive ? "page" : undefined}
                   >
@@ -293,13 +335,13 @@ function ProductListingToolbar({
               type="button"
               className={`${styles.paginationButton}`}
               onClick={goToNextPage}
-              disabled={isLastPage}
+              disabled={isLastPage || isFetching}
               aria-label="Next page"
             >
               <FaChevronRight />
             </button>
           </div>
-        </div>
+        </nav>
       )}
     </div>
   );

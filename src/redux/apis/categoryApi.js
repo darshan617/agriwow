@@ -20,41 +20,64 @@ const CategoryApi = apiSlice.injectEndpoints({
       providesTags: ["products"],
     }),
     getProductsByCategory: builder.query({
-      query: ({ slug, minPrice, maxPrice }) => {
-        const params = new URLSearchParams();
-
-        if (minPrice) params.append("min_price", minPrice);
-        if (maxPrice) params.append("max_price", maxPrice);
-
+      query: ({ slug, minPrice, maxPrice, page = 1, per_page = 10 }) => {
         return {
-          url: `/${slug}?${params.toString()}`,
+          url: `/${slug}`,
           method: "GET",
-        };
-      },
-      providesTags: (result, error, { slug, minPrice, maxPrice } = {}) => [
-        { type: "ProductsByCategory", id: slug, minPrice, maxPrice },
-      ],
-    }),
-    getProductsBySubCategory: builder.query({
-      query: ({ categorySlug, subCategorySlug, minPrice, maxPrice }) => {
-        const params = new URLSearchParams();
-        if (minPrice) params.append("min_price", minPrice);
-        if (maxPrice) params.append("max_price", maxPrice);
-        return {
-          url: `/${categorySlug}/${subCategorySlug}?${params.toString()}`,
-          method: "GET",
+          params: {
+            ...(minPrice != null && minPrice !== "" && { min_price: minPrice }),
+            ...(maxPrice != null && maxPrice !== "" && { max_price: maxPrice }),
+            page: Number(page) || 1,
+            per_page: Number(per_page) || 10,
+          },
         };
       },
       providesTags: (
         result,
         error,
-        { categorySlug, subCategorySlug, minPrice, maxPrice } = {},
+        { slug, minPrice, maxPrice, page, per_page } = {},
+      ) => [
+        {
+          type: "ProductsByCategory",
+          id: `${slug}-${page}-${per_page}-${minPrice}-${maxPrice}`,
+        },
+      ],
+    }),
+    getProductsBySubCategory: builder.query({
+      query: ({
+        categorySlug,
+        subCategorySlug,
+        minPrice,
+        maxPrice,
+        page = 1,
+        per_page = 10,
+      }) => {
+        return {
+          url: `/${categorySlug}/${subCategorySlug}`,
+          method: "GET",
+          params: {
+            ...(minPrice != null && minPrice !== "" && { min_price: minPrice }),
+            ...(maxPrice != null && maxPrice !== "" && { max_price: maxPrice }),
+            page: Number(page) || 1,
+            per_page: Number(per_page) || 10,
+          },
+        };
+      },
+      providesTags: (
+        result,
+        error,
+        {
+          categorySlug,
+          subCategorySlug,
+          minPrice,
+          maxPrice,
+          page,
+          per_page,
+        } = {},
       ) => [
         {
           type: "ProductsBySubCategory",
-          id: `${categorySlug}/${subCategorySlug}`,
-          minPrice,
-          maxPrice,
+          id: `${categorySlug}/${subCategorySlug}-${page}-${per_page}-${minPrice}-${maxPrice}`,
         },
       ],
     }),
