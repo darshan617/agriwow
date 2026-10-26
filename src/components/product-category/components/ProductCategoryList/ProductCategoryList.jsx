@@ -181,7 +181,15 @@ const ProductCategoryList = () => {
     (isFetching && products.length === 0);
 
   const resultCount = totalItems || products.length;
-  const categoryCount = categoryData?.data?.length;
+  const categoryPagination =
+    categoryData?.pagination ?? categoryData?.meta ?? null;
+  const categoryCount = Number(
+    categoryPagination?.total ??
+      categoryPagination?.total_count ??
+      categoryPagination?.totalCount ??
+      categoryData?.data?.length ??
+      0,
+  );
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
   const subCategoryName =
