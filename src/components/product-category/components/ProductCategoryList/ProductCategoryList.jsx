@@ -28,7 +28,13 @@ const humanize = (slug = "") =>
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router?.query;
+  const requestedPage = Array.isArray(router?.query?.page)
+    ? router.query.page[0]
+    : router?.query?.page;
+  const currentPage = Math.max(1, Number.parseInt(requestedPage, 10) || 1);
+  const pageSize = 10;
   const listTrackedKey = useRef("");
+  const prevListKey = useRef("");
   const [sortBy, setSortBy] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -42,13 +48,69 @@ const ProductCategoryList = () => {
   }));
   const [priceMaxBound, setPriceMaxBound] = useState(50000);
   const categories = useSelector((state) => state.category.categories);
+
+  const setPageInUrl = (page, { replace = false } = {}) => {
+    if (!router.isReady) return;
+    const url = new URL(router.asPath, window.location.origin);
+    if (page <= 1) {
+      url.searchParams.delete("page");
+    } else {
+      url.searchParams.set("page", String(page));
+    }
+    const next = `${url.pathname}${url.search}${url.hash}`;
+    if (next === router.asPath) return;
+    const nav = replace ? router.replace : router.push;
+    nav(next, undefined, { shallow: true, scroll: true });
+  };
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!requestedPage) return;
+    if (requestedPage === String(currentPage)) return;
+    setPageInUrl(currentPage, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, requestedPage, router.isReady]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedPriceFilter({ minPrice, maxPrice });
+      setDebouncedPriceFilter((prev) => {
+        if (prev.minPrice === minPrice && prev.maxPrice === maxPrice) {
+          return prev;
+        }
+        return { minPrice, maxPrice };
+      });
     }, 1500);
 
     return () => clearTimeout(timer);
   }, [minPrice, maxPrice]);
+
+  const skipPricePageReset = useRef(true);
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (skipPricePageReset.current) {
+      skipPricePageReset.current = false;
+      return;
+    }
+    if (currentPage === 1) return;
+    setPageInUrl(1, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedPriceFilter.minPrice, debouncedPriceFilter.maxPrice]);
+
+  // New category / subcategory → reset to page 1 (skip first mount)
+  useEffect(() => {
+    if (!router.isReady) return;
+    const listKey = `${categorySlug || ""}/${subCategory || ""}`;
+    if (!prevListKey.current) {
+      prevListKey.current = listKey;
+      return;
+    }
+    if (prevListKey.current === listKey) return;
+    prevListKey.current = listKey;
+    if (currentPage !== 1) {
+      setPageInUrl(1, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categorySlug, subCategory, router.isReady]);
 
   const {
     data: categoryData,
@@ -60,6 +122,8 @@ const ProductCategoryList = () => {
       slug: categorySlug,
       minPrice: debouncedPriceFilter?.minPrice,
       maxPrice: debouncedPriceFilter?.maxPrice,
+      page: currentPage,
+      per_page: pageSize,
     },
     {
       skip: !categorySlug || !router?.isReady || !debouncedPriceFilter,
@@ -77,6 +141,8 @@ const ProductCategoryList = () => {
       subCategorySlug: subCategory,
       minPrice: debouncedPriceFilter?.minPrice,
       maxPrice: debouncedPriceFilter?.maxPrice,
+      page: currentPage,
+      per_page: pageSize,
     },
     {
       skip:
@@ -93,6 +159,20 @@ const ProductCategoryList = () => {
   const isLoading = subCategory ? subCategoryIsLoading : categoryIsLoading;
   const isError = subCategory ? subCategoryIsError : categoryIsError;
   const products = useMemo(() => activeQuery?.data ?? [], [activeQuery?.data]);
+  const pagination = activeQuery?.pagination ?? activeQuery?.meta ?? null;
+  const totalItems = Number(
+    pagination?.total ?? pagination?.total_count ?? pagination?.totalCount ?? 0,
+  );
+  const totalPages = Math.max(
+    1,
+    Number(
+      pagination?.last_page ??
+        pagination?.total_pages ??
+        pagination?.totalPages,
+    ) || (totalItems ? Math.ceil(totalItems / pageSize) : 1),
+  );
+  const rangeFrom = Number(pagination?.from) || null;
+  const rangeTo = Number(pagination?.to) || null;
 
   const isProductsPending =
     !router?.isReady ||
@@ -100,7 +180,7 @@ const ProductCategoryList = () => {
     isLoading ||
     (isFetching && products.length === 0);
 
-  const resultCount = products?.length;
+  const resultCount = totalItems || products.length;
   const categoryCount = categoryData?.data?.length;
 
   const categoryName = products?.[0]?.category?.name || humanize(categorySlug);
@@ -241,6 +321,12 @@ const ProductCategoryList = () => {
               isError={isError}
               minPrice={minPrice}
               maxPrice={maxPrice}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              rangeFrom={rangeFrom}
+              rangeTo={rangeTo}
+              serverPaginated
             />
           </div>
         </div>
