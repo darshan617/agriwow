@@ -32,7 +32,7 @@ const ProductCategoryList = () => {
     ? router.query.page[0]
     : router?.query?.page;
   const currentPage = Math.max(1, Number.parseInt(requestedPage, 10) || 1);
-  const pageSize = 10;
+  const pageSize = 12;
   const listTrackedKey = useRef("");
   const prevListKey = useRef("");
   const [sortBy, setSortBy] = useState("default");
