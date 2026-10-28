@@ -19,6 +19,11 @@ import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 import { trackPageView, trackUserData } from "@/utils/gtm";
 import { useUtmStoreMutation } from "@/redux/apis/utmApi";
+import {
+  isPopNavigation,
+  markRouteNavType,
+  readListingPage,
+} from "@/utils/listingPaginationMemory";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -37,9 +42,34 @@ function AppContent({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
+    let popped = false;
+
+    const onPopState = () => {
+      popped = true;
+      markRouteNavType(true);
+    };
+
+    const onRouteChangeStart = () => {
+      markRouteNavType(popped);
+      popped = false;
+    };
+
+    window.addEventListener("popstate", onPopState);
+    router.events.on("routeChangeStart", onRouteChangeStart);
+
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      router.events.off("routeChangeStart", onRouteChangeStart);
+    };
+  }, [router.events]);
+
+  useEffect(() => {
     if (!router.isReady) return;
 
-    const url = new URL(router.asPath, window.location.origin);
+    const url = new URL(
+      typeof window !== "undefined" ? window.location.href : router.asPath,
+      window.location.origin,
+    );
     const savedParams = new URLSearchParams(
       window.sessionStorage.getItem("agriwow:utm-params") || "",
     );
@@ -57,6 +87,17 @@ function AppContent({ Component, pageProps }) {
     savedParams.forEach((value, key) => {
       if (!url.searchParams.has(key)) url.searchParams.set(key, value);
     });
+
+    if (
+      url.pathname.startsWith("/product-category/") &&
+      !url.searchParams.get("page") &&
+      isPopNavigation()
+    ) {
+      const savedPage = readListingPage(url.pathname);
+      if (savedPage > 1) {
+        url.searchParams.set("page", String(savedPage));
+      }
+    }
 
     const nextUrl = `${url.pathname}${url.search}${url.hash}`;
     if (nextUrl !== router.asPath) {

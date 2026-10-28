@@ -26,6 +26,7 @@ function ProductListingToolbar({
   rangeFrom,
   rangeTo,
   serverPaginated = false,
+  onPageChange,
   products = [],
   sortBy: controlledSortBy,
   onSortChange,
@@ -127,13 +128,19 @@ function ProductListingToolbar({
   const isLastPage = currentPage >= totalPages;
 
   function navigateToPage(page) {
-    const url = new URL(router.asPath, window.location.origin);
-    if (page <= 1) {
-      url.searchParams.delete("page");
-    } else {
-      url.searchParams.set("page", String(page));
+    if (onPageChange) {
+      onPageChange(page);
+      return;
     }
-    router.push(`${url.pathname}${url.search}${url.hash}`, undefined, {
+
+    const query = { ...router.query };
+    if (page <= 1) {
+      delete query.page;
+    } else {
+      query.page = String(page);
+    }
+
+    router.push({ pathname: router.pathname, query }, undefined, {
       shallow: true,
       scroll: true,
     });

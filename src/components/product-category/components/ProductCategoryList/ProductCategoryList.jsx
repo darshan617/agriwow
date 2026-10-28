@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SeoHead from "@/components/seo/SeoHead";
@@ -16,6 +16,12 @@ import {
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { trackViewItemList } from "@/utils/gtm";
+import {
+  getPathnameFromAsPath,
+  isPopNavigation,
+  readListingPage,
+  saveListingPage,
+} from "@/utils/listingPaginationMemory";
 
 const humanize = (slug = "") =>
   slug
@@ -25,16 +31,64 @@ const humanize = (slug = "") =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
+const parsePageParam = (value) => {
+  const raw = Array.isArray(value) ? value[0] : value;
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+};
+
+const getPageFromLocation = (router) => {
+  const fromQuery = parsePageParam(router?.query?.page);
+  if (fromQuery) return fromQuery;
+
+  const sources = [router?.asPath];
+  if (typeof window !== "undefined") {
+    sources.push(window.location.href);
+  }
+
+  for (const src of sources) {
+    if (!src || !String(src).includes("page=")) continue;
+    try {
+      const page = parsePageParam(
+        new URL(src, "http://localhost").searchParams.get("page"),
+      );
+      if (page) return page;
+    } catch {
+      // ignore invalid URL
+    }
+  }
+
+  return 1;
+};
+
+const getInitialListingPage = (router) => {
+  const urlPage = getPageFromLocation(router);
+  if (urlPage > 1) return urlPage;
+  if (typeof window === "undefined") return 1;
+  if (!isPopNavigation()) return 1;
+  return (
+    readListingPage(window.location.pathname) ||
+    readListingPage(getPathnameFromAsPath(router?.asPath)) ||
+    1
+  );
+};
+
 const ProductCategoryList = () => {
   const router = useRouter();
   const { categorySlug, subCategory } = router?.query;
-  const requestedPage = Array.isArray(router?.query?.page)
-    ? router.query.page[0]
-    : router?.query?.page;
-  const currentPage = Math.max(1, Number.parseInt(requestedPage, 10) || 1);
+  const [currentPage, setCurrentPage] = useState(() => getInitialListingPage(router));
+  const skipUrlSyncOnMount = useRef(
+    typeof window !== "undefined" &&
+      isPopNavigation() &&
+      !parsePageParam(new URL(window.location.href).searchParams.get("page")) &&
+      (readListingPage(window.location.pathname) || 1) > 1,
+  );
+  const restoredPageRef = useRef(
+    skipUrlSyncOnMount.current ? getInitialListingPage(router) : null,
+  );
   const pageSize = 12;
   const listTrackedKey = useRef("");
-  const prevListKey = useRef("");
+  const userChangedPrice = useRef(false);
   const [sortBy, setSortBy] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -49,27 +103,47 @@ const ProductCategoryList = () => {
   const [priceMaxBound, setPriceMaxBound] = useState(50000);
   const categories = useSelector((state) => state.category.categories);
 
-  const setPageInUrl = (page, { replace = false } = {}) => {
-    if (!router.isReady) return;
-    const url = new URL(router.asPath, window.location.origin);
-    if (page <= 1) {
-      url.searchParams.delete("page");
-    } else {
-      url.searchParams.set("page", String(page));
-    }
-    const next = `${url.pathname}${url.search}${url.hash}`;
-    if (next === router.asPath) return;
-    const nav = replace ? router.replace : router.push;
-    nav(next, undefined, { shallow: true, scroll: true });
-  };
+  const setPageInUrl = useCallback(
+    (page, { replace = false, scroll = false } = {}) => {
+      if (!router.isReady || typeof window === "undefined") return;
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (!requestedPage) return;
-    if (requestedPage === String(currentPage)) return;
-    setPageInUrl(currentPage, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, requestedPage, router.isReady]);
+      const query = { ...router.query };
+      if (page <= 1) {
+        delete query.page;
+      } else {
+        query.page = String(page);
+      }
+
+      const url = new URL(window.location.href);
+      if (page <= 1) {
+        url.searchParams.delete("page");
+      } else {
+        url.searchParams.set("page", String(page));
+      }
+      const as = `${url.pathname}${url.search}${url.hash}`;
+      if (as === router.asPath) return;
+
+      const nav = replace ? router.replace : router.push;
+      nav({ pathname: router.pathname, query }, as, {
+        shallow: true,
+        scroll,
+      });
+    },
+    [router],
+  );
+
+  const goToListingPage = useCallback(
+    (page, { replace = false, scroll = false } = {}) => {
+      restoredPageRef.current = null;
+      setCurrentPage(page);
+      saveListingPage(
+        getPathnameFromAsPath(router.asPath) || window.location.pathname,
+        page,
+      );
+      setPageInUrl(page, { replace, scroll });
+    },
+    [router.asPath, setPageInUrl],
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -84,33 +158,57 @@ const ProductCategoryList = () => {
     return () => clearTimeout(timer);
   }, [minPrice, maxPrice]);
 
-  const skipPricePageReset = useRef(true);
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (skipPricePageReset.current) {
-      skipPricePageReset.current = false;
-      return;
-    }
-    if (currentPage === 1) return;
-    setPageInUrl(1, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedPriceFilter.minPrice, debouncedPriceFilter.maxPrice]);
+  const handleMinPriceChange = (value) => {
+    userChangedPrice.current = true;
+    setMinPrice(value);
+  };
 
-  // New category / subcategory → reset to page 1 (skip first mount)
+  const handleMaxPriceChange = (value) => {
+    userChangedPrice.current = true;
+    setMaxPrice(value);
+  };
+
+  useEffect(() => {
+    if (!userChangedPrice.current) return;
+    userChangedPrice.current = false;
+    if (currentPage === 1) return;
+    goToListingPage(1, { replace: true });
+  }, [
+    currentPage,
+    debouncedPriceFilter.minPrice,
+    debouncedPriceFilter.maxPrice,
+    goToListingPage,
+  ]);
+
   useEffect(() => {
     if (!router.isReady) return;
-    const listKey = `${categorySlug || ""}/${subCategory || ""}`;
-    if (!prevListKey.current) {
-      prevListKey.current = listKey;
+
+    if (skipUrlSyncOnMount.current) {
+      skipUrlSyncOnMount.current = false;
+      setPageInUrl(currentPage, { replace: true });
       return;
     }
-    if (prevListKey.current === listKey) return;
-    prevListKey.current = listKey;
-    if (currentPage !== 1) {
-      setPageInUrl(1, { replace: true });
+
+    const urlPage = getPageFromLocation(router);
+    if (restoredPageRef.current && urlPage === 1) {
+      setPageInUrl(restoredPageRef.current, { replace: true });
+      return;
     }
+    if (urlPage > 1) {
+      restoredPageRef.current = null;
+    }
+    setCurrentPage((prev) => (prev === urlPage ? prev : urlPage));
+    // Restore on back uses the first-render page; don't re-run when it changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categorySlug, subCategory, router.isReady]);
+  }, [router.isReady, router.asPath, router.query.page, setPageInUrl]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const path =
+      getPathnameFromAsPath(router.asPath) ||
+      (typeof window !== "undefined" ? window.location.pathname : "");
+    saveListingPage(path, currentPage);
+  }, [currentPage, router.asPath, router.isReady]);
 
   const {
     data: categoryData,
@@ -221,12 +319,14 @@ const ProductCategoryList = () => {
 
   useEffect(() => {
     if (Cookies.get("maxPrice")) {
-      setMaxPrice(Cookies.get("maxPrice"));
+      setMaxPrice(Number(Cookies.get("maxPrice")));
     } else {
-      setMaxPrice(
+      const apiMax =
         categoryData?.price_range?.max_price ||
-          subCategoryData?.price_range?.max_price,
-      );
+        subCategoryData?.price_range?.max_price;
+      if (apiMax != null) {
+        setMaxPrice(Number(apiMax));
+      }
     }
   }, [categoryData, subCategoryData]);
 
@@ -314,8 +414,8 @@ const ProductCategoryList = () => {
             categoryCount={categoryCount}
             minPrice={minPrice}
             maxPrice={maxPrice}
-            setMinPrice={setMinPrice}
-            setMaxPrice={setMaxPrice}
+            setMinPrice={handleMinPriceChange}
+            setMaxPrice={handleMaxPriceChange}
             PRICE_MAX_BOUND={priceMaxBound}
           />
           <div className={`${styles.mainContent}`}>
@@ -335,6 +435,7 @@ const ProductCategoryList = () => {
               rangeFrom={rangeFrom}
               rangeTo={rangeTo}
               serverPaginated
+              onPageChange={(page) => goToListingPage(page, { scroll: true })}
             />
           </div>
         </div>
