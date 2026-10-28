@@ -19,8 +19,10 @@ import { trackViewItemList } from "@/utils/gtm";
 import {
   getPathnameFromAsPath,
   isPopNavigation,
+  markListingPageRestorePath,
   readListingPage,
   saveListingPage,
+  shouldRestoreListingPage,
 } from "@/utils/listingPaginationMemory";
 
 const humanize = (slug = "") =>
@@ -65,7 +67,12 @@ const getInitialListingPage = (router) => {
   const urlPage = getPageFromLocation(router);
   if (urlPage > 1) return urlPage;
   if (typeof window === "undefined") return 1;
-  if (!isPopNavigation()) return 1;
+  if (
+    !isPopNavigation() ||
+    !shouldRestoreListingPage(window.location.pathname)
+  ) {
+    return 1;
+  }
   return (
     readListingPage(window.location.pathname) ||
     readListingPage(getPathnameFromAsPath(router?.asPath)) ||
@@ -80,6 +87,7 @@ const ProductCategoryList = () => {
   const skipUrlSyncOnMount = useRef(
     typeof window !== "undefined" &&
       isPopNavigation() &&
+      shouldRestoreListingPage(window.location.pathname) &&
       !parsePageParam(new URL(window.location.href).searchParams.get("page")) &&
       (readListingPage(window.location.pathname) || 1) > 1,
   );
@@ -186,7 +194,15 @@ const ProductCategoryList = () => {
     if (skipUrlSyncOnMount.current) {
       skipUrlSyncOnMount.current = false;
       setPageInUrl(currentPage, { replace: true });
+      markListingPageRestorePath("");
       return;
+    }
+
+    if (
+      typeof window !== "undefined" &&
+      shouldRestoreListingPage(window.location.pathname)
+    ) {
+      markListingPageRestorePath("");
     }
 
     const urlPage = getPageFromLocation(router);

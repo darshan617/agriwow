@@ -1,5 +1,6 @@
 const NAV_TYPE_KEY = "agriwow:nav-type";
 const LISTING_PAGE_PREFIX = "agriwow:listing-page:";
+const LISTING_RESTORE_PATH_KEY = "agriwow:listing-restore-path";
 
 export function markRouteNavType(isPop) {
   try {
@@ -15,6 +16,27 @@ export function isPopNavigation() {
     const navEntry = performance.getEntriesByType?.("navigation")?.[0];
     if (navEntry?.type === "back_forward") return true;
     return performance.navigation?.type === 2;
+  } catch {
+    return false;
+  }
+}
+
+export function markListingPageRestorePath(pathname) {
+  try {
+    if (pathname) {
+      sessionStorage.setItem(LISTING_RESTORE_PATH_KEY, pathname);
+    } else {
+      sessionStorage.removeItem(LISTING_RESTORE_PATH_KEY);
+    }
+  } catch {
+    // ignore quota / private-mode errors
+  }
+}
+
+export function shouldRestoreListingPage(pathname) {
+  if (!pathname) return false;
+  try {
+    return sessionStorage.getItem(LISTING_RESTORE_PATH_KEY) === pathname;
   } catch {
     return false;
   }
