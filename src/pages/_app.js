@@ -20,9 +20,9 @@ import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 import { trackPageView, trackUserData } from "@/utils/gtm";
 import { useUtmStoreMutation } from "@/redux/apis/utmApi";
 import {
-  isPopNavigation,
+  getPathnameFromAsPath,
+  markListingPageRestorePath,
   markRouteNavType,
-  readListingPage,
 } from "@/utils/listingPaginationMemory";
 
 const sora = Sora({
@@ -43,23 +43,38 @@ function AppContent({ Component, pageProps }) {
 
   useEffect(() => {
     let popped = false;
+    let lastPath = router.asPath;
 
     const onPopState = () => {
+      const targetPath = window.location.pathname;
+      markListingPageRestorePath(
+        getPathnameFromAsPath(lastPath).startsWith("/product-details/") &&
+          targetPath.startsWith("/product-category/")
+          ? targetPath
+          : "",
+      );
       popped = true;
       markRouteNavType(true);
     };
 
     const onRouteChangeStart = () => {
+      if (!popped) markListingPageRestorePath("");
       markRouteNavType(popped);
       popped = false;
     };
 
+    const onRouteChangeComplete = (url) => {
+      lastPath = url;
+    };
+
     window.addEventListener("popstate", onPopState);
     router.events.on("routeChangeStart", onRouteChangeStart);
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
 
     return () => {
       window.removeEventListener("popstate", onPopState);
       router.events.off("routeChangeStart", onRouteChangeStart);
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
     };
   }, [router.events]);
 
@@ -87,17 +102,6 @@ function AppContent({ Component, pageProps }) {
     savedParams.forEach((value, key) => {
       if (!url.searchParams.has(key)) url.searchParams.set(key, value);
     });
-
-    if (
-      url.pathname.startsWith("/product-category/") &&
-      !url.searchParams.get("page") &&
-      isPopNavigation()
-    ) {
-      const savedPage = readListingPage(url.pathname);
-      if (savedPage > 1) {
-        url.searchParams.set("page", String(savedPage));
-      }
-    }
 
     const nextUrl = `${url.pathname}${url.search}${url.hash}`;
     if (nextUrl !== router.asPath) {
