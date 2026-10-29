@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useSelector } from "react-redux";
 
-const Solution = () => {
+const Solution = ({ bannersLink }) => {
   const { isLoggedIn, openLoginPopup } = useLoginPopup();
   const categories = useSelector((state) => state.category.categories);
   return (
@@ -64,9 +64,15 @@ const Solution = () => {
             <div className={`${styles.rightContent}`}>
               <div className={`${styles.imageTextWrapper}`}>
                 <Image
-                  src={solutionImage}
+                  src={
+                    bannersLink?.image_url ||
+                    bannersLink?.image ||
+                    solutionImage
+                  }
                   alt="solution"
                   className={`${styles.trackImageBg}`}
+                  width={1920}
+                  height={700}
                 />
                 <div className={`${styles.textOverlay}`}>
                   <h2 className={`${styles.title}`}>

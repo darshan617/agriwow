@@ -156,7 +156,6 @@
   z-index: 3;
 }
 
-
 .overlayContentIndustrial {
   padding: 36px 20px 0;
 }
@@ -177,7 +176,7 @@
 
 .promoImage {
   object-fit: cover !important;
-  object-position: bottom;
+  object-position: center;
 }
 
 .cardsCol {
@@ -453,8 +452,7 @@
   margin-top: -20px;
 }
 
-
-.noProductsFound{
+.noProductsFound {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -477,7 +475,6 @@
   .productCard {
     min-height: 450px !important;
   }
-
 }
 
 @media (max-width: 1400px) {
@@ -607,7 +604,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-    .productsShimmer {
+  .productsShimmer {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;

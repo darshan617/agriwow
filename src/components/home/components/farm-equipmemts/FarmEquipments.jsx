@@ -23,7 +23,7 @@ const FarmEquipments = ({
       <div className="container">
         <div className={`${styles.card}`}>
           <Image
-            src={bannersLink?.image || bannerImage}
+            src={bannersLink?.image_url || bannersLink?.image || bannerImage}
             alt="farm-equipments"
             className={styles.bannerImage}
             priority

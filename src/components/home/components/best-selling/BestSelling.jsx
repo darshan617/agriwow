@@ -6,6 +6,7 @@ import pumpImage from "@/assets/images/selling-2.png";
 
 const BestSelling = ({
   bestSellingData,
+  bannerImageUrl,
   bannersLink,
   isHomeDataLoading = false,
   viewAllLink = "/best-selling",
@@ -16,7 +17,7 @@ const BestSelling = ({
       <ProductsItem
         sectionClassName=""
         title="Best Seller"
-        bannerImage={bannerImage}
+        bannerImage={bannerImageUrl || bannerImage}
         bannersLink={bannersLink}
         viewAllLink={viewAllLink}
         agricultureProductsData={bestSellingData}
