@@ -9,29 +9,20 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import Link from "next/link";
 import ProductCardShimmer from "../product-card/ProductCardShimmer";
-import { useSelector } from "react-redux";
 
 const SHIMMER_COUNT = 4;
 
 const ProductsItem = ({
   isHomeDataLoading,
   bannerTitle,
-  bannerDescription,
-  description,
   agricultureProductsData,
   variant = "default",
   title = "",
   bannerImage = productImage,
   productsSectionClassName = "",
   sectionClassName = "sectionSpace",
-  overlayHeading,
   overlayVariant = "default",
-  overlayProducts = [],
-  overlayFooter,
-  hideOverlay = false,
-  customOverlay,
   bannerImageProps = {},
-  categorySlug,
   viewAllLink = "/product-category/agriculture-sprayers",
   bannersLink,
   type = "",
@@ -43,8 +34,6 @@ const ProductsItem = ({
   } = bannerImageProps;
   const isEquipment = variant === "equipment";
   const isIndustrialOverlay = overlayVariant === "industrial";
-  const isPostHarvestOverlay = overlayVariant === "postHarvest";
-  const isBestSellingOverlay = overlayVariant === "bestSelling";
   const productsSectionClassNames = [
     styles.productsSection,
     isEquipment && styles.productsSectionEquipment,
@@ -52,10 +41,8 @@ const ProductsItem = ({
   ]
     .filter(Boolean)
     .join(" ");
-
   const hasProducts = agricultureProductsData?.length > 0;
   const showSection = isHomeDataLoading || hasProducts;
-  const categories = useSelector((state) => state.category.categories);
 
   return (
     <section className={sectionClassName}>
@@ -86,7 +73,11 @@ const ProductsItem = ({
                       className={`${styles.promoCard} ${isIndustrialOverlay ? styles.promoCardIndustrial : ""}`}
                     >
                       <Image
-                        src={bannersLink?.image || bannerImage}
+                        src={
+                          bannersLink?.image_url ||
+                          bannersLink?.image ||
+                          bannerImage
+                        }
                         alt={bannersLink?.name || bannerTitle || title}
                         fill
                         sizes="(max-width: 767px) 100vw, 25vw"
@@ -96,55 +87,6 @@ const ProductsItem = ({
                         style={{ objectFit: "cover", ...bannerImageStyle }}
                         {...restBannerImageProps}
                       />
-                      {!hideOverlay &&
-                        (customOverlay ? (
-                          customOverlay
-                        ) : isIndustrialOverlay ? (
-                          <div
-                            className={`${styles.overlayContent} ${styles.overlayContentIndustrial}`}
-                          >
-                            <h3
-                              className={`${styles.overlayTitle} ${styles.overlayTitleIndustrial}`}
-                            >
-                              {overlayHeading || title}
-                            </h3>
-                          </div>
-                        ) : isPostHarvestOverlay ? (
-                          <div className={`${styles.overlayContent} `}>
-                            <h3 className={`${styles.overlayTitle} `}>
-                              {overlayHeading || title}
-                            </h3>
-                          </div>
-                        ) : isBestSellingOverlay ? (
-                          <>
-                            <div
-                              className={`${styles.overlayContent} ${styles.overlayContentBestSelling}`}
-                            >
-                              <h3
-                                className={`${styles.overlayTitle} ${styles.overlayTitleBestSelling}`}
-                              >
-                                {overlayHeading || title}
-                              </h3>
-                            </div>
-
-                            {overlayFooter && (
-                              <div className={styles.bestSellingFooter}>
-                                {overlayFooter}
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className={styles.overlayContent}>
-                            <h3 className={styles.overlayTitle}>
-                              {bannerTitle}
-                            </h3>
-                            {bannerDescription && (
-                              <p className={styles.overlayDescription}>
-                                {bannerDescription}
-                              </p>
-                            )}
-                          </div>
-                        ))}
                     </div>
                   </Link>
                 </div>
