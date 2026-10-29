@@ -8,7 +8,7 @@ import styles from "@/components/home/components/deal/ExclusiveDeal.module.css";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-const ExclusiveDeal = () => {
+const ExclusiveDeal = ({ bannersLink }) => {
   const categories = useSelector((state) => state.category.categories);
   return (
     <section className={`${styles.ExclusiveDealSection}`}>
@@ -16,7 +16,11 @@ const ExclusiveDeal = () => {
         <div className="container">
           <div className={`${styles.exclusiveDeal}`}>
             <div className={`${styles.exclusiveDealBanner}`}>
-              <Image src={exclusiveDeal} alt="deal" fill />
+              <Image
+                src={bannersLink?.image_url || bannersLink?.image || exclusiveDeal}
+                alt="deal"
+                fill
+              />
             </div>
             <div className={`${styles.exclusiveDealContent}`}>
               <div className={`${styles.exclusiveDealRow} row`}>
