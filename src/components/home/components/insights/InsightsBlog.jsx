@@ -3,12 +3,6 @@ import { LuCalendarDays } from "react-icons/lu";
 import { FaRegUser } from "react-icons/fa6";
 import blogImage from "@/assets/images/insight.jpg";
 import styles from "@/components/home/components/insights/InsightsBlog.module.css";
-import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const stripHtml = (html) =>
@@ -62,17 +56,7 @@ const PostCard = ({ post }) => (
   </Link>
 );
 
-const InsightsBlog = ({ insightsBlogData }) => {
-  const [isMobile, setIsMobile] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    setIsMobile(mq.matches);
-    const handler = (e) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
+const InsightsBlog = ({ insightsBlogData, isHomeDataLoading = false }) => {
   return (
     <div className="sectionSpace">
     <section
@@ -83,26 +67,26 @@ const InsightsBlog = ({ insightsBlogData }) => {
       <div className="container">
         <h2 className={`${styles.heading}`}>Farming Insights &amp; Blogs</h2>
 
-        {isMobile ? (
-          <Swiper
-            modules={[Pagination]}
-            pagination={{
-              clickable: true,
-              bulletActiveClass: styles.swiperBulletActive,
-            }}
-            spaceBetween={20}
-            breakpoints={{
-              576: { slidesPerView: 2 },
-              0: { slidesPerView: 1 },
-            }}
-            className={styles.swiper}
-          >
-            {insightsBlogData?.map((post) => (
-              <SwiperSlide key={post?.id}>
-                <PostCard post={post} />
-              </SwiperSlide>
+        {isHomeDataLoading ? (
+          <div className={`${styles.grid} ${styles.loadingGrid}`} aria-hidden>
+            {Array.from({ length: 3 }, (_, index) => (
+              <article
+                className={`${styles.card} ${styles.loadingCard}`}
+                key={index}
+              >
+                <div
+                  className={`${styles.media} ${styles.skeletonMedia} shimmerEffect`}
+                />
+                <div className={`${styles.cardBody} ${styles.skeletonBody}`}>
+                  <div className={`${styles.skeletonLine} shimmerEffect`} />
+                  <div className={`${styles.skeletonLine} shimmerEffect`} />
+                  <div
+                    className={`${styles.skeletonLine} ${styles.skeletonLineShort} shimmerEffect`}
+                  />
+                </div>
+              </article>
             ))}
-          </Swiper>
+          </div>
         ) : (
           <div className={`${styles.grid}`}>
             {insightsBlogData?.map((post) => (

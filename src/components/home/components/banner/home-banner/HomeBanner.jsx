@@ -14,6 +14,7 @@ const HomeBanner = () => {
     data: bannerDataResponse,
     isLoading: isBannerDataLoading,
     isFetching: isBannerDataFetching,
+    isError: isBannerDataError,
   } = useGetBannerDataQuery();
   const bannerData = bannerDataResponse?.data;
 
@@ -31,7 +32,11 @@ const HomeBanner = () => {
       }));
   }, [bannerData]);
 
-  return isBannerDataLoading || isBannerDataFetching ? (
+  return (
+    isBannerDataLoading ||
+    isBannerDataFetching ||
+    (!bannerData && !isBannerDataError)
+  ) ? (
     <div className={`${styles.bannerShimmer} shimmerEffect`}></div>
   ) : (
     <section className={`${styles.bannerSection}`}>

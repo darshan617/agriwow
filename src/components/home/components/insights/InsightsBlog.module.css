@@ -16,6 +16,28 @@
     gap: 35px;
 }
 
+.loadingCard {
+    pointer-events: none;
+}
+
+.skeletonMedia {
+    background: #ebebeb;
+}
+
+.skeletonBody {
+    gap: 14px;
+    min-height: 220px;
+}
+
+.skeletonLine {
+    height: 14px;
+    border-radius: 4px;
+}
+
+.skeletonLineShort {
+    width: 70%;
+}
+
 .card {
     background: #f2f2f2;
     border-radius: 14px;
@@ -134,14 +156,6 @@
     cursor: pointer;
 }
 
-.swiper {
-    padding-bottom: 36px !important; 
-}
-.swiperBulletActive {
-    background: #239c3d !important;
-    opacity: 1 !important;
-}
-
 @media (max-width: 1500px) {
     .section {
         padding: 0 16px 40px;
@@ -203,6 +217,11 @@
         font-size: 30px;
         margin-top: 20px;
     }
+
+    .skeletonBody {
+        min-height: 180px;
+    }
+
 }
 
 @media (max-width: 1024px) {
