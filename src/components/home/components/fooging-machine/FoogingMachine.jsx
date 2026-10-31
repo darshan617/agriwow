@@ -6,6 +6,7 @@ const FoogingMachine = ({
   foogingMachineData,
   viewAllLink = "/product-category/fogging-machines",
   bannersLink,
+  isHomeDataLoading,
 }) => {
   return (
     <div>
@@ -19,6 +20,7 @@ const FoogingMachine = ({
         farmEquipmentsData={foogingMachineData}
         viewAllLink={viewAllLink}
         bannersLink={bannersLink}
+        isHomeDataLoading={isHomeDataLoading}
       />
     </div>
   );

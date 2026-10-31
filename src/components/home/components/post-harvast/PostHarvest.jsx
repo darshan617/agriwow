@@ -7,6 +7,7 @@ const PostHarvest = ({
   postHarvestData,
   viewAllLink = "/product-category/post-harvest",
   bannersLink,
+  isHomeDataLoading,
 }) => {
   return (
     <div className="sectionSpace">
@@ -16,6 +17,7 @@ const PostHarvest = ({
         bannerImage={postHarvestBanner}
         viewAllLink={viewAllLink}
         agricultureProductsData={postHarvestData}
+        isHomeDataLoading={isHomeDataLoading}
         overlayVariant="postHarvest"
         bannersLink={bannersLink}
         overlayHeading={
