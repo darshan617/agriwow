@@ -6,6 +6,7 @@ const GardenTool = ({
   gardeningToolsData,
   bannersLink,
   viewAllLink = "/product-category/garden-tools",
+  isHomeDataLoading,
 }) => {
   return (
     <div>
@@ -15,6 +16,7 @@ const GardenTool = ({
         farmEquipmentsData={gardeningToolsData}
         viewAllLink={viewAllLink}
         bannersLink={bannersLink}
+        isHomeDataLoading={isHomeDataLoading}
       />
     </div>
   );

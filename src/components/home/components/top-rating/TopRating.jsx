@@ -7,6 +7,7 @@ const TopRating = ({
   topRatedData,
   bannersLink,
   viewAllLink = "/product-category/top-rating",
+  isHomeDataLoading,
 }) => {
   return (
     <div className="sectionSpace">
@@ -20,6 +21,7 @@ const TopRating = ({
         className: styles.topRatingPromoImage,
       }}
       agricultureProductsData={topRatedData}
+      isHomeDataLoading={isHomeDataLoading}
       customOverlay={
         <div className={styles.topRatingOverlay}>
           <div className={styles.topRatingBoost}>

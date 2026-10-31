@@ -6,6 +6,7 @@ import "swiper/css";
 import farmEquipments from "@/assets/images/agri-equipments.jpg";
 import styles from "@/components/home/components/farm-equipmemts/FarmEqipments.module.css";
 import ProductCard from "@/common-components/product-card/ProductCard";
+import ProductCardShimmer from "@/common-components/product-card/ProductCardShimmer";
 import Link from "next/link";
 
 const FarmEquipments = ({
@@ -17,6 +18,7 @@ const FarmEquipments = ({
   categoriesData,
   viewAllLink = "/product-category/farm-equipments",
   bannersLink,
+  isHomeDataLoading = false,
 }) => {
   return (
     <section className="sectionSpace" data-aos="zoom-in">
@@ -26,8 +28,7 @@ const FarmEquipments = ({
             src={bannersLink?.image_url || bannersLink?.image || bannerImage}
             alt="farm-equipments"
             className={styles.bannerImage}
-            priority
-            quality={100}
+            sizes="100vw"
             width={1920}
             height={700}
           />
@@ -69,25 +70,31 @@ const FarmEquipments = ({
               }}
               className={styles.productsSwiper}
             >
-              {farmEquipmentsData?.map((item) => (
-                <SwiperSlide key={item?.id}>
-                  <ProductCard
-                    type="home"
-                    image={item?.thumbnail}
-                    imageHover={item?.gallery[0]}
-                    discount={item?.discount}
-                    isBestSeller={item?.isBestSeller}
-                    name={item?.name}
-                    price={item?.selling_price}
-                    oldPrice={item?.price}
-                    reviews={item?.total_reviews}
-                    average_rating={item?.average_rating}
-                    slug={item?.slug}
-                    productId={item?.id}
-                    quantity={item?.quantity}
-                  />
-                </SwiperSlide>
-              ))}
+              {isHomeDataLoading
+                ? Array.from({ length: 4 }, (_, index) => (
+                    <SwiperSlide key={`loading-${index}`}>
+                      <ProductCardShimmer />
+                    </SwiperSlide>
+                  ))
+                : farmEquipmentsData?.map((item) => (
+                    <SwiperSlide key={item?.id}>
+                      <ProductCard
+                        type="home"
+                        image={item?.thumbnail}
+                        imageHover={item?.gallery[0]}
+                        discount={item?.discount}
+                        isBestSeller={item?.isBestSeller}
+                        name={item?.name}
+                        price={item?.selling_price}
+                        oldPrice={item?.price}
+                        reviews={item?.total_reviews}
+                        average_rating={item?.average_rating}
+                        slug={item?.slug}
+                        productId={item?.id}
+                        quantity={item?.quantity}
+                      />
+                    </SwiperSlide>
+                  ))}
             </Swiper>
           </div>
 

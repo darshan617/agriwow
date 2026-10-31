@@ -7,12 +7,14 @@ const IndustrialProduct = ({
   industrialProductsData,
   bannersLink,
   viewAllLink = "/product-category/industrial-products",
+  isHomeDataLoading,
 }) => {
   return (
     <ProductsItem
       title="Industrial Products"
       bannerImage={industrialBanner}
       agricultureProductsData={industrialProductsData}
+      isHomeDataLoading={isHomeDataLoading}
       overlayVariant="industrial"
       viewAllLink={viewAllLink}
       overlayHeading={
