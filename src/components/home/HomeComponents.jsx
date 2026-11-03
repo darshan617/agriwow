@@ -143,7 +143,12 @@ const HomeComponents = () => {
         bannersLink={banners?.industrial_products}
         isHomeDataLoading={isHomeDataLoading || !homeData}
       />
-      <Solution bannersLink={banners?.pay_online_save_more} />
+      <Solution
+        bannersLink={{
+          img1: banners?.track_order,
+          img2: banners?.all_in_one_farming_solution,
+        }}
+      />
       <DynamicGardenTool
         gardeningToolsData={gardeningToolsData}
         viewAllLink="/product-category/garden-tools"

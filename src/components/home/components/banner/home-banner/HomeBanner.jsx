@@ -32,11 +32,9 @@ const HomeBanner = () => {
       }));
   }, [bannerData]);
 
-  return (
-    isBannerDataLoading ||
+  return isBannerDataLoading ||
     isBannerDataFetching ||
-    (!bannerData && !isBannerDataError)
-  ) ? (
+    (!bannerData && !isBannerDataError) ? (
     <div className={`${styles.bannerShimmer} shimmerEffect`}></div>
   ) : (
     <section className={`${styles.bannerSection}`}>
@@ -70,8 +68,10 @@ const HomeBanner = () => {
                   <Image
                     src={slide?.backgroundImage}
                     alt="Banner Image"
-                    className={`${styles.bannerBackground}`}
-                    priority={index === 0}
+                    className={styles.bannerBackground}
+                    preload={index === 0}
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    loading={index === 0 ? "eager" : "lazy"}
                     sizes="100vw"
                     width={1920}
                     height={600}
