@@ -122,7 +122,13 @@ const Footer = () => {
                   className={styles.footerLogoLink}
                   prefetch={true}
                 >
-                  <Image src={logo} alt="Agriwow" width={170} priority />
+                  <Image
+                    src={logo}
+                    alt="Agriwow"
+                    width={170}
+                    height={38}
+                    priority
+                  />
                 </Link>
                 <p className={`${styles.footerBrandText}`}>
                   Get top-quality agricultural machinery at <br /> unbeatable

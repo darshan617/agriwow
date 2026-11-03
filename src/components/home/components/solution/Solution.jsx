@@ -22,9 +22,17 @@ const Solution = ({ bannersLink }) => {
             <div className={`${styles.leftContent}`}>
               <div className={`${styles.imageTextWrapper}`}>
                 <Image
-                  src={trackImage}
+                  src={
+                    bannersLink?.img1?.image_url ||
+                    bannersLink?.img1?.image ||
+                    trackImage
+                  }
                   alt="order-tracking"
                   className={`${styles.trackImageBg}`}
+                  width={1920}
+                  height={700}
+                  quality={65}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className={`${styles.textOverlay}`}>
                   <h2 className={`${styles.title}`}>
@@ -65,14 +73,16 @@ const Solution = ({ bannersLink }) => {
               <div className={`${styles.imageTextWrapper}`}>
                 <Image
                   src={
-                    bannersLink?.image_url ||
-                    bannersLink?.image ||
+                    bannersLink?.img2?.image_url ||
+                    bannersLink?.img2?.image ||
                     solutionImage
                   }
                   alt="solution"
                   className={`${styles.trackImageBg}`}
                   width={1920}
                   height={700}
+                  quality={65}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className={`${styles.textOverlay}`}>
                   <h2 className={`${styles.title}`}>

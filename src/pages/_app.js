@@ -13,8 +13,6 @@ import { ToastProvider } from "@/custom-hooks/toast/ToastProvider";
 import { LoginPopupProvider } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ProgressBar from "@/custom-hooks/progress-bar/ProgressBar";
-import { FaArrowUp } from "react-icons/fa";
-import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import ComingSoonPage from "@/components/coming-soon/ComingSoonPage";
 import { trackPageView, trackUserData } from "@/utils/gtm";
@@ -132,30 +130,72 @@ function AppContent({ Component, pageProps }) {
       .catch((error) => console.error("Failed to store UTM page visit", error));
   }, [router, router.asPath, router.isReady, storeUtm]);
 
+  // useEffect(() => {
+  //   const initAos = async () => {
+  //     await import("aos/dist/aos.css");
+  //     const Aos = (await import("aos")).default;
+  //     Aos.init({
+  //       duration: 1000,
+  //       once: true,
+  //     });
+  //   };
+
+  //   if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+  //     const id = window.requestIdleCallback(
+  //       () => {
+  //         void initAos();
+  //       },
+  //       { timeout: 2000 },
+  //     );
+  //     return () => window.cancelIdleCallback(id);
+  //   }
+
+  //   const timer = window.setTimeout(() => {
+  //     void initAos();
+  //   }, 1);
+  //   return () => window.clearTimeout(timer);
+  // }, []);
   useEffect(() => {
+    let cancelled = false;
+    let aosInstance;
+
     const initAos = async () => {
-      await import("aos/dist/aos.css");
-      const Aos = (await import("aos")).default;
-      Aos.init({
-        duration: 1000,
-        once: true,
-      });
+      try {
+        const Aos = (await import("aos")).default;
+
+        if (cancelled) return;
+
+        aosInstance = Aos;
+
+        Aos.init({
+          duration: 600,
+          once: true,
+          disableMutationObserver: true,
+        });
+
+        Aos.refreshHard();
+      } catch (error) {
+        console.error("AOS initialization failed:", error);
+      }
     };
 
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(
-        () => {
-          void initAos();
-        },
-        { timeout: 2000 },
-      );
-      return () => window.cancelIdleCallback(id);
+    let timer;
+
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(initAos, { timeout: 3000 });
+
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
     }
 
-    const timer = window.setTimeout(() => {
-      void initAos();
-    }, 1);
-    return () => window.clearTimeout(timer);
+    timer = window.setTimeout(initAos, 1000);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -214,7 +254,15 @@ function FloatingWhatsAppButton() {
       aria-label="Chat on WhatsApp"
       className="whatsapp-float-btn"
     >
-      <FaWhatsapp className="whatsapp-float-btn-icon" />
+      <svg
+        viewBox="0 0 24 24"
+        width="25"
+        height="25"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M20.52 3.48A11.9 11.9 0 0 0 12.06 0C5.46 0 .1 5.36.1 11.96c0 2.1.55 4.16 1.6 5.98L0 24l6.22-1.63a11.9 11.9 0 0 0 5.83 1.48h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.5-8.41Zm-8.46 18.34h-.01a9.95 9.95 0 0 1-5.07-1.39l-.36-.21-3.69.97.99-3.6-.23-.37a9.93 9.93 0 0 1-1.53-5.26c0-5.49 4.47-9.96 9.97-9.96a9.9 9.9 0 0 1 7.05 2.92 9.9 9.9 0 0 1 2.92 7.05c0 5.5-4.47 9.97-9.96 9.97Zm5.47-7.46c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.8-1.49-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.5 1.7.64.71.22 1.36.19 1.87.11.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z" />
+      </svg>
     </Link>
   );
 }
@@ -243,7 +291,19 @@ function BackToTopButton() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to Top"
     >
-      <FaArrowUp />
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m18 15-6-6-6 6" />
+      </svg>
     </button>
   );
 }
