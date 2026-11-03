@@ -4,10 +4,16 @@ import Layout from "../layout/Layout";
 import Breadcrumb from "./components/breadcrumb/Breadcrumb";
 import DeliveryDetail from "./components/delivery-detail/deliveryDetails";
 import SimilarProduct from "./components/similar-product/SimilarProduct";
-import ReviewsRating from "./components/reviews-rating/ReviewsRating";
 import Faqs from "./components/faqs/Faqs";
 import OrderInformation from "../product-category/components/order-information/OrderInformation";
 import FrequentlyBought from "../Frequently-bought/FrequentlyBought";
+import dynamic from "next/dynamic";
+
+const DynamicReviews = dynamic(
+  () => import("./components/reviews-rating/ReviewsRating"),
+  { ssr: false },
+);
+
 const ProductDetailsComponent = ({ productDetails }) => {
   const similarProducts = productDetails?.data?.similar_products ?? [];
   const categorySlug = productDetails?.data?.category?.slug;
@@ -34,7 +40,7 @@ const ProductDetailsComponent = ({ productDetails }) => {
         similarProducts={similarProducts}
         categorySlug={categorySlug}
       />
-      <ReviewsRating
+      <DynamicReviews
         // productName={productDetails?.data?.name}
         productId={productDetails?.data?.id}
         productName={productDetails?.data?.name}
