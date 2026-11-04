@@ -3,11 +3,16 @@ import ItemDetail from "./components/item-detail/ItemDetail";
 import Layout from "../layout/Layout";
 import Breadcrumb from "./components/breadcrumb/Breadcrumb";
 import DeliveryDetail from "./components/delivery-detail/deliveryDetails";
-import SimilarProduct from "./components/similar-product/SimilarProduct";
 import Faqs from "./components/faqs/Faqs";
 import OrderInformation from "../product-category/components/order-information/OrderInformation";
 import FrequentlyBought from "../Frequently-bought/FrequentlyBought";
 import dynamic from "next/dynamic";
+import DeferredSection from "./DeferredSection";
+
+const DynamicSimilarProduct = dynamic(
+  () => import("./components/similar-product/SimilarProduct"),
+  { ssr: false },
+);
 
 const DynamicReviews = dynamic(
   () => import("./components/reviews-rating/ReviewsRating"),
@@ -36,20 +41,25 @@ const ProductDetailsComponent = ({ productDetails }) => {
         productDetails={productDetails}
         frequentlyBoughtProducts={frequentlyBoughtProducts}
       />
-      <SimilarProduct
-        similarProducts={similarProducts}
-        categorySlug={categorySlug}
-      />
-      <DynamicReviews
-        // productName={productDetails?.data?.name}
-        productId={productDetails?.data?.id}
-        productName={productDetails?.data?.name}
-        ratingData={productDetails?.data?.rating_summary}
-        reviews={productDetails?.data?.reviews}
-        can_review={productDetails?.data?.can_review}
-        has_purchased={productDetails?.data?.has_purchased}
-        product_review_media={productDetails?.data?.product_review_media}
-      />
+      {similarProducts.length > 0 && (
+        <DeferredSection minHeight="420px">
+          <DynamicSimilarProduct
+            similarProducts={similarProducts}
+            categorySlug={categorySlug}
+          />
+        </DeferredSection>
+      )}
+      <DeferredSection minHeight="480px">
+        <DynamicReviews
+          productId={productDetails?.data?.id}
+          productName={productDetails?.data?.name}
+          ratingData={productDetails?.data?.rating_summary}
+          reviews={productDetails?.data?.reviews}
+          can_review={productDetails?.data?.can_review}
+          has_purchased={productDetails?.data?.has_purchased}
+          product_review_media={productDetails?.data?.product_review_media}
+        />
+      </DeferredSection>
       <Faqs
         productData={productDetails?.data}
         productId={productDetails?.data?.id}

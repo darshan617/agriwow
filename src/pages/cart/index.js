@@ -1,7 +1,7 @@
 "use client";
 
 import Layout from "@/components/layout/Layout";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import CartDetails from "@/components/cart-details/product-info/cartDetails";
 import CartSummery from "@/components/cart-details/cart-summery/CartSummery";
 import OrderInformation from "@/components/product-category/components/order-information/OrderInformation";
@@ -14,12 +14,14 @@ import {
 } from "@/redux/apis/addToCartApi";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
-import ProductCard from "@/common-components/product-card/ProductCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
-import { useRef } from "react";
 import { trackViewCart } from "@/utils/gtm";
+import dynamic from "next/dynamic";
+
+const CartRecommendations = dynamic(
+  () => import("@/components/cart-details/CartRecommendations"),
+  { ssr: false },
+);
 
 const Cart = () => {
   const { showToast } = useToast();
@@ -39,8 +41,16 @@ const Cart = () => {
       skip: !canFetchCart,
     },
   );
-  const { data: homeData } = useGetHomeDataQuery();
   const [cachedTrendingProducts, setCachedTrendingProducts] = useState([]);
+  const hasCartTrendingProducts = cartData?.trending_products?.length > 0;
+  const shouldFetchHomeFallback =
+    isCartInitialized &&
+    !(canFetchCart && isCartLoading) &&
+    !hasCartTrendingProducts &&
+    cachedTrendingProducts.length === 0;
+  const { data: homeData } = useGetHomeDataQuery(undefined, {
+    skip: !shouldFetchHomeFallback,
+  });
 
   const cartItems = Array.isArray(cartData?.data) ? cartData.data : [];
   useEffect(() => {
@@ -173,71 +183,7 @@ const Cart = () => {
         </div>
 
         {trending_products?.length > 0 && (
-          <div className={styles.mayLike}>
-            <h2 className={styles.swiperTitle}>You may also like</h2>
-            <Swiper
-              modules={[Navigation, Autoplay]}
-              navigation={{
-                prevEl: ".swiper-btn-prev",
-                nextEl: ".swiper-btn-next",
-              }}
-              autoplay={{
-                delay: 8000,
-                disableOnInteraction: false,
-              }}
-              breakpoints={{
-                0: {
-                  slidesPerView: 2,
-                  spaceBetween: 5,
-                },
-                425: {
-                  slidesPerView: 2,
-                  spaceBetween: 5,
-                },
-                575: {
-                  slidesPerView: 3,
-                  spaceBetween: 14,
-                },
-                767: {
-                  slidesPerView: 3,
-                  spaceBetween: 16,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 18,
-                },
-                1200: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              className="swiper-wrapper"
-            >
-              {trending_products.map((item) => (
-                <SwiperSlide key={item?.id}>
-                  <ProductCard
-                    image={item?.thumbnail}
-                    imageHover={item?.gallery?.[0]}
-                    discount={item?.discount}
-                    isBestSeller={item?.is_best_selling}
-                    name={item?.name}
-                    price={item?.selling_price}
-                    oldPrice={item?.price}
-                    reviews={item?.total_reviews}
-                    average_rating={item?.average_rating}
-                    isTrending={item?.is_trending}
-                    isFeatured={item?.is_featured}
-                    isTopRated={item?.is_top_rated}
-                    slug={item?.slug}
-                    productId={item?.id}
-                    isWishlist={item?.is_wishlist}
-                    similarProductData={item}
-                    quantity={item?.quantity}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          <CartRecommendations products={trending_products} />
         )}
       </div>
       <OrderInformation />
