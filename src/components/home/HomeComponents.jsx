@@ -8,6 +8,8 @@ import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useEffect, useRef } from "react";
 import { trackViewItemList } from "@/utils/gtm";
 
+const HOME_SECTION_ROOT_MARGIN = "100px 0px";
+
 const DynamicMarquee = dynamic(
   () => import("@/components/home/components/marquee/Marquee"),
 );
@@ -115,10 +117,13 @@ const HomeComponents = () => {
     <Layout>
       <DynamicTopBanner categoriesData={categoriesData} />
       <DynamicHomeBanner />
-      <DeferredSection minHeight="40px">
+      <DeferredSection minHeight="40px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicMarquee />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicBestSelling
           bestSellingData={bestSellingData}
           bannerImageUrl={
@@ -130,10 +135,13 @@ const HomeComponents = () => {
           type="bestSelling"
         />
       </DeferredSection>
-      <DeferredSection minHeight="140px">
+      <DeferredSection minHeight="140px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicDetail />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicProductsItem
           agricultureProductsData={agricultureProductsData}
           title="Agriculture Sprayers"
@@ -147,7 +155,10 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicFarmEquipments
           farmEquipmentsData={farmEquipmentsData}
           categoriesData={categoriesData}
@@ -156,10 +167,13 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="320px">
+      <DeferredSection minHeight="320px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicBenefit />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicIndustrialProduct
           industrialProductsData={industrialProductsData}
           viewAllLink="/product-category/industrial-products"
@@ -167,7 +181,7 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="330px">
+      <DeferredSection minHeight="330px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicSolution
           bannersLink={{
             img1: banners?.track_order,
@@ -175,7 +189,10 @@ const HomeComponents = () => {
           }}
         />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicGardenTool
           gardeningToolsData={gardeningToolsData}
           viewAllLink="/product-category/garden-tools"
@@ -183,7 +200,10 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicPostHarvest
           postHarvestData={postHarvestData}
           viewAllLink="/product-category/post-harvest"
@@ -191,7 +211,10 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicFoogingMachine
           foogingMachineData={foogingMachineData}
           viewAllLink="/product-category/fogging-machines"
@@ -199,10 +222,13 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="240px">
+      <DeferredSection minHeight="240px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicExclusiveDeal bannersLink={banners?.exclusive_deals} />
       </DeferredSection>
-      <DeferredSection minHeight="520px">
+      <DeferredSection
+        minHeight="520px"
+        rootMargin={HOME_SECTION_ROOT_MARGIN}
+      >
         <DynamicTopRating
           topRatedData={topRatedData}
           viewAllLink="/product-category/top-rating"
@@ -210,10 +236,10 @@ const HomeComponents = () => {
           isHomeDataLoading={isHomeDataLoading || !homeData}
         />
       </DeferredSection>
-      <DeferredSection minHeight="420px">
+      <DeferredSection minHeight="420px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicVideoSection />
       </DeferredSection>
-      <DeferredSection minHeight="420px">
+      <DeferredSection minHeight="420px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
         <DynamicInsightsBlog
           insightsBlogData={insightsBlogData}
           isHomeDataLoading={isHomeDataLoading || !homeData}
