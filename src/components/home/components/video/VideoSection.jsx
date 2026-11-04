@@ -72,9 +72,13 @@ const getYoutubeVideoId = (url) => {
   return null;
 };
 
-const VideoSection = () => {
-  const { data: homeData, isLoading, isUninitialized } = useGetHomeDataQuery();
-  const video_banner = homeData?.data?.banners?.video_banner;
+const VideoSection = ({ initialVideoBanner }) => {
+  const { data: homeData, isLoading, isUninitialized } =
+    useGetHomeDataQuery(undefined, {
+      skip: Boolean(initialVideoBanner),
+    });
+  const video_banner =
+    initialVideoBanner ?? homeData?.data?.banners?.video_banner;
   const [activeVideo, setActiveVideo] = useState(null);
 
   const embedVideos = useMemo(() => {
@@ -93,7 +97,7 @@ const VideoSection = () => {
       }));
   }, [video_banner?.youtube_links]);
 
-  if (isLoading || isUninitialized || !homeData) {
+  if (!video_banner && (isLoading || isUninitialized || !homeData)) {
     return (
       <section className={`${styles.VideoContainer} sectionSpace`} aria-hidden>
         <div className="container">

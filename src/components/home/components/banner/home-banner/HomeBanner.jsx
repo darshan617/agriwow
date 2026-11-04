@@ -9,14 +9,16 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import { useGetBannerDataQuery } from "@/redux/apis/homeApi";
 
-const HomeBanner = () => {
+const HomeBanner = ({ initialBannerData }) => {
   const {
     data: bannerDataResponse,
     isLoading: isBannerDataLoading,
     isFetching: isBannerDataFetching,
     isError: isBannerDataError,
-  } = useGetBannerDataQuery();
-  const bannerData = bannerDataResponse?.data;
+  } = useGetBannerDataQuery(undefined, {
+    skip: Boolean(initialBannerData),
+  });
+  const bannerData = (bannerDataResponse ?? initialBannerData)?.data;
 
   const slides = useMemo(() => {
     if (!Array.isArray(bannerData)) {
@@ -32,9 +34,10 @@ const HomeBanner = () => {
       }));
   }, [bannerData]);
 
-  return isBannerDataLoading ||
-    isBannerDataFetching ||
-    (!bannerData && !isBannerDataError) ? (
+  return !bannerData &&
+    (isBannerDataLoading ||
+      isBannerDataFetching ||
+      (!bannerData && !isBannerDataError)) ? (
     <div className={`${styles.bannerShimmer} shimmerEffect`}></div>
   ) : (
     <section className={`${styles.bannerSection}`}>
