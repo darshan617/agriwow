@@ -125,8 +125,8 @@ const Footer = () => {
                   <Image
                     src={logo}
                     alt="Agriwow"
-                    width={170}
                     height={38}
+                    width={170}
                     priority
                   />
                 </Link>
