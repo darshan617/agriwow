@@ -47,7 +47,8 @@ const CartDetails = ({
   const { showToast } = useToast();
   const [showPopup, setShowPopup] = useState("");
   const [phone, setPhone] = useState("");
-  const [removeFromCart] = useRemoveFromCartMutation();
+  const [removeFromCart, { isLoading: isRemovingFromCart }] =
+    useRemoveFromCartMutation();
   const [mergeCart] = useMergeCartMutation();
   const [auth, { isLoading: isAuthLoading }] = useAuthMutation();
   const [verifyOtp, { isLoading: isVerifyOtpLoading }] = useVerifyOtpMutation();
@@ -321,7 +322,14 @@ const CartDetails = ({
                             : handleRemoveFromCart(item.id)
                         }
                       >
-                        <ImBin />
+                        {isRemovingFromCart ? (
+                          <div
+                            className="spinner-border text-success spinner-border-sm"
+                            role="status"
+                          ></div>
+                        ) : (
+                          <ImBin />
+                        )}
                       </button>
                     ) : (
                       <button
