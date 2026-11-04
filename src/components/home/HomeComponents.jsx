@@ -1,14 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Layout from "../layout/Layout";
-import DeferredSection from "@/components/product-details/DeferredSection";
 import TopBannerShimmer from "@/components/layout/top-banner/TopBannerShimmer";
 import homeBannerStyles from "@/components/home/components/banner/home-banner/HomeBanner.module.css";
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useEffect, useRef } from "react";
 import { trackViewItemList } from "@/utils/gtm";
-
-const HOME_SECTION_ROOT_MARGIN = "100px 0px";
 
 const DynamicMarquee = dynamic(
   () => import("@/components/home/components/marquee/Marquee"),
@@ -70,9 +67,12 @@ const DynamicProductsItem = dynamic(
   () => import("@/common-components/products/ProductsItem"),
 );
 
-const HomeComponents = () => {
-  const { data: homeData, isLoading: isHomeDataLoading } =
-    useGetHomeDataQuery(undefined);
+const HomeComponents = ({ initialHomeData, initialBannerData }) => {
+  const { data: queriedHomeData, isLoading } = useGetHomeDataQuery(undefined, {
+    skip: Boolean(initialHomeData),
+  });
+  const homeData = queriedHomeData ?? initialHomeData;
+  const isHomeDataLoading = !homeData && isLoading;
 
   const categoriesData = homeData?.data?.categories;
   const agricultureProductsData =
@@ -116,135 +116,81 @@ const HomeComponents = () => {
   return (
     <Layout>
       <DynamicTopBanner categoriesData={categoriesData} />
-      <DynamicHomeBanner />
-      <DeferredSection minHeight="40px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicMarquee />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicBestSelling
-          bestSellingData={bestSellingData}
-          bannerImageUrl={
-            banners?.best_selling?.image_url || banners?.best_selling?.image
-          }
-          viewAllLink={`/best-seller`}
-          bannersLink={`/best-seller`}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-          type="bestSelling"
-        />
-      </DeferredSection>
-      <DeferredSection minHeight="140px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicDetail />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicProductsItem
-          agricultureProductsData={agricultureProductsData}
-          title="Agriculture Sprayers"
-          bannerTitle="Power Sprayer"
-          bannerDescription={
-            <>
-              Performance <br /> That Grows With You
-            </>
-          }
-          bannersLink={banners?.agriculture_sprayers}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicFarmEquipments
-          farmEquipmentsData={farmEquipmentsData}
-          categoriesData={categoriesData}
-          viewAllLink="/product-category/farm-mechanization-equipments"
-          bannersLink={banners?.farm_mechanization_equipments}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection minHeight="320px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicBenefit />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicIndustrialProduct
-          industrialProductsData={industrialProductsData}
-          viewAllLink="/product-category/industrial-products"
-          bannersLink={banners?.industrial_products}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection minHeight="330px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicSolution
-          bannersLink={{
-            img1: banners?.track_order,
-            img2: banners?.all_in_one_farming_solution,
-          }}
-        />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicGardenTool
-          gardeningToolsData={gardeningToolsData}
-          viewAllLink="/product-category/garden-tools"
-          bannersLink={banners?.garden_tools}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicPostHarvest
-          postHarvestData={postHarvestData}
-          viewAllLink="/product-category/post-harvest"
-          bannersLink={banners?.post_harvest}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicFoogingMachine
-          foogingMachineData={foogingMachineData}
-          viewAllLink="/product-category/fogging-machines"
-          bannersLink={banners?.fogging_machines}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection minHeight="240px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicExclusiveDeal bannersLink={banners?.exclusive_deals} />
-      </DeferredSection>
-      <DeferredSection
-        minHeight="520px"
-        rootMargin={HOME_SECTION_ROOT_MARGIN}
-      >
-        <DynamicTopRating
-          topRatedData={topRatedData}
-          viewAllLink="/product-category/top-rating"
-          bannersLink={banners?.top_rating}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
-      <DeferredSection minHeight="420px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicVideoSection />
-      </DeferredSection>
-      <DeferredSection minHeight="420px" rootMargin={HOME_SECTION_ROOT_MARGIN}>
-        <DynamicInsightsBlog
-          insightsBlogData={insightsBlogData}
-          isHomeDataLoading={isHomeDataLoading || !homeData}
-        />
-      </DeferredSection>
+      <DynamicHomeBanner initialBannerData={initialBannerData} />
+      <DynamicMarquee />
+      <DynamicBestSelling
+        bestSellingData={bestSellingData}
+        bannerImageUrl={
+          banners?.best_selling?.image_url || banners?.best_selling?.image
+        }
+        viewAllLink={`/best-seller`}
+        bannersLink={`/best-seller`}
+        isHomeDataLoading={isHomeDataLoading}
+        type="bestSelling"
+      />
+      <DynamicDetail />
+      <DynamicProductsItem
+        agricultureProductsData={agricultureProductsData}
+        title="Agriculture Sprayers"
+        bannerTitle="Power Sprayer"
+        bannerDescription={
+          <>
+            Performance <br /> That Grows With You
+          </>
+        }
+        bannersLink={banners?.agriculture_sprayers}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicFarmEquipments
+        farmEquipmentsData={farmEquipmentsData}
+        categoriesData={categoriesData}
+        viewAllLink="/product-category/farm-mechanization-equipments"
+        bannersLink={banners?.farm_mechanization_equipments}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicBenefit />
+      <DynamicIndustrialProduct
+        industrialProductsData={industrialProductsData}
+        viewAllLink="/product-category/industrial-products"
+        bannersLink={banners?.industrial_products}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicSolution
+        bannersLink={{
+          img1: banners?.track_order,
+          img2: banners?.all_in_one_farming_solution,
+        }}
+      />
+      <DynamicGardenTool
+        gardeningToolsData={gardeningToolsData}
+        viewAllLink="/product-category/garden-tools"
+        bannersLink={banners?.garden_tools}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicPostHarvest
+        postHarvestData={postHarvestData}
+        viewAllLink="/product-category/post-harvest"
+        bannersLink={banners?.post_harvest}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicFoogingMachine
+        foogingMachineData={foogingMachineData}
+        viewAllLink="/product-category/fogging-machines"
+        bannersLink={banners?.fogging_machines}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicExclusiveDeal bannersLink={banners?.exclusive_deals} />
+      <DynamicTopRating
+        topRatedData={topRatedData}
+        viewAllLink="/product-category/top-rating"
+        bannersLink={banners?.top_rating}
+        isHomeDataLoading={isHomeDataLoading}
+      />
+      <DynamicVideoSection initialVideoBanner={banners?.video_banner} />
+      <DynamicInsightsBlog
+        insightsBlogData={insightsBlogData}
+        isHomeDataLoading={isHomeDataLoading}
+      />
     </Layout>
   );
 };
