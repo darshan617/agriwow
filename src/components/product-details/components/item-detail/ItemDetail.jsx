@@ -283,7 +283,6 @@ const ItemDetail = ({ productDetails }) => {
     }
   };
 
-
   return (
     <div className={`${styles.itemDetail} container`}>
       <div className="row">
@@ -397,8 +396,8 @@ const ItemDetail = ({ productDetails }) => {
               breakpoints={{
                 0: { slidesPerView: 3 },
                 575: { slidesPerView: 4 },
-                1023: { slidesPerView: 3},
-                1400: { slidesPerView: 4}
+                1023: { slidesPerView: 3 },
+                1400: { slidesPerView: 4 },
               }}
             >
               {gallery.map((item, index) => (
@@ -544,9 +543,9 @@ const ItemDetail = ({ productDetails }) => {
                     </div>
                   </div>
                   <span className={styles.mrpText}>
-                  MRP :
+                    MRP :
                     <span className={styles.oldPrice}>
-                       {" "}
+                      {" "}
                       ₹ {productDetails?.data?.price.toLocaleString()}
                     </span>
                   </span>
@@ -579,13 +578,13 @@ const ItemDetail = ({ productDetails }) => {
                         />
                       </div>
                     )}
-                    {productDetails?.data?.discount > 0 && (
+                    {/* {productDetails?.data?.discount > 0 && (
                       <span className={`${styles.discountText}`}>
                         Save ₹{" "}
                         {productDetails?.data?.selling_price -
                           productDetails?.data?.price}
                       </span>
-                    )}
+                    )} */}
                   </div>
                 )}
 
