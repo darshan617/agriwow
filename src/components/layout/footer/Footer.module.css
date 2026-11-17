@@ -1,557 +1,562 @@
 .footer {
-    background: #333333;
-    color: #fff;
+  background: #333333;
+  color: #fff;
 }
 
 .footerForm input {
-    padding: 15px;
-    border-radius: 5px;
-    width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
 }
 
 .footerText {
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 10px;
-    color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
 .footerPara {
-    color: #8dba3b;
-    margin-bottom: 2px;
+  color: #8dba3b;
+  margin-bottom: 2px;
 }
 
 .footerShortPara {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
 }
 
 .footerFormIconWrapper {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .footerFormIcon {
-    font-size: 16px;
-    color: #333;
+  font-size: 16px;
+  color: #333;
 }
 
 .inputIconRight {
-    border: none;
-    background: #8dba3b;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    right: 10px;
-    top: 15%;
-    padding: 10px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center
+  border: none;
+  background: #8dba3b;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 10px;
+  top: 15%;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .inputIconRight:hover {
-    background: #719a2f;
-    transition: all 0.3s ease;
+  background: #719a2f;
+  transition: all 0.3s ease;
 }
 
 .footerFormButtonIcon {
-    color: #333;
-    font-size: 15px;
+  color: #333;
+  font-size: 15px;
 }
 
 .footerFormPara {
-    color: #fff;
-    font-size: 14px;
-    padding-top: 20px;
-    margin: 0;
+  color: #fff;
+  font-size: 14px;
+  padding-top: 20px;
+  margin: 0;
 }
 
 .footerFormPara a {
-    color: #8dba3b;
+  color: #8dba3b;
 }
 
 .footerTop {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 60px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 60px 0;
 }
 
 /* ── Main footer content ── */
 .footerBottom {
-    padding: 0 0 48px;
+  padding: 0 0 48px;
 }
 
 .footerMain {
-    padding: 48px 0 0;
+  padding: 48px 0 0;
 }
 
 .footerMainGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-    align-items: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
 }
 
 /* Brand column */
 .footerBrand {
-    max-width: 300px;
+  max-width: 300px;
 }
 
 .footerLogoLink {
-    display: inline-block;
-    margin-bottom: 16px;
+  display: inline-block;
+  margin-bottom: 16px;
 }
 
 .footerLogoLink img {
-    height: auto;
-    max-width: 170px;
-    width: auto;
+  height: auto;
+  max-width: 170px;
+  width: auto;
 }
 
 .footerBrandText {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 13px;
-    line-height: 1.6;
-    margin: 0 0 24px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 24px;
 }
 
 .footerPhone {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .footerPhoneIcon {
-    color: #fff;
-    font-size: 22px;
-    flex-shrink: 0;
+  color: #fff;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
 .footerPhoneLink {
-    color: #fff;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    line-height: 1;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  line-height: 1;
 }
 
 .footerPhoneLink:hover {
-    color: #8dba3b;
+  color: #8dba3b;
 }
 
 .footerNavGroup {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 24px;
 }
 
 .footerNavCol {
-    min-width: 0;
+  min-width: 0;
 }
 
 .footerNavHeading {
-    color: #8dba3b;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    margin: 0 0 16px;
-    text-transform: uppercase;
+  color: #8dba3b;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0 0 16px;
+  text-transform: uppercase;
 }
 
 .footerNavList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .footerNavList li:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .footerNavList a,
 .footerNavList button {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 14px;
-    line-height: 1.4;
-    text-decoration: none;
-    transition: color 0.2s ease;
-    background: none;
-    border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
 }
 
 .footerNavList a:hover,
 .footerNavList button:hover {
-    color: #8dba3b;
+  color: #8dba3b;
 }
 
 .footerAside {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
 }
 
 .footerSocialWrap {
-    display: flex;
-    justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .footerSocial {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .footerSocialBtn {
-    align-items: center;
-    border: 1px solid #fff;
-    border-radius: 2px;
-    color: #fff;
-    display: inline-flex;
-    font-size: 15px;
-    height: 24px;
-    justify-content: center;
-    text-decoration: none;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-    width: 24px;
+  align-items: center;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 15px;
+  height: 24px;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+  width: 24px;
 }
 
 .footerSocialBtn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #8dba3b;
-    color: #8dba3b;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #8dba3b;
+  color: #8dba3b;
 }
 
 .footerPayments {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 14px;
-    justify-content: flex-start;
-    margin-top: 0;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  justify-content: flex-start;
+  margin-top: 0;
 }
 
 .footerPaymentMaestro {
-    display: inline-flex;
-    line-height: 0;
+  display: inline-flex;
+  line-height: 0;
 }
 
 .footerPayments img {
-    height: auto;
-    object-fit: contain;
+  height: auto;
+  object-fit: contain;
 }
 
 .footerBottomRow {
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    margin-top: 40px;
-    padding-top: 24px;
-    row-gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 40px;
+  padding-top: 24px;
+  row-gap: 1rem;
 }
 
 .footerCopyright {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .footerCredit {
-    color: #8dba3b;
-    font-weight: 600;
-    text-decoration: none;
+  color: #8dba3b;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .footerCredit:hover {
-    color: #a4d655;
-    text-decoration: underline;
+  color: #a4d655;
+  text-decoration: underline;
 }
 
 .footerLegal {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.25rem 1.75rem;
-    justify-content: flex-start;
-    margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.75rem;
+  justify-content: flex-start;
+  margin: 0;
 }
 
-.footerCopyright br{
-    display: none;
+.footerCopyright br {
+  display: none;
 }
 
 .footerLegal a {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 14px;
-    text-decoration: none;
-    white-space: nowrap;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .footerLegal a:hover {
-    color: #8dba3b;
+  color: #8dba3b;
 }
 
 .footerFormInput {
-    border: 2px solid transparent;
-    outline: none;
+  border: 2px solid transparent;
+  outline: none;
 }
 
 .footerFormInput:focus {
-    border: 2px solid #8dba3b;
-    outline: none;
+  border: 2px solid #8dba3b;
+  outline: none;
 }
 
 @media (min-width: 768px) {
-    .footerNavGroup {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px 40px;
-    }
+  .footerNavGroup {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 40px;
+  }
 
-    .footerNavCol:last-child {
-        grid-column: auto;
-    }
+  .footerNavCol:last-child {
+    grid-column: auto;
+  }
 }
 
 @media (min-width: 992px) {
-    .footerMainGrid {
-        grid-template-columns: minmax(220px, 1.35fr) minmax(0, 2.2fr) minmax(120px, 0.55fr);
-        column-gap: 48px;
-        row-gap: 0;
-        align-items: start;
-    }
+  .footerMainGrid {
+    grid-template-columns: minmax(220px, 1.35fr) minmax(0, 2.2fr) minmax(
+        120px,
+        0.55fr
+      );
+    column-gap: 48px;
+    row-gap: 0;
+    align-items: start;
+  }
 
-    .footerBrand {
-        grid-column: 1;
-        max-width: 280px;
-    }
+  .footerBrand {
+    grid-column: 1;
+    max-width: 280px;
+  }
 
-    .footerNavGroup {
-        grid-column: 2;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px 48px;
-    }
+  .footerNavGroup {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 48px;
+  }
 
-    .footerAside {
-        grid-column: 3;
-        align-items: flex-end;
-        align-self: stretch;
-        justify-content: space-between;
-        min-height: 100%;
-        padding-top: 2px;
-    }
+  .footerAside {
+    grid-column: 3;
+    align-items: flex-end;
+    align-self: stretch;
+    justify-content: space-between;
+    min-height: 100%;
+    padding-top: 2px;
+  }
 
-    .footerSocialWrap {
-        justify-content: flex-end;
-    }
+  .footerSocialWrap {
+    justify-content: flex-end;
+  }
 
-    .footerPayments {
-        justify-content: flex-end;
-        margin-top: auto;
-    }
+  .footerPayments {
+    justify-content: flex-end;
+    margin-top: auto;
+  }
 
-    .footerLegal {
-        justify-content: flex-end;
-    }
+  .footerLegal {
+    justify-content: flex-end;
+  }
 }
 
 @media (min-width: 1200px) {
-    .footerMainGrid {
-        column-gap: 64px;
-    }
+  .footerMainGrid {
+    column-gap: 64px;
+  }
 
-    .footerNavGroup {
-        gap: 24px 72px;
-    }
+  .footerNavGroup {
+    gap: 24px 72px;
+  }
 }
 
 @media (max-width: 991px) {
-    .footerMainGrid {
-        gap: 36px;
-    }
+  .footerMainGrid {
+    gap: 36px;
+  }
 
-    .footerAside {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        gap: 20px;
-    }
+  .footerAside {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+  }
 
-    .footerPayments {
-        margin-left: auto;
-    }
+  .footerPayments {
+    margin-left: auto;
+  }
 }
 
 @media (max-width: 768px) {
-    .footerTop {
-        padding: 40px 0;
-    }
+  .footerTop {
+    padding: 40px 0;
+  }
 
-    .footerTop .row {
-        flex-direction: column;
-        gap: 24px;
-    }
+  .footerTop .row {
+    flex-direction: column;
+    gap: 24px;
+  }
 
-    .footerText {
-        font-size: 1.4rem;
-    }
+  .footerText {
+    font-size: 1.4rem;
+  }
 
-    .footerPara {
-        font-size: 0.85rem;
-    }
+  .footerPara {
+    font-size: 0.85rem;
+  }
 
-    .footerFormInput {
-        width: 100%;
-    }
+  .footerFormInput {
+    width: 100%;
+  }
 
-    .footerMain {
-        padding-top: 36px;
-    }
+  .footerMain {
+    padding-top: 36px;
+  }
 
-    .footerAside {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .footerAside {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .footerPayments {
-        margin-left: 0;
-    }
+  .footerPayments {
+    margin-left: 0;
+  }
 
-    .footerBottomRow {
-        text-align: center;
-    }
+  .footerBottomRow {
+    text-align: center;
+  }
 
-    .footerLegal {
-        justify-content: center;
-        gap: 8px 16px;
-    }
+  .footerLegal {
+    justify-content: center;
+    gap: 8px 16px;
+  }
 
-    .footerCopyright {
-        text-align: center;
-    }
+  .footerCopyright {
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
-    .footerTop {
-        padding: 32px 0 24px;
-    }
+  .footerTop {
+    padding: 32px 0 24px;
+  }
 
-    .footerText {
-        font-size: 1.2rem;
-    }
+  .footerText {
+    font-size: 1.2rem;
+  }
 
-    .footerShortPara {
-        font-size: 0.8rem;
-    }
+  .footerShortPara {
+    font-size: 0.8rem;
+  }
 
-    .footerNavGroup {
-        grid-template-columns: 1fr 1fr;
-        gap: 24px 16px;
-    }
+  .footerNavGroup {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 16px;
+  }
 
-    .footerNavCol:last-child {
-        grid-column: 1 / -1;
-    }
+  .footerNavCol:last-child {
+    grid-column: 1 / -1;
+  }
 
-    .footerSocialBtn {
-        width: 28px;
-        height: 28px;
-        font-size: 11px;
-    }
+  .footerSocialBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
 
-    .footerNavHeading {
-        font-size: 12px;
-        margin: 0 0 5px;
-    }
+  .footerNavHeading {
+    font-size: 12px;
+    margin: 0 0 5px;
+  }
 
-    .footerForm input {
-        padding: 8px;
-    }
+  .footerForm input {
+    padding: 8px;
+  }
 
-    .footerFormButtonIcon {
-        font-size: 13px;
-    }
+  .footerFormButtonIcon {
+    font-size: 13px;
+  }
 
-    .inputIconRight {
-        top: 25%;
-        right: 15px;
-        padding: 5px;
-    }
+  .inputIconRight {
+    top: 25%;
+    right: 15px;
+    padding: 5px;
+  }
 
-    .footerMain {
-        padding-top: 15px;
-    }
+  .footerMain {
+    padding-top: 15px;
+  }
 
-    .footerLogoLink img {
-        max-width: 150px;
-    }
+  .footerLogoLink img {
+    max-width: 150px;
+  }
 
-    .footerBrandText {
-        font-size: 12px;
-        margin: 0 0 10px;
-    }
+  .footerBrandText {
+    font-size: 12px;
+    margin: 0 0 10px;
+  }
 
-    .footerNavList a {
-        font-size: 12px;
-    }
+  .footerNavList a {
+    font-size: 12px;
+  }
 
-    .footerCopyright {
-        font-size: 12px;
-    }
+  .footerCopyright {
+    font-size: 12px;
+  }
 
-    .footerLegal a {
-        font-size: 12px;
-    }
-    
-    .footerLegal {
-        justify-content: center;
-        gap: 8px 16px;
-    }
+  .footerLegal a {
+    font-size: 12px;
+  }
 
-    .footerCopyright br{
-        display: block;
-    }
-    .footerPhoneLink {
-        font-size: 20px;
-    }
+  .footerLegal {
+    justify-content: center;
+    gap: 8px 16px;
+  }
+
+  .footerCopyright br {
+    display: block;
+  }
+  .footerPhoneLink {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 375px) {
-    .footerText {
-        font-size: 1.05rem;
-    }
+  .footerText {
+    font-size: 1.05rem;
+  }
 
-    .footerFormInput {
-        font-size: 0.8rem;
-        padding-left: 28px;
-    }
+  .footerFormInput {
+    font-size: 0.8rem;
+    padding-left: 28px;
+  }
 
-   
+  .footerSocialBtn {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
 
-    .footerSocialBtn {
-        width: 26px;
-        height: 26px;
-        font-size: 10px;
-    }
+  .footerPayments img {
+    width: 32px !important;
+  }
 
-    .footerPayments img {
-        width: 32px !important;
-    }
-
-    /* .footerCopyright,
+  /* .footerCopyright,
     .footerLegal a {
         font-size: 0.72rem;
     } */
-    /* .inputIconRight {
+  /* .inputIconRight {
         top: 25%;
         right: 15px;
     } */
