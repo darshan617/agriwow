@@ -298,7 +298,7 @@ export function buildJsonLd({
     ],
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+919238300367",
+      telephone: "+919201954770",
       contactType: "customer support",
       areaServed: "IN",
       availableLanguage: ["English", "Hindi"],

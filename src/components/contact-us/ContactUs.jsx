@@ -25,11 +25,15 @@ const ContactUs = ({ contactDetailsData }) => {
           <div style={{ margin: "16px 0" }}>
             <ul>
               <li>
-                <Link href="/" prefetch={true}>Home</Link>
+                <Link href="/" prefetch={true}>
+                  Home
+                </Link>
               </li>
               <li style={{ margin: "0 8px", color: "#6c757d" }}>/</li>
               <li>
-                <Link href="/contact-us" prefetch={true}>Contact Us</Link>
+                <Link href="/contact-us" prefetch={true}>
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -77,11 +81,10 @@ const ContactUs = ({ contactDetailsData }) => {
                           Agriwow is here to help you
                         </p>
                         <Link
-                          href="https://wa.me/+919238300367?text=Hello, I am interested in your products"
+                          href="https://wa.me/+919201954770?text=Hello, I am interested in your products"
                           target="_blank"
                           rel="noopener noreferrer"
                           className={styles.actionButton}
-                          prefetch={true}
                         >
                           Chat Now
                         </Link>
@@ -104,7 +107,6 @@ const ContactUs = ({ contactDetailsData }) => {
                           <Link
                             href="/my-order"
                             className={styles.actionButton}
-                            prefetch={true}
                           >
                             Track Now
                           </Link>
@@ -148,9 +150,22 @@ const ContactUs = ({ contactDetailsData }) => {
                       <Link
                         href={`tel:${contactDetails?.phone}`}
                         className={styles.officeAddress}
-                        prefetch={true}
                       >
-                        Telephone: {contactDetails?.phone}
+                        Telephone: {contactDetails?.phone || "-"}
+                      </Link>
+                      <Link
+                        href={`tel:${contactDetails?.delivery_transport_phone}`}
+                        className={styles.officeAddress}
+                      >
+                        Delivery & Transport Support:{" "}
+                        {contactDetails?.delivery_transport_phone || "-"}
+                      </Link>
+                      <Link
+                        href={`tel:${contactDetails?.technical_support}`}
+                        className={styles.officeAddress}
+                      >
+                        Technical Support:{" "}
+                        {contactDetails?.technical_support || "-"}
                       </Link>
                       <Link
                         href={`mailto:${contactDetails?.email}`}
