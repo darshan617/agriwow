@@ -15,6 +15,8 @@ import mastercard from "@/assets/icon/smartcard.png";
 import { useToast } from "@/custom-hooks/toast/ToastProvider";
 import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 import { useRouter } from "next/router";
+import { TbTruckDelivery } from "react-icons/tb";
+import { BiSupport } from "react-icons/bi";
 
 const Footer = () => {
   const router = useRouter();
@@ -147,6 +149,35 @@ const Footer = () => {
                     prefetch={true}
                   >
                     +91 9201954770
+                  </Link>
+                </p>
+                <p className={`${styles.footerPhone}`}>
+                  <TbTruckDelivery
+                    className={styles.footerPhoneIcon}
+                    aria-hidden
+                    strokeWidth={1.5}
+                  />
+                  <Link
+                    href="https://wa.me/+918770281487?text=Hello, I have a query related to shipping"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.footerPhoneLink}
+                    prefetch={true}
+                  >
+                    +91 8770281487
+                  </Link>
+                </p>
+                <p className={`${styles.footerPhone}`}>
+                  <BiSupport className={styles.footerPhoneIcon} aria-hidden />
+                  <Link
+                    href="https://wa.me/+919201592022?text=Hello, I have a query, i need a help"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.footerPhoneLink}
+                    prefetch={true}
+                    strokeWidth={1.5}
+                  >
+                    +91 9201592022
                   </Link>
                 </p>
               </div>
