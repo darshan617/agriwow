@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import styles from "@/components/layout/top-header/TopHeader.module.css";
-import {
-  useLoginPopup,
-} from "@/custom-hooks/login-popup/LoginPopupProvider";
+import { useLoginPopup } from "@/custom-hooks/login-popup/LoginPopupProvider";
 
 export const TopHeaderLeftLinks = () => {
   const { openLoginPopup, isLoggedIn } = useLoginPopup();
@@ -11,19 +9,27 @@ export const TopHeaderLeftLinks = () => {
     <div className={styles.topHeaderLeft}>
       <ul className="d-flex gap-3">
         <li>
-          <Link href="/about-us" prefetch={true}>About</Link>
+          <Link href="/about-us" prefetch={true}>
+            About
+          </Link>
         </li>
         <li>
-          <Link href="/shipping-return" prefetch={true}>Shipping & Returns</Link>
+          <Link href="/shipping-return" prefetch={true}>
+            Shipping & Returns
+          </Link>
         </li>
         {!isLoggedIn && (
           <li onClick={openLoginPopup}>
-            <Link href="#" prefetch={true}>My Profile</Link>
+            <Link href="#" prefetch={true}>
+              My Profile
+            </Link>
           </li>
         )}
         {isLoggedIn && (
           <li>
-            <Link href="/my-profile" prefetch={true}>My Profile</Link>
+            <Link href="/my-profile" prefetch={true}>
+              My Profile
+            </Link>
           </li>
         )}
       </ul>
@@ -34,12 +40,12 @@ export const TopHeaderHelp = () => (
   <div className={styles.topHeaderRight}>
     <h2>Need Help?</h2>
     <Link
-      href="https://wa.me/+919238300367?text=I'm%20interested%20in%20your%20products"
+      href="https://wa.me/+919201954770?text=I'm%20interested%20in%20your%20products"
       target="_blank"
       rel="noopener noreferrer"
       prefetch={true}
     >
-      +91 92383 00367
+      +91 9201954770
     </Link>
   </div>
 );
