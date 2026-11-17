@@ -6,6 +6,7 @@ import homeBannerStyles from "@/components/home/components/banner/home-banner/Ho
 import { useGetHomeDataQuery } from "@/redux/apis/homeApi";
 import { useEffect, useRef } from "react";
 import { trackViewItemList } from "@/utils/gtm";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 
 const DynamicMarquee = dynamic(
   () => import("@/components/home/components/marquee/Marquee"),
@@ -191,6 +192,7 @@ const HomeComponents = ({ initialHomeData, initialBannerData }) => {
         insightsBlogData={insightsBlogData}
         isHomeDataLoading={isHomeDataLoading}
       />
+      <MobileBottomNav />
     </Layout>
   );
 };

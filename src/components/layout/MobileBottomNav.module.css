@@ -1,0 +1,61 @@
+.bottomNav {
+  display: none;
+}
+
+.bottomNavSpacer {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .bottomNav {
+    position: fixed;
+    z-index: 199;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 8px 4px calc(7px + env(safe-area-inset-bottom));
+    border-top: 1px solid #e8e8e8;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    box-shadow: -1px -2px 14px #31734387;
+  }
+
+  .bottomNavSpacer {
+    display: block;
+    height: calc(60px + env(safe-area-inset-bottom));
+  }
+
+  .navItem {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 0;
+    background: transparent;
+    color: #111;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .navItem svg {
+    width: 22px;
+    height: 22px;
+    color: #777;
+    stroke-width: 1.8;
+  }
+
+  .active {
+    color: #239c3d;
+  }
+
+  .active svg {
+    color: inherit;
+  }
+}

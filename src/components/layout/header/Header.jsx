@@ -919,7 +919,7 @@ const Header = ({ scrolled: scrolledFromParent }) => {
                   aria-expanded={productsExpanded}
                   aria-controls="drawer-mega-products"
                 >
-                  {item?.label}
+                  {item?.label === "Products" ? "Categories" : item?.label}
                   <IoChevronDown
                     size={18}
                     className={`${styles.drawerProductsChevron}`}
@@ -972,6 +972,22 @@ const Header = ({ scrolled: scrolledFromParent }) => {
               </Link>
             );
           })}
+          <Link
+            href="/wishlist"
+            className={router.pathname === "/wishlist" ? styles.navLinkActive : ""}
+            onClick={closeMenu}
+            prefetch={true}
+          >
+            Wishlist
+          </Link>
+          <Link
+            href="/cart"
+            className={router.pathname === "/cart" ? styles.navLinkActive : ""}
+            onClick={closeMenu}
+            prefetch={true}
+          >
+            Cart
+          </Link>
         </div>
         <div className={`${styles.drawerTopExtras}`}>
           <TopHeaderExtras variant="drawer" />

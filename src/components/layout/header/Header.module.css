@@ -1351,6 +1351,15 @@
     display: none;
   }
 
+  .actions > .userMenuWrap,
+  .actions > .iconBtn {
+    display: none;
+  }
+
+  .menuToggle {
+    display: flex;
+  }
+
   .megaDropdown {
     display: none;
   }

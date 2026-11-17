@@ -361,9 +361,9 @@ export default function App({ Component, pageProps, ...rest }) {
                   width: 50px;
                   height: 50px;
                 }
-                @media (max-width: 500px) {
+                @media (max-width: 992px) {
                   .whatsapp-float-btn {
-                    bottom: 80px;
+                    bottom: 90px;
                     right: 18px;
                     padding: 10px 13px;
                     font-size: 20px;
@@ -399,9 +399,9 @@ export default function App({ Component, pageProps, ...rest }) {
                 .back-to-top-btn:hover {
                   background: #236622;
                 }
-                @media (max-width: 500px) {
+                @media (max-width: 992px) {
                   .back-to-top-btn {
-                    bottom: 18px;
+                    bottom: 145px;
                     right: 18px;
                     padding: 10px 13px;
                     font-size: 20px;
